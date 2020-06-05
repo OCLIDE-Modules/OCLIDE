@@ -1,6 +1,5 @@
 package ru.VladG24.ocide.main;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
