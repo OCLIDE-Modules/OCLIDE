@@ -1,2 +1,2 @@
 # OpenComputers-IDE
- An IDE for OpenComputers 1.7.2 written in Java with Swing GUI
+ An IDE for OpenComputers 1.7.5 written in Java with Swing GUI
