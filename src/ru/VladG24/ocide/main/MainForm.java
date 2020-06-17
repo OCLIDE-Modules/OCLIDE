@@ -9,10 +9,12 @@ package ru.VladG24.ocide.main;
  * @author VladG24YT
  */
 public class MainForm extends javax.swing.JFrame {
-
+    
     private static final long serialVersionUID = 1L;
+    private int TAB = 1;
+    
     javax.swing.Timer timer = new javax.swing.Timer(300, (java.awt.event.ActionEvent e) -> {
-        //TODO: Syntax Highlighting
+        
         this.repaint();
     });
 
@@ -135,11 +137,15 @@ public class MainForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        mainFile = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        projectLocation = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
         settingsEtcFrame = new javax.swing.JFrame();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         projectsAndFiles = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -180,6 +186,8 @@ public class MainForm extends javax.swing.JFrame {
         jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
         runMenu = new javax.swing.JMenu();
         launchEmulator = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         launchAndRun = new javax.swing.JMenuItem();
         toolsMenu = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -1043,25 +1051,30 @@ public class MainForm extends javax.swing.JFrame {
 
         jTextField1.setText("Example Project");
         jTextField1.setName("jTextField1"); // NOI18N
+        jTextField1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextField1CaretUpdate(evt);
+            }
+        });
 
         jLabel4.setText("Project Type");
         jLabel4.setName("jLabel4"); // NOI18N
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lua OpenComputers program", "Lua OpenComputers library", "Lua OpenComputers custom", " " }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lua OpenComputers program", "Lua OpenComputers library", "Lua OpenComputers custom" }));
         jComboBox2.setName("jComboBox2"); // NOI18N
 
         jLabel10.setText("Main File");
         jLabel10.setName("jLabel10"); // NOI18N
 
-        jTextField2.setEditable(false);
-        jTextField2.setText("C:/Users/Default/Documents/OCIDE/projects/ExampleProject/main.lua");
-        jTextField2.setName("jTextField2"); // NOI18N
+        mainFile.setEditable(false);
+        mainFile.setText("C:/Users/Default/Documents/OCIDE/projects/ExampleProject/main.lua");
+        mainFile.setName("mainFile"); // NOI18N
 
         jLabel21.setText("Project Location");
         jLabel21.setName("jLabel21"); // NOI18N
 
-        jTextField3.setText("C:/Users/Default/Documentss/OCIDE/projects/ExampleProject");
-        jTextField3.setName("jTextField3"); // NOI18N
+        projectLocation.setText("C:/Users/Default/Documentss/OCIDE/projects/ExampleProject");
+        projectLocation.setName("projectLocation"); // NOI18N
 
         jSeparator8.setName("jSeparator8"); // NOI18N
 
@@ -1076,7 +1089,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mainFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -1086,7 +1099,7 @@ public class MainForm extends javax.swing.JFrame {
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField1)
                             .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)))))
+                            .addComponent(projectLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1102,13 +1115,13 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(projectLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mainFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
@@ -1147,6 +1160,21 @@ public class MainForm extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+        jPopupMenu1.setName("jPopupMenu1"); // NOI18N
+
+        jMenu1.setText("dafuq");
+        jMenu1.setName("jMenu1"); // NOI18N
+
+        jMenuItem17.setText("YEEEEEEEEEEEE");
+        jMenuItem17.setName("jMenuItem17"); // NOI18N
+        jMenu1.add(jMenuItem17);
+
+        jPopupMenu1.add(jMenu1);
+
+        jMenuItem18.setText("Yee");
+        jMenuItem18.setName("jMenuItem18"); // NOI18N
+        jPopupMenu1.add(jMenuItem18);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("OpenComputers IDE 1.0");
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
@@ -1160,6 +1188,11 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
         jTree1.setName("jTree1"); // NOI18N
+        jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTree1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTree1);
 
         projectsAndFiles.addTab("Projects", jScrollPane2);
@@ -1258,6 +1291,8 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        editorTabs.getAccessibleContext().setAccessibleDescription("yee");
+
         topMenu.setName("topMenu"); // NOI18N
 
         fileMenu.setText("File");
@@ -1288,6 +1323,7 @@ public class MainForm extends javax.swing.JFrame {
         fileMenu.add(jSeparator2);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/textures/items/FloppyDisk_dyeBlack.png"))); // NOI18N
         jMenuItem4.setText("Save Project");
         jMenuItem4.setName("jMenuItem4"); // NOI18N
         fileMenu.add(jMenuItem4);
@@ -1359,6 +1395,7 @@ public class MainForm extends javax.swing.JFrame {
         runMenu.setName("runMenu"); // NOI18N
 
         launchEmulator.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+        launchEmulator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/textures/items/Terminal.png"))); // NOI18N
         launchEmulator.setText("Launch Emulator");
         launchEmulator.setName("launchEmulator"); // NOI18N
         launchEmulator.addActionListener(new java.awt.event.ActionListener() {
@@ -1367,6 +1404,14 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         runMenu.add(launchEmulator);
+
+        jMenuItem14.setText("Launch File");
+        jMenuItem14.setName("jMenuItem14"); // NOI18N
+        runMenu.add(jMenuItem14);
+
+        jMenuItem15.setText("Launch Function...");
+        jMenuItem15.setName("jMenuItem15"); // NOI18N
+        runMenu.add(jMenuItem15);
 
         launchAndRun.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, java.awt.event.InputEvent.CTRL_MASK));
         launchAndRun.setText("Launch & Run");
@@ -1385,7 +1430,7 @@ public class MainForm extends javax.swing.JFrame {
         jSeparator3.setName("jSeparator3"); // NOI18N
         toolsMenu.add(jSeparator3);
 
-        jMenuItem10.setText("Plugins");
+        jMenuItem10.setText("Modules");
         jMenuItem10.setName("jMenuItem10"); // NOI18N
         toolsMenu.add(jMenuItem10);
 
@@ -1394,6 +1439,11 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenuItem11.setText("Prefrences");
         jMenuItem11.setName("jMenuItem11"); // NOI18N
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         toolsMenu.add(jMenuItem11);
 
         topMenu.add(toolsMenu);
@@ -1402,15 +1452,27 @@ public class MainForm extends javax.swing.JFrame {
         helpMenu.setName("helpMenu"); // NOI18N
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/textures/gui/manual_missing_item.png"))); // NOI18N
         jMenuItem1.setText("Help");
         jMenuItem1.setName("jMenuItem1"); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         helpMenu.add(jMenuItem1);
 
         jSeparator9.setName("jSeparator9"); // NOI18N
         helpMenu.add(jSeparator9);
 
+        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/textures/gui/manual_home.png"))); // NOI18N
         jMenuItem13.setText("About");
         jMenuItem13.setName("jMenuItem13"); // NOI18N
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         helpMenu.add(jMenuItem13);
 
         topMenu.add(helpMenu);
@@ -1470,6 +1532,30 @@ public class MainForm extends javax.swing.JFrame {
             jPanel4.setEnabled(false);
         }
     }//GEN-LAST:event_isCpuGpuActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        TAB = 4;
+        settingsEtcFrame.setVisible(true);
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
+        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2 && !(jTree1.isSelectionEmpty())) {
+            jPopupMenu1.setVisible(true);
+        }
+    }//GEN-LAST:event_jTree1MouseClicked
+
+    private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
+        projectLocation.setText("C:\\Users\\Default\\Documents\\OCIDE\\Projects\\" + jTextField1.getText());
+        mainFile.setText(projectLocation.getText() + "\\main.lua");
+    }//GEN-LAST:event_jTextField1CaretUpdate
 
     /**
      * @param args the command line arguments
@@ -1599,11 +1685,16 @@ public class MainForm extends javax.swing.JFrame {
     javax.swing.JLabel jLabel7;
     javax.swing.JLabel jLabel8;
     javax.swing.JLabel jLabel9;
+    javax.swing.JMenu jMenu1;
     javax.swing.JMenuItem jMenuItem1;
     javax.swing.JMenuItem jMenuItem10;
     javax.swing.JMenuItem jMenuItem11;
     javax.swing.JMenuItem jMenuItem12;
     javax.swing.JMenuItem jMenuItem13;
+    javax.swing.JMenuItem jMenuItem14;
+    javax.swing.JMenuItem jMenuItem15;
+    javax.swing.JMenuItem jMenuItem17;
+    javax.swing.JMenuItem jMenuItem18;
     javax.swing.JMenuItem jMenuItem2;
     javax.swing.JMenuItem jMenuItem3;
     javax.swing.JMenuItem jMenuItem4;
@@ -1622,6 +1713,7 @@ public class MainForm extends javax.swing.JFrame {
     javax.swing.JPanel jPanel6;
     javax.swing.JPanel jPanel8;
     javax.swing.JPanel jPanel9;
+    javax.swing.JPopupMenu jPopupMenu1;
     javax.swing.JScrollPane jScrollPane2;
     javax.swing.JScrollPane jScrollPane3;
     javax.swing.JScrollPane jScrollPane4;
@@ -1637,19 +1729,19 @@ public class MainForm extends javax.swing.JFrame {
     javax.swing.JSeparator jSeparator8;
     javax.swing.JPopupMenu.Separator jSeparator9;
     javax.swing.JTextField jTextField1;
-    javax.swing.JTextField jTextField2;
-    javax.swing.JTextField jTextField3;
     javax.swing.JTree jTree1;
     javax.swing.JMenuItem launchAndRun;
     javax.swing.JButton launchButton;
     javax.swing.JFrame launchDialog;
     javax.swing.JMenuItem launchEmulator;
+    javax.swing.JTextField mainFile;
     javax.swing.JPanel mainPanel;
     javax.swing.JPanel navigationPanel;
     javax.swing.JPanel navigatorPanel;
     javax.swing.JMenuItem newProject;
     javax.swing.JFileChooser openFile;
     javax.swing.JTextArea outputArea;
+    javax.swing.JTextField projectLocation;
     javax.swing.JTabbedPane projectsAndFiles;
     javax.swing.JMenu runMenu;
     javax.swing.JLabel screenLabel;

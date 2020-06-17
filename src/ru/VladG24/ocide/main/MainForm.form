@@ -1716,7 +1716,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jTextField2" min="-2" max="-2" attributes="0"/>
+                              <Component id="mainFile" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -1728,7 +1728,7 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jTextField1" max="32767" attributes="0"/>
                                   <Component id="jComboBox2" max="32767" attributes="0"/>
-                                  <Component id="jTextField3" alignment="0" pref="345" max="32767" attributes="0"/>
+                                  <Component id="projectLocation" alignment="0" pref="345" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -1751,14 +1751,14 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="projectLocation" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jSeparator8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="mainFile" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="65" max="32767" attributes="0"/>
                   </Group>
@@ -1777,6 +1777,9 @@
                 <Property name="text" type="java.lang.String" value="Example Project"/>
                 <Property name="name" type="java.lang.String" value="jTextField1" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="jTextField1CaretUpdate"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
@@ -1787,11 +1790,10 @@
             <Component class="javax.swing.JComboBox" name="jComboBox2">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
+                  <StringArray count="3">
                     <StringItem index="0" value="Lua OpenComputers program"/>
                     <StringItem index="1" value="Lua OpenComputers library"/>
                     <StringItem index="2" value="Lua OpenComputers custom"/>
-                    <StringItem index="3" value=" "/>
                   </StringArray>
                 </Property>
                 <Property name="name" type="java.lang.String" value="jComboBox2" noResource="true"/>
@@ -1806,11 +1808,11 @@
                 <Property name="name" type="java.lang.String" value="jLabel10" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField2">
+            <Component class="javax.swing.JTextField" name="mainFile">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="text" type="java.lang.String" value="C:/Users/Default/Documents/OCIDE/projects/ExampleProject/main.lua"/>
-                <Property name="name" type="java.lang.String" value="jTextField2" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="mainFile" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel21">
@@ -1819,10 +1821,10 @@
                 <Property name="name" type="java.lang.String" value="jLabel21" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField3">
+            <Component class="javax.swing.JTextField" name="projectLocation">
               <Properties>
                 <Property name="text" type="java.lang.String" value="C:/Users/Default/Documentss/OCIDE/projects/ExampleProject"/>
-                <Property name="name" type="java.lang.String" value="jTextField3" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="projectLocation" noResource="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator8">
@@ -1851,6 +1853,37 @@
           </Group>
         </DimensionLayout>
       </Layout>
+    </Container>
+    <Container class="javax.swing.JPopupMenu" name="jPopupMenu1">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="jPopupMenu1" noResource="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="jMenu1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="dafuq"/>
+            <Property name="name" type="java.lang.String" value="jMenu1" noResource="true"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem17">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="YEEEEEEEEEEEE"/>
+                <Property name="name" type="java.lang.String" value="jMenuItem17" noResource="true"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem18">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Yee"/>
+            <Property name="name" type="java.lang.String" value="jMenuItem18" noResource="true"/>
+          </Properties>
+        </MenuItem>
+      </SubComponents>
     </Container>
     <Menu class="javax.swing.JMenuBar" name="topMenu">
       <Properties>
@@ -1901,6 +1934,9 @@
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+S"/>
+                </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/assets/textures/items/FloppyDisk_dyeBlack.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Save Project"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem4" noResource="true"/>
@@ -2014,12 +2050,27 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F6"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/assets/textures/items/Terminal.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Launch Emulator"/>
                 <Property name="name" type="java.lang.String" value="launchEmulator" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="launchEmulatorActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Launch File"/>
+                <Property name="name" type="java.lang.String" value="jMenuItem14" noResource="true"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem15">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Launch Function..."/>
+                <Property name="name" type="java.lang.String" value="jMenuItem15" noResource="true"/>
+              </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="launchAndRun">
               <Properties>
@@ -2051,7 +2102,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Plugins"/>
+                <Property name="text" type="java.lang.String" value="Modules"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem10" noResource="true"/>
               </Properties>
             </MenuItem>
@@ -2065,6 +2116,9 @@
                 <Property name="text" type="java.lang.String" value="Prefrences"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem11" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem11ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -2079,9 +2133,15 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F1"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/assets/textures/gui/manual_missing_item.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Help"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator9">
               <Properties>
@@ -2090,9 +2150,15 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem13">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/assets/textures/gui/manual_home.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="About"/>
                 <Property name="name" type="java.lang.String" value="jMenuItem13" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem13ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -2208,6 +2274,9 @@
                   <Properties>
                     <Property name="name" type="java.lang.String" value="jTree1" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTree1MouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -2295,6 +2364,9 @@
           <Properties>
             <Property name="name" type="java.lang.String" value="editorTabs" noResource="true"/>
           </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="yee"/>
+          </AccessibilityProperties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
