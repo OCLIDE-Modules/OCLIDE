@@ -1,43 +1,202 @@
 package ru.VladG24.ocide.main;
 
 /**
- * Main window of the application
+ * OCIDE is an Integrated Development Environment, made specifically for
+ * creating programs and libraries in Lua 5.2 or Lua 5.3 for OpenComputers 1.7.5
  *
- * TODO: 1.) Finish navigator panel 2.) JDialog logic + new upgrades' checkboxes
- * 3.) Fill top-bar menus 4.) Wtf is JPopupMenu 5.) Make emulator emulate
+ * Written in Java 8 using Swing GUI Library and Apache NetBeans 11.2
  *
  * @author VladG24YT
  */
 public class MainForm extends javax.swing.JFrame {
-    
+
     private static final long serialVersionUID = 1L;
-    private int TAB = 1;
-    
-    javax.swing.Timer timer = new javax.swing.Timer(300, (java.awt.event.ActionEvent e) -> {
-        
-        this.repaint();
-    });
+
+    /* Variables declaration */
+    //Directories
+    private final String APP_DIRECTORY = System.getenv("APPDATA") + "/OCIDE/";
+    private final String PROJECTS_DIR = APP_DIRECTORY + "projects/";
+    private final String OPENOS_SDK_DIR = APP_DIRECTORY + "SDK/OpenOS/";
+    //Workspace variables
+    private java.io.File ACTIVE_FILE;
+    private String ACTIVE_PROJECT;
+    //Project types
+    private final int OPENOS_PROG = 1,
+            OPENOS_LIB = 2,
+            CUSTOM = 3;
 
     /**
-     * Creates new form MainForm
+     * App constructor. Used for variable initialization
      */
     public MainForm() {
+        ACTIVE_PROJECT = new java.io.File(PROJECTS_DIR).list()[0];
+        ACTIVE_FILE = new java.io.File(PROJECTS_DIR + ACTIVE_PROJECT + "/main.lua");
         initComponents();
-        timer.start();
+        new javax.swing.Timer(300, (java.awt.event.ActionEvent e) -> {
+            refreshTrees(new javax.swing.tree.DefaultMutableTreeNode(projectsTree.getModel().getRoot()), new javax.swing.tree.DefaultMutableTreeNode(fileTree.getModel().getRoot()), new javax.swing.tree.DefaultMutableTreeNode(fieldsTree.getModel().getRoot()));
+            this.repaint();
+        }).start();
+    }
+
+    /**
+     * Refreshes all the JTree data
+     *
+     * @param projectsTop 'Projects' JTree
+     * @param filesTop 'Files' JTree
+     * @param fieldsTop Navigator panel
+     */
+    private void refreshTrees(javax.swing.tree.DefaultMutableTreeNode projectsTop, javax.swing.tree.DefaultMutableTreeNode filesTop, javax.swing.tree.DefaultMutableTreeNode fieldsTop) {
+
+        //Projects
+        for (String project : new java.io.File(PROJECTS_DIR).list()) {
+            javax.swing.tree.DefaultMutableTreeNode projectNode = new javax.swing.tree.DefaultMutableTreeNode(project);
+            javax.swing.tree.DefaultMutableTreeNode src = new javax.swing.tree.DefaultMutableTreeNode("Source");
+            javax.swing.tree.DefaultMutableTreeNode lib = new javax.swing.tree.DefaultMutableTreeNode("Libraries");
+            if (new java.io.File(PROJECTS_DIR + project).isDirectory()) {
+                for (String file : new java.io.File(PROJECTS_DIR + project).list()) {
+                    //Looking for libraries
+                    if (new java.io.File(PROJECTS_DIR + project).equals("lib")) {
+                        lib.add(new javax.swing.tree.DefaultMutableTreeNode(file));
+                    } else {
+                        src.add(new javax.swing.tree.DefaultMutableTreeNode(file));
+                    }
+                }
+            }
+            projectNode.add(src);
+            projectNode.add(lib);
+            projectsTop.add(projectNode);
+        }
+
+        //Files
+        for (String file : new java.io.File(PROJECTS_DIR + ACTIVE_PROJECT).list()) {
+            javax.swing.tree.DefaultMutableTreeNode node = new javax.swing.tree.DefaultMutableTreeNode(file);
+            if (new java.io.File(PROJECTS_DIR + ACTIVE_PROJECT + "/" + file).isDirectory()) {
+                for (String subFile : new java.io.File(PROJECTS_DIR + ACTIVE_PROJECT + "/" + file).list()) {
+                    node.add(new javax.swing.tree.DefaultMutableTreeNode(subFile));
+                }
+                filesTop.add(node);
+            }
+        }
+
+        //Navigator
+        try {
+            java.io.FileReader fileReader = new java.io.FileReader(ACTIVE_FILE);
+            java.io.BufferedReader reader = new java.io.BufferedReader(fileReader);
+            String[] lines = {};
+            int count = 0;
+            while (true) {
+                if (reader.readLine() != null) {
+                    lines[count] = reader.readLine();
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            String[] words = null;
+            for (String line : lines) {
+                words = line.split(" ");
+                if ((words[0].equals("local") && words[2].equals("=")) || (words[0].equals("function") && words[2].startsWith("("))) {
+                    fieldsTop.add(new javax.swing.tree.DefaultMutableTreeNode(words[0] + " " + words[1]));
+                }
+            }
+        } catch (java.io.IOException ex) {
+            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * This method exists in order to make createProject JDialog's code more
+     * readable
+     *
+     * basically it just creates all the neccessary files and directories
+     *
+     * @param name Project name
+     * @param type Project type
+     * @param location Project location (absolute)
+     * @param mainFilePath Main project file location (absolute)
+     */
+    private void createProjectFolder(String name, int type, String location, String mainFilePath) {
+        try {
+            ACTIVE_PROJECT = location + name;
+            ACTIVE_FILE = new java.io.File(mainFilePath);
+            new java.io.File(ACTIVE_PROJECT).mkdirs();
+            ACTIVE_FILE.createNewFile();
+            //Initializing OpenOS libraries
+            java.io.File[] fs = {
+                // lib
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/bit32.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/buffer.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/colors.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/devfs.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/event.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/filesystem.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/internet.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/io.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/keyboard.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/note.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/package.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/pipe.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/process.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/rc.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/serialization.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/sh.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/shell.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/sides.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/term.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/text.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/thread.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/transforms.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/tty.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/uuid.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/vt100.lua")),
+                // lib/core
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/boot.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/cursor.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/device_labeling.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_buffer.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_cursor.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_event.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_filesystem.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_keyboard.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_ls.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_sh.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_shell.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_text.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_transforms.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/full_vt.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/install_basics.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/install_utils.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/core/lua_shell.lua")),
+                // lib/tools
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/tools/programLocations.lua")),
+                new java.io.File(new java.net.URI("https://github.com/MightyPirates/OpenComputers/raw/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos/lib/tools/transfer.lua"))
+            };
+            java.util.List<java.io.File> files = java.util.Arrays.asList(fs);
+            String path = ACTIVE_PROJECT;
+            files.forEach((file) -> {
+                try {
+                    java.nio.file.Files.copy(file.toPath(), (new java.io.File(path + file.getName())).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                } catch (java.io.IOException ex) {
+                    java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
+            });
+        } catch (java.net.URISyntaxException | java.io.IOException ex) {
+            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }
 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * regenerated by the Apache NetBeans Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        openFile = new javax.swing.JFileChooser();
+        openFileDialog = new javax.swing.JFileChooser();
         cpuOrApu = new javax.swing.ButtonGroup();
-        launchDialog = new javax.swing.JFrame();
+        testDialog = new javax.swing.JFrame();
         blocksPanel = new javax.swing.JPanel();
         architectureLabel = new javax.swing.JLabel();
         architectureType = new javax.swing.JComboBox<>();
@@ -61,7 +220,7 @@ public class MainForm extends javax.swing.JFrame {
         jComboBox17 = new javax.swing.JComboBox<>();
         jPanel10 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
-        jComboBox20 = new javax.swing.JComboBox<>();
+        rackSlot1 = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -76,7 +235,7 @@ public class MainForm extends javax.swing.JFrame {
         jCheckBox10 = new javax.swing.JCheckBox();
         jCheckBox11 = new javax.swing.JCheckBox();
         jCheckBox12 = new javax.swing.JCheckBox();
-        jComboBox29 = new javax.swing.JComboBox<>();
+        hologramProjector = new javax.swing.JComboBox<>();
         hasGeolyzer = new javax.swing.JCheckBox();
         floppyType = new javax.swing.JComboBox<>();
         componentsPanel = new javax.swing.JPanel();
@@ -121,97 +280,102 @@ public class MainForm extends javax.swing.JFrame {
         buttonsPanel = new javax.swing.JPanel();
         launchButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
-        createProject = new javax.swing.JDialog();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        testResultArea = new javax.swing.JTextArea();
+        createProjectDialog = new javax.swing.JDialog();
         navigationPanel = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         buttons = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        finishButton = new javax.swing.JButton();
+        nextStepButton = new javax.swing.JButton();
+        previousStepButton = new javax.swing.JButton();
+        cancelProjectCreation = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        projectName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        projectType = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         mainFile = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         projectLocation = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
         settingsEtcFrame = new javax.swing.JFrame();
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
-        jPanel1 = new javax.swing.JPanel();
+        openProjectDialog = new javax.swing.JDialog();
+        navigation = new javax.swing.JPanel();
         projectsAndFiles = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        javax.swing.tree.DefaultMutableTreeNode projectsParent = new javax.swing.tree.DefaultMutableTreeNode("Projects");
+        java.io.File projectDirectory = new java.io.File(PROJECTS_DIR);
+        if (!(projectDirectory.exists() && projectDirectory.isDirectory())){
+            projectDirectory.mkdirs();
+        }
+        projectsTree = new javax.swing.JTree(projectsParent);
         jScrollPane3 = new javax.swing.JScrollPane();
+        javax.swing.tree.DefaultMutableTreeNode filesParent = new javax.swing.tree.DefaultMutableTreeNode("Files");
         fileTree = new javax.swing.JTree();
         navigatorPanel = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        editorTabs = new javax.swing.JTabbedPane();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jEditorPane1 = new javax.swing.JEditorPane();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jEditorPane2 = new javax.swing.JEditorPane();
-        io = new javax.swing.JTabbedPane();
         jScrollPane4 = new javax.swing.JScrollPane();
+        javax.swing.tree.DefaultMutableTreeNode fieldsParent = new javax.swing.tree.DefaultMutableTreeNode();
+        if (!(ACTIVE_FILE.equals(null))) {
+            fieldsParent = new javax.swing.tree.DefaultMutableTreeNode(ACTIVE_FILE);
+        }
+        fieldsTree = new javax.swing.JTree(fieldsParent);
+        ide = new javax.swing.JPanel();
+        editorTabs = new javax.swing.JTabbedPane();
+        io = new javax.swing.JTabbedPane();
+        outputScrollable = new javax.swing.JScrollPane();
         outputArea = new javax.swing.JTextArea();
         topMenu = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newProject = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        openProject = new javax.swing.JMenuItem();
+        openFile = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        saveProject = new javax.swing.JMenuItem();
+        saveFile = new javax.swing.JMenuItem();
+        exportProject = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem12 = new javax.swing.JMenuItem();
+        exitIDE = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        undoItem = new javax.swing.JMenuItem();
+        redoItem = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+        viewProjects = new javax.swing.JCheckBoxMenuItem();
+        viewFiles = new javax.swing.JCheckBoxMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
+        viewNavigator = new javax.swing.JCheckBoxMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
-        jCheckBoxMenuItem4 = new javax.swing.JCheckBoxMenuItem();
+        viewOutput = new javax.swing.JCheckBoxMenuItem();
         runMenu = new javax.swing.JMenu();
-        launchEmulator = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        launchAndRun = new javax.swing.JMenuItem();
+        launchBasicTest = new javax.swing.JMenuItem();
+        launchCustomConfigTest = new javax.swing.JMenuItem();
         toolsMenu = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        libraries = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        modules = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        settings = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        helpItem = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        aboutItem = new javax.swing.JMenuItem();
 
-        openFile.setName("openFile"); // NOI18N
+        openFileDialog.setName("openFileDialog"); // NOI18N
 
-        launchDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        launchDialog.setTitle("Emulator Control Panel");
-        launchDialog.setBounds(new java.awt.Rectangle(0, 0, 0, 0));
-        launchDialog.setName("launchDialog"); // NOI18N
-        launchDialog.setResizable(false);
+        testDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        testDialog.setTitle("Emulator Control Panel");
+        testDialog.setBounds(new java.awt.Rectangle(0, 0, 0, 0));
+        testDialog.setName("testDialog"); // NOI18N
+        testDialog.setResizable(false);
 
         blocksPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blocks", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         blocksPanel.setName("blocksPanel"); // NOI18N
 
-        architectureLabel.setText("Architecture");
+        architectureLabel.setText("Case type");
         architectureLabel.setName("architectureLabel"); // NOI18N
 
         architectureType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Case Tier 1", "Computer Case Tier 2", "Computer Case Tier 3", "Computer Case Creative", "Drone Case Tier 1", "Drone Case Tier 2", "Drone Case Creative", "Microcontroller Tier 1", "Microcontroller Tier 2", "Microcontroller Creative", "Server Tier 1", "Server Tier 2", "Server Tier 3", "Server Creative", "Tablet Case Tier 1", "Tablet Case Tier 2", "Tablet Case Creative" }));
@@ -362,8 +526,8 @@ public class MainForm extends javax.swing.JFrame {
         jLabel17.setText("Slot 1");
         jLabel17.setName("jLabel17"); // NOI18N
 
-        jComboBox20.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Tier 1", "Tier 2", "Tier 3", "Creative" }));
-        jComboBox20.setName("jComboBox20"); // NOI18N
+        rackSlot1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Tier 1", "Tier 2", "Tier 3", "Creative" }));
+        rackSlot1.setName("rackSlot1"); // NOI18N
 
         jLabel18.setText("Slot 2");
         jLabel18.setName("jLabel18"); // NOI18N
@@ -397,7 +561,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jLabel17))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox20, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rackSlot1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBox21, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBox22, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBox23, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -409,7 +573,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(jComboBox20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rackSlot1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -449,8 +613,8 @@ public class MainForm extends javax.swing.JFrame {
         jCheckBox12.setText("Motion Sensor");
         jCheckBox12.setName("jCheckBox12"); // NOI18N
 
-        jComboBox29.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Hologram Projector", "Hologram Projector Tier 1 (Monochrome)", "Hologram Projector Tier 2 (Tricolor)" }));
-        jComboBox29.setName("jComboBox29"); // NOI18N
+        hologramProjector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Hologram Projector", "Hologram Projector Tier 1 (Monochrome)", "Hologram Projector Tier 2 (Tricolor)" }));
+        hologramProjector.setName("hologramProjector"); // NOI18N
 
         hasGeolyzer.setText("Geolyzer");
         hasGeolyzer.setName("hasGeolyzer"); // NOI18N
@@ -499,7 +663,7 @@ public class MainForm extends javax.swing.JFrame {
                                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(blocksPanelLayout.createSequentialGroup()
                                 .addGroup(blocksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox29, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(hologramProjector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(floppyType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
@@ -544,7 +708,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(hologramProjector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(floppyType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -554,6 +718,7 @@ public class MainForm extends javax.swing.JFrame {
         componentsPanel.setName("componentsPanel"); // NOI18N
 
         cpuOrApu.add(isCpuGpu);
+        isCpuGpu.setSelected(true);
         isCpuGpu.setText("CPU/GPU");
         isCpuGpu.setName("isCpuGpu"); // NOI18N
         isCpuGpu.addActionListener(new java.awt.event.ActionListener() {
@@ -612,7 +777,13 @@ public class MainForm extends javax.swing.JFrame {
         jLabel2.setName("jLabel2"); // NOI18N
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tier 2", "Tier 3", "Creative" }));
+        jComboBox5.setEnabled(false);
         jComboBox5.setName("jComboBox5"); // NOI18N
+        jComboBox5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -902,7 +1073,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        cancelButton.setText("<< Cancel");
+        cancelButton.setText("Cancel");
         cancelButton.setName("cancelButton"); // NOI18N
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -910,53 +1081,67 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane7.setName("jScrollPane7"); // NOI18N
+
+        testResultArea.setColumns(20);
+        testResultArea.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        testResultArea.setRows(5);
+        testResultArea.setText("Awaiting launch...");
+        testResultArea.setName("testResultArea"); // NOI18N
+        jScrollPane7.setViewportView(testResultArea);
+
         javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(buttonsPanel);
         buttonsPanel.setLayout(buttonsPanelLayout);
         buttonsPanelLayout.setHorizontalGroup(
             buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cancelButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(launchButton)
+                .addContainerGap()
+                .addComponent(jScrollPane7)
+                .addGap(18, 18, 18)
+                .addGroup(buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(launchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         buttonsPanelLayout.setVerticalGroup(
             buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(launchButton)
-                    .addComponent(cancelButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(buttonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(buttonsPanelLayout.createSequentialGroup()
+                        .addComponent(launchButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancelButton)))
+                .addContainerGap())
         );
 
-        javax.swing.GroupLayout launchDialogLayout = new javax.swing.GroupLayout(launchDialog.getContentPane());
-        launchDialog.getContentPane().setLayout(launchDialogLayout);
-        launchDialogLayout.setHorizontalGroup(
-            launchDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(launchDialogLayout.createSequentialGroup()
+        javax.swing.GroupLayout testDialogLayout = new javax.swing.GroupLayout(testDialog.getContentPane());
+        testDialog.getContentPane().setLayout(testDialogLayout);
+        testDialogLayout.setHorizontalGroup(
+            testDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(testDialogLayout.createSequentialGroup()
                 .addComponent(blocksPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(componentsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(buttonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        launchDialogLayout.setVerticalGroup(
-            launchDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(launchDialogLayout.createSequentialGroup()
-                .addGroup(launchDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        testDialogLayout.setVerticalGroup(
+            testDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(testDialogLayout.createSequentialGroup()
+                .addGroup(testDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(componentsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(blocksPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        launchDialog.pack();
+        testDialog.pack();
 
-        createProject.setTitle("Creating a new project...");
-        createProject.setBounds(new java.awt.Rectangle(0, 0, 600, 300));
-        createProject.setName("createProject"); // NOI18N
-        createProject.setResizable(false);
+        createProjectDialog.setTitle("Creating a new project...");
+        createProjectDialog.setBounds(new java.awt.Rectangle(0, 0, 600, 300));
+        createProjectDialog.setName("createProjectDialog"); // NOI18N
+        createProjectDialog.setResizable(false);
 
         navigationPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         navigationPanel.setName("navigationPanel"); // NOI18N
@@ -1004,17 +1189,34 @@ public class MainForm extends javax.swing.JFrame {
         buttons.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         buttons.setName("buttons"); // NOI18N
 
-        jButton1.setText("Finish");
-        jButton1.setName("jButton1"); // NOI18N
+        finishButton.setText("Finish");
+        finishButton.setName("finishButton"); // NOI18N
+        finishButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                finishButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Next >>");
-        jButton2.setName("jButton2"); // NOI18N
+        nextStepButton.setText("Next >>");
+        nextStepButton.setEnabled(false);
+        nextStepButton.setName("nextStepButton"); // NOI18N
 
-        jButton3.setText("<< Previous");
-        jButton3.setName("jButton3"); // NOI18N
+        previousStepButton.setText("<< Previous");
+        previousStepButton.setEnabled(false);
+        previousStepButton.setName("previousStepButton"); // NOI18N
+        previousStepButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                previousStepButtonActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Cancel");
-        jButton4.setName("jButton4"); // NOI18N
+        cancelProjectCreation.setText("Cancel");
+        cancelProjectCreation.setName("cancelProjectCreation"); // NOI18N
+        cancelProjectCreation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelProjectCreationActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout buttonsLayout = new javax.swing.GroupLayout(buttons);
         buttons.setLayout(buttonsLayout);
@@ -1022,13 +1224,13 @@ public class MainForm extends javax.swing.JFrame {
             buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(cancelProjectCreation)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(previousStepButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(nextStepButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(finishButton)
                 .addContainerGap())
         );
         buttonsLayout.setVerticalGroup(
@@ -1036,10 +1238,10 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(buttonsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(buttonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(finishButton)
+                    .addComponent(nextStepButton)
+                    .addComponent(previousStepButton)
+                    .addComponent(cancelProjectCreation))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -1049,466 +1251,458 @@ public class MainForm extends javax.swing.JFrame {
         jLabel1.setText("Project Name");
         jLabel1.setName("jLabel1"); // NOI18N
 
-        jTextField1.setText("Example Project");
-        jTextField1.setName("jTextField1"); // NOI18N
-        jTextField1.addCaretListener(new javax.swing.event.CaretListener() {
+        projectName.setText("Example Project");
+        projectName.setName("projectName"); // NOI18N
+        projectName.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                jTextField1CaretUpdate(evt);
+                projectNameCaretUpdate(evt);
             }
         });
 
         jLabel4.setText("Project Type");
         jLabel4.setName("jLabel4"); // NOI18N
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lua OpenComputers program", "Lua OpenComputers library", "Lua OpenComputers custom" }));
-        jComboBox2.setName("jComboBox2"); // NOI18N
+        projectType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lua OpenComputers program", "Lua OpenComputers library", "Lua OpenComputers custom" }));
+        projectType.setName("projectType"); // NOI18N
 
         jLabel10.setText("Main File");
         jLabel10.setName("jLabel10"); // NOI18N
 
         mainFile.setEditable(false);
-        mainFile.setText("C:/Users/Default/Documents/OCIDE/projects/ExampleProject/main.lua");
-        mainFile.setName("mainFile"); // NOI18N
+        mainFile.setText(new java.io.File(PROJECTS_DIR).getPath() + "\\" + projectName.getText() + "\\main.lua");
+            mainFile.setName("mainFile"); // NOI18N
 
-        jLabel21.setText("Project Location");
-        jLabel21.setName("jLabel21"); // NOI18N
+            jLabel21.setText("Project Location");
+            jLabel21.setName("jLabel21"); // NOI18N
 
-        projectLocation.setText("C:/Users/Default/Documentss/OCIDE/projects/ExampleProject");
-        projectLocation.setName("projectLocation"); // NOI18N
+            projectLocation.setText(new java.io.File(PROJECTS_DIR).getPath() + "\\" + projectName.getText());
+                projectLocation.setName("projectLocation"); // NOI18N
+                projectLocation.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        projectLocationActionPerformed(evt);
+                    }
+                });
 
-        jSeparator8.setName("jSeparator8"); // NOI18N
+                jSeparator8.setName("jSeparator8"); // NOI18N
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator8)
+                javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+                mainPanel.setLayout(mainPanelLayout);
+                mainPanelLayout.setHorizontalGroup(
+                    mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mainFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator8)
+                            .addGroup(mainPanelLayout.createSequentialGroup()
+                                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(mainFile, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(mainPanelLayout.createSequentialGroup()
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel21))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(projectName)
+                                            .addComponent(projectType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(projectLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                );
+                mainPanelLayout.setVerticalGroup(
+                    mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
+                            .addComponent(projectName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel21))
+                            .addComponent(projectType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(projectLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(projectLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)))))
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21)
-                    .addComponent(projectLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(mainFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(65, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout createProjectLayout = new javax.swing.GroupLayout(createProject.getContentPane());
-        createProject.getContentPane().setLayout(createProjectLayout);
-        createProjectLayout.setHorizontalGroup(
-            createProjectLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(createProjectLayout.createSequentialGroup()
-                .addComponent(navigationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(buttons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        createProjectLayout.setVerticalGroup(
-            createProjectLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(createProjectLayout.createSequentialGroup()
-                .addGroup(createProjectLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(navigationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        createProject.pack();
-
-        settingsEtcFrame.setName("settingsEtcFrame"); // NOI18N
-
-        javax.swing.GroupLayout settingsEtcFrameLayout = new javax.swing.GroupLayout(settingsEtcFrame.getContentPane());
-        settingsEtcFrame.getContentPane().setLayout(settingsEtcFrameLayout);
-        settingsEtcFrameLayout.setHorizontalGroup(
-            settingsEtcFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        settingsEtcFrameLayout.setVerticalGroup(
-            settingsEtcFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        jPopupMenu1.setName("jPopupMenu1"); // NOI18N
-
-        jMenu1.setText("dafuq");
-        jMenu1.setName("jMenu1"); // NOI18N
-
-        jMenuItem17.setText("YEEEEEEEEEEEE");
-        jMenuItem17.setName("jMenuItem17"); // NOI18N
-        jMenu1.add(jMenuItem17);
-
-        jPopupMenu1.add(jMenu1);
-
-        jMenuItem18.setText("Yee");
-        jMenuItem18.setName("jMenuItem18"); // NOI18N
-        jPopupMenu1.add(jMenuItem18);
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("OpenComputers IDE 1.0");
-        setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
-        setLocation(new java.awt.Point(0, 0));
-        setSize(getPreferredSize());
-
-        jPanel1.setName("jPanel1"); // NOI18N
-
-        projectsAndFiles.setName("projectsAndFiles"); // NOI18N
-
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-
-        jTree1.setName("jTree1"); // NOI18N
-        jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTree1MouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jTree1);
-
-        projectsAndFiles.addTab("Projects", jScrollPane2);
-
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
-
-        fileTree.setName("fileTree"); // NOI18N
-        jScrollPane3.setViewportView(fileTree);
-
-        projectsAndFiles.addTab("Files", jScrollPane3);
-
-        navigatorPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Navigator"));
-        navigatorPanel.setName("navigatorPanel"); // NOI18N
-
-        javax.swing.GroupLayout navigatorPanelLayout = new javax.swing.GroupLayout(navigatorPanel);
-        navigatorPanel.setLayout(navigatorPanelLayout);
-        navigatorPanelLayout.setHorizontalGroup(
-            navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        navigatorPanelLayout.setVerticalGroup(
-            navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(projectsAndFiles, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                    .addComponent(navigatorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(projectsAndFiles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(navigatorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel2.setName("jPanel2"); // NOI18N
-
-        editorTabs.setName("editorTabs"); // NOI18N
-
-        jScrollPane5.setName("jScrollPane5"); // NOI18N
-
-        jEditorPane1.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        jEditorPane1.setText("local term = require('term');\n\nterm.clear();\nterm.write('Hello, world!');");
-        jEditorPane1.setName("jEditorPane1"); // NOI18N
-        jScrollPane5.setViewportView(jEditorPane1);
-
-        editorTabs.addTab("TestFile.lua", jScrollPane5);
-
-        jScrollPane6.setName("jScrollPane6"); // NOI18N
-
-        jEditorPane2.setName("jEditorPane2"); // NOI18N
-        jScrollPane6.setViewportView(jEditorPane2);
-
-        editorTabs.addTab("file.txt", jScrollPane6);
-
-        io.setName("io"); // NOI18N
-
-        jScrollPane4.setName("jScrollPane4"); // NOI18N
-
-        outputArea.setEditable(false);
-        outputArea.setColumns(20);
-        outputArea.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        outputArea.setRows(5);
-        outputArea.setText("Example output");
-        outputArea.setName("outputArea"); // NOI18N
-        jScrollPane4.setViewportView(outputArea);
-
-        io.addTab("Output", jScrollPane4);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(io, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editorTabs, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(editorTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(io)
-                .addContainerGap())
-        );
-
-        editorTabs.getAccessibleContext().setAccessibleDescription("yee");
-
-        topMenu.setName("topMenu"); // NOI18N
-
-        fileMenu.setText("File");
-        fileMenu.setName("fileMenu"); // NOI18N
-
-        newProject.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        newProject.setText("New Project...");
-        newProject.setName("newProject"); // NOI18N
-        newProject.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newProjectActionPerformed(evt);
-            }
-        });
-        fileMenu.add(newProject);
-
-        jSeparator1.setName("jSeparator1"); // NOI18N
-        fileMenu.add(jSeparator1);
-
-        jMenuItem2.setText("Open Project...");
-        jMenuItem2.setName("jMenuItem2"); // NOI18N
-        fileMenu.add(jMenuItem2);
-
-        jMenuItem3.setText("Open File...");
-        jMenuItem3.setName("jMenuItem3"); // NOI18N
-        fileMenu.add(jMenuItem3);
-
-        jSeparator2.setName("jSeparator2"); // NOI18N
-        fileMenu.add(jSeparator2);
-
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/textures/items/FloppyDisk_dyeBlack.png"))); // NOI18N
-        jMenuItem4.setText("Save Project");
-        jMenuItem4.setName("jMenuItem4"); // NOI18N
-        fileMenu.add(jMenuItem4);
-
-        jMenuItem5.setText("Save File As...");
-        jMenuItem5.setName("jMenuItem5"); // NOI18N
-        fileMenu.add(jMenuItem5);
-
-        jMenuItem7.setText("Export Project...");
-        jMenuItem7.setName("jMenuItem7"); // NOI18N
-        fileMenu.add(jMenuItem7);
-
-        jSeparator5.setName("jSeparator5"); // NOI18N
-        fileMenu.add(jSeparator5);
-
-        jMenuItem12.setText("Exit");
-        jMenuItem12.setName("jMenuItem12"); // NOI18N
-        fileMenu.add(jMenuItem12);
-
-        topMenu.add(fileMenu);
-
-        editMenu.setText("Edit");
-        editMenu.setName("editMenu"); // NOI18N
-
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem6.setText("Undo");
-        jMenuItem6.setName("jMenuItem6"); // NOI18N
-        editMenu.add(jMenuItem6);
-
-        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem8.setText("Redo");
-        jMenuItem8.setName("jMenuItem8"); // NOI18N
-        editMenu.add(jMenuItem8);
-
-        topMenu.add(editMenu);
-
-        viewMenu.setText("View");
-        viewMenu.setName("viewMenu"); // NOI18N
-
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("Projects");
-        jCheckBoxMenuItem1.setName("jCheckBoxMenuItem1"); // NOI18N
-        viewMenu.add(jCheckBoxMenuItem1);
-
-        jCheckBoxMenuItem2.setSelected(true);
-        jCheckBoxMenuItem2.setText("Files");
-        jCheckBoxMenuItem2.setName("jCheckBoxMenuItem2"); // NOI18N
-        viewMenu.add(jCheckBoxMenuItem2);
-
-        jSeparator6.setName("jSeparator6"); // NOI18N
-        viewMenu.add(jSeparator6);
-
-        jCheckBoxMenuItem3.setSelected(true);
-        jCheckBoxMenuItem3.setText("Navigator");
-        jCheckBoxMenuItem3.setName("jCheckBoxMenuItem3"); // NOI18N
-        viewMenu.add(jCheckBoxMenuItem3);
-
-        jSeparator7.setName("jSeparator7"); // NOI18N
-        viewMenu.add(jSeparator7);
-
-        jCheckBoxMenuItem4.setSelected(true);
-        jCheckBoxMenuItem4.setText("Output");
-        jCheckBoxMenuItem4.setName("jCheckBoxMenuItem4"); // NOI18N
-        viewMenu.add(jCheckBoxMenuItem4);
-
-        topMenu.add(viewMenu);
-
-        runMenu.setText("Run");
-        runMenu.setName("runMenu"); // NOI18N
-
-        launchEmulator.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        launchEmulator.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/textures/items/Terminal.png"))); // NOI18N
-        launchEmulator.setText("Launch Emulator");
-        launchEmulator.setName("launchEmulator"); // NOI18N
-        launchEmulator.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                launchEmulatorActionPerformed(evt);
-            }
-        });
-        runMenu.add(launchEmulator);
-
-        jMenuItem14.setText("Launch File");
-        jMenuItem14.setName("jMenuItem14"); // NOI18N
-        runMenu.add(jMenuItem14);
-
-        jMenuItem15.setText("Launch Function...");
-        jMenuItem15.setName("jMenuItem15"); // NOI18N
-        runMenu.add(jMenuItem15);
-
-        launchAndRun.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, java.awt.event.InputEvent.CTRL_MASK));
-        launchAndRun.setText("Launch & Run");
-        launchAndRun.setName("launchAndRun"); // NOI18N
-        runMenu.add(launchAndRun);
-
-        topMenu.add(runMenu);
-
-        toolsMenu.setText("Tools");
-        toolsMenu.setName("toolsMenu"); // NOI18N
-
-        jMenuItem9.setText("Libraries");
-        jMenuItem9.setName("jMenuItem9"); // NOI18N
-        toolsMenu.add(jMenuItem9);
-
-        jSeparator3.setName("jSeparator3"); // NOI18N
-        toolsMenu.add(jSeparator3);
-
-        jMenuItem10.setText("Modules");
-        jMenuItem10.setName("jMenuItem10"); // NOI18N
-        toolsMenu.add(jMenuItem10);
-
-        jSeparator4.setName("jSeparator4"); // NOI18N
-        toolsMenu.add(jSeparator4);
-
-        jMenuItem11.setText("Prefrences");
-        jMenuItem11.setName("jMenuItem11"); // NOI18N
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
-            }
-        });
-        toolsMenu.add(jMenuItem11);
-
-        topMenu.add(toolsMenu);
-
-        helpMenu.setText("Help");
-        helpMenu.setName("helpMenu"); // NOI18N
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/textures/gui/manual_missing_item.png"))); // NOI18N
-        jMenuItem1.setText("Help");
-        jMenuItem1.setName("jMenuItem1"); // NOI18N
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        helpMenu.add(jMenuItem1);
-
-        jSeparator9.setName("jSeparator9"); // NOI18N
-        helpMenu.add(jSeparator9);
-
-        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/textures/gui/manual_home.png"))); // NOI18N
-        jMenuItem13.setText("About");
-        jMenuItem13.setName("jMenuItem13"); // NOI18N
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
-            }
-        });
-        helpMenu.add(jMenuItem13);
-
-        topMenu.add(helpMenu);
-
-        setJMenuBar(topMenu);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        getAccessibleContext().setAccessibleDescription("Yee");
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(mainFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(65, Short.MAX_VALUE))
+                );
+
+                javax.swing.GroupLayout createProjectDialogLayout = new javax.swing.GroupLayout(createProjectDialog.getContentPane());
+                createProjectDialog.getContentPane().setLayout(createProjectDialogLayout);
+                createProjectDialogLayout.setHorizontalGroup(
+                    createProjectDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(createProjectDialogLayout.createSequentialGroup()
+                        .addComponent(navigationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(buttons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                );
+                createProjectDialogLayout.setVerticalGroup(
+                    createProjectDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(createProjectDialogLayout.createSequentialGroup()
+                        .addGroup(createProjectDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(navigationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                );
+
+                createProjectDialog.pack();
+
+                settingsEtcFrame.setName("settingsEtcFrame"); // NOI18N
+
+                javax.swing.GroupLayout settingsEtcFrameLayout = new javax.swing.GroupLayout(settingsEtcFrame.getContentPane());
+                settingsEtcFrame.getContentPane().setLayout(settingsEtcFrameLayout);
+                settingsEtcFrameLayout.setHorizontalGroup(
+                    settingsEtcFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGap(0, 400, Short.MAX_VALUE)
+                );
+                settingsEtcFrameLayout.setVerticalGroup(
+                    settingsEtcFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGap(0, 300, Short.MAX_VALUE)
+                );
+
+                openProjectDialog.setName("openProjectDialog"); // NOI18N
+
+                javax.swing.GroupLayout openProjectDialogLayout = new javax.swing.GroupLayout(openProjectDialog.getContentPane());
+                openProjectDialog.getContentPane().setLayout(openProjectDialogLayout);
+                openProjectDialogLayout.setHorizontalGroup(
+                    openProjectDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGap(0, 400, Short.MAX_VALUE)
+                );
+                openProjectDialogLayout.setVerticalGroup(
+                    openProjectDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGap(0, 300, Short.MAX_VALUE)
+                );
+
+                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+                setTitle("OpenComputers IDE 1.0");
+                setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+                setLocation(new java.awt.Point(0, 0));
+                setSize(getPreferredSize());
+
+                navigation.setName("navigation"); // NOI18N
+
+                projectsAndFiles.setName("projectsAndFiles"); // NOI18N
+
+                jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+                projectsTree.setName("projectsTree"); // NOI18N
+                projectsTree.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        projectsTreeMouseClicked(evt);
+                    }
+                });
+                projectsTree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+                    public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                        projectsTreeValueChanged(evt);
+                    }
+                });
+                jScrollPane2.setViewportView(projectsTree);
+
+                projectsAndFiles.addTab("Projects", jScrollPane2);
+
+                jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+                fileTree.setName("fileTree"); // NOI18N
+                jScrollPane3.setViewportView(fileTree);
+
+                projectsAndFiles.addTab("Files", jScrollPane3);
+
+                navigatorPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Navigator"));
+                navigatorPanel.setName("navigatorPanel"); // NOI18N
+
+                jScrollPane4.setName("jScrollPane4"); // NOI18N
+
+                fieldsTree.setName("fieldsTree"); // NOI18N
+                jScrollPane4.setViewportView(fieldsTree);
+
+                javax.swing.GroupLayout navigatorPanelLayout = new javax.swing.GroupLayout(navigatorPanel);
+                navigatorPanel.setLayout(navigatorPanelLayout);
+                navigatorPanelLayout.setHorizontalGroup(
+                    navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4)
+                );
+                navigatorPanelLayout.setVerticalGroup(
+                    navigatorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                );
+
+                javax.swing.GroupLayout navigationLayout = new javax.swing.GroupLayout(navigation);
+                navigation.setLayout(navigationLayout);
+                navigationLayout.setHorizontalGroup(
+                    navigationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(navigationLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(navigationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(projectsAndFiles, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                            .addComponent(navigatorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                );
+                navigationLayout.setVerticalGroup(
+                    navigationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(navigationLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(projectsAndFiles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(navigatorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                );
+
+                ide.setName("ide"); // NOI18N
+
+                editorTabs.setName("editorTabs"); // NOI18N
+
+                io.setName("io"); // NOI18N
+
+                outputScrollable.setName("outputScrollable"); // NOI18N
+
+                outputArea.setEditable(false);
+                outputArea.setColumns(20);
+                outputArea.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+                outputArea.setRows(5);
+                outputArea.setText("Example output");
+                outputArea.setName("outputArea"); // NOI18N
+                outputScrollable.setViewportView(outputArea);
+
+                io.addTab("Output", outputScrollable);
+
+                javax.swing.GroupLayout ideLayout = new javax.swing.GroupLayout(ide);
+                ide.setLayout(ideLayout);
+                ideLayout.setHorizontalGroup(
+                    ideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ideLayout.createSequentialGroup()
+                        .addGroup(ideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(io, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(editorTabs))
+                        .addContainerGap())
+                );
+                ideLayout.setVerticalGroup(
+                    ideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ideLayout.createSequentialGroup()
+                        .addComponent(editorTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(io)
+                        .addContainerGap())
+                );
+
+                editorTabs.getAccessibleContext().setAccessibleDescription("yee");
+
+                topMenu.setName("topMenu"); // NOI18N
+
+                fileMenu.setText("File");
+                fileMenu.setName("fileMenu"); // NOI18N
+
+                newProject.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+                newProject.setText("New Project...");
+                newProject.setName("newProject"); // NOI18N
+                newProject.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        newProjectActionPerformed(evt);
+                    }
+                });
+                fileMenu.add(newProject);
+
+                jSeparator1.setName("jSeparator1"); // NOI18N
+                fileMenu.add(jSeparator1);
+
+                openProject.setText("Open Project...");
+                openProject.setName("openProject"); // NOI18N
+                openProject.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        openProjectActionPerformed(evt);
+                    }
+                });
+                fileMenu.add(openProject);
+
+                openFile.setText("Open File...");
+                openFile.setName("openFile"); // NOI18N
+                fileMenu.add(openFile);
+
+                jSeparator2.setName("jSeparator2"); // NOI18N
+                fileMenu.add(jSeparator2);
+
+                saveProject.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+                saveProject.setText("Save Project");
+                saveProject.setName("saveProject"); // NOI18N
+                fileMenu.add(saveProject);
+
+                saveFile.setText("Save File As...");
+                saveFile.setName("saveFile"); // NOI18N
+                fileMenu.add(saveFile);
+
+                exportProject.setText("Export Project...");
+                exportProject.setName("exportProject"); // NOI18N
+                fileMenu.add(exportProject);
+
+                jSeparator5.setName("jSeparator5"); // NOI18N
+                fileMenu.add(jSeparator5);
+
+                exitIDE.setText("Exit");
+                exitIDE.setName("exitIDE"); // NOI18N
+                fileMenu.add(exitIDE);
+
+                topMenu.add(fileMenu);
+
+                editMenu.setText("Edit");
+                editMenu.setName("editMenu"); // NOI18N
+
+                undoItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+                undoItem.setText("Undo");
+                undoItem.setName("undoItem"); // NOI18N
+                editMenu.add(undoItem);
+
+                redoItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+                redoItem.setText("Redo");
+                redoItem.setName("redoItem"); // NOI18N
+                editMenu.add(redoItem);
+
+                topMenu.add(editMenu);
+
+                viewMenu.setText("View");
+                viewMenu.setName("viewMenu"); // NOI18N
+
+                viewProjects.setSelected(true);
+                viewProjects.setText("Projects");
+                viewProjects.setName("viewProjects"); // NOI18N
+                viewMenu.add(viewProjects);
+
+                viewFiles.setSelected(true);
+                viewFiles.setText("Files");
+                viewFiles.setName("viewFiles"); // NOI18N
+                viewMenu.add(viewFiles);
+
+                jSeparator6.setName("jSeparator6"); // NOI18N
+                viewMenu.add(jSeparator6);
+
+                viewNavigator.setSelected(true);
+                viewNavigator.setText("Navigator");
+                viewNavigator.setName("viewNavigator"); // NOI18N
+                viewMenu.add(viewNavigator);
+
+                jSeparator7.setName("jSeparator7"); // NOI18N
+                viewMenu.add(jSeparator7);
+
+                viewOutput.setSelected(true);
+                viewOutput.setText("Output");
+                viewOutput.setName("viewOutput"); // NOI18N
+                viewMenu.add(viewOutput);
+
+                topMenu.add(viewMenu);
+
+                runMenu.setText("Run");
+                runMenu.setName("runMenu"); // NOI18N
+
+                launchBasicTest.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+                launchBasicTest.setText("Test on basic configurations");
+                launchBasicTest.setName("launchBasicTest"); // NOI18N
+                launchBasicTest.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        launchBasicTestActionPerformed(evt);
+                    }
+                });
+                runMenu.add(launchBasicTest);
+
+                launchCustomConfigTest.setText("Test on custom configuration...");
+                launchCustomConfigTest.setName("launchCustomConfigTest"); // NOI18N
+                runMenu.add(launchCustomConfigTest);
+
+                topMenu.add(runMenu);
+
+                toolsMenu.setText("Tools");
+                toolsMenu.setName("toolsMenu"); // NOI18N
+
+                libraries.setText("Libraries");
+                libraries.setName("libraries"); // NOI18N
+                toolsMenu.add(libraries);
+
+                jSeparator3.setName("jSeparator3"); // NOI18N
+                toolsMenu.add(jSeparator3);
+
+                modules.setText("Modules");
+                modules.setName("modules"); // NOI18N
+                toolsMenu.add(modules);
+
+                jSeparator4.setName("jSeparator4"); // NOI18N
+                toolsMenu.add(jSeparator4);
+
+                settings.setText("Settings");
+                settings.setName("settings"); // NOI18N
+                settings.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        settingsActionPerformed(evt);
+                    }
+                });
+                toolsMenu.add(settings);
+
+                topMenu.add(toolsMenu);
+
+                helpMenu.setText("Help");
+                helpMenu.setName("helpMenu"); // NOI18N
+
+                helpItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+                helpItem.setText("Help");
+                helpItem.setName("helpItem"); // NOI18N
+                helpItem.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        helpItemActionPerformed(evt);
+                    }
+                });
+                helpMenu.add(helpItem);
+
+                jSeparator9.setName("jSeparator9"); // NOI18N
+                helpMenu.add(jSeparator9);
+
+                aboutItem.setText("About");
+                aboutItem.setName("aboutItem"); // NOI18N
+                aboutItem.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        aboutItemActionPerformed(evt);
+                    }
+                });
+                helpMenu.add(aboutItem);
+
+                topMenu.add(helpMenu);
+
+                setJMenuBar(topMenu);
+
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(navigation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                );
+                layout.setVerticalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(navigation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                );
+
+                getAccessibleContext().setAccessibleDescription("Yee");
+
+                pack();
+            }// </editor-fold>//GEN-END:initComponents
 
     private void newProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newProjectActionPerformed
-        createProject.setVisible(true);
+        createProjectDialog.setVisible(true);
     }//GEN-LAST:event_newProjectActionPerformed
 
-    private void launchEmulatorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchEmulatorActionPerformed
-        launchDialog.setVisible(true);
-    }//GEN-LAST:event_launchEmulatorActionPerformed
+    private void launchBasicTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchBasicTestActionPerformed
+        testDialog.setVisible(true);
+    }//GEN-LAST:event_launchBasicTestActionPerformed
 
     private void launchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchButtonActionPerformed
-        new ru.VladG24.ocide.tester.Emulator().setVisible(true);
+
     }//GEN-LAST:event_launchButtonActionPerformed
 
     private void floppyTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_floppyTypeActionPerformed
@@ -1517,85 +1711,117 @@ public class MainForm extends javax.swing.JFrame {
 
     private void isAPUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isAPUActionPerformed
         if (isAPU.isSelected()) {
-            jPanel3.setEnabled(false);
-            jPanel4.setEnabled(true);
+            jComboBox1.setEnabled(false);
+            jComboBox3.setEnabled(false);
+            jComboBox5.setEnabled(true);
         }
     }//GEN-LAST:event_isAPUActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        launchDialog.dispose();
+        testDialog.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void isCpuGpuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isCpuGpuActionPerformed
         if (isCpuGpu.isSelected()) {
-            jPanel3.setEnabled(true);
-            jPanel4.setEnabled(false);
+            jComboBox1.setEnabled(true);
+            jComboBox3.setEnabled(true);
+            jComboBox5.setEnabled(false);
         }
     }//GEN-LAST:event_isCpuGpuActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void helpItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpItemActionPerformed
 
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_helpItemActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        TAB = 4;
+    private void aboutItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutItemActionPerformed
         settingsEtcFrame.setVisible(true);
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+    }//GEN-LAST:event_aboutItemActionPerformed
 
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+    private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
 
-    }//GEN-LAST:event_jMenuItem11ActionPerformed
+    }//GEN-LAST:event_settingsActionPerformed
 
-    private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
-        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2 && !(jTree1.isSelectionEmpty())) {
-            jPopupMenu1.setVisible(true);
+    private void projectsTreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_projectsTreeMouseClicked
+        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON2 && !(projectsTree.isSelectionEmpty())) {
+
         }
-    }//GEN-LAST:event_jTree1MouseClicked
+    }//GEN-LAST:event_projectsTreeMouseClicked
 
-    private void jTextField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextField1CaretUpdate
-        projectLocation.setText("C:\\Users\\Default\\Documents\\OCIDE\\Projects\\" + jTextField1.getText());
-        mainFile.setText(projectLocation.getText() + "\\main.lua");
-    }//GEN-LAST:event_jTextField1CaretUpdate
+    private void projectNameCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_projectNameCaretUpdate
+        projectLocation.setText(new java.io.File(PROJECTS_DIR).getPath() + "/" + projectName.getText());
+        mainFile.setText(new java.io.File(PROJECTS_DIR).getPath() + "/" + projectName.getText() + "/main.lua");
+    }//GEN-LAST:event_projectNameCaretUpdate
+
+    private void openProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openProjectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_openProjectActionPerformed
+
+    private void projectLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectLocationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_projectLocationActionPerformed
+
+    private void finishButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishButtonActionPerformed
+        java.io.File projectMainFile = new java.io.File(mainFile.getText());
+        try {
+            new java.io.File(projectLocation.getText()).mkdirs();
+            projectMainFile.createNewFile();
+        } catch (java.io.IOException ex) {
+            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        createProjectDialog.dispose();
+    }//GEN-LAST:event_finishButtonActionPerformed
+
+    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox5ActionPerformed
+
+    private void cancelProjectCreationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelProjectCreationActionPerformed
+        createProjectDialog.dispose();
+    }//GEN-LAST:event_cancelProjectCreationActionPerformed
+
+    private void previousStepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousStepButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_previousStepButtonActionPerformed
+
+    private void projectsTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_projectsTreeValueChanged
+        ACTIVE_PROJECT = String.valueOf(projectsTree.getSelectionPath().getPathComponent(0));
+        if (new java.io.File(String.valueOf(projectsTree.getSelectionPath().getLastPathComponent())).isFile()) {
+            ACTIVE_FILE = new java.io.File(PROJECTS_DIR + ACTIVE_PROJECT + "/" + String.valueOf(projectsTree.getSelectionPath().getLastPathComponent()));
+        }
+    }//GEN-LAST:event_projectsTreeValueChanged
 
     /**
+     * Main method. The program's starting point
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        //L&F setting
         try {
-            /*try {
-            // Set the Ocean ("Metal") look and feel
-            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getCrossPlatformLookAndFeelClassName());
-            //</editor-fold>
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
-            javax.swing.UIManager.setLookAndFeel(new javax.swing.plaf.metal.MetalLookAndFeel());
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex
+            );
         }
-
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(
-                () -> {
-                    new MainForm().setVisible(true);
-                }
-        );
+        //
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainForm().setVisible(true);
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    javax.swing.JMenuItem aboutItem;
     javax.swing.JLabel architectureLabel;
     javax.swing.JComboBox<String> architectureType;
     javax.swing.JPanel blocksPanel;
     javax.swing.JPanel buttons;
     javax.swing.JPanel buttonsPanel;
     javax.swing.JButton cancelButton;
+    javax.swing.JButton cancelProjectCreation;
     javax.swing.JPanel componentsPanel;
     javax.swing.JLabel cpuLabel;
     javax.swing.ButtonGroup cpuOrApu;
-    javax.swing.JDialog createProject;
+    javax.swing.JDialog createProjectDialog;
     javax.swing.JComboBox<String> defaultSlot1HDDTier;
     javax.swing.JComboBox<String> defaultSlot2HDDTier;
     javax.swing.JComboBox<String> defaultSlot3HDDTier;
@@ -1603,19 +1829,22 @@ public class MainForm extends javax.swing.JFrame {
     javax.swing.JTabbedPane editorTabs;
     javax.swing.JLabel eepromLabel;
     javax.swing.JComboBox<String> eepromType;
+    javax.swing.JMenuItem exitIDE;
+    javax.swing.JMenuItem exportProject;
+    javax.swing.JTree fieldsTree;
     javax.swing.JMenu fileMenu;
     javax.swing.JTree fileTree;
+    javax.swing.JButton finishButton;
     javax.swing.JComboBox<String> floppyType;
     javax.swing.JLabel gpuLabel;
     javax.swing.JCheckBox hasGeolyzer;
+    javax.swing.JMenuItem helpItem;
     javax.swing.JMenu helpMenu;
+    javax.swing.JComboBox<String> hologramProjector;
+    javax.swing.JPanel ide;
     javax.swing.JTabbedPane io;
     javax.swing.JRadioButton isAPU;
     javax.swing.JRadioButton isCpuGpu;
-    javax.swing.JButton jButton1;
-    javax.swing.JButton jButton2;
-    javax.swing.JButton jButton3;
-    javax.swing.JButton jButton4;
     javax.swing.JCheckBox jCheckBox1;
     javax.swing.JCheckBox jCheckBox10;
     javax.swing.JCheckBox jCheckBox11;
@@ -1632,10 +1861,6 @@ public class MainForm extends javax.swing.JFrame {
     javax.swing.JCheckBox jCheckBox7;
     javax.swing.JCheckBox jCheckBox8;
     javax.swing.JCheckBox jCheckBox9;
-    javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
-    javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem4;
     javax.swing.JComboBox<String> jComboBox1;
     javax.swing.JComboBox<String> jComboBox14;
     javax.swing.JComboBox<String> jComboBox15;
@@ -1643,8 +1868,6 @@ public class MainForm extends javax.swing.JFrame {
     javax.swing.JComboBox<String> jComboBox17;
     javax.swing.JComboBox<String> jComboBox18;
     javax.swing.JComboBox<String> jComboBox19;
-    javax.swing.JComboBox<String> jComboBox2;
-    javax.swing.JComboBox<String> jComboBox20;
     javax.swing.JComboBox<String> jComboBox21;
     javax.swing.JComboBox<String> jComboBox22;
     javax.swing.JComboBox<String> jComboBox23;
@@ -1653,14 +1876,11 @@ public class MainForm extends javax.swing.JFrame {
     javax.swing.JComboBox<String> jComboBox26;
     javax.swing.JComboBox<String> jComboBox27;
     javax.swing.JComboBox<String> jComboBox28;
-    javax.swing.JComboBox<String> jComboBox29;
     javax.swing.JComboBox<String> jComboBox3;
     javax.swing.JComboBox<String> jComboBox5;
     javax.swing.JComboBox<String> jComboBox6;
     javax.swing.JComboBox<String> jComboBox7;
     javax.swing.JComboBox<String> jComboBox8;
-    javax.swing.JEditorPane jEditorPane1;
-    javax.swing.JEditorPane jEditorPane2;
     javax.swing.JLabel jLabel1;
     javax.swing.JLabel jLabel10;
     javax.swing.JLabel jLabel11;
@@ -1685,40 +1905,18 @@ public class MainForm extends javax.swing.JFrame {
     javax.swing.JLabel jLabel7;
     javax.swing.JLabel jLabel8;
     javax.swing.JLabel jLabel9;
-    javax.swing.JMenu jMenu1;
-    javax.swing.JMenuItem jMenuItem1;
-    javax.swing.JMenuItem jMenuItem10;
-    javax.swing.JMenuItem jMenuItem11;
-    javax.swing.JMenuItem jMenuItem12;
-    javax.swing.JMenuItem jMenuItem13;
-    javax.swing.JMenuItem jMenuItem14;
-    javax.swing.JMenuItem jMenuItem15;
-    javax.swing.JMenuItem jMenuItem17;
-    javax.swing.JMenuItem jMenuItem18;
-    javax.swing.JMenuItem jMenuItem2;
-    javax.swing.JMenuItem jMenuItem3;
-    javax.swing.JMenuItem jMenuItem4;
-    javax.swing.JMenuItem jMenuItem5;
-    javax.swing.JMenuItem jMenuItem6;
-    javax.swing.JMenuItem jMenuItem7;
-    javax.swing.JMenuItem jMenuItem8;
-    javax.swing.JMenuItem jMenuItem9;
-    javax.swing.JPanel jPanel1;
     javax.swing.JPanel jPanel10;
     javax.swing.JPanel jPanel11;
-    javax.swing.JPanel jPanel2;
     javax.swing.JPanel jPanel3;
     javax.swing.JPanel jPanel4;
     javax.swing.JPanel jPanel5;
     javax.swing.JPanel jPanel6;
     javax.swing.JPanel jPanel8;
     javax.swing.JPanel jPanel9;
-    javax.swing.JPopupMenu jPopupMenu1;
     javax.swing.JScrollPane jScrollPane2;
     javax.swing.JScrollPane jScrollPane3;
     javax.swing.JScrollPane jScrollPane4;
-    javax.swing.JScrollPane jScrollPane5;
-    javax.swing.JScrollPane jScrollPane6;
+    javax.swing.JScrollPane jScrollPane7;
     javax.swing.JPopupMenu.Separator jSeparator1;
     javax.swing.JPopupMenu.Separator jSeparator2;
     javax.swing.JPopupMenu.Separator jSeparator3;
@@ -1728,27 +1926,50 @@ public class MainForm extends javax.swing.JFrame {
     javax.swing.JPopupMenu.Separator jSeparator7;
     javax.swing.JSeparator jSeparator8;
     javax.swing.JPopupMenu.Separator jSeparator9;
-    javax.swing.JTextField jTextField1;
-    javax.swing.JTree jTree1;
-    javax.swing.JMenuItem launchAndRun;
+    javax.swing.JMenuItem launchBasicTest;
     javax.swing.JButton launchButton;
-    javax.swing.JFrame launchDialog;
-    javax.swing.JMenuItem launchEmulator;
+    javax.swing.JMenuItem launchCustomConfigTest;
+    javax.swing.JMenuItem libraries;
     javax.swing.JTextField mainFile;
     javax.swing.JPanel mainPanel;
+    javax.swing.JMenuItem modules;
+    javax.swing.JPanel navigation;
     javax.swing.JPanel navigationPanel;
     javax.swing.JPanel navigatorPanel;
     javax.swing.JMenuItem newProject;
-    javax.swing.JFileChooser openFile;
+    javax.swing.JButton nextStepButton;
+    javax.swing.JMenuItem openFile;
+    javax.swing.JFileChooser openFileDialog;
+    javax.swing.JMenuItem openProject;
+    javax.swing.JDialog openProjectDialog;
     javax.swing.JTextArea outputArea;
+    javax.swing.JScrollPane outputScrollable;
+    javax.swing.JButton previousStepButton;
     javax.swing.JTextField projectLocation;
+    javax.swing.JTextField projectName;
+    javax.swing.JComboBox<String> projectType;
     javax.swing.JTabbedPane projectsAndFiles;
+    javax.swing.JTree projectsTree;
+    javax.swing.JComboBox<String> rackSlot1;
+    javax.swing.JMenuItem redoItem;
     javax.swing.JMenu runMenu;
+    javax.swing.JMenuItem saveFile;
+    javax.swing.JMenuItem saveProject;
     javax.swing.JLabel screenLabel;
     javax.swing.JComboBox<String> screenTier;
+    javax.swing.JMenuItem settings;
     javax.swing.JFrame settingsEtcFrame;
+    javax.swing.JFrame testDialog;
+    javax.swing.JTextArea testResultArea;
     javax.swing.JMenu toolsMenu;
     javax.swing.JMenuBar topMenu;
+    javax.swing.JMenuItem undoItem;
+    javax.swing.JCheckBoxMenuItem viewFiles;
     javax.swing.JMenu viewMenu;
+    javax.swing.JCheckBoxMenuItem viewNavigator;
+    javax.swing.JCheckBoxMenuItem viewOutput;
+    javax.swing.JCheckBoxMenuItem viewProjects;
     // End of variables declaration//GEN-END:variables
+
+    /* End of program's code */
 }

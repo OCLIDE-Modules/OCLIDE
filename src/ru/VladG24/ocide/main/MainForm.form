@@ -2,25 +2,25 @@
 
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.JFileChooser" name="openFile">
+    <Component class="javax.swing.JFileChooser" name="openFileDialog">
       <Properties>
-        <Property name="name" type="java.lang.String" value="openFile" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="openFileDialog" noResource="true"/>
       </Properties>
     </Component>
     <Component class="javax.swing.ButtonGroup" name="cpuOrApu">
     </Component>
-    <Container class="javax.swing.JFrame" name="launchDialog">
+    <Container class="javax.swing.JFrame" name="testDialog">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="2"/>
         <Property name="title" type="java.lang.String" value="Emulator Control Panel"/>
         <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
           <Rectangle value="[0, 0, 0, 0]"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="launchDialog" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="testDialog" noResource="true"/>
         <Property name="resizable" type="boolean" value="false"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="launchDialog.pack();"/>
+        <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="testDialog.pack();"/>
       </AuxValues>
 
       <Layout>
@@ -100,7 +100,7 @@
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jComboBox29" max="32767" attributes="0"/>
+                                          <Component id="hologramProjector" max="32767" attributes="0"/>
                                           <Component id="floppyType" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -158,7 +158,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jCheckBox12" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jComboBox29" min="-2" max="-2" attributes="0"/>
+                      <Component id="hologramProjector" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="floppyType" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -169,7 +169,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="architectureLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Architecture"/>
+                <Property name="text" type="java.lang.String" value="Case type"/>
                 <Property name="name" type="java.lang.String" value="architectureLabel" noResource="true"/>
               </Properties>
             </Component>
@@ -541,7 +541,7 @@
                           </Group>
                           <EmptySpace pref="64" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jComboBox20" max="32767" attributes="0"/>
+                              <Component id="rackSlot1" max="32767" attributes="0"/>
                               <Component id="jComboBox21" alignment="0" max="32767" attributes="0"/>
                               <Component id="jComboBox22" alignment="0" max="32767" attributes="0"/>
                               <Component id="jComboBox23" alignment="0" max="32767" attributes="0"/>
@@ -556,7 +556,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox20" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rackSlot1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -585,7 +585,7 @@
                     <Property name="name" type="java.lang.String" value="jLabel17" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox20">
+                <Component class="javax.swing.JComboBox" name="rackSlot1">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="5">
@@ -596,7 +596,7 @@
                         <StringItem index="4" value="Creative"/>
                       </StringArray>
                     </Property>
-                    <Property name="name" type="java.lang.String" value="jComboBox20" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="rackSlot1" noResource="true"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -715,7 +715,7 @@
                 <Property name="name" type="java.lang.String" value="jCheckBox12" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox29">
+            <Component class="javax.swing.JComboBox" name="hologramProjector">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
@@ -724,7 +724,7 @@
                     <StringItem index="2" value="Hologram Projector Tier 2 (Tricolor)"/>
                   </StringArray>
                 </Property>
-                <Property name="name" type="java.lang.String" value="jComboBox29" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="hologramProjector" noResource="true"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -870,6 +870,7 @@
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="cpuOrApu"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="CPU/GPU"/>
                 <Property name="name" type="java.lang.String" value="isCpuGpu" noResource="true"/>
               </Properties>
@@ -1020,8 +1021,12 @@
                         <StringItem index="2" value="Creative"/>
                       </StringArray>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                     <Property name="name" type="java.lang.String" value="jComboBox5" noResource="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox5ActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
@@ -1473,10 +1478,13 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="launchButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane7" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="launchButton" max="32767" attributes="0"/>
+                          <Component id="cancelButton" max="32767" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1485,11 +1493,15 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="launchButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jScrollPane7" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="launchButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1506,28 +1518,51 @@
             </Component>
             <Component class="javax.swing.JButton" name="cancelButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;&lt; Cancel"/>
+                <Property name="text" type="java.lang.String" value="Cancel"/>
                 <Property name="name" type="java.lang.String" value="cancelButton" noResource="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
               </Events>
             </Component>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane7">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="jScrollPane7" noResource="true"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextArea" name="testResultArea">
+                  <Properties>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Monospaced" size="12" style="0"/>
+                    </Property>
+                    <Property name="rows" type="int" value="5"/>
+                    <Property name="text" type="java.lang.String" value="Awaiting launch..."/>
+                    <Property name="name" type="java.lang.String" value="testResultArea" noResource="true"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JDialog" name="createProject">
+    <Container class="javax.swing.JDialog" name="createProjectDialog">
       <Properties>
         <Property name="title" type="java.lang.String" value="Creating a new project..."/>
         <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
           <Rectangle value="[0, 0, 600, 300]"/>
         </Property>
-        <Property name="name" type="java.lang.String" value="createProject" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="createProjectDialog" noResource="true"/>
         <Property name="resizable" type="boolean" value="false"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="createProject.pack();"/>
+        <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="createProjectDialog.pack();"/>
       </AuxValues>
 
       <Layout>
@@ -1641,13 +1676,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                      <Component id="cancelProjectCreation" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                      <Component id="previousStepButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="nextStepButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="finishButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1657,10 +1692,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="finishButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="nextStepButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="previousStepButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cancelProjectCreation" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="22" max="32767" attributes="0"/>
                   </Group>
@@ -1668,29 +1703,40 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="finishButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Finish"/>
-                <Property name="name" type="java.lang.String" value="jButton1" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="finishButton" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="finishButtonActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="javax.swing.JButton" name="nextStepButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Next &gt;&gt;"/>
-                <Property name="name" type="java.lang.String" value="jButton2" noResource="true"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="nextStepButton" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton3">
+            <Component class="javax.swing.JButton" name="previousStepButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&lt;&lt; Previous"/>
-                <Property name="name" type="java.lang.String" value="jButton3" noResource="true"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="previousStepButton" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="previousStepButtonActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton4">
+            <Component class="javax.swing.JButton" name="cancelProjectCreation">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Cancel"/>
-                <Property name="name" type="java.lang.String" value="jButton4" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="cancelProjectCreation" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelProjectCreationActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -1713,23 +1759,28 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jSeparator8" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="mainFile" min="-2" max="-2" attributes="0"/>
-                          </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel21" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="mainFile" min="-2" pref="381" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel21" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="projectName" max="32767" attributes="0"/>
+                                          <Component id="projectType" max="32767" attributes="0"/>
+                                          <Component id="projectLocation" alignment="0" pref="345" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jTextField1" max="32767" attributes="0"/>
-                                  <Component id="jComboBox2" max="32767" attributes="0"/>
-                                  <Component id="projectLocation" alignment="0" pref="345" max="32767" attributes="0"/>
-                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -1741,12 +1792,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="projectName" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="projectType" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1772,13 +1823,13 @@
                 <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="projectName">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Example Project"/>
-                <Property name="name" type="java.lang.String" value="jTextField1" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="projectName" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="jTextField1CaretUpdate"/>
+                <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="projectNameCaretUpdate"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
@@ -1787,7 +1838,7 @@
                 <Property name="name" type="java.lang.String" value="jLabel4" noResource="true"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox2">
+            <Component class="javax.swing.JComboBox" name="projectType">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
@@ -1796,7 +1847,7 @@
                     <StringItem index="2" value="Lua OpenComputers custom"/>
                   </StringArray>
                 </Property>
-                <Property name="name" type="java.lang.String" value="jComboBox2" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="projectType" noResource="true"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -1811,7 +1862,9 @@
             <Component class="javax.swing.JTextField" name="mainFile">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="text" type="java.lang.String" value="C:/Users/Default/Documents/OCIDE/projects/ExampleProject/main.lua"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new java.io.File(PROJECTS_DIR).getPath() + &quot;\\&quot; + projectName.getText() + &quot;\\main.lua&quot;" type="code"/>
+                </Property>
                 <Property name="name" type="java.lang.String" value="mainFile" noResource="true"/>
               </Properties>
             </Component>
@@ -1823,9 +1876,14 @@
             </Component>
             <Component class="javax.swing.JTextField" name="projectLocation">
               <Properties>
-                <Property name="text" type="java.lang.String" value="C:/Users/Default/Documentss/OCIDE/projects/ExampleProject"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="new java.io.File(PROJECTS_DIR).getPath() + &quot;\\&quot; + projectName.getText()" type="code"/>
+                </Property>
                 <Property name="name" type="java.lang.String" value="projectLocation" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="projectLocationActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator8">
               <Properties>
@@ -1854,36 +1912,23 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Container class="javax.swing.JPopupMenu" name="jPopupMenu1">
+    <Container class="javax.swing.JDialog" name="openProjectDialog">
       <Properties>
-        <Property name="name" type="java.lang.String" value="jPopupMenu1" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="openProjectDialog" noResource="true"/>
       </Properties>
 
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="300" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
       </Layout>
-      <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenu1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="dafuq"/>
-            <Property name="name" type="java.lang.String" value="jMenu1" noResource="true"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem17">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="YEEEEEEEEEEEE"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem17" noResource="true"/>
-              </Properties>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
-        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem18">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Yee"/>
-            <Property name="name" type="java.lang.String" value="jMenuItem18" noResource="true"/>
-          </Properties>
-        </MenuItem>
-      </SubComponents>
     </Container>
     <Menu class="javax.swing.JMenuBar" name="topMenu">
       <Properties>
@@ -1913,16 +1958,19 @@
                 <Property name="name" type="java.lang.String" value="jSeparator1" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JMenuItem" name="openProject">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Open Project..."/>
-                <Property name="name" type="java.lang.String" value="jMenuItem2" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="openProject" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openProjectActionPerformed"/>
+              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+            <MenuItem class="javax.swing.JMenuItem" name="openFile">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Open File..."/>
-                <Property name="name" type="java.lang.String" value="jMenuItem3" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="openFile" noResource="true"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
@@ -1930,28 +1978,25 @@
                 <Property name="name" type="java.lang.String" value="jSeparator2" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+            <MenuItem class="javax.swing.JMenuItem" name="saveProject">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+S"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/assets/textures/items/FloppyDisk_dyeBlack.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Save Project"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem4" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="saveProject" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
+            <MenuItem class="javax.swing.JMenuItem" name="saveFile">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save File As..."/>
-                <Property name="name" type="java.lang.String" value="jMenuItem5" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="saveFile" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
+            <MenuItem class="javax.swing.JMenuItem" name="exportProject">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Export Project..."/>
-                <Property name="name" type="java.lang.String" value="jMenuItem7" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="exportProject" noResource="true"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
@@ -1959,10 +2004,10 @@
                 <Property name="name" type="java.lang.String" value="jSeparator5" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem12">
+            <MenuItem class="javax.swing.JMenuItem" name="exitIDE">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exit"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem12" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="exitIDE" noResource="true"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -1973,22 +2018,22 @@
             <Property name="name" type="java.lang.String" value="editMenu" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem6">
+            <MenuItem class="javax.swing.JMenuItem" name="undoItem">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+Z"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Undo"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem6" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="undoItem" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem8">
+            <MenuItem class="javax.swing.JMenuItem" name="redoItem">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+R"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Redo"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem8" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="redoItem" noResource="true"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -1999,18 +2044,18 @@
             <Property name="name" type="java.lang.String" value="viewMenu" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem1">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="viewProjects">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Projects"/>
-                <Property name="name" type="java.lang.String" value="jCheckBoxMenuItem1" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="viewProjects" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem2">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="viewFiles">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Files"/>
-                <Property name="name" type="java.lang.String" value="jCheckBoxMenuItem2" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="viewFiles" noResource="true"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator6">
@@ -2018,11 +2063,11 @@
                 <Property name="name" type="java.lang.String" value="jSeparator6" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem3">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="viewNavigator">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Navigator"/>
-                <Property name="name" type="java.lang.String" value="jCheckBoxMenuItem3" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="viewNavigator" noResource="true"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator7">
@@ -2030,11 +2075,11 @@
                 <Property name="name" type="java.lang.String" value="jSeparator7" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem4">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="viewOutput">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Output"/>
-                <Property name="name" type="java.lang.String" value="jCheckBoxMenuItem4" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="viewOutput" noResource="true"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -2045,40 +2090,22 @@
             <Property name="name" type="java.lang.String" value="runMenu" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="launchEmulator">
+            <MenuItem class="javax.swing.JMenuItem" name="launchBasicTest">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F6"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/assets/textures/items/Terminal.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Launch Emulator"/>
-                <Property name="name" type="java.lang.String" value="launchEmulator" noResource="true"/>
+                <Property name="text" type="java.lang.String" value="Test on basic configurations"/>
+                <Property name="name" type="java.lang.String" value="launchBasicTest" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="launchEmulatorActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="launchBasicTestActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem14">
+            <MenuItem class="javax.swing.JMenuItem" name="launchCustomConfigTest">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Launch File"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem14" noResource="true"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem15">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Launch Function..."/>
-                <Property name="name" type="java.lang.String" value="jMenuItem15" noResource="true"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="launchAndRun">
-              <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="Ctrl+F6"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Launch &amp; Run"/>
-                <Property name="name" type="java.lang.String" value="launchAndRun" noResource="true"/>
+                <Property name="text" type="java.lang.String" value="Test on custom configuration..."/>
+                <Property name="name" type="java.lang.String" value="launchCustomConfigTest" noResource="true"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -2089,10 +2116,10 @@
             <Property name="name" type="java.lang.String" value="toolsMenu" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem9">
+            <MenuItem class="javax.swing.JMenuItem" name="libraries">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Libraries"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem9" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="libraries" noResource="true"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
@@ -2100,10 +2127,10 @@
                 <Property name="name" type="java.lang.String" value="jSeparator3" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
+            <MenuItem class="javax.swing.JMenuItem" name="modules">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Modules"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem10" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="modules" noResource="true"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
@@ -2111,13 +2138,13 @@
                 <Property name="name" type="java.lang.String" value="jSeparator4" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem11">
+            <MenuItem class="javax.swing.JMenuItem" name="settings">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Prefrences"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem11" noResource="true"/>
+                <Property name="text" type="java.lang.String" value="Settings"/>
+                <Property name="name" type="java.lang.String" value="settings" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem11ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingsActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -2128,19 +2155,16 @@
             <Property name="name" type="java.lang.String" value="helpMenu" noResource="true"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+            <MenuItem class="javax.swing.JMenuItem" name="helpItem">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F1"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/assets/textures/gui/manual_missing_item.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Help"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem1" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="helpItem" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="helpItemActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator9">
@@ -2148,16 +2172,13 @@
                 <Property name="name" type="java.lang.String" value="jSeparator9" noResource="true"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem13">
+            <MenuItem class="javax.swing.JMenuItem" name="aboutItem">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/assets/textures/gui/manual_home.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="About"/>
-                <Property name="name" type="java.lang.String" value="jMenuItem13" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="aboutItem" noResource="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem13ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aboutItemActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -2202,23 +2223,23 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <Component id="navigation" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel2" max="32767" attributes="0"/>
+              <Component id="ide" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" max="32767" attributes="0"/>
-          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+          <Component id="navigation" max="32767" attributes="0"/>
+          <Component id="ide" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="navigation">
       <Properties>
-        <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="navigation" noResource="true"/>
       </Properties>
 
       <Layout>
@@ -2270,13 +2291,18 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTree" name="jTree1">
+                <Component class="javax.swing.JTree" name="projectsTree">
                   <Properties>
-                    <Property name="name" type="java.lang.String" value="jTree1" noResource="true"/>
+                    <Property name="name" type="java.lang.String" value="projectsTree" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTree1MouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="projectsTreeMouseClicked"/>
+                    <EventHandler event="valueChanged" listener="javax.swing.event.TreeSelectionListener" parameters="javax.swing.event.TreeSelectionEvent" handler="projectsTreeValueChanged"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTree(projectsParent)"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="javax.swing.tree.DefaultMutableTreeNode projectsParent = new javax.swing.tree.DefaultMutableTreeNode(&quot;Projects&quot;);&#xd;&#xa;java.io.File projectDirectory = new java.io.File(PROJECTS_DIR);&#xd;&#xa;if (!(projectDirectory.exists() &amp;&amp; projectDirectory.isDirectory())){&#xd;&#xa;    projectDirectory.mkdirs();&#xd;&#xa;}&#xd;&#xa;"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -2301,6 +2327,9 @@
                   <Properties>
                     <Property name="name" type="java.lang.String" value="fileTree" noResource="true"/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="javax.swing.tree.DefaultMutableTreeNode filesParent = new javax.swing.tree.DefaultMutableTreeNode(&quot;Files&quot;);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -2319,21 +2348,44 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane4" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane4" alignment="0" pref="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+              <Properties>
+                <Property name="name" type="java.lang.String" value="jScrollPane4" noResource="true"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTree" name="fieldsTree">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="fieldsTree" noResource="true"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTree(fieldsParent)"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="javax.swing.tree.DefaultMutableTreeNode fieldsParent = new javax.swing.tree.DefaultMutableTreeNode();&#xd;&#xa;if (!(ACTIVE_FILE.equals(null))) {&#xd;&#xa;    fieldsParent = new javax.swing.tree.DefaultMutableTreeNode(ACTIVE_FILE);&#xd;&#xa;}&#xd;&#xa;"/>
+                  </AuxValues>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanel2">
+    <Container class="javax.swing.JPanel" name="ide">
       <Properties>
-        <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="ide" noResource="true"/>
       </Properties>
 
       <Layout>
@@ -2342,7 +2394,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="io" alignment="0" max="32767" attributes="0"/>
-                      <Component id="editorTabs" pref="512" max="32767" attributes="0"/>
+                      <Component id="editorTabs" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -2369,60 +2421,6 @@
           </AccessibilityProperties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
-          <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane5">
-              <Properties>
-                <Property name="name" type="java.lang.String" value="jScrollPane5" noResource="true"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="TestFile.lua">
-                    <Property name="tabTitle" type="java.lang.String" value="TestFile.lua"/>
-                  </JTabbedPaneConstraints>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JEditorPane" name="jEditorPane1">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Consolas" size="12" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="local term = require(&apos;term&apos;);&#xa;&#xa;term.clear();&#xa;term.write(&apos;Hello, world!&apos;);"/>
-                    <Property name="name" type="java.lang.String" value="jEditorPane1" noResource="true"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane6">
-              <Properties>
-                <Property name="name" type="java.lang.String" value="jScrollPane6" noResource="true"/>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="file.txt">
-                    <Property name="tabTitle" type="java.lang.String" value="file.txt"/>
-                  </JTabbedPaneConstraints>
-                </Constraint>
-              </Constraints>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JEditorPane" name="jEditorPane2">
-                  <Properties>
-                    <Property name="name" type="java.lang.String" value="jEditorPane2" noResource="true"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
-          </SubComponents>
         </Container>
         <Container class="javax.swing.JTabbedPane" name="io">
           <Properties>
@@ -2431,9 +2429,9 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+            <Container class="javax.swing.JScrollPane" name="outputScrollable">
               <Properties>
-                <Property name="name" type="java.lang.String" value="jScrollPane4" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="outputScrollable" noResource="true"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
