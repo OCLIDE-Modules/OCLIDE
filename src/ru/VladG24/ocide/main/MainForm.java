@@ -4,9 +4,9 @@ package ru.VladG24.ocide.main;
  * OCIDE is an Integrated Development Environment, made specifically for
  * creating programs and libraries in Lua 5.2 or Lua 5.3 for OpenComputers 1.7.5
  *
- * Written in Java 8 using Swing GUI Library and Apache NetBeans 11.2
+ * Written in Java 8 using Swing GUI Library and Apache NetBeans 12.0
  *
- * @author VladG24YT
+ * @author VladTheMountain
  */
 public class MainForm extends javax.swing.JFrame {
 
@@ -14,9 +14,9 @@ public class MainForm extends javax.swing.JFrame {
 
     /* Variables declaration */
     //Directories
-    private final String APP_DIRECTORY = System.getenv("APPDATA") + "/OCIDE/";
-    private final String PROJECTS_DIR = APP_DIRECTORY + "projects/";
-    private final String OPENOS_SDK_DIR = APP_DIRECTORY + "SDK/OpenOS/";
+    private final String APP_DIRECTORY = new java.io.File("").getAbsolutePath();
+    private final String PROJECTS_DIR = APP_DIRECTORY + "/projects/";
+    private final String OPENOS_SDK_DIR = APP_DIRECTORY + "/SDK/OpenOS/";
     //Workspace variables
     private java.io.File ACTIVE_FILE;
     private String ACTIVE_PROJECT;
@@ -79,6 +79,7 @@ public class MainForm extends javax.swing.JFrame {
         }
 
         //Navigator
+        /*
         try {
             java.io.FileReader fileReader = new java.io.FileReader(ACTIVE_FILE);
             java.io.BufferedReader reader = new java.io.BufferedReader(fileReader);
@@ -101,7 +102,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         } catch (java.io.IOException ex) {
             java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        }*/
     }
 
     /**
@@ -372,7 +373,7 @@ public class MainForm extends javax.swing.JFrame {
         testDialog.setName("testDialog"); // NOI18N
         testDialog.setResizable(false);
 
-        blocksPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blocks", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        blocksPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Blocks", 0, 0, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         blocksPanel.setName("blocksPanel"); // NOI18N
 
         architectureLabel.setText("Case type");
@@ -387,7 +388,7 @@ public class MainForm extends javax.swing.JFrame {
         screenTier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tier 1", "Tier 2", "Tier 3" }));
         screenTier.setName("screenTier"); // NOI18N
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Case HDD Slots", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Case HDD Slots", 0, 0, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         jPanel6.setName("jPanel6"); // NOI18N
 
         jLabel7.setText("Slot 1");
@@ -456,7 +457,7 @@ public class MainForm extends javax.swing.JFrame {
         eepromType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Empty", "Lua BIOS", "Custom" }));
         eepromType.setName("eepromType"); // NOI18N
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RAID HDD Slots", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RAID HDD Slots", 0, 0, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         jPanel8.setToolTipText("Set all to none to disable RAID");
         jPanel8.setName("jPanel8"); // NOI18N
 
@@ -520,7 +521,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rack Properties", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rack Properties", 0, 0, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         jPanel10.setName("jPanel10"); // NOI18N
 
         jLabel17.setText("Slot 1");
@@ -714,7 +715,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        componentsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Components", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        componentsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Components", 0, 0, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         componentsPanel.setName("componentsPanel"); // NOI18N
 
         cpuOrApu.add(isCpuGpu);
@@ -727,7 +728,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(0));
         jPanel3.setName("jPanel3"); // NOI18N
 
         cpuLabel.setText("CPU");
@@ -770,7 +771,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(0));
         jPanel4.setName("jPanel4"); // NOI18N
 
         jLabel2.setText("APU");
@@ -884,7 +885,7 @@ public class MainForm extends javax.swing.JFrame {
         jCheckBox3.setText("Network Card");
         jCheckBox3.setName("jCheckBox3"); // NOI18N
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Server", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Server", 0, 0, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         jPanel9.setName("jPanel9"); // NOI18N
 
         jLabel16.setText("Component Bus");
@@ -914,7 +915,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Upgrades", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Upgrades", 0, 0, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         jPanel11.setName("jPanel11"); // NOI18N
 
         jCheckBox14.setText("Angel");
@@ -1245,7 +1246,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        mainPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Creating a project", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        mainPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Creating a project", 0, 0, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         mainPanel.setName("mainPanel"); // NOI18N
 
         jLabel1.setText("Project Name");
@@ -1460,6 +1461,12 @@ public class MainForm extends javax.swing.JFrame {
 
                 editorTabs.setName("editorTabs"); // NOI18N
 
+                try {
+                    byte[] byteArray = new byte[((int)this.ACTIVE_FILE.length())];
+                    new java.io.FileInputStream(this.ACTIVE_FILE).read(byteArray);
+                    editorTabs.addTab(this.ACTIVE_FILE.getName(), new javax.swing.JEditorPane("text/lua", new String(byteArray)));
+                } catch (java.io.IOException e){}
+
                 io.setName("io"); // NOI18N
 
                 outputScrollable.setName("outputScrollable"); // NOI18N
@@ -1487,20 +1494,21 @@ public class MainForm extends javax.swing.JFrame {
                 ideLayout.setVerticalGroup(
                     ideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ideLayout.createSequentialGroup()
-                        .addComponent(editorTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()
+                        .addComponent(editorTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(io)
                         .addContainerGap())
                 );
 
-                editorTabs.getAccessibleContext().setAccessibleDescription("yee");
+                editorTabs.getAccessibleContext().setAccessibleDescription("");
 
                 topMenu.setName("topMenu"); // NOI18N
 
                 fileMenu.setText("File");
                 fileMenu.setName("fileMenu"); // NOI18N
 
-                newProject.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+                newProject.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
                 newProject.setText("New Project...");
                 newProject.setName("newProject"); // NOI18N
                 newProject.addActionListener(new java.awt.event.ActionListener() {
@@ -1529,7 +1537,7 @@ public class MainForm extends javax.swing.JFrame {
                 jSeparator2.setName("jSeparator2"); // NOI18N
                 fileMenu.add(jSeparator2);
 
-                saveProject.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+                saveProject.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
                 saveProject.setText("Save Project");
                 saveProject.setName("saveProject"); // NOI18N
                 fileMenu.add(saveProject);
@@ -1554,12 +1562,12 @@ public class MainForm extends javax.swing.JFrame {
                 editMenu.setText("Edit");
                 editMenu.setName("editMenu"); // NOI18N
 
-                undoItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+                undoItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_DOWN_MASK));
                 undoItem.setText("Undo");
                 undoItem.setName("undoItem"); // NOI18N
                 editMenu.add(undoItem);
 
-                redoItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+                redoItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
                 redoItem.setText("Redo");
                 redoItem.setName("redoItem"); // NOI18N
                 editMenu.add(redoItem);
@@ -1753,7 +1761,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_projectNameCaretUpdate
 
     private void openProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openProjectActionPerformed
-        // TODO add your handling code here:
+        openProjectDialog.setVisible(true);
     }//GEN-LAST:event_openProjectActionPerformed
 
     private void projectLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectLocationActionPerformed
