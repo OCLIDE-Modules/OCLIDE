@@ -25,7 +25,7 @@ package ru.VladTheMountain.ocide;
 
 /**
  *
- * @author nogot
+ * @author VladTheMountain
  */
 public class ProjectsPanel extends javax.swing.JPanel {
 
@@ -34,6 +34,17 @@ public class ProjectsPanel extends javax.swing.JPanel {
      */
     public ProjectsPanel() {
         initComponents();
+        javax.swing.tree.DefaultMutableTreeNode projRoot = new javax.swing.tree.DefaultMutableTreeNode("Projects");
+        for (String list : new java.io.File("/projects").list()) {
+            if (new java.io.File(list).isDirectory()) {
+                for (String list1 : new java.io.File(list).list()) {
+                    projRoot.add(new javax.swing.tree.DefaultMutableTreeNode(new java.io.File(list1).getName()));
+                }
+            } else {
+                projRoot.add(new javax.swing.tree.DefaultMutableTreeNode(new java.io.File(list).getName()));
+            }
+        }
+        projectsTree.setModel(new javax.swing.tree.DefaultTreeModel(projRoot));
     }
 
     /**
@@ -45,19 +56,26 @@ public class ProjectsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        projectsTree = new javax.swing.JTree();
+
+        jScrollPane1.setViewportView(projectsTree);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTree projectsTree;
     // End of variables declaration//GEN-END:variables
 }
