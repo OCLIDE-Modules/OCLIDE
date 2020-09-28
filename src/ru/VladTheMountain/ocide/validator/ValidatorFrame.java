@@ -34,13 +34,14 @@ public class ValidatorFrame extends javax.swing.JFrame {
 
     private ValidatorFrame instance;
 
-    ArchitecturePanel panelTL;
-    UpgradesPanel panelBL;
-    MainComponentsPanel panelTR;
-    SecondaryComponentsPanel panelBR;
+    ArchitecturePanel panelTL = new ArchitecturePanel();
+    UpgradesPanel panelBL = new UpgradesPanel();
+    MainComponentsPanel panelTR = new MainComponentsPanel();
+    SecondaryComponentsPanel panelBR = new SecondaryComponentsPanel();
 
     /**
-     * Creates a new {@link ru.VladTheMountain.ocide.validator.Validator} interface instance.
+     * Creates a new {@link ru.VladTheMountain.ocide.validator.Validator}
+     * interface instance.
      *
      * @param tl Architecture configuration {@link javax.swing.JPanel}
      * @param bl Upgrades' configuration {@link javax.swing.JPanel}
@@ -49,12 +50,12 @@ public class ValidatorFrame extends javax.swing.JFrame {
      * @param br Secondary components - Data cards, GPUs, Network cards etc. -
      * configuration {@link javax.swing.JPanel}
      */
-    public ValidatorFrame(ArchitecturePanel tl, UpgradesPanel bl, MainComponentsPanel tr, SecondaryComponentsPanel br) {
+    public ValidatorFrame(/*ArchitecturePanel tl, UpgradesPanel bl, MainComponentsPanel tr, SecondaryComponentsPanel br*/) {
         instance = this;
-        panelTL = tl;
+        /*panelTL = tl;
         panelBL = bl;
         panelTR = tr;
-        panelBR = br;
+        panelBR = br;*/
         new javax.swing.Timer(300, (ActionEvent e) -> {
             instance.repaint();
         });
@@ -112,7 +113,7 @@ public class ValidatorFrame extends javax.swing.JFrame {
         gen.addLayoutComponent(leftPanel, java.awt.BorderLayout.WEST);
         gen.addLayoutComponent(rightPanel, java.awt.BorderLayout.EAST);
         gen.addLayoutComponent(bottomPanel, java.awt.BorderLayout.SOUTH);
-        instance.setContentPane(new javax.swing.JPanel(gen));
+        instance.getContentPane().setLayout(gen);
         instance.pack();
     }
 

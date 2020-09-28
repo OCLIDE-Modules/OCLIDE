@@ -25,7 +25,7 @@ package ru.VladTheMountain.ocide.settings;
 
 /**
  *
- * @author nogot
+ * @author VladTheMountain
  */
 public class SettingsFrame extends javax.swing.JFrame {
 
