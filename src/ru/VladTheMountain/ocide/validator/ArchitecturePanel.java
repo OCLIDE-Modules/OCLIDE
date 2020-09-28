@@ -49,21 +49,147 @@ public class ArchitecturePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Core", 0, 0, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        eepromPicker = new javax.swing.ButtonGroup();
+        architecturePanel = new javax.swing.JPanel();
+        architectureLabel = new javax.swing.JLabel();
+        architectureBox = new javax.swing.JComboBox<>();
+        eepromPanel = new javax.swing.JPanel();
+        isDefaultEEPROM = new javax.swing.JRadioButton();
+        isCustomEEPROM = new javax.swing.JRadioButton();
+        customEEEPROMPanel = new javax.swing.JPanel();
+        customEEPROMLabel = new javax.swing.JLabel();
+        customEEPROMPath = new javax.swing.JTextField();
+        customEEPROMPathButton = new javax.swing.JButton();
+
+        eepromPicker.add(isDefaultEEPROM);
+        eepromPicker.add(isCustomEEPROM);
+
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Core", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+
+        architecturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Architecture", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        architectureLabel.setText("Computer architecture:");
+
+        architectureBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Computer Case (Tier 1)", "Computer Case (Tier 2)", "Computer Case (Tier 3)", "Server (Tier 1)", "Server (Tier 2)", "Server (Tier 3)", "Microcontroller" }));
+
+        javax.swing.GroupLayout architecturePanelLayout = new javax.swing.GroupLayout(architecturePanel);
+        architecturePanel.setLayout(architecturePanelLayout);
+        architecturePanelLayout.setHorizontalGroup(
+            architecturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(architecturePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(architectureLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(architectureBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        architecturePanelLayout.setVerticalGroup(
+            architecturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(architecturePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(architecturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(architectureLabel)
+                    .addComponent(architectureBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        eepromPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "EEPROM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+
+        isDefaultEEPROM.setText("Lua BIOS");
+
+        isCustomEEPROM.setText("Custom");
+
+        customEEEPROMPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        customEEPROMLabel.setText("Path to EEPROM script:");
+
+        customEEPROMPath.setText("jTextField1");
+
+        customEEPROMPathButton.setText("Browse...");
+
+        javax.swing.GroupLayout customEEEPROMPanelLayout = new javax.swing.GroupLayout(customEEEPROMPanel);
+        customEEEPROMPanel.setLayout(customEEEPROMPanelLayout);
+        customEEEPROMPanelLayout.setHorizontalGroup(
+            customEEEPROMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(customEEEPROMPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(customEEEPROMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(customEEEPROMPanelLayout.createSequentialGroup()
+                        .addComponent(customEEPROMLabel)
+                        .addGap(0, 32, Short.MAX_VALUE))
+                    .addComponent(customEEPROMPath))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(customEEPROMPathButton)
+                .addContainerGap())
+        );
+        customEEEPROMPanelLayout.setVerticalGroup(
+            customEEEPROMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(customEEEPROMPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(customEEPROMLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(customEEEPROMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(customEEPROMPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(customEEPROMPathButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout eepromPanelLayout = new javax.swing.GroupLayout(eepromPanel);
+        eepromPanel.setLayout(eepromPanelLayout);
+        eepromPanelLayout.setHorizontalGroup(
+            eepromPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, eepromPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(eepromPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(customEEEPROMPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(isDefaultEEPROM, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(isCustomEEPROM, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        eepromPanelLayout.setVerticalGroup(
+            eepromPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(eepromPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(isDefaultEEPROM)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(isCustomEEPROM)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(customEEEPROMPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 388, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(architecturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(eepromPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(architecturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(eepromPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> architectureBox;
+    private javax.swing.JLabel architectureLabel;
+    private javax.swing.JPanel architecturePanel;
+    private javax.swing.JPanel customEEEPROMPanel;
+    private javax.swing.JLabel customEEPROMLabel;
+    private javax.swing.JTextField customEEPROMPath;
+    private javax.swing.JButton customEEPROMPathButton;
+    private javax.swing.JPanel eepromPanel;
+    private javax.swing.ButtonGroup eepromPicker;
+    private javax.swing.JRadioButton isCustomEEPROM;
+    private javax.swing.JRadioButton isDefaultEEPROM;
     // End of variables declaration//GEN-END:variables
 }
