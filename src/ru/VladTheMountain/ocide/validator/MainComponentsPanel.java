@@ -45,19 +45,303 @@ public class MainComponentsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        componentsPanel = new javax.swing.JPanel();
+        cpuApuLabel = new javax.swing.JLabel();
+        gpuLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        storagePanel = new javax.swing.JPanel();
+        isHDD = new javax.swing.JRadioButton();
+        isRAID = new javax.swing.JRadioButton();
+        HDDPanel = new javax.swing.JPanel();
+        HDDSlot1Label = new javax.swing.JLabel();
+        HDDSlot1Box = new javax.swing.JComboBox<>();
+        HDDSlot2Label = new javax.swing.JLabel();
+        HDDSlot2Box = new javax.swing.JComboBox<>();
+        RAIDPanel = new javax.swing.JPanel();
+        RAIDSlot1Label = new javax.swing.JLabel();
+        RAIDSlot2Label = new javax.swing.JLabel();
+        RAIDSlot3Label = new javax.swing.JLabel();
+        RAIDSlot1Box = new javax.swing.JComboBox<>();
+        RAIDSlot2Box = new javax.swing.JComboBox<>();
+        RAIDSlot3Box = new javax.swing.JComboBox<>();
+        cpuApuBox = new javax.swing.JComboBox<>();
+        gpuBox = new javax.swing.JComboBox<>();
+        dataCardBox = new javax.swing.JComboBox<>();
+        memorySlot1Box = new javax.swing.JComboBox<>();
+        memorySlot2Box = new javax.swing.JComboBox<>();
+        floppyBox = new javax.swing.JComboBox<>();
+        memorySlot1Label = new javax.swing.JLabel();
+        memorySlot2Label = new javax.swing.JLabel();
+        floppyLabel = new javax.swing.JLabel();
+
+        componentsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Primary Components", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+
+        cpuApuLabel.setText("CPU/APU:");
+
+        gpuLabel.setText("Graphics Card:");
+
+        jLabel1.setText("Data Card:");
+
+        storagePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Storage", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+
+        isHDD.setText("Hard Disk Drives");
+
+        isRAID.setText("RAID");
+
+        HDDPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        HDDSlot1Label.setText("HDD (Slot 1)");
+
+        HDDSlot1Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tier 1", "Tier 2", "Tier 3" }));
+
+        HDDSlot2Label.setText("HDD (Slot 2)");
+
+        HDDSlot2Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Tier 1", "Tier 2", "Tier 3" }));
+
+        javax.swing.GroupLayout HDDPanelLayout = new javax.swing.GroupLayout(HDDPanel);
+        HDDPanel.setLayout(HDDPanelLayout);
+        HDDPanelLayout.setHorizontalGroup(
+            HDDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HDDPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(HDDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(HDDPanelLayout.createSequentialGroup()
+                        .addComponent(HDDSlot1Label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(HDDSlot1Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(HDDPanelLayout.createSequentialGroup()
+                        .addComponent(HDDSlot2Label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(HDDSlot2Box, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        HDDPanelLayout.setVerticalGroup(
+            HDDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(HDDPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(HDDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(HDDSlot1Label)
+                    .addComponent(HDDSlot1Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(HDDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(HDDSlot2Label)
+                    .addComponent(HDDSlot2Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
+
+        RAIDPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        RAIDSlot1Label.setText("Slot 1");
+
+        RAIDSlot2Label.setText("Slot 2");
+
+        RAIDSlot3Label.setText("Slot 3");
+
+        RAIDSlot1Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tier 1", "Tier 2", "Tier 3" }));
+
+        RAIDSlot2Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tier 1", "Tier 2", "Tier 3" }));
+
+        RAIDSlot3Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tier 1", "Tier 2", "Tier 3" }));
+
+        javax.swing.GroupLayout RAIDPanelLayout = new javax.swing.GroupLayout(RAIDPanel);
+        RAIDPanel.setLayout(RAIDPanelLayout);
+        RAIDPanelLayout.setHorizontalGroup(
+            RAIDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RAIDPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(RAIDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RAIDPanelLayout.createSequentialGroup()
+                        .addComponent(RAIDSlot1Label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RAIDSlot1Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(RAIDPanelLayout.createSequentialGroup()
+                        .addComponent(RAIDSlot2Label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RAIDSlot2Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(RAIDPanelLayout.createSequentialGroup()
+                        .addComponent(RAIDSlot3Label)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RAIDSlot3Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        RAIDPanelLayout.setVerticalGroup(
+            RAIDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RAIDPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(RAIDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RAIDSlot1Label)
+                    .addComponent(RAIDSlot1Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(RAIDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RAIDSlot2Label)
+                    .addComponent(RAIDSlot2Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(RAIDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RAIDSlot3Label)
+                    .addComponent(RAIDSlot3Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout storagePanelLayout = new javax.swing.GroupLayout(storagePanel);
+        storagePanel.setLayout(storagePanelLayout);
+        storagePanelLayout.setHorizontalGroup(
+            storagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(storagePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(storagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(isHDD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(HDDPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(storagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RAIDPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(isRAID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        storagePanelLayout.setVerticalGroup(
+            storagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(storagePanelLayout.createSequentialGroup()
+                .addGroup(storagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(isHDD)
+                    .addComponent(isRAID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(storagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(HDDPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RAIDPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        cpuApuBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CPU (Tier 1)", "CPU (Tier 2)", "CPU (Tier 3)", "APU (Tier 2)", "APU (Tier 3)" }));
+
+        gpuBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Tier 1", "Tier 2", "Tier 3" }));
+        gpuBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gpuBoxActionPerformed(evt);
+            }
+        });
+
+        dataCardBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Tier 1", "Tier 2", "Tier 3" }));
+
+        memorySlot1Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tier 1", "Tier 1.5", "Tier 2", "Tier 2.5", "Tier 3", "Tier 3.5" }));
+
+        memorySlot2Box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tier 1", "Tier 1.5", "Tier 2", "Tier 2.5", "Tier 3", "Tier 3.5" }));
+
+        floppyBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Empty", "OpenOS", "Plan9k", "OPPM", "IRC" }));
+
+        memorySlot1Label.setText("Memory (Slot 1)");
+
+        memorySlot2Label.setText("Memory (Slot 2)");
+
+        floppyLabel.setText("Floppy");
+
+        javax.swing.GroupLayout componentsPanelLayout = new javax.swing.GroupLayout(componentsPanel);
+        componentsPanel.setLayout(componentsPanelLayout);
+        componentsPanelLayout.setHorizontalGroup(
+            componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(componentsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(storagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(componentsPanelLayout.createSequentialGroup()
+                        .addGroup(componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(componentsPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dataCardBox, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(componentsPanelLayout.createSequentialGroup()
+                                .addComponent(cpuApuLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cpuApuBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(componentsPanelLayout.createSequentialGroup()
+                                .addComponent(gpuLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(gpuBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(memorySlot2Label)
+                            .addComponent(memorySlot1Label)
+                            .addComponent(floppyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(memorySlot1Box, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(memorySlot2Box, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(floppyBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        componentsPanelLayout.setVerticalGroup(
+            componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(componentsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cpuApuLabel)
+                    .addComponent(cpuApuBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(memorySlot1Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(memorySlot1Label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(gpuLabel)
+                    .addComponent(gpuBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(memorySlot2Box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(memorySlot2Label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(dataCardBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(componentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(floppyLabel)
+                        .addComponent(floppyBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(storagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(componentsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(componentsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void gpuBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gpuBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gpuBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel HDDPanel;
+    private javax.swing.JComboBox<String> HDDSlot1Box;
+    private javax.swing.JLabel HDDSlot1Label;
+    private javax.swing.JComboBox<String> HDDSlot2Box;
+    private javax.swing.JLabel HDDSlot2Label;
+    private javax.swing.JPanel RAIDPanel;
+    private javax.swing.JComboBox<String> RAIDSlot1Box;
+    private javax.swing.JLabel RAIDSlot1Label;
+    private javax.swing.JComboBox<String> RAIDSlot2Box;
+    private javax.swing.JLabel RAIDSlot2Label;
+    private javax.swing.JComboBox<String> RAIDSlot3Box;
+    private javax.swing.JLabel RAIDSlot3Label;
+    private javax.swing.JPanel componentsPanel;
+    private javax.swing.JComboBox<String> cpuApuBox;
+    private javax.swing.JLabel cpuApuLabel;
+    private javax.swing.JComboBox<String> dataCardBox;
+    private javax.swing.JComboBox<String> floppyBox;
+    private javax.swing.JLabel floppyLabel;
+    private javax.swing.JComboBox<String> gpuBox;
+    private javax.swing.JLabel gpuLabel;
+    private javax.swing.JRadioButton isHDD;
+    private javax.swing.JRadioButton isRAID;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> memorySlot1Box;
+    private javax.swing.JLabel memorySlot1Label;
+    private javax.swing.JComboBox<String> memorySlot2Box;
+    private javax.swing.JLabel memorySlot2Label;
+    private javax.swing.JPanel storagePanel;
     // End of variables declaration//GEN-END:variables
 }
