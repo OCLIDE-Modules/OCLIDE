@@ -39,12 +39,8 @@ public class MainForm extends javax.swing.JFrame {
     private final String PROJECTS_DIR = APP_DIRECTORY + "/projects/";
     private final String OPENOS_SDK_DIR = APP_DIRECTORY + "/SDK/OpenOS/";
     //Workspace variables
-    private java.io.File ACTIVE_FILE;
-    private String ACTIVE_PROJECT;
-    //Project types
-    private final int OPENOS_PROG = 1,
-            OPENOS_LIB = 2,
-            CUSTOM = 3;
+    protected java.io.File ACTIVE_FILE;
+    protected String ACTIVE_PROJECT;
 
     /**
      * App constructor. Used for variable initialization
@@ -89,7 +85,6 @@ public class MainForm extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         projectLocation = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
-        openProjectDialog = new javax.swing.JDialog();
         topMenu = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newProject = new javax.swing.JMenuItem();
@@ -347,19 +342,6 @@ public class MainForm extends javax.swing.JFrame {
 
                 createProjectDialog.pack();
 
-                openProjectDialog.setName("openProjectDialog"); // NOI18N
-
-                javax.swing.GroupLayout openProjectDialogLayout = new javax.swing.GroupLayout(openProjectDialog.getContentPane());
-                openProjectDialog.getContentPane().setLayout(openProjectDialogLayout);
-                openProjectDialogLayout.setHorizontalGroup(
-                    openProjectDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 400, Short.MAX_VALUE)
-                );
-                openProjectDialogLayout.setVerticalGroup(
-                    openProjectDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGap(0, 300, Short.MAX_VALUE)
-                );
-
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
                 setTitle("OpenComputers IDE 1.0");
                 setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
@@ -586,7 +568,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_projectNameCaretUpdate
 
     private void openProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openProjectActionPerformed
-        openProjectDialog.setVisible(true);
+
     }//GEN-LAST:event_openProjectActionPerformed
 
     private void projectLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectLocationActionPerformed
@@ -672,7 +654,6 @@ public class MainForm extends javax.swing.JFrame {
     javax.swing.JMenuItem openFile;
     javax.swing.JFileChooser openFileDialog;
     javax.swing.JMenuItem openProject;
-    javax.swing.JDialog openProjectDialog;
     javax.swing.JButton previousStepButton;
     javax.swing.JTextField projectLocation;
     javax.swing.JTextField projectName;
