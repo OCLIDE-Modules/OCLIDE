@@ -3,3 +3,23 @@
 
 ![](https://raw.githubusercontent.com/Vladg24YT/Oclide/master/Oclide_logo_white.jpg) 
 Ocliden is an INDEV IDE for OpenComputers 1.7.5 written in Java with Swing GUI
+
+# Roadmap
+#### I. September 2020 - October 2020 
+- [ ] Creating UI
+- [ ] Adding basic editor algorythms
+- [ ] Setting up the GitHub repository
+#### II. November 2020 - December 2020
+- [ ] Validator and `Lua` interpreter algorythms
+- [ ] Build tools implementation
+#### III. January 2021
+- [ ] Debugger
+- [ ] Code autocompletion
+- [ ] Website deployment via GitHub Pages
+#### IV. February 2021
+- [ ] Navigator
+- [ ] Finishing UI
+- [ ] Creating wiki using GitHub Wiki
+#### V. March 2021 - April 2021
+- [ ] Algorythm optimization
+- [ ] Testing
