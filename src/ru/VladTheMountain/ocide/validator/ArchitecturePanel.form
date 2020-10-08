@@ -182,7 +182,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="customEEPROMLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="32" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Component id="customEEPROMPath" max="32767" attributes="0"/>
                       </Group>
@@ -214,9 +214,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="customEEPROMPath">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jTextField1"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="customEEPROMPathButton">
               <Properties>

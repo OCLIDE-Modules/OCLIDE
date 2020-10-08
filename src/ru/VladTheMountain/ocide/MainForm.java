@@ -37,7 +37,6 @@ public class MainForm extends javax.swing.JFrame {
     //Directories
     private final String APP_DIRECTORY = new java.io.File("").getAbsolutePath();
     private final String PROJECTS_DIR = APP_DIRECTORY + "/projects/";
-    private final String OPENOS_SDK_DIR = APP_DIRECTORY + "/SDK/OpenOS/";
     //Workspace variables
     protected java.io.File ACTIVE_FILE;
     protected String ACTIVE_PROJECT;
@@ -611,7 +610,6 @@ public class MainForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             new MainForm().setVisible(true);
         });
-        new ru.VladTheMountain.ocide.validator.ValidatorFrame().setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

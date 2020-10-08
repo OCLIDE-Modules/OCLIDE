@@ -25,14 +25,14 @@ package ru.VladTheMountain.ocide;
 
 /**
  *
- * @author nogot
+ * @author VladTheMountain
  */
-public class IDEMessagesPanel extends javax.swing.JPanel {
+public class OutputPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form IDEMessagesPanel
      */
-    public IDEMessagesPanel() {
+    public OutputPanel() {
         initComponents();
     }
 

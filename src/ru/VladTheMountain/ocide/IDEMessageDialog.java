@@ -21,18 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.ocide.settings;
+package ru.VladTheMountain.ocide;
 
 /**
  *
- * @author VladTheMountain
+ * @author VladislavTheMountain
  */
-public class SettingsFrame extends javax.swing.JFrame {
+public class IDEMessageDialog extends javax.swing.JDialog {
 
     /**
-     * Creates new form SettingsFrame
+     * Creates new form IDEMessageDialog
      */
-    public SettingsFrame() {
+    public IDEMessageDialog(java.awt.Frame parent, String title, Object object) {
+        super(parent, false);
         initComponents();
     }
 
@@ -45,7 +46,7 @@ public class SettingsFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
