@@ -1,0 +1,62 @@
+# This workflow will build a Java project with Ant
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-ant
+
+name: Oclide Java CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build_Win_x32:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8 x32 for Windows
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        architecture: x86
+    - name: Build Win_x32 with Ant
+      run: ant -noinput -buildfile build.xml
+  build_Win_x64:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8 x32 for Windows
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        architecture: x64  
+    - name: Build Win_x64 with Ant
+      run: ant -noinput -buildfile build.xml
+  build_Ubuntu18:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8 for Ubuntu 18.04
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build Bionic Beaver with Ant
+      run: ant -noinput -buildfile build.xml
+  build_Ubuntu20:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8 for Ubuntu 20.04
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build Focal Fossa with Ant
+      run: ant -noinput -buildfile build.xml
