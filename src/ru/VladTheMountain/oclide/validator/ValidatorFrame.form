@@ -63,11 +63,11 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="ru.VladTheMountain.ocide.validator.ArchitecturePanel" name="architecturePanel1">
+    <Component class="ru.VladTheMountain.oclide.validator.ArchitecturePanel" name="architecturePanel1">
     </Component>
-    <Component class="ru.VladTheMountain.ocide.validator.MainComponentsPanel" name="mainComponentsPanel1">
+    <Component class="ru.VladTheMountain.oclide.validator.MainComponentsPanel" name="mainComponentsPanel1">
     </Component>
-    <Component class="ru.VladTheMountain.ocide.validator.SecondaryComponentsPanel" name="secondaryComponentsPanel1">
+    <Component class="ru.VladTheMountain.oclide.validator.SecondaryComponentsPanel" name="secondaryComponentsPanel1">
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
 
@@ -109,7 +109,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="ru.VladTheMountain.ocide.validator.UpgradesPanel" name="upgradesPanel2">
+    <Container class="ru.VladTheMountain.oclide.validator.UpgradesPanel" name="upgradesPanel2">
 
       <Layout>
         <DimensionLayout dim="0">

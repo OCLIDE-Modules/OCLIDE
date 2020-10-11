@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.ocide.validator;
+package ru.VladTheMountain.oclide.validator;
 
 /**
  *
@@ -64,9 +64,9 @@ public class ArchitecturePanel extends javax.swing.JPanel {
         eepromPicker.add(isDefaultEEPROM);
         eepromPicker.add(isCustomEEPROM);
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Core", 0, 0, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Core", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
-        architecturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Architecture", 0, 0, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        architecturePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Architecture", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         architectureLabel.setText("Computer architecture:");
 
@@ -93,13 +93,13 @@ public class ArchitecturePanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        eepromPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "EEPROM", 0, 0, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        eepromPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "EEPROM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         isDefaultEEPROM.setText("Lua BIOS");
 
         isCustomEEPROM.setText("Custom");
 
-        customEEEPROMPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(1));
+        customEEEPROMPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         customEEPROMLabel.setText("Path to EEPROM script:");
 

@@ -21,18 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.ocide.settings;
+package ru.VladTheMountain.oclide.settings;
 
 /**
  *
  * @author nogot
  */
-public class IDELookAndFeelPanel extends javax.swing.JPanel {
+public class AboutPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form IDELookAndFeelPanel
+     * Creates new form AboutPanel
      */
-    public IDELookAndFeelPanel() {
+    public AboutPanel() {
         initComponents();
     }
 

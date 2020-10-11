@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.ocide;
+package ru.VladTheMountain.oclide.main;
 
-import ru.VladTheMountain.ocide.settings.SettingsFrame;
-import ru.VladTheMountain.ocide.validator.ValidatorFrame;
+import ru.VladTheMountain.oclide.settings.SettingsFrame;
+import ru.VladTheMountain.oclide.validator.ValidatorFrame;
 
 /**
  *
@@ -37,12 +37,13 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            /*for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
-            }
+            }*/
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -63,6 +64,8 @@ public class MainFrame extends javax.swing.JFrame {
         editorTabs = new javax.swing.JTabbedPane();
         jScrollPane4 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
         navigatorScroll = new javax.swing.JScrollPane();
         navigatorList = new javax.swing.JList<>();
         outputScroll = new javax.swing.JScrollPane();
@@ -70,15 +73,29 @@ public class MainFrame extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         createProject = new javax.swing.JMenuItem();
+        openProject = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        save = new javax.swing.JMenuItem();
+        saveAs = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        exit = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
+        undo = new javax.swing.JMenuItem();
+        redo = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        cut = new javax.swing.JMenuItem();
+        copy = new javax.swing.JMenuItem();
+        paste = new javax.swing.JMenuItem();
+        delete = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        find = new javax.swing.JMenuItem();
         runMenu = new javax.swing.JMenu();
         validate = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (indev build, commit 75)");
-        setPreferredSize(getMaximumSize());
+        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (indev build, commit 76)");
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Projects");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("HelloWorld");
@@ -95,6 +112,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         editorTabs.addTab("script.lua", jScrollPane4);
 
+        jTextPane1.setText("local t = require(\"term\")\n\nt.write(\"Hello, world!\")");
+        jScrollPane1.setViewportView(jTextPane1);
+
+        editorTabs.addTab("script2.lua", jScrollPane1);
+
         navigatorList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "t : term" };
             public int getSize() { return strings.length; }
@@ -102,18 +124,77 @@ public class MainFrame extends javax.swing.JFrame {
         });
         navigatorScroll.setViewportView(navigatorList);
 
-        outputArea.setColumns(20);
-        outputArea.setRows(5);
+        outputArea.setEditable(false);
+        outputArea.setColumns(120);
+        outputArea.setRows(30);
         outputScroll.setViewportView(outputArea);
 
         fileMenu.setText("File");
+        fileMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileMenuActionPerformed(evt);
+            }
+        });
 
+        createProject.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         createProject.setText("Create project");
+        createProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createProjectActionPerformed(evt);
+            }
+        });
         fileMenu.add(createProject);
+
+        openProject.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        openProject.setText("Open project");
+        fileMenu.add(openProject);
+        fileMenu.add(jSeparator1);
+
+        save.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        save.setText("Save");
+        fileMenu.add(save);
+
+        saveAs.setText("Save as...");
+        fileMenu.add(saveAs);
+        fileMenu.add(jSeparator2);
+
+        exit.setText("Exit");
+        fileMenu.add(exit);
 
         menuBar.add(fileMenu);
 
         editMenu.setText("Edit");
+
+        undo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+        undo.setText("Undo");
+        editMenu.add(undo);
+
+        redo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
+        redo.setText("Redo");
+        editMenu.add(redo);
+        editMenu.add(jSeparator3);
+
+        cut.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        cut.setText("Cut");
+        editMenu.add(cut);
+
+        copy.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        copy.setText("Copy");
+        editMenu.add(copy);
+
+        paste.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
+        paste.setText("Paste");
+        editMenu.add(paste);
+
+        delete.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
+        delete.setText("Delete");
+        editMenu.add(delete);
+        editMenu.add(jSeparator4);
+
+        find.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        find.setText("Find...");
+        editMenu.add(find);
+
         menuBar.add(editMenu);
 
         runMenu.setText("Run");
@@ -154,7 +235,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(projectsScroll))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editorTabs, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                    .addComponent(editorTabs)
                     .addComponent(outputScroll))
                 .addContainerGap())
         );
@@ -164,11 +245,11 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(editorTabs)
-                    .addComponent(projectsScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
+                    .addComponent(projectsScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(outputScroll)
-                    .addComponent(navigatorScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(outputScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                    .addComponent(navigatorScroll))
                 .addContainerGap())
         );
 
@@ -183,23 +264,48 @@ public class MainFrame extends javax.swing.JFrame {
         new SettingsFrame().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void createProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createProjectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createProjectActionPerformed
+
+    private void fileMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileMenuActionPerformed
+        new CreateNewProjectDialog(this).setVisible(true);
+    }//GEN-LAST:event_fileMenuActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem copy;
     private javax.swing.JMenuItem createProject;
+    private javax.swing.JMenuItem cut;
+    private javax.swing.JMenuItem delete;
     private javax.swing.JMenu editMenu;
     private javax.swing.JTabbedPane editorTabs;
+    private javax.swing.JMenuItem exit;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuItem find;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JList<String> navigatorList;
     private javax.swing.JScrollPane navigatorScroll;
+    private javax.swing.JMenuItem openProject;
     private javax.swing.JTextArea outputArea;
     private javax.swing.JScrollPane outputScroll;
+    private javax.swing.JMenuItem paste;
     private javax.swing.JScrollPane projectsScroll;
     private javax.swing.JTree projectsTree;
+    private javax.swing.JMenuItem redo;
     private javax.swing.JMenu runMenu;
+    private javax.swing.JMenuItem save;
+    private javax.swing.JMenuItem saveAs;
+    private javax.swing.JMenuItem undo;
     private javax.swing.JMenuItem validate;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.VladTheMountain.ocide.validator;
+package ru.VladTheMountain.oclide.validator;
 
 /**
  *
@@ -27,13 +27,13 @@ public class ValidatorFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        architecturePanel1 = new ru.VladTheMountain.ocide.validator.ArchitecturePanel();
-        mainComponentsPanel1 = new ru.VladTheMountain.ocide.validator.MainComponentsPanel();
-        secondaryComponentsPanel1 = new ru.VladTheMountain.ocide.validator.SecondaryComponentsPanel();
+        architecturePanel1 = new ru.VladTheMountain.oclide.validator.ArchitecturePanel();
+        mainComponentsPanel1 = new ru.VladTheMountain.oclide.validator.MainComponentsPanel();
+        secondaryComponentsPanel1 = new ru.VladTheMountain.oclide.validator.SecondaryComponentsPanel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        upgradesPanel2 = new ru.VladTheMountain.ocide.validator.UpgradesPanel();
+        upgradesPanel2 = new ru.VladTheMountain.oclide.validator.UpgradesPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Validator");
@@ -112,12 +112,12 @@ public class ValidatorFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private ru.VladTheMountain.ocide.validator.ArchitecturePanel architecturePanel1;
+    private ru.VladTheMountain.oclide.validator.ArchitecturePanel architecturePanel1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
-    private ru.VladTheMountain.ocide.validator.MainComponentsPanel mainComponentsPanel1;
-    private ru.VladTheMountain.ocide.validator.SecondaryComponentsPanel secondaryComponentsPanel1;
-    private ru.VladTheMountain.ocide.validator.UpgradesPanel upgradesPanel2;
+    private ru.VladTheMountain.oclide.validator.MainComponentsPanel mainComponentsPanel1;
+    private ru.VladTheMountain.oclide.validator.SecondaryComponentsPanel secondaryComponentsPanel1;
+    private ru.VladTheMountain.oclide.validator.UpgradesPanel upgradesPanel2;
     // End of variables declaration//GEN-END:variables
 }
