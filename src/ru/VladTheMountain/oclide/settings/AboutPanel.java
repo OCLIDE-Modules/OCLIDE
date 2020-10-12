@@ -25,10 +25,10 @@ package ru.VladTheMountain.oclide.settings;
 
 /**
  *
- * @author nogot
+ * @author VladTheMountain
  */
 public class AboutPanel extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form AboutPanel
      */

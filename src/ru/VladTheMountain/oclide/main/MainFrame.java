@@ -23,6 +23,7 @@
  */
 package ru.VladTheMountain.oclide.main;
 
+import ru.VladTheMountain.oclide.emulator.EmulatorFrame;
 import ru.VladTheMountain.oclide.settings.SettingsFrame;
 import ru.VladTheMountain.oclide.validator.ValidatorFrame;
 
@@ -37,13 +38,13 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         try {
-            /*for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
-            }*/
-            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+            }
+            //javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -91,6 +92,8 @@ public class MainFrame extends javax.swing.JFrame {
         find = new javax.swing.JMenuItem();
         runMenu = new javax.swing.JMenu();
         validate = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem2 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -207,6 +210,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         runMenu.add(validate);
+        runMenu.add(jSeparator5);
+
+        jMenuItem2.setText("Run emulator");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        runMenu.add(jMenuItem2);
 
         menuBar.add(runMenu);
 
@@ -272,6 +284,10 @@ public class MainFrame extends javax.swing.JFrame {
         new CreateNewProjectDialog(this).setVisible(true);
     }//GEN-LAST:event_fileMenuActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        new EmulatorFrame("OpenOS").setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem copy;
     private javax.swing.JMenuItem createProject;
@@ -285,12 +301,14 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JTextPane jTextPane1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JList<String> navigatorList;
