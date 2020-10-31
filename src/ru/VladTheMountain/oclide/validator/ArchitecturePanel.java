@@ -29,6 +29,8 @@ package ru.VladTheMountain.oclide.validator;
  */
 public class ArchitecturePanel extends javax.swing.JPanel {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates new form ArchitecturePanel
      */
@@ -95,9 +97,17 @@ public class ArchitecturePanel extends javax.swing.JPanel {
 
         eepromPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "EEPROM", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
+        eepromPicker.add(isDefaultEEPROM);
+        isDefaultEEPROM.setSelected(true);
         isDefaultEEPROM.setText("Lua BIOS");
 
+        eepromPicker.add(isCustomEEPROM);
         isCustomEEPROM.setText("Custom");
+        isCustomEEPROM.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                isCustomEEPROMPropertyChange(evt);
+            }
+        });
 
         customEEEPROMPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
@@ -175,6 +185,12 @@ public class ArchitecturePanel extends javax.swing.JPanel {
                 .addComponent(eepromPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void isCustomEEPROMPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_isCustomEEPROMPropertyChange
+        if (evt.getPropertyName().equals("selected")) {
+            this.customEEEPROMPanel.setVisible((boolean) evt.getNewValue());
+        }
+    }//GEN-LAST:event_isCustomEEPROMPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

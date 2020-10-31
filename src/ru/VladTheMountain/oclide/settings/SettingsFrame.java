@@ -29,6 +29,8 @@ package ru.VladTheMountain.oclide.settings;
  */
 public class SettingsFrame extends javax.swing.JFrame {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates new form SettingsFrame
      */

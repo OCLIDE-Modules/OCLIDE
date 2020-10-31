@@ -45,6 +45,7 @@ public class MainComponentsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         componentsPanel = new javax.swing.JPanel();
         cpuApuLabel = new javax.swing.JLabel();
         gpuLabel = new javax.swing.JLabel();
@@ -84,8 +85,11 @@ public class MainComponentsPanel extends javax.swing.JPanel {
 
         storagePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Storage", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
+        buttonGroup1.add(isHDD);
+        isHDD.setSelected(true);
         isHDD.setText("Hard Disk Drives");
 
+        buttonGroup1.add(isRAID);
         isRAID.setText("RAID");
 
         HDDPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -327,6 +331,7 @@ public class MainComponentsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel RAIDSlot2Label;
     private javax.swing.JComboBox<String> RAIDSlot3Box;
     private javax.swing.JLabel RAIDSlot3Label;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel componentsPanel;
     private javax.swing.JComboBox<String> cpuApuBox;
     private javax.swing.JLabel cpuApuLabel;

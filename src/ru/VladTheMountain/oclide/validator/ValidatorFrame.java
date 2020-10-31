@@ -5,17 +5,26 @@
  */
 package ru.VladTheMountain.oclide.validator;
 
+import java.awt.event.ActionEvent;
+import javax.swing.Timer;
+
 /**
  *
  * @author Vladi
  */
 public class ValidatorFrame extends javax.swing.JFrame {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates new form ValidatorFrame
      */
     public ValidatorFrame() {
         initComponents();
+        Timer t = new Timer(300, (ActionEvent e) -> {
+            repaint();
+        });
+        t.start();
     }
 
     /**
@@ -40,8 +49,18 @@ public class ValidatorFrame extends javax.swing.JFrame {
         setResizable(false);
 
         jButton1.setText("Launch!");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -110,6 +129,14 @@ public class ValidatorFrame extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add emulation or checking algorythm here
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private ru.VladTheMountain.oclide.validator.ArchitecturePanel architecturePanel1;

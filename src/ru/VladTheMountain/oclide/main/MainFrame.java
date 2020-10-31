@@ -23,7 +23,12 @@
  */
 package ru.VladTheMountain.oclide.main;
 
-import ru.VladTheMountain.oclide.emulator.EmulatorFrame;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
 import ru.VladTheMountain.oclide.settings.SettingsFrame;
 import ru.VladTheMountain.oclide.validator.ValidatorFrame;
 
@@ -33,20 +38,24 @@ import ru.VladTheMountain.oclide.validator.ValidatorFrame;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    private static final long serialVersionUID = 1L;
+
+    private String ACTIVE_FILE;
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
             //javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
     }
@@ -93,12 +102,13 @@ public class MainFrame extends javax.swing.JFrame {
         runMenu = new javax.swing.JMenu();
         validate = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        emulate = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        settings = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (indev build, commit 76)");
+        setPreferredSize(getMaximumSize());
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Projects");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("HelloWorld");
@@ -108,6 +118,11 @@ public class MainFrame extends javax.swing.JFrame {
         treeNode2.add(treeNode3);
         treeNode1.add(treeNode2);
         projectsTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        projectsTree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                projectsTreeValueChanged(evt);
+            }
+        });
         projectsScroll.setViewportView(projectsTree);
 
         jEditorPane1.setText("local t = require(\"term\")\n\nt.write(\"Hello, world!\")");
@@ -149,19 +164,41 @@ public class MainFrame extends javax.swing.JFrame {
         fileMenu.add(createProject);
 
         openProject.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        openProject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/ImportIcon.png"))); // NOI18N
         openProject.setText("Open project");
+        openProject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openProjectActionPerformed(evt);
+            }
+        });
         fileMenu.add(openProject);
         fileMenu.add(jSeparator1);
 
         save.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/SaveIcon.png"))); // NOI18N
         save.setText("Save");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
         fileMenu.add(save);
 
         saveAs.setText("Save as...");
+        saveAs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAsActionPerformed(evt);
+            }
+        });
         fileMenu.add(saveAs);
         fileMenu.add(jSeparator2);
 
         exit.setText("Exit");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
         fileMenu.add(exit);
 
         menuBar.add(fileMenu);
@@ -170,32 +207,67 @@ public class MainFrame extends javax.swing.JFrame {
 
         undo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         undo.setText("Undo");
+        undo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                undoActionPerformed(evt);
+            }
+        });
         editMenu.add(undo);
 
         redo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         redo.setText("Redo");
+        redo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redoActionPerformed(evt);
+            }
+        });
         editMenu.add(redo);
         editMenu.add(jSeparator3);
 
         cut.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         cut.setText("Cut");
+        cut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cutActionPerformed(evt);
+            }
+        });
         editMenu.add(cut);
 
         copy.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         copy.setText("Copy");
+        copy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyActionPerformed(evt);
+            }
+        });
         editMenu.add(copy);
 
         paste.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         paste.setText("Paste");
+        paste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pasteActionPerformed(evt);
+            }
+        });
         editMenu.add(paste);
 
         delete.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
         delete.setText("Delete");
+        delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteActionPerformed(evt);
+            }
+        });
         editMenu.add(delete);
         editMenu.add(jSeparator4);
 
         find.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         find.setText("Find...");
+        find.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                findActionPerformed(evt);
+            }
+        });
         editMenu.add(find);
 
         menuBar.add(editMenu);
@@ -212,25 +284,25 @@ public class MainFrame extends javax.swing.JFrame {
         runMenu.add(validate);
         runMenu.add(jSeparator5);
 
-        jMenuItem2.setText("Run emulator");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        emulate.setText("Run emulator");
+        emulate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                emulateActionPerformed(evt);
             }
         });
-        runMenu.add(jMenuItem2);
+        runMenu.add(emulate);
 
         menuBar.add(runMenu);
 
         helpMenu.setText("Help");
 
-        jMenuItem1.setText("Settings");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        settings.setText("Settings");
+        settings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                settingsActionPerformed(evt);
             }
         });
-        helpMenu.add(jMenuItem1);
+        helpMenu.add(settings);
 
         menuBar.add(helpMenu);
 
@@ -272,9 +344,9 @@ public class MainFrame extends javax.swing.JFrame {
         new ValidatorFrame().setVisible(true);
     }//GEN-LAST:event_validateActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
         new SettingsFrame().setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_settingsActionPerformed
 
     private void createProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createProjectActionPerformed
         // TODO add your handling code here:
@@ -284,9 +356,71 @@ public class MainFrame extends javax.swing.JFrame {
         new CreateNewProjectDialog(this).setVisible(true);
     }//GEN-LAST:event_fileMenuActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        new EmulatorFrame("OpenOS").setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void emulateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emulateActionPerformed
+
+    }//GEN-LAST:event_emulateActionPerformed
+
+    private void projectsTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_projectsTreeValueChanged
+        for (int i = 0; i < this.editorTabs.getTabCount(); i++) {
+            if (this.editorTabs.getTabComponentAt(i).getAccessibleContext().getAccessibleDescription().equals(1)) {
+                //TODO: Load the proper file
+            }
+        }
+    }//GEN-LAST:event_projectsTreeValueChanged
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        this.saveActionPerformed(evt);
+        System.exit(0);
+    }//GEN-LAST:event_exitActionPerformed
+
+    private void saveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveAsActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        if (new File(this.ACTIVE_FILE).exists()) {
+            FileWriter fw;
+            try {
+                fw = new FileWriter(this.ACTIVE_FILE);
+                fw.write(this.editorTabs.getComponentAt(0).getAccessibleContext().getAccessibleDescription());
+                fw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_saveActionPerformed
+
+    private void openProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openProjectActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_openProjectActionPerformed
+
+    private void undoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_undoActionPerformed
+
+    private void redoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_redoActionPerformed
+
+    private void cutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cutActionPerformed
+
+    private void copyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_copyActionPerformed
+
+    private void pasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pasteActionPerformed
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteActionPerformed
+
+    private void findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_findActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem copy;
@@ -295,13 +429,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem delete;
     private javax.swing.JMenu editMenu;
     private javax.swing.JTabbedPane editorTabs;
+    private javax.swing.JMenuItem emulate;
     private javax.swing.JMenuItem exit;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuItem find;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -323,6 +456,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu runMenu;
     private javax.swing.JMenuItem save;
     private javax.swing.JMenuItem saveAs;
+    private javax.swing.JMenuItem settings;
     private javax.swing.JMenuItem undo;
     private javax.swing.JMenuItem validate;
     // End of variables declaration//GEN-END:variables

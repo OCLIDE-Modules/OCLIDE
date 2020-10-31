@@ -157,13 +157,23 @@
       <SubComponents>
         <Component class="javax.swing.JRadioButton" name="isDefaultEEPROM">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="eepromPicker"/>
+            </Property>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Lua BIOS"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="isCustomEEPROM">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="eepromPicker"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Custom"/>
           </Properties>
+          <Events>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="isCustomEEPROMPropertyChange"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="customEEEPROMPanel">
           <Properties>

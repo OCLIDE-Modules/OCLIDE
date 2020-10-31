@@ -45,6 +45,8 @@ import ru.VladTheMountain.oclide.main.MainFrame;
  */
 public class OCLIDE extends javax.swing.JFrame {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates new form OCLIDE
      */
@@ -55,15 +57,18 @@ public class OCLIDE extends javax.swing.JFrame {
             javax.swing.FocusManager.getCurrentManager().getActiveWindow().repaint();
             javax.swing.FocusManager.getCurrentManager().getActiveWindow().revalidate();
         });
-        try {
+        t.start();
+        /*try {
             this.checkFiles();
         } catch (URISyntaxException ex) {
             Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
+        this.setVisible(false);
         new MainFrame().setVisible(true);
     }
 
-    void checkFiles() throws URISyntaxException {
+    @Deprecated
+    private void checkFiles() throws URISyntaxException {
         String OpenOSRepo = "https://raw.githubusercontent.com/MightyPirates/OpenComputers/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/openos";
         String Plan9kRepo = "https://raw.githubusercontent.com/MightyPirates/OpenComputers/master-MC1.7.10/src/main/resources/assets/opencomputers/loot/plan9k";
         String[] openosFiles = {
@@ -404,8 +409,7 @@ public class OCLIDE extends javax.swing.JFrame {
                     ReadableByteChannel rbc = Channels.newChannel(new URL(Plan9kRepo + plan9kFiles[i]).openStream());
                     fos = new FileOutputStream("environment/Plan9k/" + plan9kFiles[i]);
                     fos.getChannel().transferFrom(rbc, 0, Integer.MAX_VALUE);
-                    /*this.statusLabel.setText*/
-                    System.out.println("Downloading: " + Plan9kRepo + plan9kFiles[i] + " -> " + "environment/Plan9k/" + plan9kFiles[i] + ". Total - " + Files.size(Paths.get("environment/Plan9k/" + plan9kFiles[i])) + " bytes.");
+                    this.statusLabel.setText("Downloading: " + Plan9kRepo + plan9kFiles[i] + " -> " + "environment/Plan9k/" + plan9kFiles[i] + ". Total - " + Files.size(Paths.get("environment/Plan9k/" + plan9kFiles[i])) + " bytes.");
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -492,7 +496,8 @@ public class OCLIDE extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new OCLIDE();
+            OCLIDE oclide;
+            oclide = new OCLIDE();
         });
     }
 
