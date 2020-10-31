@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import ru.VladTheMountain.oclide.settings.SettingsFrame;
 import ru.VladTheMountain.oclide.validator.ValidatorFrame;
 
@@ -54,7 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
                 }
             }
             //javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();

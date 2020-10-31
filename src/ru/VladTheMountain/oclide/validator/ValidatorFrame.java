@@ -36,7 +36,7 @@ public class ValidatorFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        architecturePanel1 = new ru.VladTheMountain.oclide.validator.ArchitecturePanel();
+        ru.VladTheMountain.oclide.validator.ArchitecturePanel architecturePanel1 = new ru.VladTheMountain.oclide.validator.ArchitecturePanel();
         mainComponentsPanel1 = new ru.VladTheMountain.oclide.validator.MainComponentsPanel();
         secondaryComponentsPanel1 = new ru.VladTheMountain.oclide.validator.SecondaryComponentsPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -139,7 +139,6 @@ public class ValidatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private ru.VladTheMountain.oclide.validator.ArchitecturePanel architecturePanel1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
