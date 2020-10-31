@@ -7,7 +7,7 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java with Swing GUI
 ## Roadmap
 #### I. September 2020 - October 2020 
 - [x] Creating UI  
-- [ ] Adding basic editor algorythms  
+- [x] Adding basic editor algorythms  
 - [x] Setting up the GitHub repository  
 #### II. November 2020 - December 2020
 - [ ] Validator and `Lua` interpreter algorythms  
