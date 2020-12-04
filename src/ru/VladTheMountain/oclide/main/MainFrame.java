@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.text.DefaultEditorKit;
 import ru.VladTheMountain.oclide.settings.SettingsFrame;
 import ru.VladTheMountain.oclide.validator.ValidatorFrame;
 
@@ -42,6 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
     private static final long serialVersionUID = 1L;
 
     private String ACTIVE_FILE;
+    private DefaultEditorKit editorKit;
 
     /**
      * Creates new form MainFrame
