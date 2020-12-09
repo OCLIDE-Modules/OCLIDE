@@ -58,11 +58,11 @@ public class OCLIDE extends javax.swing.JFrame {
             javax.swing.FocusManager.getCurrentManager().getActiveWindow().revalidate();
         });
         t.start();
-        /*try {
+        try {
             this.checkFiles();
         } catch (URISyntaxException ex) {
             Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
         this.setVisible(false);
         new MainFrame().setVisible(true);
     }

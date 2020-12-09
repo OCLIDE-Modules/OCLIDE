@@ -55,7 +55,7 @@ public class MachineSettings {
     }
 
     public MachineSettings(int caseType, String eeprom, int cpu, int gpu, int mem1, int mem2, int hdd1, int hdd2) {
-
+        
     }
 
     public Dimension getScreenSize() {
