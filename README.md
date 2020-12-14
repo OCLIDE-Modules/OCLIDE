@@ -18,10 +18,10 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java with Swing GUI
 - [x] Adding basic editor algorythms  
 - [x] Setting up the GitHub repository  
 #### II. November - December
-- [ ] <s>Validator and Lua interpreter algorythms</s> OCEmu wrapper
-- [ ] Build tools implementation  
+<s>- [ ] Validator and Lua interpreter algorythms</s>
+- [ ] <s>Build tools implementation</s> Debugger
 #### III. January
-- [ ] Debugger  
+- [ ] <s>Debugger</s> OCEmu wrapper
 - [ ] Code autocompletion  
 - [ ] Website deployment via GitHub Pages  
 #### IV. February
