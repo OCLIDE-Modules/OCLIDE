@@ -22,7 +22,7 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java with Swing GUI
 - [ ] <s>Build tools implementation</s> Debugger
 #### III. January
 - [ ] <s>Debugger</s> OCEmu wrapper
-- [ ] Code autocompletion  
+- [x] Code autocompletion  
 - [ ] Website deployment via GitHub Pages  
 #### IV. February
 - [ ] Navigator  
