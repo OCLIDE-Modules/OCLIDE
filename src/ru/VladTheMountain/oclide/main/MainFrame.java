@@ -24,6 +24,8 @@
 package ru.VladTheMountain.oclide.main;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -31,8 +33,15 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.text.DefaultEditorKit;
+import org.fife.ui.rsyntaxtextarea.AbstractTokenMakerFactory;
+import org.fife.ui.rsyntaxtextarea.RSyntaxDocument;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.TokenMakerFactory;
+import org.fife.ui.rsyntaxtextarea.parser.AbstractParser;
+import org.fife.ui.rsyntaxtextarea.parser.DefaultParseResult;
+import org.fife.ui.rsyntaxtextarea.parser.ParseResult;
+import ru.VladTheMountain.oclide.configurator.ConfiguratorFrame;
 import ru.VladTheMountain.oclide.settings.SettingsFrame;
-import ru.VladTheMountain.oclide.validator.ValidatorFrame;
 
 /**
  *
@@ -44,6 +53,15 @@ public class MainFrame extends javax.swing.JFrame {
 
     private String ACTIVE_FILE;
     private DefaultEditorKit editorKit;
+
+    private class LuaParser extends AbstractParser {
+
+        @Override
+        public ParseResult parse(RSyntaxDocument doc, String style) {
+            return new DefaultParseResult(this);
+        }
+
+    }
 
     /**
      * Creates new form MainFrame
@@ -58,9 +76,41 @@ public class MainFrame extends javax.swing.JFrame {
             }
             //javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFrame.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
+        openFile(new File("projects/Calculator/main.lua"));
+    }
+
+    /**
+     * Reads the contents of {@code file} into a new {@link RSyntaxTextArea} in
+     * a new tab
+     *
+     * @param file the {@link File}, which contents are to read
+     */
+    void openFile(File file) {
+        FileReader fr = null;
+        try {
+            fr = new FileReader(file);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainFrame.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        String fileContent = null;
+        char[] fileContents = {};
+        try {
+            fr.read(fileContents);
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        fileContent = String.copyValueOf(fileContents);
+        RSyntaxTextArea newFile = new RSyntaxTextArea(fileContent);
+        AbstractTokenMakerFactory atmf = (AbstractTokenMakerFactory) TokenMakerFactory.getDefaultInstance();
+        atmf.putMapping("text/myLanguage", "ru.VladTheMountain.oclide.main.LuaToken");
+        newFile.setSyntaxEditingStyle("text/myLanguage");
+        this.editorTabs.add(newFile);
     }
 
     /**
@@ -110,8 +160,7 @@ public class MainFrame extends javax.swing.JFrame {
         settings = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (indev build, commit 76)");
-        setPreferredSize(getMaximumSize());
+        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (indev build, commit 98)");
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Projects");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("HelloWorld");
@@ -344,7 +393,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void validateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateActionPerformed
-        new ValidatorFrame().setVisible(true);
+        new ConfiguratorFrame().setVisible(true);
     }//GEN-LAST:event_validateActionPerformed
 
     private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
@@ -352,11 +401,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsActionPerformed
 
     private void createProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createProjectActionPerformed
-        // TODO add your handling code here:
+        new CreateNewProjectDialog(this).setVisible(true);
     }//GEN-LAST:event_createProjectActionPerformed
 
     private void fileMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileMenuActionPerformed
-        new CreateNewProjectDialog(this).setVisible(true);
+
     }//GEN-LAST:event_fileMenuActionPerformed
 
     private void emulateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emulateActionPerformed
@@ -388,7 +437,8 @@ public class MainFrame extends javax.swing.JFrame {
                 fw.write(this.editorTabs.getComponentAt(0).getAccessibleContext().getAccessibleDescription());
                 fw.close();
             } catch (IOException ex) {
-                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MainFrame.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_saveActionPerformed

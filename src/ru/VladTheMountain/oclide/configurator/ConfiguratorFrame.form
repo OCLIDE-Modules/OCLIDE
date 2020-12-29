@@ -63,15 +63,15 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="ru.VladTheMountain.oclide.validator.ArchitecturePanel" name="architecturePanel1">
+    <Component class="ru.VladTheMountain.oclide.configurator.ArchitecturePanel" name="architecturePanel1">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
       </AuxValues>
     </Component>
-    <Component class="ru.VladTheMountain.oclide.validator.MainComponentsPanel" name="mainComponentsPanel1">
+    <Component class="ru.VladTheMountain.oclide.configurator.MainComponentsPanel" name="mainComponentsPanel1">
     </Component>
-    <Component class="ru.VladTheMountain.oclide.validator.SecondaryComponentsPanel" name="secondaryComponentsPanel1">
+    <Component class="ru.VladTheMountain.oclide.configurator.SecondaryComponentsPanel" name="secondaryComponentsPanel1">
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
 
@@ -119,7 +119,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="ru.VladTheMountain.oclide.validator.UpgradesPanel" name="upgradesPanel2">
+    <Container class="ru.VladTheMountain.oclide.configurator.UpgradesPanel" name="upgradesPanel2">
 
       <Layout>
         <DimensionLayout dim="0">

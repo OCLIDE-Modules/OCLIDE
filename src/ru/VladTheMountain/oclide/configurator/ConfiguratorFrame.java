@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.VladTheMountain.oclide.validator;
+package ru.VladTheMountain.oclide.configurator;
 
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
@@ -12,19 +12,26 @@ import javax.swing.Timer;
  *
  * @author Vladi
  */
-public class ValidatorFrame extends javax.swing.JFrame {
+public class ConfiguratorFrame extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * Creates new form ValidatorFrame
      */
-    public ValidatorFrame() {
+    public ConfiguratorFrame() {
         initComponents();
         Timer t = new Timer(300, (ActionEvent e) -> {
             repaint();
         });
         t.start();
+        this.setVisible(true);
+    }
+    
+    public static void main(String[] args){
+        java.awt.EventQueue.invokeLater(() -> {
+            new ConfiguratorFrame();
+        });
     }
 
     /**
@@ -36,13 +43,13 @@ public class ValidatorFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ru.VladTheMountain.oclide.validator.ArchitecturePanel architecturePanel1 = new ru.VladTheMountain.oclide.validator.ArchitecturePanel();
-        mainComponentsPanel1 = new ru.VladTheMountain.oclide.validator.MainComponentsPanel();
-        secondaryComponentsPanel1 = new ru.VladTheMountain.oclide.validator.SecondaryComponentsPanel();
+        ru.VladTheMountain.oclide.configurator.ArchitecturePanel architecturePanel1 = new ru.VladTheMountain.oclide.configurator.ArchitecturePanel();
+        mainComponentsPanel1 = new ru.VladTheMountain.oclide.configurator.MainComponentsPanel();
+        secondaryComponentsPanel1 = new ru.VladTheMountain.oclide.configurator.SecondaryComponentsPanel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        upgradesPanel2 = new ru.VladTheMountain.oclide.validator.UpgradesPanel();
+        upgradesPanel2 = new ru.VladTheMountain.oclide.configurator.UpgradesPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Validator");
@@ -135,15 +142,15 @@ public class ValidatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add emulation or checking algorythm here
+        new Configurator(new String[]{"e", "e"}).run();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
-    private ru.VladTheMountain.oclide.validator.MainComponentsPanel mainComponentsPanel1;
-    private ru.VladTheMountain.oclide.validator.SecondaryComponentsPanel secondaryComponentsPanel1;
-    private ru.VladTheMountain.oclide.validator.UpgradesPanel upgradesPanel2;
+    private ru.VladTheMountain.oclide.configurator.MainComponentsPanel mainComponentsPanel1;
+    private ru.VladTheMountain.oclide.configurator.SecondaryComponentsPanel secondaryComponentsPanel1;
+    private ru.VladTheMountain.oclide.configurator.UpgradesPanel upgradesPanel2;
     // End of variables declaration//GEN-END:variables
 }
