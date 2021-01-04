@@ -7,26 +7,8 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java with Swing GUI
 ## Feature list
 - [x] Editing tools (Undo/Redo, Clipboard)
 - [x] File management
-- [ ] Version control (Git integration)
-- [ ] Emulator wrapper
+- [x] Syntax highlighting
+- [ ] <s>Version control (Git integration)</s>
+- [ ] OCEmu integration
+- [ ] Ocelot Brain support
 - [ ] Debugging tools
-
-## Roadmap for 2020 - 2021
-#### I. September - October 
-- [x] Creating UI  
-- [x] Adding basic editor algorythms  
-- [x] Setting up the GitHub repository  
-#### II. November - December
-- [ ] <s>Validator and Lua interpreter algorythms</s>
-- [ ] <s>Build tools implementation</s> Debugger
-#### III. January
-- [ ] <s>Debugger</s> OCEmu wrapper
-- [x] Code autocompletion  
-- [ ] Website deployment via GitHub Pages  
-#### IV. February
-- [ ] Navigator  
-- [ ] Finishing UI  
-- [ ] Creating wiki using GitHub Wiki  
-#### V. March - April
-- [ ] <s>Algorythm optimization</s>
-- [ ] Testing  
