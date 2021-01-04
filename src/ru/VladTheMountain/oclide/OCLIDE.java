@@ -13,64 +13,23 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
-import javax.swing.Timer;
-import ru.VladTheMountain.oclide.main.MainFrame;
+import ru.VladTheMountain.oclide.editor.MainFrame;
 
 /**
  *
- * @author VladTheMountain
+ * @author Vladi
  */
-public class OCLIDE {
+public class OCLIDE extends javax.swing.JFrame {
 
-    private static JProgressBar progressBar;
-    private static JLabel statusLabel;
-    static Timer t;
+    private static final long serialVersionUID = 1L;
 
-    public static void main(String[] args) throws URISyntaxException {
-        /*JDialog fileChecker = new JDialog((JFrame) null, "Prepairing to start...");
-        progressBar = new JProgressBar(JProgressBar.HORIZONTAL);
-        statusLabel = new JLabel("Text");
-        fileChecker.setLayout(new FlowLayout(FlowLayout.CENTER));
-        fileChecker.add(statusLabel);
-        fileChecker.add(progressBar);
-        fileChecker.setSize(600, 200);
-        fileChecker.setResizable(false);
-        fileChecker.setVisible(true);
-        t = new Timer(300, (ActionEvent e) -> {
-            fileChecker.repaint();
-        });
-        t.start();
-        checkFiles();*/
-        JOptionPane.showMessageDialog(null, "This product is UNFINISHED. The following \'app\' is just a GUI skeleton, not a full release.\n\n"
-                + " The MIT License\n"
-                + " \n"
-                + " © 2020 Vladislav Gorskii.\n"
-                + " \n"
-                + " Permission is hereby granted, free of charge, to any person obtaining a copy\n"
-                + " of this software and associated documentation files (the \"Software\"), to deal\n"
-                + " in the Software without restriction, including without limitation the rights\n"
-                + " to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n"
-                + " copies of the Software, and to permit persons to whom the Software is\n"
-                + " furnished to do so, subject to the following conditions:\n"
-                + " \n"
-                + " The above copyright notice and this permission notice shall be included in\n"
-                + " all copies or substantial portions of the Software.\n"
-                + " \n"
-                + " THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n"
-                + " IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n"
-                + " FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n"
-                + " AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n"
-                + " LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n"
-                + " OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n"
-                + " THE SOFTWARE.", "WARNING", JOptionPane.ERROR_MESSAGE);
-        new MainFrame().setVisible(true);
+    /**
+     * Creates new form OCLIDEMain
+     */
+    public OCLIDE() {
+        initComponents();
     }
 
     static void checkFiles() throws URISyntaxException {
@@ -377,8 +336,6 @@ public class OCLIDE {
             new File("environment/Plan9k").mkdirs();
         }
 
-        progressBar.setValue(0);
-        progressBar.setMaximum(openosFiles.length);
         for (int i = 0; i < openosFiles.length; i++) {
             if (!(new File("environment/OpenOS/" + openosFiles[i]).exists())) {
                 FileOutputStream fos = null;
@@ -387,7 +344,6 @@ public class OCLIDE {
                     ReadableByteChannel rbc = Channels.newChannel(new URL(OpenOSRepo + openosFiles[i]).openStream());
                     fos = new FileOutputStream("environment/OpenOS/" + openosFiles[i]);
                     fos.getChannel().transferFrom(rbc, 0, Integer.MAX_VALUE);
-                    statusLabel.setText("Downloading: " + OpenOSRepo + openosFiles[i] + " -> " + "environment/OpenOS/" + openosFiles[i] + ". Total - " + Files.size(Paths.get("environment/OpenOS/" + openosFiles[i])) + " bytes.");
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -400,11 +356,8 @@ public class OCLIDE {
                     }
                 }
             }
-            progressBar.setValue(i + 1);
         }
 
-        progressBar.setValue(0);
-        progressBar.setMaximum(plan9kFiles.length);
         for (int i = 0; i < plan9kFiles.length; i++) {
             if (!(new File("environment/Plan9k/" + plan9kFiles[i]).exists())) {
                 FileOutputStream fos = null;
@@ -413,7 +366,6 @@ public class OCLIDE {
                     ReadableByteChannel rbc = Channels.newChannel(new URL(Plan9kRepo + plan9kFiles[i]).openStream());
                     fos = new FileOutputStream("environment/Plan9k/" + plan9kFiles[i]);
                     fos.getChannel().transferFrom(rbc, 0, Integer.MAX_VALUE);
-                    statusLabel.setText("Downloading: " + Plan9kRepo + plan9kFiles[i] + " -> " + "environment/Plan9k/" + plan9kFiles[i] + ". Total - " + Files.size(Paths.get("environment/Plan9k/" + plan9kFiles[i])) + " bytes.");
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -426,7 +378,109 @@ public class OCLIDE {
                     }
                 }
             }
-            progressBar.setValue(i + 1);
         }
     }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+        javax.swing.JComboBox<String> jComboBox1 = new javax.swing.JComboBox<>();
+        javax.swing.JButton jButton1 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Pick a mode...");
+        setResizable(false);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Choose IDE configuration (Target Architecture, Emulator):");
+
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OpenComputers, OCEmu", "OpenComputers, Ocelot Desktop" }));
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton1.setText("Proceed");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+
+        pack();
+        setLocationRelativeTo(null);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            checkFiles();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        new MainFrame().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(OCLIDE.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new OCLIDE().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // End of variables declaration//GEN-END:variables
 }

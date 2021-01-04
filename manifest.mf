@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
+SplashScreen-Image: ru/VladTheMountain/assetsa/Oclide-splash.jpg
 X-COMMENT: Main-Class will be added automatically by build
 
