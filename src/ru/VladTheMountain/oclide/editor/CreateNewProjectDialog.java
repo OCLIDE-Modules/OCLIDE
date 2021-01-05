@@ -258,9 +258,9 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
 
             projectNameField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
             projectNameField.setText("LuaScript1");
-            projectNameField.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    projectNameFieldActionPerformed(evt);
+            projectNameField.addCaretListener(new javax.swing.event.CaretListener() {
+                public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                    projectNameFieldCaretUpdate(evt);
                 }
             });
 
@@ -415,9 +415,9 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_projectTypeListValueChanged
 
-    private void projectNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projectNameFieldActionPerformed
+    private void projectNameFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_projectNameFieldCaretUpdate
         this.projectFolderField.setText(new File("projects").getAbsolutePath() + "\\" + projectNameField.getText());
-    }//GEN-LAST:event_projectNameFieldActionPerformed
+    }//GEN-LAST:event_projectNameFieldCaretUpdate
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;

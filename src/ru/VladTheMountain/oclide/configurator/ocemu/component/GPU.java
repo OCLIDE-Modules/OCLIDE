@@ -32,12 +32,7 @@ import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
 public class GPU extends OCEmuComponent {
 
     public GPU(int i1, int i2, int i3, int i4) {
-        super(4, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
-    }
-
-    @Override
-    public int getComponentType() {
-        return 4;
+        super(3, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
     }
 
 }

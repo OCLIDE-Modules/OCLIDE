@@ -156,6 +156,11 @@ public class MainFrame extends javax.swing.JFrame {
         for (java.io.File f : files) {
             javax.swing.tree.DefaultMutableTreeNode cNode = new javax.swing.tree.DefaultMutableTreeNode(f.getName());
             n.add(cNode);
+            /*try {
+                java.nio.file.Files.copy(f.toPath(), new java.io.File("OCEmu/loot/OpenOS/home/" + f.getName()).toPath(), (java.nio.file.CopyOption) null);
+            } catch (java.io.IOException ex) {
+                java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }*/
             if (f.isDirectory()) {
                 recursivelyAddFiles(f, cNode);
             }

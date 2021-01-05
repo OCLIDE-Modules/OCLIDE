@@ -23,34 +23,27 @@
  */
 package ru.VladTheMountain.oclide.configurator.ocemu.component;
 
+import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
+
 /**
  *
  * @author VladTheMountain
  */
-public class OCEmuComponent {
+public class Screen extends OCEmuComponent {
 
-    //FIELD 1
-    int type;
-    //FIELD 2
-    String address;
-    //the rest
-    String[] opts;
-
-    public OCEmuComponent(int componentType, String componentAddress, String... options) {
-        this.type = componentType;
-        this.address = componentAddress;
-        this.opts = options;
+    public Screen(int i1, int i2, int i3, int i4) {
+        super(8, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
     }
 
-    public int getComponentType() {
-        return type;
-    }
-
-    public String getComponentAddress() {
-        return address;
-    }
-
-    public String getOptionAt(int pos) {
-        return opts[pos];
+    /**
+     * Use only if the first param is null
+     *
+     * @param i1
+     * @param i2
+     * @param i3
+     * @param i4
+     */
+    public Screen(String i1, int i2, int i3, int i4) {
+        super(8, UUIDGenerator.create(), i1, String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
     }
 }

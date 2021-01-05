@@ -26,12 +26,13 @@ package ru.VladTheMountain.oclide.configurator.ocemu;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
 
 /**
  *
  * @author VladTheMountain
  */
-public class OCEmuLauncher {
+public class ConfigMaker {
 
     //CONSTANTS
     public static final int CPU = 0;
@@ -60,26 +61,57 @@ public class OCEmuLauncher {
 
     /**
      *
+     * @param comps
      */
-    public OCEmuLauncher(String[][] configuration) {
-        for (int i = 0; i < configuration.length; i++) {
-            for (int j = 0; j < configuration.length; j++) {
-                
+    public ConfigMaker(OCEmuComponent[] comps) {
+        for (OCEmuComponent comp : comps) {
+            switch (comp.getComponentType()) {
+                case 0:
+                    this.computerComponents = this.computerComponents + "      "
+                            + "{\"computer\", "
+                            + "\"" + comp.getComponentAddress() + "\"},\n";
+                    break;
+                case 1:
+                    this.computerComponents = this.computerComponents + "      "
+                            + "{\"eeprom\", "
+                            + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "" + comp.getOptionAt(1) + "},\n";
+                    break;
+                case 2:
+                    this.computerComponents = this.computerComponents + "      "
+                            + "{\"filesystem\", "
+                            + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "" + comp.getOptionAt(1) + ", " + "" + comp.getOptionAt(2) + "},\n";
+                    break;
+                case 3:
+                    this.computerComponents = this.computerComponents + "      "
+                            + "{\"gpu\", "
+                            + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "" + comp.getOptionAt(1) + ", " + "" + comp.getOptionAt(2) + ", " + "" + comp.getOptionAt(3) + "},\n";
+                    break;
+                case 4:
+                    this.computerComponents = this.computerComponents + "      "
+                            + "{\"internet\", \"" + comp.getComponentAddress() + "\"},\n";
+                    break;
+                case 5:
+                    this.computerComponents = this.computerComponents + "      "
+                            + "{\"keyboard_sdl2\", "
+                            + "\"" + comp.getComponentAddress() + "\"},\n";
+                    break;
+                case 6:
+                    this.computerComponents = this.computerComponents + "      "
+                            + "{\"modem\", "
+                            + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "" + comp.getOptionAt(1) + "},\n";
+                    break;
+                case 7:
+                    this.computerComponents = this.computerComponents + "      "
+                            + "{\"ocemu\", "
+                            + "\"" + comp.getComponentAddress() + "\"},\n";
+                    break;
+                case 8:
+                    this.computerComponents = this.computerComponents + "      "
+                            + "{\"screen_sdl2\", "
+                            + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "" + comp.getOptionAt(1) + ", " + "" + comp.getOptionAt(2) + ", " + "" + comp.getOptionAt(3) + "},\n";
+                    break;
             }
         }
-    }
-
-    /**
-     *
-     * @param componentType
-     * @return
-     */
-    String createComponent(int componentType) {
-        String comp = "";
-        switch (componentType) {
-            case 0:
-        }
-        return comp;
     }
 
     /**
@@ -184,5 +216,52 @@ public class OCEmuLauncher {
                 + "}";
         //
         Files.write(config.toPath(), contents.getBytes());
+    }
+
+    public OCEmuComponent[] readConfig(File f) throws IOException {
+        int lines = Files.readAllLines(f.toPath()).toArray().length;
+        String[] configContents = new String[lines];
+        System.arraycopy(Files.readAllLines(f.toPath()).toArray(configContents), 0, configContents, 0, lines);
+        OCEmuComponent[] tmp = {};
+        for (int i = 47; i < configContents.length; i++) {
+            if (configContents[i].startsWith("{") && (configContents[i].endsWith("}") || configContents[i].endsWith("},"))) {
+                int type = 7;
+                String address;
+                String[] opts;
+                switch (configContents[i].substring(configContents[i].indexOf("\""), configContents[i].indexOf("\"", configContents[i].indexOf("\"")))) {
+                    case "computer":
+                        type = 0;
+                        break;
+                    case "eeprom":
+                        type = 1;
+                        break;
+                    case "filesystem":
+                        type = 2;
+                        break;
+                    case "gpu":
+                        type = 3;
+                        break;
+                    case "internet":
+                        type = 4;
+                        break;
+                    case "keyboard":
+                        type = 5;
+                        break;
+                    case "modem":
+                        type = 6;
+                        break;
+                    case "ocemu":
+                        type = 7;
+                        break;
+                    case "screen":
+                        type = 8;
+                        break;
+                }
+                address = configContents[i].substring(configContents[i].indexOf("\"", configContents[i].indexOf(" ")), configContents[i].indexOf("\"", configContents[i].indexOf("\"", configContents[i].indexOf(" "))));
+                //TODO: read options from file
+                tmp[i] = new OCEmuComponent(type, address, "Can't read imported configs' component options yet");
+            }
+        }
+        return tmp;
     }
 }

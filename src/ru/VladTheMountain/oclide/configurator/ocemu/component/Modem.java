@@ -32,17 +32,7 @@ import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
 public class Modem extends OCEmuComponent {
 
     public Modem(int i1, boolean b1) {
-        super(7, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(b1));
+        super(6, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(b1));
         
-    }
-
-    @Override
-    public int getComponentType() {
-        return 7;
-    }
-
-    @Override
-    public String getOptionAt(int pos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

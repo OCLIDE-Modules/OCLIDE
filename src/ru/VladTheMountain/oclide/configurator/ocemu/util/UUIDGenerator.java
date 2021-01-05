@@ -55,6 +55,6 @@ public class UUIDGenerator {
                 + "    end\n"
                 + "  end\n"
                 + "\n"
-                + "  return result").tojstring();
+                + "  return result").call().tojstring();
     }
 }

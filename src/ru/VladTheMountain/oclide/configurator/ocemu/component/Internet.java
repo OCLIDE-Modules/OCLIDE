@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 VladislavGorskii.
+ * Copyright 2021 Vladislav Gorskii.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,10 @@ import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
  *
  * @author VladTheMountain
  */
-public class CPU extends OCEmuComponent {
+public class Internet extends OCEmuComponent {
 
-    public CPU() {
-        super(2, UUIDGenerator.create(), (String) null);
+    public Internet() {
+        super(4, UUIDGenerator.create(), (String) null);
     }
 
-    @Override
-    public int getComponentType() {
-        return 2;
-    }
 }

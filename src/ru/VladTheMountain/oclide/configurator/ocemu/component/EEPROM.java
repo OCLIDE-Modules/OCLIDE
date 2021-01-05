@@ -34,9 +34,4 @@ public class EEPROM extends OCEmuComponent {
     public EEPROM(int i1, String path1) {
         super(1, UUIDGenerator.create(), String.valueOf(i1), path1);
     }
-
-    @Override
-    public int getComponentType() {
-        return 1;
-    }
 }

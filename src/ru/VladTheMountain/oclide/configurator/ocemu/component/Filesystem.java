@@ -23,34 +23,26 @@
  */
 package ru.VladTheMountain.oclide.configurator.ocemu.component;
 
+import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
+
 /**
  *
  * @author VladTheMountain
  */
-public class OCEmuComponent {
+public class Filesystem extends OCEmuComponent {
 
-    //FIELD 1
-    int type;
-    //FIELD 2
-    String address;
-    //the rest
-    String[] opts;
-
-    public OCEmuComponent(int componentType, String componentAddress, String... options) {
-        this.type = componentType;
-        this.address = componentAddress;
-        this.opts = options;
+    public Filesystem(int i1, String s1, boolean b1) {
+        super(2, UUIDGenerator.create(), String.valueOf(i1), s1, String.valueOf(b1));
     }
 
-    public int getComponentType() {
-        return type;
-    }
-
-    public String getComponentAddress() {
-        return address;
-    }
-
-    public String getOptionAt(int pos) {
-        return opts[pos];
+    /**
+     * Only if the first parameter is {@code null}
+     *
+     * @param i1
+     * @param s1
+     * @param b1
+     */
+    public Filesystem(String i1, String s1, boolean b1) {
+        super(2, UUIDGenerator.create(), i1, s1, String.valueOf(b1));
     }
 }
