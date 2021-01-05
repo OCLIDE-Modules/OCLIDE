@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2020 Vladislav Gorskii.
+ * Copyright 2021 Vladislav Gorskii.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,38 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurator;
+package ru.VladTheMountain.oclide.configurator.ocemu.component;
 
-import org.luaj.vm2.lib.jse.JsePlatform;
+import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
 
 /**
- * Validator is an OCIDE built-in code testing tool. It helps the developers to
- * check if their code is runnable on certain system configurations. Refer to
- * <a href="https://github.com/Vladg24YT/OpenComputers-IDE/wiki/How-to-use-Validator">How
- to use Configurator</a> article to get more info.
  *
  * @author VladTheMountain
  */
-public class Configurator {
+public class Modem extends OCEmuComponent {
 
-    public final String ARCHITECTURE_CASE = "Computer Case";
-    public final String ARCHITECTURE_SERVER = "Server";
-    public final String ARCHITECTURE_MICROCONTROLLER = "Microcontroller";
-
-    public Configurator(String[] prefs) {
-        switch (prefs[0]) {
-            case ARCHITECTURE_CASE:
-                break;
-            case ARCHITECTURE_SERVER:
-                break;
-            case ARCHITECTURE_MICROCONTROLLER:
-                break;
-            default:
-                break;
-        }
+    public Modem(int i1, boolean b1) {
+        super(7, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(b1));
+        
     }
 
-    public String run() {
-        return JsePlatform.standardGlobals().loadfile("OCEmu/src/boot.lua").call().tojstring();
+    @Override
+    public int getComponentType() {
+        return 7;
+    }
+
+    @Override
+    public String getOptionAt(int pos) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

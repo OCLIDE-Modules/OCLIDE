@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 Vladislav Gorskii.
+ * Copyright 2021 VladislavGorskii.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,34 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide;
+package ru.VladTheMountain.oclide.configurator.ocemu.component;
+
+import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
 
 /**
  *
  * @author VladTheMountain
  */
-public class OCLIDE {
+public class CPU extends OCEmuComponent {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // DECOMMENT AT RELEASE
-        /*final SplashScreen splash = SplashScreen.getSplashScreen();
-        if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
-            return;
-        }
-        Graphics2D g = splash.createGraphics();
-        if (g == null) {
-            System.out.println("g is null");
-            return;
-        }
-        try {
-            Thread.sleep(2000);*/
-            new ru.VladTheMountain.oclide.editor.MainFrame().setVisible(true);
-        /*} catch (InterruptedException ex) {
-            Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+    public CPU() {
+        super(2, UUIDGenerator.create(), (String) null);
+    }
+
+    @Override
+    public int getComponentType() {
+        return 2;
     }
 }

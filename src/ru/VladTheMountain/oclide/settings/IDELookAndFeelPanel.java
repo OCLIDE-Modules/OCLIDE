@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2020 Vladislav Gorskii.
+ * Copyright 2021 Vladislav Gorskii.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

@@ -25,3 +25,7 @@ hs_err_pid*
 /dist/
 /build/
 /environment/
+/Ocelot/
+/OCEmu/
+/workspace/
+/temp/

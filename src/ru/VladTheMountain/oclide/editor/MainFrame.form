@@ -165,6 +165,24 @@
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="createFile">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/ru/VladTheMountain/oclide/assets/icons/doc_plus_icon&amp;16.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Create file"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="openFile">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/ru/VladTheMountain/oclide/assets/icons/document_icon&amp;16.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Open file"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator10">
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="save">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
@@ -315,23 +333,20 @@
             <Property name="text" type="java.lang.String" value="Run"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="validate">
+            <MenuItem class="javax.swing.JMenuItem" name="ocemu">
               <Properties>
-                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                  <KeyStroke key="F6"/>
-                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/ru/VladTheMountain/oclide/assets/icons/app_window_shell&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Run OCEmu"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="validateActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ocemuActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="emulate">
+            <MenuItem class="javax.swing.JMenuItem" name="ocelotD">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/ru/VladTheMountain/oclide/assets/icons/app_window_black&amp;16.png"/>
@@ -339,7 +354,7 @@
                 <Property name="text" type="java.lang.String" value="Run Ocelot"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emulateActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ocelotDActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -367,7 +382,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="OCLIDE - OpenComputers Lua Integrated Development Environment (indev build, commit 98)"/>
+    <Property name="title" type="java.lang.String" value="OCLIDE - OpenComputers Lua Integrated Development Environment (indev build, commit 111)"/>
     <Property name="extendedState" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
       <Connection code="javax.swing.JFrame.MAXIMIZED_BOTH" type="code"/>
     </Property>
@@ -397,7 +412,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="undoRedoToolbar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jToolBar1" min="-2" pref="100" max="-2" attributes="0"/>
+              <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Component id="jSplitPane1" pref="577" max="32767" attributes="0"/>

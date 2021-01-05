@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2020 Vladislav Gorskii.
+ * Copyright 2021 Vladislav Gorskii.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,8 +38,7 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         initComponents();
         this.openFile(new java.io.File("projects/Calculator/main.lua"));
@@ -67,6 +66,9 @@ public class MainFrame extends javax.swing.JFrame {
      * @param file the {@link File}, which contents are to read
      */
     private void openFile(java.io.File file) {
+        if (!(file.exists())) {
+            javax.swing.JOptionPane.showMessageDialog(this, "The requested file " + file.getAbsolutePath() + " does not exist.", "File does not exist", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
         String fileContent = "";
         try {
             fileContent = new String(java.nio.file.Files.readAllBytes(file.toPath()));
@@ -102,16 +104,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
         try {
-            java.nio.file.Files.write(f.toPath(),
-                    this.editorTabs
-                            .getComponentAt(this.editorTabs.getSelectedIndex())
-                            .getAccessibleContext()
-                            .getAccessibleChild(0)
-                            .getAccessibleContext()
-                            .getAccessibleChild(0)
-                            .getAccessibleContext()
-                            .getAccessibleDescription()
-                            .getBytes());
+            java.nio.file.Files.write(f.toPath(), this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleDescription().getBytes());
         } catch (java.io.IOException ex) {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -215,6 +208,9 @@ public class MainFrame extends javax.swing.JFrame {
         createProject = new javax.swing.JMenuItem();
         openProject = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        createFile = new javax.swing.JMenuItem();
+        openFile = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
         save = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         deleteProject = new javax.swing.JMenuItem();
@@ -231,9 +227,9 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         find = new javax.swing.JMenuItem();
         runMenu = new javax.swing.JMenu();
-        validate = new javax.swing.JMenuItem();
+        ocemu = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        emulate = new javax.swing.JMenuItem();
+        ocelotD = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         settings = new javax.swing.JMenuItem();
 
@@ -329,7 +325,7 @@ public class MainFrame extends javax.swing.JFrame {
         projectChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (indev build, commit 98)");
+        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (indev build, commit 111)");
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Projects");
@@ -496,6 +492,15 @@ public class MainFrame extends javax.swing.JFrame {
         fileMenu.add(openProject);
         fileMenu.add(jSeparator1);
 
+        createFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/doc_plus_icon&16.png"))); // NOI18N
+        createFile.setText("Create file");
+        fileMenu.add(createFile);
+
+        openFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/document_icon&16.png"))); // NOI18N
+        openFile.setText("Open file");
+        fileMenu.add(openFile);
+        fileMenu.add(jSeparator10);
+
         save.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/save_icon&16.png"))); // NOI18N
         save.setText("Save");
@@ -604,25 +609,24 @@ public class MainFrame extends javax.swing.JFrame {
 
         runMenu.setText("Run");
 
-        validate.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        validate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/app_window_shell&16.png"))); // NOI18N
-        validate.setText("Run OCEmu");
-        validate.addActionListener(new java.awt.event.ActionListener() {
+        ocemu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/app_window_shell&16.png"))); // NOI18N
+        ocemu.setText("Run OCEmu");
+        ocemu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                validateActionPerformed(evt);
+                ocemuActionPerformed(evt);
             }
         });
-        runMenu.add(validate);
+        runMenu.add(ocemu);
         runMenu.add(jSeparator5);
 
-        emulate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/app_window_black&16.png"))); // NOI18N
-        emulate.setText("Run Ocelot");
-        emulate.addActionListener(new java.awt.event.ActionListener() {
+        ocelotD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/app_window_black&16.png"))); // NOI18N
+        ocelotD.setText("Run Ocelot");
+        ocelotD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emulateActionPerformed(evt);
+                ocelotDActionPerformed(evt);
             }
         });
-        runMenu.add(emulate);
+        runMenu.add(ocelotD);
 
         menuBar.add(runMenu);
 
@@ -650,7 +654,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(undoRedoToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
         );
@@ -670,9 +674,9 @@ public class MainFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void validateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validateActionPerformed
-        new ru.VladTheMountain.oclide.configurator.ConfiguratorFrame().setVisible(true);
-    }//GEN-LAST:event_validateActionPerformed
+    private void ocemuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ocemuActionPerformed
+        new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm().setVisible(true);
+    }//GEN-LAST:event_ocemuActionPerformed
 
     private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
         new ru.VladTheMountain.oclide.settings.SettingsFrame().setVisible(true);
@@ -682,12 +686,12 @@ public class MainFrame extends javax.swing.JFrame {
         new CreateNewProjectDialog(this).setVisible(true);
     }//GEN-LAST:event_createProjectActionPerformed
 
-    private void emulateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emulateActionPerformed
-
-    }//GEN-LAST:event_emulateActionPerformed
+    private void ocelotDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ocelotDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ocelotDActionPerformed
 
     private void projectsTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_projectsTreeValueChanged
-
+        // TODO add your handling code here:
     }//GEN-LAST:event_projectsTreeValueChanged
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
@@ -820,11 +824,43 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_redoButtonActionPerformed
 
     private void runOCEmuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runOCEmuButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && run.bat");
+            pb.redirectErrorStream(true);
+            Process p = pb.start();
+            java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));
+            String outLine;
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.INFO, "Starting OCEmu...");
+            while (true) {
+                outLine = r.readLine();
+                if (outLine == null) {
+                    break;
+                }
+                System.out.println(outLine);
+            }
+        } catch (java.io.IOException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_runOCEmuButtonActionPerformed
 
     private void runOcelotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runOcelotButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "Ocelot\\ocelot.jar");
+            pb.redirectErrorStream(true);
+            Process p = pb.start();
+            java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));
+            String outLine;
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.INFO, "Starting Ocelot Desktop...");
+            while (true) {
+                outLine = r.readLine();
+                if (outLine == null) {
+                    break;
+                }
+                System.out.println(outLine);
+            }
+        } catch (java.io.IOException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_runOcelotButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -832,6 +868,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem addFileMenuItem;
     private javax.swing.JMenuItem addFolderMenuItem;
     private javax.swing.JMenuItem copy;
+    private javax.swing.JMenuItem createFile;
     private javax.swing.JMenuItem createProject;
     private javax.swing.JMenuItem cut;
     private javax.swing.JMenuItem delete;
@@ -840,13 +877,13 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton deleteProjectButton;
     private javax.swing.JMenu editMenu;
     private javax.swing.JTabbedPane editorTabs;
-    private javax.swing.JMenuItem emulate;
     private javax.swing.JMenuItem exit;
     private javax.swing.JPopupMenu fileManagementPopup;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuItem find;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -861,6 +898,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem moveMenuItem;
     private javax.swing.JMenu newMenu;
     private javax.swing.JButton newProjectButton;
+    private javax.swing.JMenuItem ocelotD;
+    private javax.swing.JMenuItem ocemu;
+    private javax.swing.JMenuItem openFile;
     private javax.swing.JMenuItem openProject;
     private javax.swing.JButton openProjectButton;
     private javax.swing.JMenuItem paste;
@@ -885,6 +925,5 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem undo;
     private javax.swing.JButton undoButton;
     private javax.swing.JToolBar undoRedoToolbar;
-    private javax.swing.JMenuItem validate;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2020 Vladislav Gorskii.
+ * Copyright 2021 Vladislav Gorskiis.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,44 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.emulator;
+package ru.VladTheMountain.oclide.configurator.ocemu.component;
 
-import java.awt.Dimension;
+import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
 
 /**
  *
- * @author VladislavTheMountain
+ * @author VladTheMountain
  */
-public class MachineSettings {
+public class GPU extends OCEmuComponent {
 
-    //PRESETS
-    protected static int TIER_1_DEFAULTS = 10;
-    protected static int TIER_2_DEFAULTS = 20;
-    protected static int TIER_3_DEFAULTS = 30;
-
-    //PER-COMPONENT SPECIFICATION
-    //CPU
-    protected static int CPU_TIER_1 = 1;
-    protected static int CPU_TIER_2 = 2;
-    protected static int CPU_TIER_3 = 3;
-
-    //Class variables
-    private int sWidth, sHeight;
-
-    public MachineSettings(int preset) {
-
+    public GPU(int i1, int i2, int i3, int i4) {
+        super(4, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
     }
 
-    public MachineSettings(int wid, int hei) {
-        this.sWidth = wid;
-        this.sHeight = hei;
+    @Override
+    public int getComponentType() {
+        return 4;
     }
 
-    public MachineSettings(int caseType, String eeprom, int cpu, int gpu, int mem1, int mem2, int hdd1, int hdd2) {
-        
-    }
-
-    public Dimension getScreenSize() {
-        return new Dimension(sWidth, sHeight);
-    }
 }
