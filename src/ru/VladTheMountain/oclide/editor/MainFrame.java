@@ -187,7 +187,6 @@ public class MainFrame extends javax.swing.JFrame {
         runInOCEmu = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
         renameMenuItem = new javax.swing.JMenuItem();
-        moveMenuItem = new javax.swing.JMenuItem();
         deleteMenuItem = new javax.swing.JMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         propertiesMenuItem = new javax.swing.JMenuItem();
@@ -228,7 +227,6 @@ public class MainFrame extends javax.swing.JFrame {
         cut = new javax.swing.JMenuItem();
         copy = new javax.swing.JMenuItem();
         paste = new javax.swing.JMenuItem();
-        delete = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         find = new javax.swing.JMenuItem();
         runMenu = new javax.swing.JMenu();
@@ -299,15 +297,6 @@ public class MainFrame extends javax.swing.JFrame {
         });
         projectManagementPopup.add(renameMenuItem);
 
-        moveMenuItem.setText("Move");
-        moveMenuItem.setToolTipText("");
-        moveMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                moveMenuItemActionPerformed(evt);
-            }
-        });
-        projectManagementPopup.add(moveMenuItem);
-
         deleteMenuItem.setText("Delete");
         deleteMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -330,7 +319,7 @@ public class MainFrame extends javax.swing.JFrame {
         projectChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (indev build, commit 111)");
+        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (v0.0.1-alpha.2)");
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Projects");
@@ -338,11 +327,6 @@ public class MainFrame extends javax.swing.JFrame {
         projectsTree.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 projectsTreeMouseClicked(evt);
-            }
-        });
-        projectsTree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                projectsTreeValueChanged(evt);
             }
         });
         projectsScroll.setViewportView(projectsTree);
@@ -428,11 +412,6 @@ public class MainFrame extends javax.swing.JFrame {
         undoButton.setFocusable(false);
         undoButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         undoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        undoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                undoButtonActionPerformed(evt);
-            }
-        });
         undoRedoToolbar.add(undoButton);
 
         redoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/redo_icon&24.png"))); // NOI18N
@@ -440,11 +419,6 @@ public class MainFrame extends javax.swing.JFrame {
         redoButton.setFocusable(false);
         redoButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         redoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        redoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                redoButtonActionPerformed(evt);
-            }
-        });
         undoRedoToolbar.add(redoButton);
 
         jToolBar1.setFloatable(false);
@@ -543,21 +517,11 @@ public class MainFrame extends javax.swing.JFrame {
         undo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         undo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/undo_icon&16.png"))); // NOI18N
         undo.setText("Undo");
-        undo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                undoActionPerformed(evt);
-            }
-        });
         editMenu.add(undo);
 
         redo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         redo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/redo_icon&16.png"))); // NOI18N
         redo.setText("Redo");
-        redo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                redoActionPerformed(evt);
-            }
-        });
         editMenu.add(redo);
         editMenu.add(jSeparator3);
 
@@ -590,15 +554,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         editMenu.add(paste);
-
-        delete.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
-        delete.setText("Delete");
-        delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteActionPerformed(evt);
-            }
-        });
-        editMenu.add(delete);
         editMenu.add(jSeparator4);
 
         find.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
@@ -680,7 +635,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ocemuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ocemuActionPerformed
-        new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm().setVisible(true);
+        runOCEmu();
     }//GEN-LAST:event_ocemuActionPerformed
 
     private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
@@ -692,12 +647,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_createProjectActionPerformed
 
     private void ocelotDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ocelotDActionPerformed
-        // TODO add your handling code here:
+        runOcelot();
     }//GEN-LAST:event_ocelotDActionPerformed
-
-    private void projectsTreeValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_projectsTreeValueChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_projectsTreeValueChanged
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         this.saveActionPerformed(evt);
@@ -705,7 +656,14 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exitActionPerformed
 
     private void deleteProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteProjectActionPerformed
-        // TODO add your handling code here:
+        int result = javax.swing.JOptionPane.showConfirmDialog(this, "Are you really want to delete your project?", "Deleting a project", javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE);
+        if (result == javax.swing.JOptionPane.YES_OPTION) {
+            String projectName = String.valueOf(projectsTree.getSelectionPath().getPath()[1]);
+            java.io.File f = new java.io.File("projects/" + projectName);
+            if (f.delete()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Project successfully deleted.", "Deleting a project", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_deleteProjectActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
@@ -715,14 +673,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void openProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openProjectActionPerformed
         projectChooser.showOpenDialog(this);
     }//GEN-LAST:event_openProjectActionPerformed
-
-    private void undoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_undoActionPerformed
-
-    private void redoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_redoActionPerformed
 
     private void cutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutActionPerformed
         javax.accessibility.AccessibleContext ac = this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext();
@@ -739,16 +689,12 @@ public class MainFrame extends javax.swing.JFrame {
         ac.getAccessibleEditableText().paste(ac.getAccessibleEditableText().getCaretPosition());
     }//GEN-LAST:event_pasteActionPerformed
 
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteActionPerformed
-
     private void findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findActionPerformed
-        // TODO add your handling code here:
+        javax.swing.JOptionPane.showMessageDialog(this, "Unimplemented feature. Wait for next updates");
     }//GEN-LAST:event_findActionPerformed
 
     private void popupSaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupSaveFileActionPerformed
-        // TODO add your handling code here:
+        this.saveActionPerformed(evt);
     }//GEN-LAST:event_popupSaveFileActionPerformed
 
     private void popupCloseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupCloseFileActionPerformed
@@ -770,7 +716,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_projectsTreeMouseClicked
 
     private void runInOCEmuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runInOCEmuActionPerformed
-        // TODO add your handling code here:
+        runOCEmu();
     }//GEN-LAST:event_runInOCEmuActionPerformed
 
     private void newProjectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newProjectButtonActionPerformed
@@ -786,69 +732,52 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addFileButtonActionPerformed
 
     private void addFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFileMenuItemActionPerformed
-        String path = javax.swing.JOptionPane.showInputDialog(this, "Path to the file:", "Creating a new file...", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        String path = javax.swing.JOptionPane.showInputDialog(this, "Path to a new file:", new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).getAbsolutePath());
         if (path != null) {
             this.newFile(new java.io.File(path));
         }
     }//GEN-LAST:event_addFileMenuItemActionPerformed
 
     private void addFolderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFolderMenuItemActionPerformed
-        // TODO add your handling code here:
+        String path = javax.swing.JOptionPane.showInputDialog(this, "Path to a new directory:", new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).getAbsolutePath());
+        if (path != null) {
+            new java.io.File(path).mkdirs();
+        }
     }//GEN-LAST:event_addFolderMenuItemActionPerformed
 
     private void renameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameMenuItemActionPerformed
-        // TODO add your handling code here:
+        new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).renameTo(new java.io.File(javax.swing.JOptionPane.showInputDialog(this, "New project name:", String.valueOf(projectsTree.getSelectionPath().getPath()[1]))));
     }//GEN-LAST:event_renameMenuItemActionPerformed
 
-    private void moveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_moveMenuItemActionPerformed
-
     private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
-        // TODO add your handling code here:
+        this.deleteProjectActionPerformed(evt);
     }//GEN-LAST:event_deleteMenuItemActionPerformed
 
     private void propertiesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesMenuItemActionPerformed
-        // TODO add your handling code here:
+        javax.swing.JOptionPane.showMessageDialog(this, "Project name: " + String.valueOf(projectsTree.getSelectionPath().getPath()[1]) + "\nProject path:" + new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).getAbsolutePath() + "\nCreated with " + this.getTitle(), String.valueOf(projectsTree.getSelectionPath().getPath()[1]) + " project properties", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_propertiesMenuItemActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+        this.saveActionPerformed(evt);
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void deleteProjectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteProjectButtonActionPerformed
-        // TODO add your handling code here:
+        this.deleteProjectActionPerformed(evt);
     }//GEN-LAST:event_deleteProjectButtonActionPerformed
 
-    private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_undoButtonActionPerformed
-
-    private void redoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_redoButtonActionPerformed
-
     private void runOCEmuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runOCEmuButtonActionPerformed
-        try {
-            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && run.bat");
-            pb.redirectErrorStream(true);
-            Process p = pb.start();
-            java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));
-            String outLine;
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.INFO, "Starting OCEmu...");
-            while (true) {
-                outLine = r.readLine();
-                if (outLine == null) {
-                    break;
-                }
-                System.out.println(outLine);
-            }
-        } catch (java.io.IOException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        runOCEmu();
     }//GEN-LAST:event_runOCEmuButtonActionPerformed
 
     private void runOcelotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runOcelotButtonActionPerformed
+        runOcelot();
+    }//GEN-LAST:event_runOcelotButtonActionPerformed
+
+    private void runOCEmu() {
+        new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm().setVisible(true);
+    }
+
+    private void runOcelot() {
         try {
             ProcessBuilder pb = new ProcessBuilder("java", "-jar", "Ocelot\\ocelot.jar");
             pb.redirectErrorStream(true);
@@ -866,7 +795,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (java.io.IOException ex) {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_runOcelotButtonActionPerformed
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFileButton;
@@ -876,7 +805,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem createFile;
     private javax.swing.JMenuItem createProject;
     private javax.swing.JMenuItem cut;
-    private javax.swing.JMenuItem delete;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenuItem deleteProject;
     private javax.swing.JButton deleteProjectButton;
@@ -900,7 +828,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem moveMenuItem;
     private javax.swing.JMenu newMenu;
     private javax.swing.JButton newProjectButton;
     private javax.swing.JMenuItem ocelotD;
