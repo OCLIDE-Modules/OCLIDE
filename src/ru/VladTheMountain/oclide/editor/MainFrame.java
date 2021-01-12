@@ -635,7 +635,11 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ocemuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ocemuActionPerformed
-        runOCEmu();
+        try {
+            runOCEmu();
+        } catch (java.io.IOException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ocemuActionPerformed
 
     private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
@@ -716,7 +720,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_projectsTreeMouseClicked
 
     private void runInOCEmuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runInOCEmuActionPerformed
-        runOCEmu();
+        try {
+            runOCEmu();
+        } catch (java.io.IOException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_runInOCEmuActionPerformed
 
     private void newProjectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newProjectButtonActionPerformed
@@ -766,14 +774,22 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteProjectButtonActionPerformed
 
     private void runOCEmuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runOCEmuButtonActionPerformed
-        runOCEmu();
+        try {
+            runOCEmu();
+        } catch (java.io.IOException ex) {
+            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_runOCEmuButtonActionPerformed
 
     private void runOcelotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runOcelotButtonActionPerformed
         runOcelot();
     }//GEN-LAST:event_runOcelotButtonActionPerformed
 
-    private void runOCEmu() {
+    private void runOCEmu() throws java.io.IOException {
+        String targetPath = "workspace/OCEmu/machine/home" + String.valueOf(projectsTree.getSelectionPath().getPath()[1]);
+        java.io.File f = new java.io.File(targetPath);
+        f.mkdirs();
+        org.apache.commons.io.FileUtils.copyDirectory(new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])), f);
         new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm().setVisible(true);
     }
 
