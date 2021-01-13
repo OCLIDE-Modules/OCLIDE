@@ -15,4 +15,4 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java with Swing GUI
 
 ## Requirements
 * JRE/JDK 1.8 or later
-* Windows 7 or later
+* Windows 10 (work on older versions is not guaranteed)
