@@ -41,7 +41,6 @@ public class MainFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         initComponents();
-        this.openFile(new java.io.File("projects/Calculator/main.lua"));
     }
 
     /**
@@ -86,6 +85,7 @@ public class MainFrame extends javax.swing.JFrame {
         sp.setName(file.getAbsolutePath());
         this.editorTabs.add(file.getName(), sp);
         this.editorTabs.setSelectedIndex(this.editorTabs.getTabCount() - 1);
+        updateProjectsTree();
     }
 
     /**
@@ -108,6 +108,7 @@ public class MainFrame extends javax.swing.JFrame {
         } catch (java.io.IOException ex) {
             java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        updateProjectsTree();
     }
 
     /**
@@ -786,7 +787,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_runOcelotButtonActionPerformed
 
     private void runOCEmu() throws java.io.IOException {
-        String targetPath = "workspace/OCEmu/machine/home" + String.valueOf(projectsTree.getSelectionPath().getPath()[1]);
+        String targetPath = "OCEmu/.machine/34eb7b28-14d3-4757-b326-dd1609b0a92e/home/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1]);
         java.io.File f = new java.io.File(targetPath);
         f.mkdirs();
         org.apache.commons.io.FileUtils.copyDirectory(new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])), f);
