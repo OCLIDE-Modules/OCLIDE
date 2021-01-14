@@ -59,9 +59,8 @@ public class ConfiguratorForm extends javax.swing.JFrame {
         });
         initComponents();
         if (!(new File("OCEmu/.machine/ocemu.cfg").exists()) || this.componentsArray == null || this.componentsArray.length == 0) {
-            OCEmuComponent[] defaults = new OCEmuComponent[ConfigMaker.defaultComponentSet.length];
-            System.arraycopy(ConfigMaker.defaultComponentSet, 0, defaults, 0, defaults.length);
-            System.arraycopy(defaults, 0, componentsArray, 0, ConfigMaker.defaultComponentSet.length);
+            this.componentsArray = new OCEmuComponent[ConfigMaker.defaultComponentSet.length];
+            System.arraycopy(ConfigMaker.defaultComponentSet, 0, componentsArray, 0, ConfigMaker.defaultComponentSet.length);
         } else {
             try {
                 new ConfigMaker(this.componentsArray).readConfig(new File("OCEmu/.machine/ocemu.cfg"));

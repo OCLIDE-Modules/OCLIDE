@@ -62,12 +62,12 @@ public class ConfigMaker {
         new Modem(1, false),
         new EEPROM(9, "lua/bios.lua"),
         new Filesystem(7, "loot/OpenOS", true),
-        new Filesystem(null, "tmpfs", false),
-        new Filesystem(5, null, false),
+        new Filesystem("nil", "tmpfs", false),
+        new Filesystem(5, "nil", false),
         new Internet(),
         new Computer(),
         new OCEmu(),
-        new Screen(null, 80, 25, 3),
+        new Screen("nil", 80, 25, 3),
         new Keyboard()
     };
 
