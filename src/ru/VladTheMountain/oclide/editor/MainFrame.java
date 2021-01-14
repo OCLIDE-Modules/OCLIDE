@@ -83,6 +83,11 @@ public class MainFrame extends javax.swing.JFrame {
         newFile.getAccessibleContext().setAccessibleDescription(newFile.getText());
         org.fife.ui.rtextarea.RTextScrollPane sp = new org.fife.ui.rtextarea.RTextScrollPane(newFile);
         sp.setName(file.getAbsolutePath());
+        //autocompletion
+        org.fife.ui.autocomplete.CompletionProvider occp = OpenComputersCompletionProvider.getProvider();
+        org.fife.ui.autocomplete.AutoCompletion occ = new org.fife.ui.autocomplete.AutoCompletion(occp);
+        /*occ.install(newFile); UNCOMMENT BEFORE BETA RELEASE*/
+        //
         this.editorTabs.add(file.getName(), sp);
         this.editorTabs.setSelectedIndex(this.editorTabs.getTabCount() - 1);
         updateProjectsTree();
@@ -789,11 +794,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_runOcelotButtonActionPerformed
 
     private void runOCEmu() throws java.io.IOException {
-        String targetPath = "OCEmu/.machine/34eb7b28-14d3-4757-b326-dd1609b0a92e/home/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1]);
-        java.io.File f = new java.io.File(targetPath);
-        f.mkdirs();
-        org.apache.commons.io.FileUtils.copyDirectory(new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])), f);
-        new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm().setVisible(true);
+        if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) != null) {
+            new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm(String.valueOf(projectsTree.getSelectionPath().getPath()[1])).setVisible(true);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "No project chosen. Please select a project in the file tree and then launch OCEmu.", "Project not set", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void runOcelot() {

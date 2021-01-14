@@ -25,6 +25,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Reset config"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetConfigItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
             </MenuItem>
@@ -68,11 +71,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Delete selected"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -195,14 +204,14 @@
                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="option3Field" max="32767" attributes="0"/>
                               <Component id="option2Field" max="32767" attributes="0"/>
-                              <Component id="componentTypeComboBox" max="32767" attributes="0"/>
+                              <Component id="componentTypeComboBox" pref="208" max="32767" attributes="0"/>
                               <Component id="option1Field" max="32767" attributes="0"/>
-                              <Component id="componentAddressField" max="32767" attributes="0"/>
                               <Component id="option4Field" max="32767" attributes="0"/>
+                              <Component id="componentAddressField" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -259,7 +268,6 @@
         <Component class="javax.swing.JTextField" name="componentAddressField">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="9031cf95-7a59-4ed2-af2c-dbb5834d0317"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
@@ -271,9 +279,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="option1Field">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="0"/>
-          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
           </AuxValues>
@@ -284,9 +289,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="option2Field">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="160"/>
-          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
           </AuxValues>
@@ -297,9 +299,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="option3Field">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="50"/>
-          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
           </AuxValues>
@@ -349,7 +348,6 @@
                       <Font name="Monospaced" size="12" style="0"/>
                     </Property>
                     <Property name="rows" type="int" value="5"/>
-                    <Property name="text" type="java.lang.String" value="GPU is responsible for screen buffer &#xa;manupulations and represents the &#xa;&apos;gpu&apos; component library."/>
                     <Property name="wrapStyleWord" type="boolean" value="true"/>
                   </Properties>
                   <AuxValues>
@@ -382,8 +380,10 @@
                 <StringItem index="10" value=" "/>
               </StringArray>
             </Property>
-            <Property name="selectedIndex" type="int" value="4"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="componentTypeComboBoxActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
@@ -395,9 +395,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="option4Field">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="3"/>
-          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="false"/>
           </AuxValues>

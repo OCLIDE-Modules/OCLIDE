@@ -24,22 +24,19 @@
 package ru.VladTheMountain.oclide.configurator.ocemu;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Computer;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.EEPROM;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Filesystem;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.GPU;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Internet;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Keyboard;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Modem;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmu;
+import org.apache.commons.io.FileUtils;
 import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Screen;
+import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
 
 /**
  *
@@ -53,39 +50,226 @@ public class ConfiguratorForm extends javax.swing.JFrame {
 
     /**
      * Creates new form ConfiguratorForm
+     *
+     * @param projectName Project directory to copy
      */
-    public ConfiguratorForm() {
+    public ConfiguratorForm(String projectName) {
         Timer t = new Timer(300, (ActionEvent e) -> {
             this.repaint();
         });
         initComponents();
-        addComponent(new GPU(0, 160, 50, 3));
-        addComponent(new Modem(1, false));
-        addComponent(new EEPROM(9, "lua/bios.lua"));
-        addComponent(new Filesystem(7, "loot/OpenOS", true));
-        addComponent(new Filesystem(null, "tmpfs", true));
-        addComponent(new Filesystem(9, "loot/OpenOS", true));
-        addComponent(new Internet());
-        addComponent(new Computer());
-        addComponent(new OCEmu());
-        addComponent(new Screen(null, 80, 25, 3));
-        addComponent(new Keyboard());
+        if (!(new File("OCEmu/.machine/ocemu.cfg").exists()) || this.componentsArray == null || this.componentsArray.length == 0) {
+            OCEmuComponent[] defaults = new OCEmuComponent[ConfigMaker.defaultComponentSet.length];
+            System.arraycopy(ConfigMaker.defaultComponentSet, 0, defaults, 0, defaults.length);
+            System.arraycopy(defaults, 0, componentsArray, 0, ConfigMaker.defaultComponentSet.length);
+        } else {
+            try {
+                new ConfigMaker(this.componentsArray).readConfig(new File("OCEmu/.machine/ocemu.cfg"));
+            } catch (IOException ex) {
+                Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        updateComponentList();
+        t.start();
     }
 
+    /**
+     * Adds a new component to the list
+     *
+     * @param c
+     */
     private void addComponent(OCEmuComponent c) {
         OCEmuComponent[] tmp = new OCEmuComponent[this.componentsArray.length + 1];
         System.arraycopy(this.componentsArray, 0, tmp, 0, this.componentsArray.length);
         tmp[this.componentsArray.length] = c;
         this.componentsArray = new OCEmuComponent[tmp.length];
         System.arraycopy(tmp, 0, this.componentsArray, 0, tmp.length);
+        updateComponentList();
     }
 
+    /**
+     * Deletes a component at {@code index}
+     *
+     * @param index
+     */
+    private void deleteComponent(int index) {
+        OCEmuComponent[] tmp = new OCEmuComponent[this.componentsArray.length];
+        System.arraycopy(this.componentsArray, 0, tmp, 0, tmp.length);
+        this.componentsArray = new OCEmuComponent[tmp.length - 1];
+        for (int i = 0; i < this.componentsArray.length; i++) {
+            if (i < index) {
+                this.componentsArray[i] = tmp[i];
+            } else {
+                this.componentsArray[i] = tmp[i + 1];
+            }
+        }
+    }
+
+    /**
+     * Updates componentList {@link JTree}
+     */
     private void updateComponentList() {
         DefaultListModel<String> model = new DefaultListModel<>();
         for (int i = 0; i < componentsArray.length; i++) {
             model.insertElementAt(this.componentsArray[i].getComponentAddress(), i);
         }
         this.componentList.setModel(model);
+    }
+
+    /**
+     * Copies OpenOS from OCEmu's loot folder to target filesystem
+     */
+    private void installOpenOS() {
+        String[] filesystems = new String[this.componentsArray.length];
+        int nextFreeIndex = 0;
+        for (OCEmuComponent component : this.componentsArray) {
+            if (component.getComponentType() == 2) {
+                filesystems[nextFreeIndex] = component.getComponentAddress();
+            }
+            nextFreeIndex++;
+        }
+        int input = JOptionPane.showOptionDialog(this, "Choose a filesystem to install OpenOS to:", "Machine setup", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, filesystems, filesystems[0]);
+        File machineDir = new File("OCEmu/.machine/" + filesystems[input]);
+        try {
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/bin"), machineDir);
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/boot"), machineDir);
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/etc"), machineDir);
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/home"), machineDir);
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/lib"), machineDir);
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/usr"), machineDir);
+            Files.copy(new File("OCEmu/loot/OpenOS/.osprop").toPath(), machineDir.toPath(), (CopyOption[]) null);
+            Files.copy(new File("OCEmu/loot/OpenOS/init.lua").toPath(), machineDir.toPath(), (CopyOption[]) null);
+        } catch (IOException ex) {
+            Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Updates description and option fields
+     *
+     * @param type
+     */
+    private void updateFields(OCEmuComponent c) {
+        switch (c.getComponentType() + 1) {
+            case 0:
+                //Description set
+                this.componentDescriptionArea.setText("Computer represents the \n'computer' library.");
+                //Option change
+                this.option1Field.setText("");
+                this.option2Field.setText("");
+                this.option3Field.setText("");
+                this.option4Field.setText("");
+                //Option management
+                this.option1Field.setEditable(false);
+                this.option2Field.setEditable(false);
+                this.option3Field.setEditable(false);
+                this.option4Field.setEditable(false);
+                break;
+            case 1:
+                this.componentDescriptionArea.setText("EEPROM is responsible for \nbooting up the machine.");
+                //Option change
+                this.option1Field.setText(c.getOptionAt(0));
+                this.option2Field.setText(c.getOptionAt(1));
+                this.option3Field.setText("");
+                this.option4Field.setText("");
+                //Option management
+                this.option1Field.setEditable(true);
+                this.option2Field.setEditable(true);
+                this.option3Field.setEditable(false);
+                this.option4Field.setEditable(false);
+                break;
+            case 2:
+                this.componentDescriptionArea.setText("Filesystem is responsible \nfor file management \nand represents the 'filesystem' \nlibrary.");
+                //Option change
+                this.option1Field.setText(c.getOptionAt(0));
+                this.option2Field.setText(c.getOptionAt(1));
+                this.option3Field.setText(c.getOptionAt(2));
+                this.option4Field.setText("");
+                //Option management
+                this.option1Field.setEditable(true);
+                this.option2Field.setEditable(true);
+                this.option3Field.setEditable(true);
+                this.option4Field.setEditable(false);
+                break;
+            case 3:
+                this.componentDescriptionArea.setText("GPU is responsible for screen \nbuffer manupulations \nand represents the 'gpu' \ncomponent library.");
+                //Option change
+                this.option1Field.setText(c.getOptionAt(0));
+                this.option2Field.setText(c.getOptionAt(1));
+                this.option3Field.setText(c.getOptionAt(2));
+                this.option4Field.setText(c.getOptionAt(3));
+                //Option management
+                this.option1Field.setEditable(true);
+                this.option2Field.setEditable(true);
+                this.option3Field.setEditable(true);
+                this.option4Field.setEditable(true);
+                break;
+            case 4:
+                this.componentDescriptionArea.setText("Internet is responsible for \nHTTP-requests and \nrepresents the 'internet' \ncomponent library.");
+                //Option change
+                this.option1Field.setText("");
+                this.option2Field.setText("");
+                this.option3Field.setText("");
+                this.option4Field.setText("");
+                //Option management
+                this.option1Field.setEditable(false);
+                this.option2Field.setEditable(false);
+                this.option3Field.setEditable(false);
+                this.option4Field.setEditable(false);
+                break;
+            case 5:
+                this.componentDescriptionArea.setText("Keyboard is responsible for \nuser's input and \nrepresents the 'keyboard' \ncomponent library.");
+                //Option change
+                this.option1Field.setText("");
+                this.option2Field.setText("");
+                this.option3Field.setText("");
+                this.option4Field.setText("");
+                //Option management
+                this.option1Field.setEditable(false);
+                this.option2Field.setEditable(false);
+                this.option3Field.setEditable(false);
+                this.option4Field.setEditable(false);
+                break;
+            case 6:
+                this.componentDescriptionArea.setText("Modem is responsible for \ncross-machine networking \nand represents the 'modem' \ncomponent library.");
+                //Option change
+                this.option1Field.setText(c.getOptionAt(0));
+                this.option2Field.setText(c.getOptionAt(1));
+                this.option3Field.setText("");
+                this.option4Field.setText("");
+                //Option management
+                this.option1Field.setEditable(true);
+                this.option2Field.setEditable(true);
+                this.option3Field.setEditable(false);
+                this.option4Field.setEditable(false);
+                break;
+            case 7:
+                this.componentDescriptionArea.setText("OCEmu is responsible for \nintgration of OCEmu's code \nwith original OpenComputers'\n code.");
+                //Option change
+                this.option1Field.setText("");
+                this.option2Field.setText("");
+                this.option3Field.setText("");
+                this.option4Field.setText("");
+                //Option management
+                this.option1Field.setEditable(false);
+                this.option2Field.setEditable(false);
+                this.option3Field.setEditable(false);
+                this.option4Field.setEditable(false);
+                break;
+            case 8:
+                this.componentDescriptionArea.setText("Screen is responsible for \nthe screen block and \nrepresents the 'screen' library.");
+                //Option change
+                this.option1Field.setText(c.getOptionAt(0));
+                this.option2Field.setText(c.getOptionAt(1));
+                this.option3Field.setText(c.getOptionAt(2));
+                this.option4Field.setText(c.getOptionAt(3));
+                //Option management
+                this.option1Field.setEditable(true);
+                this.option2Field.setEditable(true);
+                this.option3Field.setEditable(true);
+                this.option4Field.setEditable(true);
+                break;
+        }
     }
 
     /**
@@ -192,19 +376,12 @@ public class ConfiguratorForm extends javax.swing.JFrame {
     jLabel1.setText("Component's address:");
 
     componentAddressField.setEditable(false);
-    componentAddressField.setText("9031cf95-7a59-4ed2-af2c-dbb5834d0317");
 
     jLabel2.setText("Option 1");
 
-    option1Field.setText("0");
-
     jLabel3.setText("Option 2");
 
-    option2Field.setText("160");
-
     jLabel4.setText("Option 3");
-
-    option3Field.setText("50");
 
     descriptionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Description", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 10))); // NOI18N
 
@@ -214,7 +391,6 @@ public class ConfiguratorForm extends javax.swing.JFrame {
     componentDescriptionArea.setColumns(20);
     componentDescriptionArea.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
     componentDescriptionArea.setRows(5);
-    componentDescriptionArea.setText("GPU is responsible for screen buffer \nmanupulations and represents the \n'gpu' component library.");
     componentDescriptionArea.setWrapStyleWord(true);
     jScrollPane2.setViewportView(componentDescriptionArea);
 
@@ -234,11 +410,13 @@ public class ConfiguratorForm extends javax.swing.JFrame {
     jLabel5.setText("Component Type:");
 
     componentTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "computer", "cpu", "eeprom", "filesystem", "gpu", "internet", "keyboard", "modem", "ocemu", "screen", " " }));
-    componentTypeComboBox.setSelectedIndex(4);
+    componentTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            componentTypeComboBoxActionPerformed(evt);
+        }
+    });
 
     jLabel6.setText("Option 4");
-
-    option4Field.setText("3");
 
     javax.swing.GroupLayout componentSettingsPanelLayout = new javax.swing.GroupLayout(componentSettingsPanel);
     componentSettingsPanel.setLayout(componentSettingsPanelLayout);
@@ -256,14 +434,14 @@ public class ConfiguratorForm extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addComponent(jLabel4)
                         .addComponent(jLabel6))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(componentSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(componentSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(option3Field)
                         .addComponent(option2Field)
-                        .addComponent(componentTypeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(componentTypeComboBox, 0, 208, Short.MAX_VALUE)
                         .addComponent(option1Field)
-                        .addComponent(componentAddressField)
-                        .addComponent(option4Field))))
+                        .addComponent(option4Field)
+                        .addComponent(componentAddressField, javax.swing.GroupLayout.Alignment.TRAILING))))
             .addContainerGap())
     );
     componentSettingsPanelLayout.setVerticalGroup(
@@ -314,6 +492,11 @@ public class ConfiguratorForm extends javax.swing.JFrame {
     fileMenu.setText("File");
 
     resetConfigItem.setText("Reset config");
+    resetConfigItem.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            resetConfigItemActionPerformed(evt);
+        }
+    });
     fileMenu.add(resetConfigItem);
     fileMenu.add(jSeparator1);
 
@@ -348,9 +531,19 @@ public class ConfiguratorForm extends javax.swing.JFrame {
     componentMenu.setText("Component");
 
     jMenuItem1.setText("Add");
+    jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem1ActionPerformed(evt);
+        }
+    });
     componentMenu.add(jMenuItem1);
 
     jMenuItem2.setText("Delete selected");
+    jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItem2ActionPerformed(evt);
+        }
+    });
     componentMenu.add(jMenuItem2);
 
     jMenuBar1.add(componentMenu);
@@ -385,40 +578,12 @@ public class ConfiguratorForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void componentListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_componentListValueChanged
-        this.componentTypeComboBox.setSelectedIndex(componentsArray[this.componentList.getSelectedIndex()].getComponentType());
-        this.componentAddressField.setText(componentsArray[this.componentList.getSelectedIndex()].getComponentAddress());
-        this.option1Field.setText(componentsArray[this.componentList.getSelectedIndex()].getOptionAt(0));
-        this.option2Field.setText(componentsArray[this.componentList.getSelectedIndex()].getOptionAt(1));
-        this.option3Field.setText(componentsArray[this.componentList.getSelectedIndex()].getOptionAt(2));
-        this.option4Field.setText(componentsArray[this.componentList.getSelectedIndex()].getOptionAt(3));
-        switch (componentsArray[this.componentList.getSelectedIndex()].getComponentType()) {
-            case 0:
-                this.componentDescriptionArea.setText("Computer represents the \n'computer' library.");
-                break;
-            case 1:
-                this.componentDescriptionArea.setText("EEPROM is responsible for \nbooting up the machine.");
-                break;
-            case 2:
-                this.componentDescriptionArea.setText("Filesystem is responsible \nfor file management \nand represents the 'filesystem' \nlibrary.");
-                break;
-            case 3:
-                this.componentDescriptionArea.setText("GPU is responsible for screen \nbuffer manupulations \nand represents the 'gpu' \ncomponent library.");
-                break;
-            case 4:
-                this.componentDescriptionArea.setText("Internet is responsible for \nHTTP-requests and \nrepresents the 'internet' \ncomponent library.");
-                break;
-            case 5:
-                this.componentDescriptionArea.setText("Keyboard is responsible for \nuser's input and \nrepresents the 'keyboard' \ncomponent library.");
-                break;
-            case 6:
-                this.componentDescriptionArea.setText("Modem is responsible for \ncross-machine networking \nand represents the 'modem' \ncomponent library.");
-                break;
-            case 7:
-                this.componentDescriptionArea.setText("OCEmu is responsible for \nintgration of OCEmu's code \nwith original OpenComputers'\n code.");
-                break;
-            case 8:
-                this.componentDescriptionArea.setText("Screen is responsible for \nthe screen block and \nrepresents the 'screen' library.");
-                break;
+        int s = this.componentList.getSelectedIndex();
+        if (s >= 0) {
+            this.componentTypeComboBox.setSelectedIndex(componentsArray[s].getComponentType() + 1);
+            this.componentAddressField.setText(componentsArray[s].getComponentAddress());
+            updateFields(componentsArray[s]);
+            updateComponentList();
         }
     }//GEN-LAST:event_componentListValueChanged
 
@@ -427,6 +592,18 @@ public class ConfiguratorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void launchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchButtonActionPerformed
+        boolean isOSInstalled = false;
+        for (File file : new File("OCEmu/.machine").listFiles()) {
+            for (String current : file.list()) {
+                //Well, technically it allows to setup ANY OS, compatible with Lua BIOS EEPROM bootloader script
+                if (current.equals("init.lua")) {
+                    isOSInstalled = true;
+                }
+            }
+        }
+        if (!(isOSInstalled)) {
+            installOpenOS();
+        }
         try {
             ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && run.bat");
             pb.redirectErrorStream(true);
@@ -457,6 +634,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
             }
+            updateComponentList();
         }
     }//GEN-LAST:event_importConfigItemActionPerformed
 
@@ -467,6 +645,33 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_saveConfigItemActionPerformed
+
+    private void componentTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_componentTypeComboBoxActionPerformed
+        updateComponentList();
+    }//GEN-LAST:event_componentTypeComboBoxActionPerformed
+
+    private void resetConfigItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetConfigItemActionPerformed
+        try {
+            new ConfigMaker(ConfigMaker.defaultComponentSet).createConfig();
+            this.componentsArray = new OCEmuComponent[ConfigMaker.defaultComponentSet.length];
+            System.arraycopy(ConfigMaker.defaultComponentSet, 0, this.componentsArray, 0, ConfigMaker.defaultComponentSet.length);
+        } catch (IOException ex) {
+            Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        updateComponentList();
+    }//GEN-LAST:event_resetConfigItemActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.addComponent(new OCEmuComponent(0, UUIDGenerator.create(), ""));
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        if (this.componentList.getSelectedValue() != null) {
+            deleteComponent(this.componentList.getSelectedIndex());
+        } else {
+            JOptionPane.showMessageDialog(this, "No component selected.", "Error.", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JTextField componentAddressField;

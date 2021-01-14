@@ -30,16 +30,16 @@ package ru.VladTheMountain.oclide.configurator.ocemu.component;
 public class OCEmuComponent {
 
     //FIELD 1
-    int type;
+    private int type;
     //FIELD 2
-    String address;
+    private String address;
     //the rest
-    String[] opts;
+    private String[] opts;
 
     public OCEmuComponent(int componentType, String componentAddress, String... options) {
         this.type = componentType;
         this.address = componentAddress;
-        this.opts = options;
+        System.arraycopy(options, 0, opts, 0, options.length);
     }
 
     public int getComponentType() {

@@ -26,7 +26,16 @@ package ru.VladTheMountain.oclide.configurator.ocemu;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Computer;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.EEPROM;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Filesystem;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.GPU;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Internet;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Keyboard;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Modem;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmu;
 import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Screen;
 
 /**
  *
@@ -47,6 +56,20 @@ public class ConfigMaker {
     private static int maxWirelessRange = 400;
     //
     private String computerComponents;
+    //Config defaults
+    public final static OCEmuComponent[] defaultComponentSet = {
+        new GPU(0, 160, 50, 3),
+        new Modem(1, false),
+        new EEPROM(9, "lua/bios.lua"),
+        new Filesystem(7, "loot/OpenOS", true),
+        new Filesystem(null, "tmpfs", false),
+        new Filesystem(5, null, false),
+        new Internet(),
+        new Computer(),
+        new OCEmu(),
+        new Screen(null, 80, 25, 3),
+        new Keyboard()
+    };
 
     /**
      * Initialization constructor
@@ -110,7 +133,7 @@ public class ConfigMaker {
      * @throws IOException
      */
     void createConfig() throws IOException {
-        File config = new File("workspace/OCEmu/machine/ocemu.cfg");
+        File config = new File("OCEmu/.machine/ocemu.cfg");
         if (!(config.exists())) {
             if (!(new File(config.getParent()).exists())) {
                 new File(config.getParent()).mkdirs();
@@ -226,13 +249,11 @@ public class ConfigMaker {
                 int type = 7;
                 String address;
                 String[] opts = new String[4];
-                //Temporary variables for comma indexes. Might replace with a better optimized algorythm somewhen in Beta.
                 int comma1 = configContents[i].indexOf(",");
                 int comma2 = configContents[i].indexOf(",", comma1);
                 int comma3 = configContents[i].indexOf(",", comma2);
                 int comma4 = configContents[i].indexOf(",", comma3);
                 int comma5 = configContents[i].indexOf(",", comma4);
-                //
                 switch (configContents[i].substring(configContents[i].indexOf("\""), configContents[i].indexOf("\"", configContents[i].indexOf("\"")))) {
                     case "computer":
                         type = 0;
@@ -272,4 +293,8 @@ public class ConfigMaker {
         }
         return tmp;
     }
+
+    /*public static OCEmuComponent[] getDefaults() {
+        return defaultComponentSet;
+    }*/
 }
