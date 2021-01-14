@@ -34,17 +34,6 @@ import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
  */
 public class ConfigMaker {
 
-    //CONSTANTS
-    public static final int CPU = 0;
-    public static final int GPU = 1;
-    public static final int SCREEN = 2;
-    public static final int FILESYSTEM = 3;
-    public static final int COMPUTER = 4;
-    public static final int MODEM = 5;
-    public static final int INTERNET = 6;
-    public static final int KEYBOARD = 7;
-    public static final int EEPROM = 8;
-
     //CONFIG VARIABLES
     private static String monochromeColor = "0xFFFFFF";
     private static boolean allowBytecode = false;
@@ -60,6 +49,7 @@ public class ConfigMaker {
     private String computerComponents;
 
     /**
+     * Initialization constructor
      *
      * @param comps
      */
@@ -115,6 +105,7 @@ public class ConfigMaker {
     }
 
     /**
+     * Creates the new config file
      *
      * @throws IOException
      */
@@ -218,6 +209,13 @@ public class ConfigMaker {
         Files.write(config.toPath(), contents.getBytes());
     }
 
+    /**
+     * Parses the components' part of the OCEmu emulator config.
+     *
+     * @param f Config gile
+     * @return Array of {@link OCEmuComponent}
+     * @throws IOException
+     */
     public OCEmuComponent[] readConfig(File f) throws IOException {
         int lines = Files.readAllLines(f.toPath()).toArray().length;
         String[] configContents = new String[lines];
@@ -227,7 +225,14 @@ public class ConfigMaker {
             if (configContents[i].startsWith("{") && (configContents[i].endsWith("}") || configContents[i].endsWith("},"))) {
                 int type = 7;
                 String address;
-                String[] opts;
+                String[] opts = new String[4];
+                //Temporary variables for comma indexes. Might replace with a better optimized algorythm somewhen in Beta.
+                int comma1 = configContents[i].indexOf(",");
+                int comma2 = configContents[i].indexOf(",", comma1);
+                int comma3 = configContents[i].indexOf(",", comma2);
+                int comma4 = configContents[i].indexOf(",", comma3);
+                int comma5 = configContents[i].indexOf(",", comma4);
+                //
                 switch (configContents[i].substring(configContents[i].indexOf("\""), configContents[i].indexOf("\"", configContents[i].indexOf("\"")))) {
                     case "computer":
                         type = 0;
@@ -257,9 +262,12 @@ public class ConfigMaker {
                         type = 8;
                         break;
                 }
-                address = configContents[i].substring(configContents[i].indexOf("\"", configContents[i].indexOf(" ")), configContents[i].indexOf("\"", configContents[i].indexOf("\"", configContents[i].indexOf(" "))));
-                //TODO: read options from file
-                tmp[i] = new OCEmuComponent(type, address, "Can't read imported configs' component options yet");
+                address = configContents[i].substring(comma1 + 2, comma2 - 1);
+                opts[0] = configContents[i].substring(comma2 + 2, comma3 - 1);
+                opts[1] = configContents[i].substring(comma3 + 2, comma4 - 1);
+                opts[2] = configContents[i].substring(comma4 + 2, comma5 - 1);
+                opts[3] = configContents[i].substring(comma5 + 2, configContents[i].indexOf("}") - 1);
+                tmp[i] = new OCEmuComponent(type, address, opts);
             }
         }
         return tmp;

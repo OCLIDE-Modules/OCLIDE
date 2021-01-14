@@ -88,7 +88,7 @@
                       <Font name="Monospaced" size="12" style="0"/>
                     </Property>
                     <Property name="rows" type="int" value="5"/>
-                    <Property name="text" type="java.lang.String" value="OpenComputers Lua Integrated Development Environment&#xa;(OCLIDE)&#xa;Copyright &#xa9; VladTheMountain, 2021&#xa;&#xa;OCEmu&#xa;Copyright &#xa9; James Coonradt, 2015&#xa;Copyright &#xa9; Zen1th, 2020&#xa;&#xa;Ocelot Desktop&#xa;Copyright &#xa9; #cc.ru, 2020&#xa;&#xa;Ocelot Brain&#xa;Copyright &#xa9; #cc.ru, 2020"/>
+                    <Property name="text" type="java.lang.String" value="OpenComputers Lua Integrated Development Environment&#xa;(OCLIDE)&#xa;Copyright &#xa9; VladTheMountain, 2021&#xa;&#xa;OCEmu&#xa;Copyright &#xa9; James Coonradt, 2015&#xa;Copyright &#xa9; Zen1th, 2020&#xa;&#xa;Ocelot Brain&#xa;Copyright &#xa9; #cc.ru, 2020"/>
                   </Properties>
                 </Component>
               </SubComponents>

@@ -439,6 +439,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         runOcelotButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/app_window_black&24.png"))); // NOI18N
         runOcelotButton.setToolTipText("Launch Ocelot Desktop");
+        runOcelotButton.setEnabled(false);
         runOcelotButton.setFocusable(false);
         runOcelotButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         runOcelotButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -582,6 +583,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         ocelotD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/app_window_black&16.png"))); // NOI18N
         ocelotD.setText("Run Ocelot");
+        ocelotD.setEnabled(false);
         ocelotD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ocelotDActionPerformed(evt);
