@@ -39,7 +39,7 @@ public class OCEmuComponent {
     public OCEmuComponent(int componentType, String componentAddress, String... options) {
         this.type = componentType;
         this.address = componentAddress;
-        this.opts = new String[options.length];
+        this.opts = new String[4];
         System.arraycopy(options, 0, opts, 0, options.length);
     }
 

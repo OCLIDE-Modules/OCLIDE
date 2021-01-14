@@ -149,7 +149,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
      * @param type
      */
     private void updateFields(OCEmuComponent c) {
-        switch (c.getComponentType() + 1) {
+        switch (c.getComponentType()) {
             case 0:
                 //Description set
                 this.componentDescriptionArea.setText("Computer represents the \n'computer' library.");
