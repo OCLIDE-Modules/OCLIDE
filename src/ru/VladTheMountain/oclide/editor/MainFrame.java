@@ -325,7 +325,7 @@ public class MainFrame extends javax.swing.JFrame {
         projectChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (v0.0.1-alpha.2)");
+        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (v0.0.5)");
         setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Projects");

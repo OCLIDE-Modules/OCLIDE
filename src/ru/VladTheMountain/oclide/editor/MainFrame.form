@@ -357,7 +357,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="OCLIDE - OpenComputers Lua Integrated Development Environment (v0.0.1-alpha.2)"/>
+    <Property name="title" type="java.lang.String" value="OCLIDE - OpenComputers Lua Integrated Development Environment (v0.0.5)"/>
     <Property name="extendedState" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
       <Connection code="javax.swing.JFrame.MAXIMIZED_BOTH" type="code"/>
     </Property>

@@ -449,7 +449,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new File(&quot;projects&quot;).getAbsolutePath() + &quot;\\&quot; + projectNameField.getText())"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(new File(&quot;projects&quot;).getAbsolutePath() + java.nio.file.FileSystems.getDefault().getSeparator() + projectNameField.getText())"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JSeparator" name="scriptSeparator">

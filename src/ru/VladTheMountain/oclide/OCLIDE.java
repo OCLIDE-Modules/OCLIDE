@@ -23,10 +23,10 @@
  */
 package ru.VladTheMountain.oclide;
 
-import java.awt.Graphics2D;
+/*import java.awt.Graphics2D;
 import java.awt.SplashScreen;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.Logger;*/
 
 /**
  *
@@ -39,7 +39,7 @@ public class OCLIDE {
      */
     public static void main(String[] args) {
         // DECOMMENT AT RELEASE
-        final SplashScreen splash = SplashScreen.getSplashScreen();
+        /*final SplashScreen splash = SplashScreen.getSplashScreen();
         if (splash == null) {
             System.out.println("SplashScreen.getSplashScreen() returned null");
             return;
@@ -50,10 +50,10 @@ public class OCLIDE {
             return;
         }
         try {
-            Thread.sleep(2000);
+            Thread.sleep(2000);*/
             new ru.VladTheMountain.oclide.editor.MainFrame().setVisible(true);
-        } catch (InterruptedException ex) {
+        /*} catch (InterruptedException ex) {
             Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 }
