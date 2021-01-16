@@ -63,7 +63,7 @@ public class SettingsFrame extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         jTextArea1.setRows(5);
-        jTextArea1.setText("OpenComputers Lua Integrated Development Environment\n(OCLIDE)\nCopyright © VladTheMountain, 2021\n\nOCEmu\nCopyright © James Coonradt, 2015\nCopyright © Zen1th, 2020\n\nOcelot Brain\nCopyright © #cc.ru, 2020");
+        jTextArea1.setText("OpenComputers Lua Integrated Development Environment\n(OCLIDE)\nCopyright © VladTheMountain, 2021\n\nOCEmu\nCopyright © James Coonradt, 2015\nCopyright © Zen1th, 2020\n\nOcelot Brain\nCopyright © Dmitry Zhidenkov, 2020");
         jScrollPane2.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);

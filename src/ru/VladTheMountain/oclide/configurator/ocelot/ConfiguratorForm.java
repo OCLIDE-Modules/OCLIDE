@@ -23,6 +23,8 @@
  */
 package ru.VladTheMountain.oclide.configurator.ocelot;
 
+import ru.VladTheMountain.oclide.emulator.EmulatorFrame;
+
 /**
  *
  * @author VladTheMountain
@@ -85,7 +87,12 @@ public class ConfiguratorForm extends javax.swing.JFrame {
 
         controlPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        launchButton.setText("Launch OCEmu");
+        launchButton.setText("Launch Ocelot");
+        launchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                launchButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
 
@@ -348,6 +355,10 @@ public class ConfiguratorForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void launchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchButtonActionPerformed
+        new EmulatorFrame().setVisible(true);
+    }//GEN-LAST:event_launchButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

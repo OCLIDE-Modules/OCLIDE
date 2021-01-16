@@ -81,13 +81,21 @@ public class MainFrame extends javax.swing.JFrame {
             newFile.getAccessibleContext().setAccessibleDescription(newFile.getText());
         });
         newFile.getAccessibleContext().setAccessibleDescription(newFile.getText());
+        //autocompletion
+        org.fife.ui.autocomplete.CompletionProvider occp = ru.VladTheMountain.oclide.editor.util.OpenComputersCompletionProvider.getProvider();
+        org.fife.ui.autocomplete.AutoCompletion occ = new org.fife.ui.autocomplete.AutoCompletion(occp);
+        occ.setListCellRenderer(new org.fife.ui.autocomplete.CompletionCellRenderer());
+        occ.setAutoCompleteEnabled(true);
+        occ.setAutoActivationEnabled(true);
+        occ.setAutoActivationDelay(100);
+        occ.setShowDescWindow(true);
+        occ.setParameterAssistanceEnabled(true);
+        //occ.install(newFile); /*UNCOMMENT BEFORE BETA RELEASE*/
+        newFile.setToolTipSupplier((org.fife.ui.rtextarea.ToolTipSupplier) occp);
+        javax.swing.ToolTipManager.sharedInstance().registerComponent(newFile);
+        //
         org.fife.ui.rtextarea.RTextScrollPane sp = new org.fife.ui.rtextarea.RTextScrollPane(newFile);
         sp.setName(file.getAbsolutePath());
-        //autocompletion
-        org.fife.ui.autocomplete.CompletionProvider occp = OpenComputersCompletionProvider.getProvider();
-        org.fife.ui.autocomplete.AutoCompletion occ = new org.fife.ui.autocomplete.AutoCompletion(occp);
-        /*occ.install(newFile); UNCOMMENT BEFORE BETA RELEASE*/
-        //
         this.editorTabs.add(file.getName(), sp);
         this.editorTabs.setSelectedIndex(this.editorTabs.getTabCount() - 1);
         updateProjectsTree();
@@ -790,7 +798,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_runOCEmuButtonActionPerformed
 
     private void runOcelotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runOcelotButtonActionPerformed
-        runOcelot();
+        //runOcelot();
+        new ru.VladTheMountain.oclide.emulator.EmulatorFrame().setVisible(true);
     }//GEN-LAST:event_runOcelotButtonActionPerformed
 
     private void runOCEmu() throws java.io.IOException {
@@ -807,7 +816,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void runOcelot() {
         try {
-            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "Ocelot\\ocelot.jar");
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "Ocelot" + java.nio.file.FileSystems.getDefault().getSeparator() + "ocelot.jar");
             pb.redirectErrorStream(true);
             Process p = pb.start();
             java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));

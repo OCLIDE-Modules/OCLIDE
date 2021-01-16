@@ -23,80 +23,96 @@
  */
 package ru.VladTheMountain.oclide.emulator;
 
+import java.awt.Canvas;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.Timer;
+import totoro.ocelot.brain.Ocelot;
+import totoro.ocelot.brain.entity.CPU;
+import totoro.ocelot.brain.entity.Case;
+import totoro.ocelot.brain.entity.GraphicsCard;
+import totoro.ocelot.brain.entity.HDDManaged;
+import totoro.ocelot.brain.entity.Memory;
+import totoro.ocelot.brain.entity.Screen;
+import totoro.ocelot.brain.loot.Loot;
+import totoro.ocelot.brain.loot.Loot.LootFactory;
+import totoro.ocelot.brain.nbt.NBTTagCompound;
+import totoro.ocelot.brain.nbt.persistence.PersistableString;
+import totoro.ocelot.brain.util.Tier;
+import totoro.ocelot.brain.workspace.Workspace;
+
 /**
  *
  * @author VladTheMountain
  */
-public class EmulatorFrame extends javax.swing.JFrame {
+public class EmulatorFrame extends JFrame {
 
-    javax.swing.JPanel mainPanel;
-    javax.swing.JTextArea shell;
+    Canvas mainPanel;
     //
-    private totoro.ocelot.brain.workspace.Workspace temporaryWorkspace;
+    private Workspace temporaryWorkspace;
 
     private static final long serialVersionUID = 1L;
 
     public EmulatorFrame() {
         initComponents();
         this.pack();
-        javax.swing.Timer t = new javax.swing.Timer(300, (java.awt.event.ActionEvent e) -> {
+        Timer t = new Timer(300, (ActionEvent e) -> {
             this.repaint();
         });
-        try {
+        /*try {
             initWorkspace();
         } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(EmulatorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }
 
     void initComponents() {
-        mainPanel = new javax.swing.JPanel();
-        shell = new javax.swing.JTextArea();
-        //
-        shell.setBackground(java.awt.Color.BLACK);
-        shell.setForeground(java.awt.Color.WHITE);
-        shell.setFont(java.awt.Font.getFont("Monospaced 12 Plain"));
-        //
-        mainPanel.add(shell);
+        this.setTitle("Emulator");
+        mainPanel = new CustomCanvas();
         //
         this.getContentPane().add(mainPanel);
     }
 
-    void initWorkspace() throws java.lang.InterruptedException {
-        totoro.ocelot.brain.Ocelot.initialize();
+    void initWorkspace() throws InterruptedException {
+        Ocelot.initialize();
         //Workspace initialization
-        java.io.File tempWork = new java.io.File("workspace/current");
+        File tempWork = new File("workspace/current");
         if (!(tempWork.exists())) {
             tempWork.mkdirs();
         }
-        this.temporaryWorkspace = new totoro.ocelot.brain.workspace.Workspace(tempWork.toPath());
+        this.temporaryWorkspace = new Workspace(tempWork.toPath());
         //Computer creation
-        totoro.ocelot.brain.entity.Case tPC = new totoro.ocelot.brain.entity.Case(totoro.ocelot.brain.util.Tier.Two());
+        Case tPC = new Case(Tier.Two());
         this.temporaryWorkspace.add(tPC);
         //CPU
-        totoro.ocelot.brain.entity.CPU tCPU = new totoro.ocelot.brain.entity.CPU(totoro.ocelot.brain.util.Tier.Three());
+        CPU tCPU = new CPU(Tier.Three());
         tPC.add(tCPU);
         //Memory
-        totoro.ocelot.brain.entity.Memory tM1 = new totoro.ocelot.brain.entity.Memory(totoro.ocelot.brain.util.Tier.Four());
+        Memory tM1 = new Memory(Tier.Four());
         tPC.add(tM1);
         //GPU
-        totoro.ocelot.brain.entity.GraphicsCard tGPU = new totoro.ocelot.brain.entity.GraphicsCard(totoro.ocelot.brain.util.Tier.Three());
+        GraphicsCard tGPU = new GraphicsCard(Tier.Three());
         tPC.add(tGPU);
         //HDD
-        totoro.ocelot.brain.entity.HDDManaged tHDD = new totoro.ocelot.brain.entity.HDDManaged(totoro.ocelot.brain.util.Tier.Three());
+        HDDManaged tHDD = new HDDManaged(Tier.Three());
         tPC.add(tHDD);
         //EEPROM
         //What kind of Cyberpunk is this?
-        totoro.ocelot.brain.loot.Loot.LootFactory tMOSEFI = totoro.ocelot.brain.loot.Loot.MineOSEFIEEPROM(); //O_O
+        LootFactory tMOSEFI = Loot.OpenOsEEPROM(); //O_O
         tPC.add(tMOSEFI.create());
         //Floppy
-        totoro.ocelot.brain.loot.Loot.LootFactory tOOSF = totoro.ocelot.brain.loot.Loot.OpenOsFloppy();
+        LootFactory tOOSF = Loot.OpenOsFloppy();
         tPC.add(tOOSF.create());
         //Screen
-        totoro.ocelot.brain.entity.Screen tScreen = new totoro.ocelot.brain.entity.Screen(totoro.ocelot.brain.util.Tier.Two());
-        tPC.add(tScreen);
+        Screen tScreen = new Screen(Tier.Two());
+        tPC.connect(tScreen);
         //Custom Data (for some reason)
-        tPC.setCustomData(new totoro.ocelot.brain.nbt.persistence.PersistableString("hi?"));
+        tPC.setCustomData(new PersistableString("hi?"));
         //EventListeners (I wonder if to turn this thing off...)
         /*
         totoro.ocelot.brain.event.EventBus.listenTo(totoro.ocelot.brain.event.BeepEvent.class, new EventListener(){});
@@ -116,7 +132,7 @@ public class EmulatorFrame extends javax.swing.JFrame {
         while (this.temporaryWorkspace.getIngameTime() < 100000) {
             for (int i = 1; i <= tScreen.getHeight(); i++) {
                 for (int j = 1; j <= tScreen.getWidth(); j++) {
-                    this.shell.setText(this.shell.getText() + tScreen.get(i, j));
+                    //
                 }
             }
             this.temporaryWorkspace.update();
@@ -124,26 +140,26 @@ public class EmulatorFrame extends javax.swing.JFrame {
         }
 
         tPC.turnOff();
-        totoro.ocelot.brain.Ocelot.shutdown();
+        Ocelot.shutdown();
     }
 
-    void saveWorkspace(totoro.ocelot.brain.workspace.Workspace w) {
+    void saveWorkspace(Workspace w) {
         //Save the 'w'
-        totoro.ocelot.brain.nbt.NBTTagCompound nbt = new totoro.ocelot.brain.nbt.NBTTagCompound();
+        NBTTagCompound nbt = new NBTTagCompound();
         w.save(nbt);
-        java.io.File tempMachineState = new java.io.File("temp/machineState.log");
+        File tempMachineState = new File("temp/machineState.log");
         if (!(tempMachineState.exists())) {
             try {
-                new java.io.File(tempMachineState.getParent()).mkdirs();
+                new File(tempMachineState.getParent()).mkdirs();
                 tempMachineState.createNewFile();
-            } catch (java.io.IOException ex) {
-                java.util.logging.Logger.getLogger(EmulatorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         try {
-            java.nio.file.Files.write(tempMachineState.toPath(), String.valueOf(nbt).getBytes());
-        } catch (java.io.IOException ex) {
-            java.util.logging.Logger.getLogger(EmulatorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Files.write(tempMachineState.toPath(), String.valueOf(nbt).getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(EmulatorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
