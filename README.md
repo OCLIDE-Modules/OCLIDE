@@ -13,3 +13,7 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java with Swing GUI.
 - [x] OCEmu integration
 - [ ] *maybe* Ocelot Brain support
 - [ ] Debugging tools
+
+## System requirements
+* JRE/JDK 1.8 or later
+* Windows 10 (work on older versions is not guaranteed, but may be possible)
