@@ -26,7 +26,7 @@ package ru.VladTheMountain.oclide.configurator.ocemu;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -110,7 +110,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
     private void updateComponentList() {
         DefaultListModel<String> model = new DefaultListModel<>();
         for (int i = 0; i < componentsArray.length; i++) {
-            model.insertElementAt(this.componentsArray[i].getComponentAddress(), i);
+            model.insertElementAt(this.componentTypeComboBox.getItemAt(this.componentsArray[i].getComponentType()+1), i);
         }
         this.componentList.setModel(model);
     }
@@ -127,19 +127,21 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             }
             nextFreeIndex++;
         }
-        int input = JOptionPane.showOptionDialog(this, "Choose a filesystem to install OpenOS to:", "Machine setup", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, filesystems, filesystems[0]);
-        File machineDir = new File("OCEmu/.machine/" + filesystems[input]);
-        try {
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/bin"), machineDir);
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/boot"), machineDir);
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/etc"), machineDir);
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/home"), machineDir);
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/lib"), machineDir);
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/usr"), machineDir);
-            Files.copy(new File("OCEmu/loot/OpenOS/.osprop").toPath(), machineDir.toPath(), (CopyOption[]) null);
-            Files.copy(new File("OCEmu/loot/OpenOS/init.lua").toPath(), machineDir.toPath(), (CopyOption[]) null);
-        } catch (IOException ex) {
-            Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+        String input = new MachineChooser(this, true, filesystems).getSelectedFS();
+        if (input != null) {
+            File machineDir = new File("OCEmu/.machine/" + input);
+            try {
+                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/bin"), new File(machineDir.getAbsoluteFile() + "/bin"));
+                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/boot"), new File(machineDir.getAbsoluteFile() + "/boot"));
+                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/etc"), new File(machineDir.getAbsoluteFile() + "/etc"));
+                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/home"), new File(machineDir.getAbsoluteFile() + "/home"));
+                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/lib"), new File(machineDir.getAbsoluteFile() + "/lib"));
+                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/usr"), new File(machineDir.getAbsoluteFile() + "/usr"));
+                Files.copy(new File("OCEmu/loot/OpenOS/.osprop").toPath(), new File(machineDir.getAbsoluteFile() + "/.osprop").toPath());
+                Files.copy(new File("OCEmu/loot/OpenOS/init.lua").toPath(), new File(machineDir.getAbsoluteFile() + "/init.lua").toPath());
+            } catch (IOException ex) {
+                Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -582,7 +584,6 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             this.componentTypeComboBox.setSelectedIndex(componentsArray[s].getComponentType() + 1);
             this.componentAddressField.setText(componentsArray[s].getComponentAddress());
             updateFields(componentsArray[s]);
-            updateComponentList();
         }
     }//GEN-LAST:event_componentListValueChanged
 
@@ -592,19 +593,34 @@ public class ConfiguratorForm extends javax.swing.JFrame {
 
     private void launchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchButtonActionPerformed
         boolean isOSInstalled = false;
-        for (File file : new File("OCEmu/.machine").listFiles()) {
-            for (String current : file.list()) {
-                //Well, technically it allows to setup ANY OS, compatible with Lua BIOS EEPROM bootloader script
-                if (current.equals("init.lua")) {
-                    isOSInstalled = true;
+        File machineFolder = new File("OCEmu" + FileSystems.getDefault().getSeparator() + ".machine");
+        if (machineFolder.exists() && machineFolder.listFiles().length > 0) {
+            for (File file : machineFolder.listFiles()) {
+                if (file.isDirectory()) {
+                    for (String current : file.list()) {
+                        //Well, technically it allows to setup ANY OS, compatible with Lua BIOS EEPROM bootloader script
+                        if (current.equals("init.lua")) {
+                            isOSInstalled = true;
+                        }
+                    }
                 }
             }
+        } else {
+            machineFolder.mkdirs();
         }
         if (!(isOSInstalled)) {
             installOpenOS();
         }
+
+        ProcessBuilder pb = null;
+        if (System.getProperty("os.name").contains("Windows")) {
+            pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && run.bat");
+            // NOT GUARANTEED TO WORK
+            // but still
+        } else if (System.getProperty("os.name").contains("Ubuntu") || System.getProperty("os.name").contains("Arch")) {
+            pb = new ProcessBuilder("lua", "boot.lua", "./.machine");
+        }
         try {
-            ProcessBuilder pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && run.bat");
             pb.redirectErrorStream(true);
             Process p = pb.start();
             java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));
@@ -617,8 +633,8 @@ public class ConfiguratorForm extends javax.swing.JFrame {
                 }
                 System.out.println(outLine);
             }
-        } catch (java.io.IOException ex) {
-            java.util.logging.Logger.getLogger(ConfiguratorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_launchButtonActionPerformed
 

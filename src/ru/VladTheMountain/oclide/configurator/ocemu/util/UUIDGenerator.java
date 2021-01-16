@@ -35,7 +35,7 @@ public class UUIDGenerator {
      * @return the same result as OpenOS' {@code uuid.next()}
      */
     public static String create() {
-        return org.luaj.vm2.lib.jse.JsePlatform.standardGlobals().load("local sets = {4, 2, 2, 2, 6}\n"
+        return li.cil.repack.org.luaj.vm2.lib.jse.JsePlatform.standardGlobals().load("local sets = {4, 2, 2, 2, 6}\n"
                 + "  local result = \"\"\n"
                 + "  local pos = 0\n"
                 + "\n"

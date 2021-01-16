@@ -801,7 +801,7 @@ public class MainFrame extends javax.swing.JFrame {
                 new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm(String.valueOf(projectsTree.getSelectionPath().getPath()[1])).setVisible(true);
             }
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "No project chosen. Please select a project in the file tree and then launch OCEmu.", "Project not set", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "No project chosen. Please select a project folder in the file tree and then launch OCEmu.", "Project not set", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 
