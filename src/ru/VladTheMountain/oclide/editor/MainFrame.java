@@ -794,8 +794,12 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_runOcelotButtonActionPerformed
 
     private void runOCEmu() throws java.io.IOException {
-        if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) != null) {
-            new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm(String.valueOf(projectsTree.getSelectionPath().getPath()[1])).setVisible(true);
+        if (projectsTree.getSelectionPath().getPath().length > 1 && projectsTree.getSelectionPath().getPath().length < 3) {
+            if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) == null || "".equals(String.valueOf(projectsTree.getSelectionPath().getPath()[1]))) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid project selection.", "Error: Can't run OCEmu", javax.swing.JOptionPane.ERROR_MESSAGE);
+            } else {
+                new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm(String.valueOf(projectsTree.getSelectionPath().getPath()[1])).setVisible(true);
+            }
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "No project chosen. Please select a project in the file tree and then launch OCEmu.", "Project not set", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
