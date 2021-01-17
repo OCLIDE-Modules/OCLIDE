@@ -753,7 +753,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void addFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFileMenuItemActionPerformed
         String name = javax.swing.JOptionPane.showInputDialog(this, "Name a new file:", "");
         if (name != null) {
-            this.newFile(new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath()) + java.nio.file.FileSystems.getDefault().getSeparator() + name));
+            this.newFile(new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1]) + java.nio.file.FileSystems.getDefault().getSeparator() + name));
         }
     }//GEN-LAST:event_addFileMenuItemActionPerformed
 

@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -118,30 +119,30 @@ public class ConfiguratorForm extends javax.swing.JFrame {
      * Copies OpenOS from OCEmu's loot folder to target filesystem
      */
     private void installOpenOS() {
-        String[] filesystems = new String[this.componentsArray.length];
+        /*String[] filesystems = new String[this.componentsArray.length];
         int nextFreeIndex = 0;
         for (OCEmuComponent component : this.componentsArray) {
             if (component.getComponentType() == 2) {
                 filesystems[nextFreeIndex] = component.getComponentAddress();
             }
             nextFreeIndex++;
+        }*/
+        String input = /*new MachineChooser(this, true, filesystems).getSelectedFS()*/ "tmpfs";
+        //if (input != null) {
+        File machineDir = new File("OCEmu/.machine/" + input);
+        try {
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/bin"), new File(machineDir.getAbsoluteFile() + "/bin"));
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/boot"), new File(machineDir.getAbsoluteFile() + "/boot"));
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/etc"), new File(machineDir.getAbsoluteFile() + "/etc"));
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/home"), new File(machineDir.getAbsoluteFile() + "/home"));
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/lib"), new File(machineDir.getAbsoluteFile() + "/lib"));
+            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/usr"), new File(machineDir.getAbsoluteFile() + "/usr"));
+            Files.copy(new File("OCEmu/loot/OpenOS/.osprop").toPath(), new File(machineDir.getAbsoluteFile() + "/.osprop").toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(new File("OCEmu/loot/OpenOS/init.lua").toPath(), new File(machineDir.getAbsoluteFile() + "/init.lua").toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+            Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String input = new MachineChooser(this, true, filesystems).getSelectedFS();
-        if (input != null) {
-            File machineDir = new File("OCEmu/.machine/" + input);
-            try {
-                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/bin"), new File(machineDir.getAbsoluteFile() + "/bin"));
-                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/boot"), new File(machineDir.getAbsoluteFile() + "/boot"));
-                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/etc"), new File(machineDir.getAbsoluteFile() + "/etc"));
-                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/home"), new File(machineDir.getAbsoluteFile() + "/home"));
-                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/lib"), new File(machineDir.getAbsoluteFile() + "/lib"));
-                FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/usr"), new File(machineDir.getAbsoluteFile() + "/usr"));
-                Files.copy(new File("OCEmu/loot/OpenOS/.osprop").toPath(), new File(machineDir.getAbsoluteFile() + "/.osprop").toPath());
-                Files.copy(new File("OCEmu/loot/OpenOS/init.lua").toPath(), new File(machineDir.getAbsoluteFile() + "/init.lua").toPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        //}
     }
 
     /**
@@ -284,10 +285,18 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             return;
         }
         for (File f : files) {
-            try {
-                Files.copy(f.toPath(), targ.toPath());
-            } catch (IOException ex) {
-                Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+            if (f.isFile()) {
+                try {
+                    Files.copy(f.toPath(), new File(targ.getAbsolutePath() + FileSystems.getDefault().getSeparator() + f.getName()).toPath());
+                } catch (IOException ex) {
+                    Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    FileUtils.copyDirectory(f, targ);
+                } catch (IOException ex) {
+                    Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             if (f.isDirectory()) {
                 recursivelyCopyFiles(src, targ);
@@ -615,18 +624,20 @@ public class ConfiguratorForm extends javax.swing.JFrame {
 
     private void launchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_launchButtonActionPerformed
         boolean isOSInstalled = false;
+        String OpenOSUUID = "tmpfs";
         File machineFolder = new File("OCEmu" + FileSystems.getDefault().getSeparator() + ".machine");
         if (machineFolder.exists() && machineFolder.listFiles().length > 0) {
-            for (File file : machineFolder.listFiles()) {
+            /*for (File file : machineFolder.listFiles()) {
                 if (file.isDirectory()) {
                     for (String current : file.list()) {
                         //Well, technically it allows to setup ANY OS, compatible with Lua BIOS EEPROM bootloader script
                         if (current.equals("init.lua")) {
                             isOSInstalled = true;
+                            OpenOSUUID = file.getName();
                         }
                     }
                 }
-            }
+            }*/
         } else {
             machineFolder.mkdirs();
         }
@@ -635,31 +646,48 @@ public class ConfiguratorForm extends javax.swing.JFrame {
         }
 
         //Files' copy
-        //
-        ProcessBuilder pb = null;
-        if (System.getProperty("os.name").contains("Windows")) {
-            pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && run.bat");
-            // NOT GUARANTEED TO WORK
-            // but still
-        } else if (System.getProperty("os.name").contains("Ubuntu") || System.getProperty("os.name").contains("Arch")) {
-            pb = new ProcessBuilder("lua", "boot.lua", "./.machine");
-        }
-        try {
-            pb.redirectErrorStream(true);
-            Process p = pb.start();
-            java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));
-            String outLine;
-            java.util.logging.Logger.getLogger(ConfiguratorForm.class.getName()).log(java.util.logging.Level.INFO, "Starting OCEmu...");
-            while (true) {
-                outLine = r.readLine();
-                if (outLine == null) {
-                    break;
-                }
-                System.out.println(outLine);
+        if (new File("projects").exists()) {
+            try {
+                //recursivelyCopyFiles(new File("projects"), new File("OCEmu"+FileSystems.getDefault().getSeparator()+".machine"+FileSystems.getDefault().getSeparator()+OpenOSUUID+FileSystems.getDefault().getSeparator()+"home"));
+                FileUtils.copyDirectory(new File("projects"), new File("OCEmu" + FileSystems.getDefault().getSeparator() + ".machine" + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home"));
+                System.out.println("Copied " + new File("projects").getAbsolutePath() + " to " + new File("OCEmu" + FileSystems.getDefault().getSeparator() + ".machine" + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home").getAbsolutePath());
+            } catch (IOException ex) {
+                Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                ProcessBuilder pb = null;
+                if (System.getProperty("os.name").contains("Windows")) {
+                    pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && run.bat");
+                    // NOT GUARANTEED TO WORK
+                    // but still
+                } else if (System.getProperty("os.name").contains("Ubuntu") || System.getProperty("os.name").contains("Arch")) {
+                    pb = new ProcessBuilder("lua", "boot.lua", "./.machine");
+                }
+
+                pb.redirectErrorStream(true);
+                try {
+                    Process p = pb.start();
+                    java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));
+                    String outLine;
+                    java.util.logging.Logger.getLogger(ConfiguratorForm.class.getName()).log(java.util.logging.Level.INFO, "Starting OCEmu...");
+                    while (true) {
+                        outLine = r.readLine();
+                        if (outLine == null) {
+                            break;
+                        }
+                        System.out.println(outLine);
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        t.start();
+
     }//GEN-LAST:event_launchButtonActionPerformed
 
     private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed

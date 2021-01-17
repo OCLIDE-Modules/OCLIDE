@@ -61,7 +61,7 @@ public class ConfigMaker {
         new GPU(0, 160, 50, 3),
         new Modem(1, false),
         new EEPROM(9, "lua/bios.lua"),
-        new Filesystem(7, "loot/OpenOS", true),
+        new Filesystem(7, ".machine/tmpfs", true),
         new Filesystem("nil", "tmpfs", false),
         new Filesystem(5, "nil", false),
         new Internet(),

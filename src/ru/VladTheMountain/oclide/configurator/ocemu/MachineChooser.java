@@ -46,6 +46,7 @@ public class MachineChooser extends javax.swing.JDialog {
         System.arraycopy(fs, 0, this.fileSystemList, 0, fs.length);
         selectedFS = null;
         initComponents();
+        this.setDefaultCloseOperation(javax.swing.JDialog.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -76,7 +77,7 @@ public class MachineChooser extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel1.setText("Choose a file system to install OpenOS to:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "tmpfs" }));
+        jComboBox1.setToolTipText("");
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -84,6 +85,11 @@ public class MachineChooser extends javax.swing.JDialog {
         });
 
         proceedButton.setText("Proceed");
+        proceedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proceedButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,8 +123,12 @@ public class MachineChooser extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        this.selectedFS = String.valueOf(jComboBox1.getSelectedItem());
+        
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void proceedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proceedButtonActionPerformed
+        this.selectedFS = String.valueOf(jComboBox1.getSelectedItem());
+    }//GEN-LAST:event_proceedButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
