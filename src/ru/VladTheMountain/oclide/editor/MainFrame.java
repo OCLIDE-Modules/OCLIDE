@@ -49,7 +49,6 @@ public class MainFrame extends javax.swing.JFrame {
      * @param file A file to save contents to
      */
     private void newFile(java.io.File file) {
-        //file.mkdirs();
         try {
             file.createNewFile();
         } catch (java.io.IOException ex) {
@@ -90,7 +89,8 @@ public class MainFrame extends javax.swing.JFrame {
         occ.setAutoActivationDelay(100);
         occ.setShowDescWindow(true);
         occ.setParameterAssistanceEnabled(true);
-        //occ.install(newFile); /*UNCOMMENT BEFORE BETA RELEASE*/
+        occ.install(newFile);
+        /*UNCOMMENT BEFORE BETA RELEASE*/
         newFile.setToolTipSupplier((org.fife.ui.rtextarea.ToolTipSupplier) occp);
         javax.swing.ToolTipManager.sharedInstance().registerComponent(newFile);
         //
@@ -170,11 +170,6 @@ public class MainFrame extends javax.swing.JFrame {
         for (java.io.File f : files) {
             javax.swing.tree.DefaultMutableTreeNode cNode = new javax.swing.tree.DefaultMutableTreeNode(f.getName());
             n.add(cNode);
-            /*try {
-                java.nio.file.Files.copy(f.toPath(), new java.io.File("OCEmu/loot/OpenOS/home/" + f.getName()).toPath(), (java.nio.file.CopyOption) null);
-            } catch (java.io.IOException ex) {
-                java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }*/
             if (f.isDirectory()) {
                 recursivelyAddFiles(f, cNode);
             }
@@ -756,9 +751,9 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addFileButtonActionPerformed
 
     private void addFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFileMenuItemActionPerformed
-        String path = javax.swing.JOptionPane.showInputDialog(this, "Path to a new file:", new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).getAbsolutePath());
-        if (path != null) {
-            this.newFile(new java.io.File(path));
+        String name = javax.swing.JOptionPane.showInputDialog(this, "Name a new file:", "");
+        if (name != null) {
+            this.newFile(new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath()) + java.nio.file.FileSystems.getDefault().getSeparator() + name));
         }
     }//GEN-LAST:event_addFileMenuItemActionPerformed
 
@@ -807,7 +802,7 @@ public class MainFrame extends javax.swing.JFrame {
             if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) == null || "".equals(String.valueOf(projectsTree.getSelectionPath().getPath()[1]))) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Invalid project selection.", "Error: Can't run OCEmu", javax.swing.JOptionPane.ERROR_MESSAGE);
             } else {
-                new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm(String.valueOf(projectsTree.getSelectionPath().getPath()[1])).setVisible(true);
+                new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm().setVisible(true);
             }
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "No project chosen. Please select a project folder in the file tree and then launch OCEmu.", "Project not set", javax.swing.JOptionPane.ERROR_MESSAGE);

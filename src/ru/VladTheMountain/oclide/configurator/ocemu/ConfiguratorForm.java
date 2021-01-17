@@ -51,9 +51,8 @@ public class ConfiguratorForm extends javax.swing.JFrame {
     /**
      * Creates new form ConfiguratorForm
      *
-     * @param projectName Project directory to copy
      */
-    public ConfiguratorForm(String projectName) {
+    public ConfiguratorForm() {
         Timer t = new Timer(300, (ActionEvent e) -> {
             this.repaint();
         });
@@ -110,7 +109,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
     private void updateComponentList() {
         DefaultListModel<String> model = new DefaultListModel<>();
         for (int i = 0; i < componentsArray.length; i++) {
-            model.insertElementAt(this.componentTypeComboBox.getItemAt(this.componentsArray[i].getComponentType()+1), i);
+            model.insertElementAt(this.componentTypeComboBox.getItemAt(this.componentsArray[i].getComponentType() + 1), i);
         }
         this.componentList.setModel(model);
     }
@@ -270,6 +269,29 @@ public class ConfiguratorForm extends javax.swing.JFrame {
                 this.option3Field.setEditable(true);
                 this.option4Field.setEditable(true);
                 break;
+        }
+    }
+
+    /**
+     * Recursively gets all files in the project folder
+     *
+     * @param file Project folder as a {@link File}
+     * @param n Project's tree node
+     */
+    static void recursivelyCopyFiles(File src, File targ) {
+        java.io.File[] files = src.listFiles();
+        if (files == null) {
+            return;
+        }
+        for (File f : files) {
+            try {
+                Files.copy(f.toPath(), targ.toPath());
+            } catch (IOException ex) {
+                Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (f.isDirectory()) {
+                recursivelyCopyFiles(src, targ);
+            }
         }
     }
 
@@ -612,6 +634,8 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             installOpenOS();
         }
 
+        //Files' copy
+        //
         ProcessBuilder pb = null;
         if (System.getProperty("os.name").contains("Windows")) {
             pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && run.bat");
