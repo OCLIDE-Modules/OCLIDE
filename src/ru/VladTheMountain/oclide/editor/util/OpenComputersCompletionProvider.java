@@ -24,6 +24,8 @@
 package ru.VladTheMountain.oclide.editor.util;
 
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
@@ -52,6 +54,7 @@ public class OpenComputersCompletionProvider {
     private static final String OPTS = "...";
 
     public static CompletionProvider getProvider() {
+        ResourceBundle autocompletion = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.autocompletion.Autocompletion", Locale.getDefault());
         DefaultCompletionProvider defaultProvider = new DefaultCompletionProvider();
         defaultProvider.setAutoActivationRules(true, null);
         defaultProvider.setParameterizedCompletionParams('(', ", ", ')');
@@ -61,7 +64,7 @@ public class OpenComputersCompletionProvider {
         defaultProvider.addCompletion(new BasicCompletion(defaultProvider, "_VERSION"));
 
         FunctionCompletion assertF1 = new FunctionCompletion(defaultProvider, "assert", OPTS);
-        assertF1.setShortDescription("Issues an error when the value of its argument v is false (i.e., nil or false); otherwise, returns all its arguments. message is an error message; when absent, it defaults to \"assertion failed!\"");
+        assertF1.setShortDescription(autocompletion.getString("ipairs")/*"Issues an error when the value of its argument v is false (i.e., nil or false); otherwise, returns all its arguments. message is an error message; when absent, it defaults to \"assertion failed!\""*/);
         assertF1.setParams(Arrays.asList(
                 new Parameter(BOOL, "v", true)
         ));
