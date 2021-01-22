@@ -1,20 +1,16 @@
 ------------------------------------------------------------------------------
--- LuaSec 0.5
--- Copyright (C) 2006-2014 Bruno Silvestre
+-- LuaSec 0.9
+--
+-- Copyright (C) 2006-2019 Bruno Silvestre
 --
 ------------------------------------------------------------------------------
 
 local core    = require("ssl.core")
 local context = require("ssl.context")
 local x509    = require("ssl.x509")
+local config  = require("ssl.config")
 
-module("ssl", package.seeall)
-
-_VERSION   = "0.5.PR"
-_COPYRIGHT = core.copyright()
-
--- Export
-loadcertificate = x509.load
+local unpack  = table.unpack or unpack
 
 -- We must prevent the contexts to be collected before the connections,
 -- otherwise the C registry will be cleared.
@@ -35,9 +31,42 @@ local function optexec(func, param, ctx)
 end
 
 --
+-- Convert an array of strings to wire-format
+--
+local function array2wireformat(array)
+   local str = ""
+   for k, v in ipairs(array) do
+      if type(v) ~= "string" then return nil end
+      local len = #v
+      if len == 0 then
+        return nil, "invalid ALPN name (empty string)"
+      elseif len > 255 then
+        return nil, "invalid ALPN name (length > 255)"
+      end
+      str = str .. string.char(len) .. v
+   end
+   if str == "" then return nil, "invalid ALPN list (empty)" end
+   return str
+end
+
+--
+-- Convert wire-string format to array
+--
+local function wireformat2array(str)
+   local i = 1
+   local array = {}
+   while i < #str do
+      local len = str:byte(i)
+      array[#array + 1] = str:sub(i + 1, i + len)
+      i = i + len + 1
+   end
+   return array
+end
+
 --
 --
-function newcontext(cfg)
+--
+local function newcontext(cfg)
    local succ, msg, ctx
    -- Create the context
    ctx, msg = context.create(cfg.protocol)
@@ -45,21 +74,33 @@ function newcontext(cfg)
    -- Mode
    succ, msg = context.setmode(ctx, cfg.mode)
    if not succ then return nil, msg end
-   -- Load the key
-   if cfg.key then
-      if cfg.password and
-         type(cfg.password) ~= "function" and
-         type(cfg.password) ~= "string"
-      then
-         return nil, "invalid password type"
-      end
-      succ, msg = context.loadkey(ctx, cfg.key, cfg.password)
-      if not succ then return nil, msg end
+   local certificates = cfg.certificates
+   if not certificates then
+      certificates = {
+         { certificate = cfg.certificate, key = cfg.key, password = cfg.password }
+      }
    end
-   -- Load the certificate
-   if cfg.certificate then
-      succ, msg = context.loadcert(ctx, cfg.certificate)
-      if not succ then return nil, msg end
+   for _, certificate in ipairs(certificates) do
+      -- Load the key
+      if certificate.key then
+         if certificate.password and
+            type(certificate.password) ~= "function" and
+            type(certificate.password) ~= "string"
+         then
+            return nil, "invalid password type"
+         end
+         succ, msg = context.loadkey(ctx, certificate.key, certificate.password)
+         if not succ then return nil, msg end
+      end
+      -- Load the certificate(s)
+      if certificate.certificate then
+        succ, msg = context.loadcert(ctx, certificate.certificate)
+        if not succ then return nil, msg end
+        if certificate.key and context.checkkey then
+          succ = context.checkkey(ctx)
+          if not succ then return nil, "private key does not match public key" end
+        end
+      end
    end
    -- Load the CA certificates
    if cfg.cafile or cfg.capath then
@@ -71,7 +112,12 @@ function newcontext(cfg)
       succ, msg = context.setcipher(ctx, cfg.ciphers)
       if not succ then return nil, msg end
    end
-   -- Set the verification options
+   -- Set SSL cipher suites
+   if cfg.ciphersuites then
+      succ, msg = context.setciphersuites(ctx, cfg.ciphersuites)
+      if not succ then return nil, msg end
+   end
+    -- Set the verification options
    succ, msg = optexec(context.setverify, cfg.verify, ctx)
    if not succ then return nil, msg end
    -- Set SSL options
@@ -94,15 +140,69 @@ function newcontext(cfg)
       end
       context.setdhparam(ctx, cfg.dhparam)
    end
-   -- Set elliptic curve
-   if cfg.curve then
-      succ, msg = context.setcurve(ctx, cfg.curve)
-      if not succ then return nil, msg end
+   
+   -- Set elliptic curves
+   if (not config.algorithms.ec) and (cfg.curve or cfg.curveslist) then
+     return false, "elliptic curves not supported"
    end
+   if config.capabilities.curves_list and cfg.curveslist then
+     succ, msg = context.setcurveslist(ctx, cfg.curveslist)
+     if not succ then return nil, msg end
+   elseif cfg.curve then
+     succ, msg = context.setcurve(ctx, cfg.curve)
+     if not succ then return nil, msg end
+   end
+
    -- Set extra verification options
    if cfg.verifyext and ctx.setverifyext then
       succ, msg = optexec(ctx.setverifyext, cfg.verifyext, ctx)
       if not succ then return nil, msg end
+   end
+
+   -- ALPN
+   if cfg.mode == "server" and cfg.alpn then
+      if type(cfg.alpn) == "function" then
+         local alpncb = cfg.alpn
+         -- This callback function has to return one value only
+         succ, msg = context.setalpncb(ctx, function(str)
+            local protocols = alpncb(wireformat2array(str))
+            if type(protocols) == "string" then
+               protocols = { protocols }
+            elseif type(protocols) ~= "table" then
+               return nil
+            end
+            return (array2wireformat(protocols))    -- use "()" to drop error message
+         end)
+         if not succ then return nil, msg end
+      elseif type(cfg.alpn) == "table" then
+         local protocols = cfg.alpn
+         -- check if array is valid before use it
+         succ, msg = array2wireformat(protocols)
+         if not succ then return nil, msg end
+         -- This callback function has to return one value only
+         succ, msg = context.setalpncb(ctx, function()
+            return (array2wireformat(protocols))    -- use "()" to drop error message
+         end)
+         if not succ then return nil, msg end
+      else
+         return nil, "invalid ALPN parameter"
+      end
+   elseif cfg.mode == "client" and cfg.alpn then
+      local alpn
+      if type(cfg.alpn) == "string" then
+         alpn, msg = array2wireformat({ cfg.alpn })
+      elseif type(cfg.alpn) == "table" then
+         alpn, msg = array2wireformat(cfg.alpn)
+      else
+         return nil, "invalid ALPN parameter"
+      end
+      if not alpn then return nil, msg end
+      succ, msg = context.setalpn(ctx, alpn)
+      if not succ then return nil, msg end
+   end
+
+   if config.capabilities.dane and cfg.dane then
+      context.setdane(ctx)
    end
 
    return ctx
@@ -111,7 +211,7 @@ end
 --
 --
 --
-function wrap(sock, cfg)
+local function wrap(sock, cfg)
    local ctx, msg
    if type(cfg) == "table" then
       ctx, msg = newcontext(cfg)
@@ -122,7 +222,7 @@ function wrap(sock, cfg)
    local s, msg = core.create(ctx)
    if s then
       core.setfd(s, sock:getfd())
-      sock:setfd(core.invalidfd)
+      sock:setfd(core.SOCKET_INVALID)
       registry[s] = ctx
       return s
    end
@@ -166,3 +266,17 @@ end
 --
 core.setmethod("info", info)
 
+--------------------------------------------------------------------------------
+-- Export module
+--
+
+local _M = {
+  _VERSION        = "0.9",
+  _COPYRIGHT      = core.copyright(),
+  config          = config,
+  loadcertificate = x509.load,
+  newcontext      = newcontext,
+  wrap            = wrap,
+}
+
+return _M

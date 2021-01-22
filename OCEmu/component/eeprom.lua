@@ -15,6 +15,33 @@ local code = elsa.filesystem.read(filename)
 local data = ""
 local label = "EEPROM"
 local readonly = false
+
+local di = {
+	class = "memory",
+	description = "EEPROM",
+	vendor = "MightyPirates GmbH & Co. KG",
+	product = "FlashStick2k",
+	capacity = tostring(settings.eepromSize),
+	size = tostring(settings.eepromSize)
+}
+
+local function persistfile(fname, data)
+	local ok, err = elsa.filesystem.write(directory .. "/" .. fname, data)
+	if not ok then
+		cprint("Failed to persist eeprom(" .. fname .. ") @" .. address .. ": " .. err)
+		return false
+	end
+	return ok, err
+end
+
+local function persistlock()
+	if readonly then
+		persistfile("readonly", "")
+	else
+		elsa.filesystem.remove(directory .. "/readonly")
+	end
+end
+
 if elsa.filesystem.exists(directory .. "/data.lua") then
 	local fn, err = elsa.filesystem.load(directory .. "/data.lua","t",{})
 	if not fn then
@@ -29,51 +56,74 @@ if elsa.filesystem.exists(directory .. "/data.lua") then
 			cprint("read) " .. type(nread))
 		else
 			code,data,label,readonly = ncode,ndata,nlabel,nread
+			persistfile("code.lua", code)
+			persistfile("data.bin", data)
+			persistfile("label.txt", label)
+			persistlock()
+			elsa.filesystem.remove(directory .. "/data.lua")
 		end
 	end
-end
-
-local function persist()
-	local file, err = io.open(directory .. "/data.lua", "wb")
-	if not file then
-		cprint("Failed to persist eeprom @" .. address .. ": " .. err)
-		return false
+else
+	if elsa.filesystem.exists(directory .. "/code.lua") then
+		code = elsa.filesystem.read(directory .. "/code.lua")
+	else
+		persistfile("code.lua", code)
 	end
-	file:write(string.format("return %q,%q,%q,%s",code,data,label,tostring(readonly)):gsub("\\\n","\\n") .. "")
-	file:close()
-	return true
+	if elsa.filesystem.exists(directory .. "/data.bin") then
+		data = elsa.filesystem.read(directory .. "/data.bin")
+	else
+		persistfile("data.bin", data)
+	end
+	if elsa.filesystem.exists(directory .. "/label.txt") then
+		label = elsa.filesystem.read(directory .. "/label.txt")
+	else
+		persistfile("label.txt", label)
+	end
+	readonly = elsa.filesystem.exists(directory .. "/readonly")
 end
 
 -- eeprom component
+local mai = {}
 local obj = {}
 
-function obj.getData() -- Get the currently stored byte array.
+mai.getData = {direct = true, doc = "function():string -- Get the currently stored byte array."}
+function obj.getData()
 	cprint("eeprom.getData")
 	return data
 end
-function obj.setData(newdata) -- Overwrite the currently stored byte array.
+
+mai.setData = {doc = "function(data:string) -- Overwrite the currently stored byte array."}
+function obj.setData(newdata)
 	cprint("eeprom.setData", newdata)
 	compCheckArg(1,newdata,"string","nil")
 	if newdata == nil then newdata = "" end
-	if #newdata > 256 then
-		error("not enough space",3)
+	if #newdata > settings.eepromDataSize then
+		error("not enough space", 0)
 	end
 	data = newdata
-	persist()
+	persistfile("data.bin", data)
 end
-function obj.getDataSize() -- Get the storage capacity of this EEPROM.
+
+mai.getDataSize = {direct = true, doc = "function():string -- Get the storage capacity of this EEPROM."}
+function obj.getDataSize()
 	cprint("eeprom.getDataSize")
-	return 256
+	return settings.eepromDataSize
 end
-function obj.getSize() -- Get the storage capacity of this EEPROM.
+
+mai.getSize = {direct = true, doc = "function():string -- Get the storage capacity of this EEPROM."}
+function obj.getSize()
 	cprint("eeprom.getSize")
-	return 4096
+	return settings.eepromSize
 end
-function obj.getLabel() -- Get the label of the EEPROM.
+
+mai.getLabel = {direct = true, doc = "function():string -- Get the label of the EEPROM."}
+function obj.getLabel()
 	cprint("eeprom.getLabel")
 	return label
 end
-function obj.setLabel(newlabel) -- Set the label of the EEPROM.
+
+mai.setLabel = {doc = "function(data:string):string -- Set the label of the EEPROM."}
+function obj.setLabel(newlabel)
 	cprint("eeprom.setLabel", newlabel)
 	if readonly then
 		return nil, "storage is readonly"
@@ -81,17 +131,23 @@ function obj.setLabel(newlabel) -- Set the label of the EEPROM.
 	compCheckArg(1,newlabel,"string","nil")
 	if newlabel == nil then newlabel = "EEPROM" end
 	label = newlabel:sub(1,16)
-	persist()
+	persistfile("label.txt", label)
 	return label
 end
-function obj.getChecksum() -- Get the checksum of the data on this EEPROM.
+
+mai.getChecksum = {direct = true, doc = "function():string -- Get the checksum of the data on this EEPROM."}
+function obj.getChecksum()
 	cprint("eeprom.getChecksum")
 	return string.format("%08x", tonumber(crc32(code)))
 end
+
+mai.get = {direct = true, doc = "function():string -- Get the currently stored byte array."}
 function obj.get() -- Get the currently stored byte array.
 	cprint("eeprom.get")
 	return code
 end
+
+mai.set = {doc = "function(data:string) -- Overwrite the currently stored byte array."}
 function obj.set(newcode) -- Overwrite the currently stored byte array.
 	cprint("eeprom.set", newcode)
 	if readonly then
@@ -99,12 +155,14 @@ function obj.set(newcode) -- Overwrite the currently stored byte array.
 	end
 	compCheckArg(1,newcode,"string","nil")
 	if newcode == nil then newcode = "" end
-	if #newcode > 4096 then
-		error("not enough space",3)
+	if #newcode > settings.eepromSize then
+		error("not enough space", 0)
 	end
 	code = newcode
-	persist()
+	persistfile("code.lua", code)
 end
+
+mai.makeReadonly = {direct = true, doc = "function(checksum:string):boolean -- Make this EEPROM readonly if it isn't already. This process cannot be reversed!"}
 function obj.makeReadonly(checksum) -- Make this EEPROM readonly if it isn't already. This process cannot be reversed!
 	cprint("eeprom.makeReadonly", checksum)
 	compCheckArg(1,checksum,"string")
@@ -112,23 +170,8 @@ function obj.makeReadonly(checksum) -- Make this EEPROM readonly if it isn't alr
 		return nil, "incorrect checksum"
 	end
 	readonly = true
-	persist()
+	persistlock()
 	return true
 end
 
-local cec = {}
-
-local doc = {
-	["getData"]="function():string -- Get the currently stored byte array.",
-	["setData"]="function(data:string) -- Overwrite the currently stored byte array.",
-	["getDataSize"]="function():string -- Get the storage capacity of this EEPROM.",
-	["getSize"]="function():string -- Get the storage capacity of this EEPROM.",
-	["getLabel"]="function():string -- Get the label of the EEPROM.",
-	["setLabel"]="function(data:string):string -- Set the label of the EEPROM.",
-	["getChecksum"]="function():string -- Get the checksum of the data on this EEPROM.",
-	["get"]="function():string -- Get the currently stored byte array.",
-	["set"]="function(data:string) -- Overwrite the currently stored byte array.",
-	["makeReadonly"]="function(checksum:string):boolean -- Make this EEPROM readonly if it isn't already. This process cannot be reversed!",
-}
-
-return obj,cec,doc
+return obj,nil,mai,di

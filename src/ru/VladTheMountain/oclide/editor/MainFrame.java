@@ -89,7 +89,7 @@ public class MainFrame extends javax.swing.JFrame {
         occ.setAutoActivationDelay(100);
         occ.setShowDescWindow(true);
         occ.setParameterAssistanceEnabled(true);
-        occ.install(newFile);
+        //occ.install(newFile);
         /*UNCOMMENT BEFORE BETA RELEASE*/
         newFile.setToolTipSupplier((org.fife.ui.rtextarea.ToolTipSupplier) occp);
         javax.swing.ToolTipManager.sharedInstance().registerComponent(newFile);
@@ -604,7 +604,7 @@ public class MainFrame extends javax.swing.JFrame {
         helpMenu.setText("Help");
 
         settings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/cogs_icon&16.png"))); // NOI18N
-        settings.setText("Settings");
+        settings.setText("About");
         settings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 settingsActionPerformed(evt);

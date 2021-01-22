@@ -2,7 +2,18 @@
 -- Generated with dev/create-init.lua
 
 local ffi = require 'ffi'
-local C = ffi.load('SDL2')
+local ok, C
+-- Search multiple places for the SDL2 library
+local names={'SDL2', 'SDL2-2.0', 'SDL2-2.0.so.0'}
+for i = 1, #names do
+	ok, C = pcall(ffi.load, names[i])
+	if ok then break end
+	ok, C = pcall(ffi.load, 'lib' .. names[i])
+	if ok then break end
+end
+if not ok then
+	error("Failed to load the SDL2 library!")
+end
 local sdl = {C=C}
 local registerdefines = require 'sdl2.defines'
 
@@ -190,6 +201,7 @@ register('unlockAudio', 'SDL_UnlockAudio')
 register('unlockAudioDevice', 'SDL_UnlockAudioDevice')
 register('closeAudio', 'SDL_CloseAudio')
 register('closeAudioDevice', 'SDL_CloseAudioDevice')
+register('queueAudio', 'SDL_QueueAudio')
 register('setClipboardText', 'SDL_SetClipboardText')
 register('getClipboardText', 'SDL_GetClipboardText')
 register('hasClipboardText', 'SDL_HasClipboardText')
@@ -745,6 +757,8 @@ register('WINDOW_MOUSE_FOCUS', 'SDL_WINDOW_MOUSE_FOCUS')
 register('WINDOW_FULLSCREEN_DESKTOP', 'SDL_WINDOW_FULLSCREEN_DESKTOP')
 register('WINDOW_FULLSCREEN', 'SDL_WINDOW_FULLSCREEN')
 register('WINDOW_FOREIGN', 'SDL_WINDOW_FOREIGN')
+register('WINDOW_ALLOW_HIGHDPI', 'SDL_WINDOW_ALLOW_HIGHDPI')
+register('WINDOW_MOUSE_CAPTURE', 'SDL_WINDOW_MOUSE_CAPTURE')
 register('WINDOWEVENT_NONE', 'SDL_WINDOWEVENT_NONE')
 register('WINDOWEVENT_SHOWN', 'SDL_WINDOWEVENT_SHOWN')
 register('WINDOWEVENT_HIDDEN', 'SDL_WINDOWEVENT_HIDDEN')
@@ -760,6 +774,8 @@ register('WINDOWEVENT_LEAVE', 'SDL_WINDOWEVENT_LEAVE')
 register('WINDOWEVENT_FOCUS_GAINED', 'SDL_WINDOWEVENT_FOCUS_GAINED')
 register('WINDOWEVENT_FOCUS_LOST', 'SDL_WINDOWEVENT_FOCUS_LOST')
 register('WINDOWEVENT_CLOSE', 'SDL_WINDOWEVENT_CLOSE')
+register('WINDOWEVENT_TAKE_FOCUS', 'SDL_WINDOWEVENT_TAKE_FOCUS')
+register('WINDOWEVENT_HIT_TEST', 'SDL_WINDOWEVENT_HIT_TEST')
 register('GL_RED_SIZE', 'SDL_GL_RED_SIZE')
 register('GL_GREEN_SIZE', 'SDL_GL_GREEN_SIZE')
 register('GL_BLUE_SIZE', 'SDL_GL_BLUE_SIZE')
@@ -1291,6 +1307,13 @@ register('DOLLARRECORD', 'SDL_DOLLARRECORD')
 register('MULTIGESTURE', 'SDL_MULTIGESTURE')
 register('CLIPBOARDUPDATE', 'SDL_CLIPBOARDUPDATE')
 register('DROPFILE', 'SDL_DROPFILE')
+register('DROPTEXT', 'SDL_DROPTEXT')
+register('DROPBEGIN', 'SDL_DROPBEGIN')
+register('DROPCOMPLETE', 'SDL_DROPCOMPLETE')
+register('AUDIODEVICEADDED', 'SDL_AUDIODEVICEADDED')
+register('AUDIODEVICEREMOVED', 'SDL_AUDIODEVICEREMOVED')
+register('RENDER_TARGETS_RESET', 'SDL_RENDER_TARGETS_RESET')
+register('RENDER_DEVICE_RESET', 'SDL_RENDER_DEVICE_RESET')
 register('USEREVENT', 'SDL_USEREVENT')
 register('LASTEVENT', 'SDL_LASTEVENT')
 register('ADDEVENT', 'SDL_ADDEVENT')

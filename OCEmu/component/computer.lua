@@ -1,19 +1,23 @@
 -- computer component
+local mai = {}
 local obj = {}
 
-function obj.isRunning() -- Returns whether the computer is running.
+mai.isRunning = {direct = true, doc = "function():boolean -- Returns whether the computer is running."}
+function obj.isRunning()
 	--STUB
 	cprint("computer.isRunning")
 	return true
 end
-function obj.beep(frequency, duration) -- Plays a tone, useful to alert users via audible feedback.
+
+mai.beep = {doc = "function([frequency:number[, duration:number]]) -- Plays a tone, useful to alert users via audible feedback."}
+function obj.beep(frequency, duration)
 	--STUB
 	cprint("computer.beep", frequency, duration)
 	if frequency == nil then frequency = 440 end
 	compCheckArg(1,frequency,"number")
 	frequency = math.floor(frequency)
 	if frequency < 20 or frequency > 2000 then
-		error("invalid frequency, must be in [20, 2000]",3)
+		error("invalid frequency, must be in [20, 2000]", 0)
 	end
 	if duration == nil then duration = 0.1 end
 	compCheckArg(2,duration,"number")
@@ -21,22 +25,51 @@ function obj.beep(frequency, duration) -- Plays a tone, useful to alert users vi
 	machine.beep(frequency, durationMS)
 	machine.sleep(durationMS/1000)
 end
-function obj.stop() -- Stops the computer. Returns true if the state changed.
+
+mai.stop = {doc = "function():boolean -- Stops the computer. Returns true if the state changed."}
+function obj.stop()
 	--STUB
 	cprint("computer.stop")
 end
-function obj.start() -- Starts the computer. Returns true if the state changed.
+
+mai.start = {doc = "function():boolean -- Starts the computer. Returns true if the state changed."}
+function obj.start()
 	--STUB
 	cprint("computer.start")
 end
 
-local cec = {}
+mai.getDeviceInfo = {direct = true, doc = "function():table -- Collect information on all connected devices."}
+function obj.getDeviceInfo()
+	cprint("computer.getDeviceInfo")
+	local info = {}
+	for address, _ in component.list() do
+		info[address] = component.deviceInfo(address)
+	end
+	return info
+end
 
-local doc = {
-	["isRunning"]="function():boolean -- Returns whether the computer is running.",
-	["beep"]="function([frequency:number[, duration:number]]) -- Plays a tone, useful to alert users via audible feedback.",
-	["stop"]="function():boolean -- Stops the computer. Returns true if the state changed.",
-	["start"]="function():boolean -- Starts the computer. Returns true if the state changed.",
-}
+mai.getProgramLocations = {doc = "function():table -- Returns a list of available programs and their install disks."}
+function obj.getProgramLocations()
+	cprint("computer.getProgramLocations")
+	return table.pack(
+		table.pack("build", "builder"),
+		table.pack("dig", "dig"),
+		table.pack("base64", "data"),
+		table.pack("deflate", "data"),
+		table.pack("gpg", "data"),
+		table.pack("inflate", "data"),
+		table.pack("md5sum", "data"),
+		table.pack("sha256sum", "data"),
+		table.pack("refuel", "generator"),
+		table.pack("irc", "irc"),
+		table.pack("maze", "maze"),
+		table.pack("arp", "network"),
+		table.pack("ifconfig", "network"),
+		table.pack("ping", "network"),
+		table.pack("route", "network"),
+		table.pack("opl-flash", "openloader"),
+		table.pack("oppm", "oppm")
+	)
+end
 
-return obj,cec,doc
+return obj,nil,mai

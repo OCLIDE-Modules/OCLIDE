@@ -1,8 +1,8 @@
-local address, _, wireless = ...
+local modem_address, _, wireless = ...
 compCheckArg(1,wireless,"boolean")
 
 local socket = require("socket")
-local ser = require("loot.OpenOS.lib.serialization")
+local ser = require("support.serialization")
 
 local function cerror(...)
 	local args = table.pack(...)
@@ -26,7 +26,18 @@ end
 modem_host = {}
 
 -- modem component
+local mai = {}
 local obj = {}
+local di = {
+	class = "network",
+	description = (wireless and "Wireless ethernet controller") or "Ethernet controller",
+	vendor = "MightyPirates GmbH & Co. KG",
+	product = (wireless and "62i230 (MPW-01)") or "42i520 (MPN-01)",
+	version = (wireless and "2.0") or "1.0",
+	capacity = tostring(settings.maxNetworkPacketSize),
+	size = 65536, -- ports aren't limited in OCEmu yet
+	width = math.huge -- neither are packet parts limited
+}
 
 -- Modem cards communicate on a real backend port
 modem_host.comms_port = 61234
@@ -34,7 +45,7 @@ modem_host.comms_ip = "127.0.0.10"
 modem_host.connected = false
 modem_host.messages = {}
 modem_host.socket = nil
-
+modem_host.id = modem_address
 modem_host.hosting = false
 modem_host.clients = {}
 
@@ -53,6 +64,7 @@ function modem_host.createPacketArray(packetType, address, port, ...)
 		modem_host.id,
 		port,
 		0, -- distance
+		n = 5 + select('#', ...),
 		...
 	}
 
@@ -69,14 +81,8 @@ function modem_host.packetArrayToPacket(packed)
 	packet.source = packed[3]
 	packet.port = packed[4]
 	packet.distance = packed[5]
-	packet.payload = {}
 
-	-- all other keys will be index values but may skip some (nils)
-	for k,v in pairs(packed) do
-		if k > 5 then
-			packet.payload[k-5] = v
-		end
-	end
+	packet.payload = table.pack(table.unpack(packed, 6, packed.n))
 
 	return packet
 end
@@ -89,20 +95,13 @@ function modem_host.packetArrayToDatagram(packed)
 end
 
 function modem_host.packetToPacketArray(packet)
-	local packed =
-	{
+	packed = table.pack(select(1,
 		packet.type,
 		packet.target,
 		packet.source,
 		packet.port,
 		packet.distance,
-	}
-
-	if packet.payload then
-		for i,v in pairs(packet.payload) do
-			packed[i+5] = v
-		end
-	end
+		table.unpack(packet.payload, 1, packet.payload.n)))
 
 	return packed
 end
@@ -258,10 +257,10 @@ function modem_host.acceptPendingClients()
 				local connectionResponse
 				local accepted = false
 				if handshake.type ~= "handshake" then
-					connectionResponse = modem_host.createPacketArray("handshake", 0, -1, 
+					connectionResponse = modem_host.createPacketArray("handshake", 0, -1,
 						false, "unsupported message type");
 				elseif modem_host.validTarget(handshake.source) then -- repeated client
-					connectionResponse = modem_host.createPacketArray("handshake", 0, -1, 
+					connectionResponse = modem_host.createPacketArray("handshake", 0, -1,
 						false, "computer address conflict detected, ignoring connection");
 				else
 					client:settimeout(0, 't')
@@ -305,7 +304,7 @@ function modem_host.allPendingMessages()
 				else
 					if err ~= "timeout" then
 						if not modem_host.host_shutdown then
-							error("modem host was unexpectedly lost")
+							cerror("modem host was unexpectedly lost")
 						end
 						modem_host.connected = false
 						modem_host.connectMessageBoard()
@@ -365,12 +364,6 @@ function modem_host.connectMessageBoard()
 	modem_host.messages = {}
 	modem_host.host_shutdown = nil
 
-	-- computer address seems to be applied late
-	if modem_host.id == nil then
-		modem_host.id = component.list("computer",true)()
-		assert(modem_host.id)
-	end
-
 	local ok, info, critical = modem_host.joinExistingMessageBoard()
 
 	if not ok and critical then
@@ -425,13 +418,14 @@ if wireless then
 end
 
 local function checkPort(port)
-	if port < 1 and port >= 65536 then
-		error("invalid port number",4)
+	if port < 1 or port >= 65536 then
+		error("invalid port number", 0)
 	end
 	return math.floor(port)
 end
 
-function obj.send(address, port, ...) -- Sends the specified data to the specified target.
+mai.send = {doc = "function(address:string, port:number, data...) -- Sends the specified data to the specified target."}
+function obj.send(address, port, ...)
 	compCheckArg(1,address,"string")
 	compCheckArg(2,port,"number")
 	port=checkPort(port)
@@ -447,16 +441,19 @@ function obj.send(address, port, ...) -- Sends the specified data to the specifi
 	return true
 end
 
-function obj.getWakeMessage() -- Get the current wake-up message.
+mai.getWakeMessage = {direct = true, doc = "function():string -- Get the current wake-up message."}
+function obj.getWakeMessage()
 	return wakeMessage
 end
 
-function obj.setWakeMessage(message) -- Set the wake-up message.
+mai.setWakeMessage = {doc = "function(message:string):string -- Set the wake-up message."}
+function obj.setWakeMessage(message)
 	compCheckArg(1,message,"string","nil")
 	wakeMessage = message
 end
 
-function obj.close(port) -- Closes the specified port (default: all ports). Returns true if ports were closed.
+mai.close = {doc = "function([port:number]):boolean -- Closes the specified port (default: all ports). Returns true if ports were closed."}
+function obj.close(port)
 	compCheckArg(1,port,"number","nil")
 	if port ~= nil then
 		port=checkPort(port)
@@ -478,26 +475,32 @@ function obj.close(port) -- Closes the specified port (default: all ports). Retu
 	return true
 end
 
-function obj.maxPacketSize() -- Gets the maximum packet size (config setting).
+mai.maxPacketSize = {direct = true, doc = "function():number -- Gets the maximum packet size (config setting)."}
+function obj.maxPacketSize()
 	return settings.maxNetworkPacketSize
 end
 
 if wireless then
-	function obj.getStrength() -- Get the signal strength (range) used when sending messages.
+	mai.getStrength = {direct = true, doc = "function():number -- Get the signal strength (range) used when sending messages."}
+	function obj.getStrength()
 		return strength
 	end
-	function obj.setStrength(newstrength) -- Set the signal strength (range) used when sending messages.
+
+	mai.setStrength = {doc = "function(strength:number):number -- Set the signal strength (range) used when sending messages."}
+	function obj.setStrength(newstrength)
 		compCheckArg(1,newstrength,"number")
 		strength = newstrength
 	end
 end
 
-function obj.isOpen(port) -- Whether the specified port is open.
+mai.isOpen = {direct = true, doc = "function(port:number):boolean -- Whether the specified port is open."}
+function obj.isOpen(port)
 	compCheckArg(1,port,"number")
 	return modem_host.open_ports[port] ~= nil
 end
 
-function obj.open(port) -- Opens the specified port. Returns true if the port was opened.
+mai.open = {doc = "function(port:number):boolean -- Opens the specified port. Returns true if the port was opened."}
+function obj.open(port)
 	compCheckArg(1,port,"number")
 	port=checkPort(port)
 
@@ -507,7 +510,7 @@ function obj.open(port) -- Opens the specified port. Returns true if the port wa
 
 	-- make sure we are connected to the message board
 	local ok, why = modem_host.connectMessageBoard()
-	
+
 	if not ok then
 		return false, why
 	end
@@ -516,11 +519,13 @@ function obj.open(port) -- Opens the specified port. Returns true if the port wa
 	return true
 end
 
-function obj.isWireless() -- Whether this is a wireless network card.
+mai.isWireless = {direct = true, doc = "function():boolean -- Whether this is a wireless network card."}
+function obj.isWireless()
 	return wireless
 end
 
-function obj.broadcast(port, ...) -- Broadcasts the specified data on the specified port.
+mai.broadcast = {doc = "function(port:number, data...) -- Broadcasts the specified data on the specified port."}
+function obj.broadcast(port, ...)
 	compCheckArg(1,port,"number")
 	port=checkPort(port)
 
@@ -535,20 +540,4 @@ function obj.broadcast(port, ...) -- Broadcasts the specified data on the specif
 	return true
 end
 
-local cec = {}
-
-local doc = {
-	["send"]="function(address:string, port:number, data...) -- Sends the specified data to the specified target.",
-	["getWakeMessage"]="function():string -- Get the current wake-up message.",
-	["setWakeMessage"]="function(message:string):string -- Set the wake-up message.",
-	["close"]="function([port:number]):boolean -- Closes the specified port (default: all ports). Returns true if ports were closed.",
-	["maxPacketSize"]="function():number -- Gets the maximum packet size (config setting).",
-	["getStrength"]="function():number -- Get the signal strength (range) used when sending messages.",
-	["setStrength"]="function(strength:number):number -- Set the signal strength (range) used when sending messages.",
-	["isOpen"]="function(port:number):boolean -- Whether the specified port is open.",
-	["open"]="function(port:number):boolean -- Opens the specified port. Returns true if the port was opened.",
-	["isWireless"]="function():boolean -- Whether this is a wireless network card.",
-	["broadcast"]="function(port:number, data...) -- Broadcasts the specified data on the specified port.",
-}
-
-return obj,cec,doc
+return obj,nil,mai,di

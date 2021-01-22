@@ -34,7 +34,7 @@ function env.computer.uptime()
 end
 function env.computer.address()
 	cprint("computer.address")
-	return component.list("computer",true)()
+	return (component.list("computer",true)())
 end
 function env.computer.freeMemory()
 	--STUB
@@ -95,7 +95,7 @@ function env.computer.getArchitectures()
 end
 function env.computer.getArchitecture()
 	--STUB
-	cprint("computer.getArchitecure")
+	cprint("computer.getArchitecture")
 	return _VERSION
 end
 function env.computer.setArchitecture(archName)

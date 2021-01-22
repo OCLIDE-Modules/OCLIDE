@@ -661,7 +661,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             public void run() {
                 ProcessBuilder pb = null;
                 if (System.getProperty("os.name").contains("Windows")) {
-                    pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && run.bat");
+                    pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && OCEmu.exe");
                     // NOT GUARANTEED TO WORK
                     // but still
                 } else if (System.getProperty("os.name").contains("Ubuntu") || System.getProperty("os.name").contains("Arch")) {

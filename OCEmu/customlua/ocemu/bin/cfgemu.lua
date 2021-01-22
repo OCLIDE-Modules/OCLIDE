@@ -2,6 +2,8 @@ local component = require("component")
 local kbd = require("keyboard")
 local event = require("event")
 local term = require("term")
+local unicode = require("unicode")
+local colors = require("colors")
 
 if not component.isAvailable("ocemu") then
 	io.stderr:write("This program requires OCEmu to run.")
@@ -12,7 +14,19 @@ local ocemu = component.ocemu
 local gpu = component.gpu
 local keys = kbd.keys
 
+local floppy = {
+"\226\150\137\238\161\129\238\161\129\238\161\129\238\161\129\238\132\132",
+"\226\150\137\238\161\129\238\161\129\238\161\129\238\161\129\238\132\132",
+"\238\132\163\226\150\140\226\150\174\32\226\150\144\226\150\136"
+}
+local floppyTop = "\226\161\164\226\160\164\226\160\164\226\160\164\226\160\164\226\160\164\226\160\164\226\162\164"
+local floppyBott = "\226\160\147\226\160\146\226\160\146\226\160\146\226\160\146\226\160\146\226\160\146\226\160\154"
+local floppyLeft = unicode.char(0x258C)
+local floppyRight = unicode.char(0x2590)
+local floppyPal = {[0]=0xFFFFFF,0xFFCC33,0xCC66CC,0x6699FF,0xFFFF33,0x33CC33,0xFF6699,0x333333,0xCCCCCC,0x336699,0x9933CC,0x333399,0x663300,0x336600,0xFF3333,0x000000}
+
 local gpuW,gpuH = gpu.getResolution()
+local gpuColor = gpu.getDepth()>1
 
 gpu.setForeground(0xFFFFFF)
 gpu.setBackground(0x000000)
@@ -24,6 +38,70 @@ end
 local function setStatus(status)
 	gpu.fill(1,gpuH,gpuW,1," ")
 	gpu.set((gpuW-#status)/2,gpuH,status)
+end
+
+local function floppySelect()
+	setTitle("Loot Disk Configuration Utility")
+	local list = ocemu.lootlist()
+	local listpos = 1
+	local cx=math.floor(gpuW/2)
+	local cy=math.floor(gpuH/2)-2
+	local fcount=math.floor(gpuW/24)
+	gpu.set(cx-1, cy-3, "\226\151\165\226\151\164")
+
+	local function drawFloppy(ox, oy, name, color)
+		if gpuColor then
+			gpu.setForeground(floppyPal[colors[color:sub(4):lower()] or colors.gray])
+		end
+		for y=0,2 do
+			gpu.set(ox-3, oy+y, floppy[y+1])
+		end
+		if gpuColor then
+			gpu.setForeground(0xFFFFFF)
+		end
+		if ocemu.lootattached(name) then
+			gpu.set(ox-4, oy-1, floppyTop)
+			gpu.set(ox-4, oy+3, floppyBott)
+			gpu.fill(ox-4, oy, 1, 3, floppyLeft)
+			gpu.fill(ox+3, oy, 1, 3, floppyRight)
+		end
+		gpu.set(ox-(#name/2), oy+4, name)
+	end
+	local function drawLoot()
+		gpu.fill(1, cy-2, gpuW, 7, " ")
+		for i=-fcount, fcount do
+			local disk = list[listpos+i]
+			if disk then
+				drawFloppy(cx+i*12, cy-(i==0 and 1 or 0), disk[1], disk[3])
+			end
+		end
+		setStatus(list[listpos][2])
+	end
+	drawLoot()
+
+	while true do
+		local evnt = table.pack(event.pull())
+		if evnt[1] == "key_down" then
+			if evnt[4] == keys.left and listpos > 1 then
+				listpos = listpos - 1
+				drawLoot()
+			elseif evnt[4] == keys.right and listpos < #list then
+				listpos = listpos + 1
+				drawLoot()
+			elseif evnt[4] == keys.enter then
+				local path = list[listpos][1]
+				if ocemu.lootattached(path) then
+					ocemu.lootremove(path)
+					drawLoot()
+				else
+					ocemu.lootinsert(path)
+					drawLoot()
+				end
+			elseif evnt[3] == string.byte("q") then
+				return
+			end
+		end
+	end
 end
 
 local function componentConfig()
@@ -134,6 +212,7 @@ local function componentConfig()
 end
 
 local menu = {
+	{"Add and Remove Floppies",floppySelect},
 	{"Configure Components",componentConfig},
 	{"Exit",os.exit}
 }
@@ -146,6 +225,7 @@ local function drawMenu()
 		gpu.set(4,i+2,menu[i][1])
 	end
 	gpu.set(2,menuX+2,"▶")
+	setStatus("Press Q to quit")
 end
 drawMenu()
 
@@ -164,6 +244,8 @@ while true do
 			gpu.fill(1,1,gpuW,gpuH," ")
 			menu[menuX][2]()
 			drawMenu()
+		elseif evnt[3] == string.byte("q") then
+			return
 		end
 	end
 end

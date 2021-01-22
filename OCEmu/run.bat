@@ -1,1 +1,0 @@
-@lua52 boot.lua ./.machine

@@ -14,15 +14,17 @@ if not httpsok then
 else
 	http.PORT = nil
 end
+local ltn12 = require("ltn12")
+local javaserialize = require("support.serialization").javaserialize
 
-component.connect("filesystem",gen_uuid(),nil,"lua/component/internet",true)
-
+local mai = {}
 local obj = {}
-
-local function string_trim(s)
-	local from = s:match"^%s*()"
-	return from > #s and "" or s:match(".*%S", from)
-end
+local di = {
+	class = "communication",
+	description = "Internet modem",
+	vendor = "MightyPirates GmbH & Co. KG",
+	product = "SuperLink X-D4NK"
+}
 
 local function checkUri(address, port)
 	local parsed = url.parse(address)
@@ -33,18 +35,23 @@ local function checkUri(address, port)
 	if simple ~= nil and simple.host ~= nil and (simple.port ~= nil or port > -1) then
 		return simple.host, simple.port or port
 	end
-	error("address could not be parsed or no valid port given",4)
+	error("address could not be parsed or no valid port given", 0)
 end
 
-function obj.isTcpEnabled() -- Returns whether TCP connections can be made (config setting).
+mai.isTcpEnabled = {direct = true, doc = "function():boolean -- Returns whether TCP connections can be made (config setting)."}
+function obj.isTcpEnabled()
 	cprint("internet.isTcpEnabled")
 	return settings.tcpEnabled
 end
-function obj.isHttpEnabled() -- Returns whether HTTP requests can be made (config setting).
+
+mai.isHttpEnabled = {direct = true, doc = "function():boolean -- Returns whether HTTP requests can be made (config setting)."}
+function obj.isHttpEnabled()
 	cprint("internet.isHttpEnabled")
 	return settings.httpEnabled
 end
-function obj.connect(address, port) -- Opens a new TCP connection. Returns the handle of the connection.
+
+mai.connect = {doc = "function(address:string[, port:number]):userdata -- Opens a new TCP connection. Returns the handle of the connection."}
+function obj.connect(address, port)
 	cprint("internet.connect",address, port)
 	if port == nil then port = -1 end
 	compCheckArg(1,address,"string")
@@ -62,6 +69,7 @@ function obj.connect(address, port) -- Opens a new TCP connection. Returns the h
 	client:settimeout(10)
 	local connected = false
 	local closed = false
+	local id = gen_uuid()
 	local function connect()
 		cprint("(socket) connect",host,port)
 		local did, err = client:connect(host,port)
@@ -69,18 +77,29 @@ function obj.connect(address, port) -- Opens a new TCP connection. Returns the h
 		if did then
 			connected = true
 			client:settimeout(0)
+			-- I'd put internet_ready here but it's broken in OC
 		else
 			pcall(client.close,client)
 			closed = true
 		end
 	end
 	local fakesocket = {
+		finishConnect = function()
+			cprint("(socket) finishConnect")
+			-- TODO: Does this actually error?
+			if closed then return nil, "connection lost" end
+			local laststate = connected
+			if not connected then connect() end
+			return laststate
+		end,
 		read = function(n)
 			cprint("(socket) read",n)
+			if n == nil then n = math.huge end
+			checkArg(1,n,"number")
 			-- TODO: Better Error handling
 			if closed then return nil, "connection lost" end
 			if not connected then connect() return "" end
-			if type(n) ~= "number" then n = math.huge end
+			n = math.min(math.max(n, 0), settings.maxReadBuffer)
 			local data, err, part = client:receive(n)
 			if err == nil or err == "timeout" or part ~= "" then
 				return data or part
@@ -108,17 +127,16 @@ function obj.connect(address, port) -- Opens a new TCP connection. Returns the h
 			pcall(client.close,client)
 			closed = true
 		end,
-		finishConnect = function()
-			cprint("(socket) finishConnect")
-			-- TODO: Does this actually error?
-			if closed then return nil, "connection lost" end
-			return connected
+		id = function()
+			return id
 		end
 	}
 	return fakesocket
 end
-function obj.request(url, postData) -- Starts an HTTP request. If this returns true, further results will be pushed using `http_response` signals.
-	cprint("internet.request",url, postData)
+
+mai.request = {doc = "function(url:string[, postData:string[, headers:table]]):userdata -- Starts an HTTP request. If this returns true, further results will be pushed using `http_response` signals."}
+function obj.request(url, postData, headers)
+	cprint("internet.request", url, postData, headers)
 	compCheckArg(1,url,"string")
 	if not settings.httpEnabled then
 		return nil, "http requests are unavailable"
@@ -140,15 +158,37 @@ function obj.request(url, postData) -- Starts an HTTP request. If this returns t
 	if type(postData) ~= "string" then
 		postData = nil
 	end
+	local cleanheaders = {}
+	if type(headers) == "table" then
+		for k, v in pairs(headers) do
+			if type(k) == "string" then
+				cleanheaders[k:lower()] = javaserialize(v)
+			end
+		end
+	end
+	local body = {}
+	local reqt = {
+		method = (postData and "POST" or "GET"),
+		url = url,
+		headers = cleanheaders,
+		sink = ltn12.sink.table(body)
+	}
+	if postData then
+		reqt.source = ltn12.source.string(postData)
+		reqt.headers["content-length"] = #postData
+		reqt.headers["content-type"] = "application/x-www-form-urlencoded"
+	end
 	-- TODO: This works ... but is slow.
 	-- TODO: Infact so slow, it can trigger the machine's sethook, so we have to work around that.
 	local starttime = gettime()
-	local page, err, headers, status = http.request(url, postData)
+	local page, err, headers, status = http.request(reqt)
 	local offset = gettime() - starttime
 	timeoffset = timeoffset + offset
 	cprint("(request.hack) Going back in time: " .. offset .. "s")
 	if not page then
 		cprint("(request) request failed",err)
+	else
+		page = table.concat(body)
 	end
 	-- Experimental fix for headers
 	if headers ~= nil then
@@ -182,7 +222,8 @@ function obj.request(url, postData) -- Starts an HTTP request. If this returns t
 	local fakesocket = {
 		read = function(n)
 			cprint("(socket) read",n)
-			-- OC doesn't actually return n bytes when requested.
+			if n == nil then n = math.huge end
+			checkArg(1,n,"number")
 			if closed then
 				return nil, "connection lost"
 			elseif headers == nil then
@@ -192,9 +233,15 @@ function obj.request(url, postData) -- Starts an HTTP request. If this returns t
 			elseif bad then
 				return nil, page
 			else
-				-- Return up to 8192 bytes
-				local data = page:sub(1,8192)
-				page = page:sub(8193)
+				n = math.min(math.max(n, 0), settings.maxReadBuffer)
+				local data
+				if n == math.huge then
+					data = page
+					page = ""
+				else
+					data = page:sub(1,n)
+					page = page:sub(n+1)
+				end
 				return data
 			end
 		end,
@@ -225,13 +272,4 @@ function obj.request(url, postData) -- Starts an HTTP request. If this returns t
 	return fakesocket
 end
 
-local cec = {}
-
-local doc = {
-	["isTcpEnabled"]="function():boolean -- Returns whether TCP connections can be made (config setting).",
-	["isHttpEnabled"]="function():boolean -- Returns whether HTTP requests can be made (config setting).",
-	["connect"]="function(address:string[, port:number]):userdata -- Opens a new TCP connection. Returns the handle of the connection.",
-	["request"]="function(url:string[, postData:string]):userdata -- Starts an HTTP request. If this returns true, further results will be pushed using `http_response` signals.",
-}
-
-return obj,cec,doc
+return obj,nil,mai,di

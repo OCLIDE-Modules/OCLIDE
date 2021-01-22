@@ -10,10 +10,21 @@ function gen_uuid()
 	r(0,255),r(0,255),r(0,255),r(0,255),r(0,255),r(0,255))
 end
 
+local function tlen(t)
+	local n = -math.huge
+	for k in pairs(t) do
+		if type(k) == "number" and k >= n then
+			n = k
+		end
+	end
+	return n
+end
+
 local proxylist = {}
 local slotlist = {}
 local emuicc = {}
-local doclist = {}
+local mailist = {}
+local dilist = {}
 
 component = {}
 
@@ -21,12 +32,13 @@ function component.connect(info, ...)
 	local address
 	if type(info) ~= "table" then
 		info = table.pack(info, ...)
+	else
+		info.n = tlen(info)
 	end
 	checkArg(2,info[2],"string","number")
 	if type(info[2]) == "string" then
 		address = info[2]
 	else
-		math.randomseed(info[2])
 		address = gen_uuid()
 	end
 	if proxylist[address] ~= nil then
@@ -37,15 +49,26 @@ function component.connect(info, ...)
 	if not fn then
 		return nil, err
 	end
-	local proxy, cec, doc = fn(table.unpack(info,2))
+	local proxy, cec, mai, di = fn(table.unpack(info, 2, info.n))
 	if not proxy then
 		return nil, cec or "no component added"
+	end
+	for k, v in pairs(proxy) do
+		if type(v) == "function" then
+			if mai[k] == nil then mai[k] = {} end
+			if mai[k].direct == nil then mai[k].direct = false end
+			if mai[k].limit == nil then mai[k].limit = math.huge end
+			if mai[k].doc == nil then mai[k].doc = "" end
+			if mai[k].getter == nil then mai[k].getter = false end
+			if mai[k].setter == nil then mai[k].setter = false end
+		end
 	end
 	proxy.address = address
 	proxy.type = proxy.type or info[1]
 	proxylist[address] = proxy
 	emuicc[address] = cec
-	doclist[address] = doc
+	mailist[address] = mai
+	dilist[address] = di
 	slotlist[address] = info[3]
 	if boot_machine then
 		table.insert(machine.signals,{"component_added",address,proxy.type})
@@ -60,10 +83,14 @@ function component.disconnect(address)
 	local thetype = proxylist[address].type
 	proxylist[address] = nil
 	emuicc[address] = nil
-	doclist[address] = nil
+	mailist[address] = nil
+	dilist[address] = nil
 	slotlist[address] = nil
 	table.insert(machine.signals,{"component_removed",address,thetype})
 	return true
+end
+function component.deviceInfo(address)
+	return dilist[address]
 end
 function component.exists(address)
 	checkArg(1,address,"string")
@@ -137,7 +164,7 @@ end
 function env.component.slot(address)
 	checkArg(1,address,"string")
 	if proxylist[address] ~= nil then
-		return slotlist[address] or -1
+		return slotlist[address]
 	end
 	return nil, "no such component"
 end
@@ -148,7 +175,8 @@ function env.component.methods(address)
 		local methods = {}
 		for k,v in pairs(proxylist[address]) do
 			if type(v) == "function" then
-				methods[k] = {direct=true} -- TODO: getter, setter?
+				local methodmai = mailist[address][k]
+				methods[k] = {direct=(settings.fast or methodmai.direct), getter=methodmai.getter, setter=methodmai.setter}
 			end
 		end
 		return methods
@@ -163,7 +191,14 @@ function env.component.invoke(address, method, ...)
 		if proxylist[address][method] == nil then
 			error("no such method",2)
 		end
-		return true, proxylist[address][method](...)
+		if mailist[address][method].direct and not machine.consumeCallBudget(1/mailist[address][method].limit) then
+			return
+		end
+		local results = table.pack(pcall(proxylist[address][method], ...))
+		if machine.callBudget < 0 then
+			return
+		end
+		return table.unpack(results, 1, results.n)
 	end
 	return nil, "no such component"
 end
@@ -175,8 +210,8 @@ function env.component.doc(address, method)
 		if proxylist[address][method] == nil then
 			return nil
 		end
-		if doclist[address] ~= nil then
-			return doclist[address][method]
+		if mailist[address] ~= nil then
+			return mailist[address][method].doc
 		end
 		return nil
 	end

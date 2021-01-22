@@ -11,11 +11,67 @@ local lfs = require("lfs")
 
 local sdlinit = false
 
-local args = table.pack(...)
-local emulationInstancePath = (os.getenv("HOME") or os.getenv("APPDATA")) .. "/.ocemu"
+local arg_parse = require("support.arg_parse")
+
+local args = arg_parse(...)
+local baseDir
+
+local getenv = setmetatable({}, {__index=function(t, k) local v=os.getenv(k) t[k]=v return v end})
+local paths = {}
 
 if #args > 0 then
-	emulationInstancePath = args[1]
+	table.insert(paths, args[1])
+elseif ffi.os == 'Windows' then
+	if getenv["HOME"] then -- Unlikely but possible thanks to the old code.
+		table.insert(paths, getenv["HOME"] .. "\\.ocemu")
+	end
+	if getenv["APPDATA"] then
+		table.insert(paths, getenv["APPDATA"] .. "\\.ocemu")
+		table.insert(paths, getenv["APPDATA"] .. "\\OCEmu")
+	end
+else -- Assume Linux
+	if getenv["HOME"] then
+		table.insert(paths, getenv["HOME"] .. "/.ocemu")
+	end
+	if getenv["XDG_CONFIG_HOME"] then
+		table.insert(paths, getenv["XDG_CONFIG_HOME"] .. "/ocemu")
+	elseif getenv["HOME"] and lfs.attributes(getenv["HOME"] .. "/.config", "mode") == "directory" then
+		table.insert(paths, getenv["HOME"] .. "/.config/ocemu")
+	end
+	if getenv["XDG_DATA_HOME"] then
+		table.insert(paths, getenv["XDG_DATA_HOME"] .. "/ocemu")
+	elseif getenv["HOME"] and lfs.attributes(getenv["HOME"] .. "/.local/share", "mode") == "directory" then
+		table.insert(paths, getenv["HOME"] .. "/.local/share/ocemu")
+	end
+end
+if #paths == 0 then
+	table.insert(paths, lfs.currentdir() .. "/data")
+end
+for i = 1, #paths do
+	if lfs.attributes(paths[i], "mode") ~= nil then
+		baseDir = paths[i]
+		break
+	end
+end
+
+local preferred = paths[#paths]
+if not baseDir then
+	baseDir = preferred
+end
+
+local baseDirType = lfs.attributes(baseDir, "mode")
+if baseDirType ~= nil and baseDirType ~= "directory" then
+	error("Emulation storage location '" .. baseDir .. "' is not a directory", 0)
+elseif baseDirType == "nil" then
+	local ok, err = lfs.mkdir(baseDir)
+	if not ok then
+		error("Failed to create directory '" .. baseDir .. "':" .. err, 0)
+	end
+end
+
+if baseDir ~= preferred then
+	print("Warning: Using legacy path of '" .. baseDir .. "'")
+	print("Please move this to '" .. preferred .. "'")
 end
 
 local function boot()
@@ -45,6 +101,34 @@ local function boot()
 		[SDL.MOUSEBUTTONDOWN] = "mousebuttondown",
 		[SDL.MOUSEBUTTONUP] = "mousebuttonup",
 		[SDL.MOUSEWHEEL] = "mousewheel",
+		[SDL.JOYAXISMOTION] = "joyaxismotion",
+		[SDL.JOYBALLMOTION] = "joyballmotion",
+		[SDL.JOYHATMOTION] = "joyhatmotion",
+		[SDL.JOYBUTTONDOWN] = "joybuttondown",
+		[SDL.JOYBUTTONUP] = "joybuttonup",
+		[SDL.JOYDEVICEADDED] = "joydeviceadded",
+		[SDL.JOYDEVICEREMOVED] = "joydeviceremoved",
+		[SDL.CONTROLLERAXISMOTION] = "controlleraxismotion",
+		[SDL.CONTROLLERBUTTONDOWN] = "controllerbuttondown",
+		[SDL.CONTROLLERBUTTONUP] = "controllerbuttonup",
+		[SDL.CONTROLLERDEVICEADDED] = "controllerdeviceadded",
+		[SDL.CONTROLLERDEVICEREMOVED] = "controllerdeviceremoved",
+		[SDL.CONTROLLERDEVICEREMAPPED] = "controllerdeviceremapped",
+		[SDL.FINGERDOWN] = "fingerdown",
+		[SDL.FINGERUP] = "fingerup",
+		[SDL.FINGERMOTION] = "fingermotion",
+		[SDL.DOLLARGESTURE] = "dollargesture",
+		[SDL.DOLLARRECORD] = "dollarrecord",
+		[SDL.MULTIGESTURE] = "multigesture",
+		[SDL.CLIPBOARDUPDATE] = "clipboardupdate",
+		[SDL.DROPFILE] = "dropfile",
+		[SDL.DROPTEXT] = "droptext",
+		[SDL.DROPBEGIN] = "dropbegin",
+		[SDL.DROPCOMPLETE] = "dropcomplete",
+		[SDL.AUDIODEVICEADDED] = "audiodeviceadded",
+		[SDL.AUDIODEVICEREMOVED] = "audiodeviceremoved",
+		[SDL.RENDER_TARGETS_RESET] = "render_targets_reset",
+		[SDL.RENDER_DEVICE_RESET] = "render_device_reset",
 	}
 
 	local wen = {}
@@ -75,16 +159,24 @@ local function boot()
 	end
 
 	elsa = {
+		args = args,
 		getError = function() return ffi.string(SDL.getError()) end,
 		filesystem = {
 			lines = io.lines,
 			load = loadfile,
 			read = function(path)
-				local file, err = io.open(path,"rb")
+				local file, err = io.open(path, "rb")
 				if not file then return nil, err end
 				local data = file:read("*a")
 				file:close()
 				return data, #data
+			end,
+			write = function(path, data)
+				local file, err = io.open(path, "wb")
+				if not file then return false, err end
+				file:write(data)
+				file:close()
+				return true
 			end,
 			exists = function(path)
 				return lfs.attributes(path,"mode") ~= nil
@@ -120,7 +212,7 @@ local function boot()
 				return lfs.attributes(path,"size")
 			end,
 			getSaveDirectory = function()
-				return emulationInstancePath
+				return baseDir
 			end,
 			remove = function(path)
 				return recursiveDelete(path)
@@ -131,9 +223,37 @@ local function boot()
 				return SDL.getTicks()/1000
 			end,
 		},
+		system = {
+			getOS = function()
+				return ffi.os
+			end,
+		},
+		handlers = {},
 		SDL = SDL,
 		windowEventID = wen,
 	}
+
+	local handlers = elsa.handlers
+
+	setmetatable(elsa, {
+		__index=function(t, k)
+			return function(...)
+				if handlers[k] ~= nil then
+					local hndtbl = handlers[k]
+					for i=1, #hndtbl do
+						hndtbl[i](...)
+					end
+				end
+			end
+		end,
+		__newindex=function(t, k, v)
+			if handlers[k] == nil then
+				handlers[k] = {}
+			end
+			local hndtbl = handlers[k]
+			hndtbl[#hndtbl+1]=v
+		end
+	})
 
 	-- redirect os.remove is non posix
 	if ffi.os == 'Windows' then
@@ -150,30 +270,56 @@ local function boot()
 		end
 	end
 
+	-- seed randomizer
+	math.randomseed(os.time())
+
 	require("main")
 
 	local e = ffi.new('SDL_Event')
 	while true do
+		local start = SDL.getTicks()
 		while b(SDL.pollEvent(e)) do
-			local etype = eventNames[e.type]
+			local event = e
+			local etype = eventNames[event.type]
 			if etype == nil then
-				print("Ignoring event of ID: " .. e.type)
+				print("Ignoring event of ID: " .. event.type)
 				goto econtinue
 			end
-			if elsa[etype] ~= nil then
-				elsa[etype](e)
+			if etype == "windowevent" then
+				event = ffi.cast("SDL_WindowEvent*", event)
+				if wen[event.event] == nil then
+					print("Ignoring window event of kind: " .. event.event)
+					goto econtinue
+				end
+				etype = "window" .. wen[event.event]
+			end
+			if handlers[etype] ~= nil then
+				local hndtbl = handlers[etype]
+				for i=1, #hndtbl do
+					hndtbl[i](event)
+				end
 			end
 			if etype == "quit" then
 				return
 			end
 			::econtinue::
 		end
-		elsa.update()
-		if elsa.draw then
-			elsa.draw()
+		local updtbl=handlers.update
+		for i=1, #updtbl do
+			updtbl[i]()
+		end
+		if handlers.draw then
+			local drawtbl=handlers.draw
+			for i=1, #drawtbl do
+				drawtbl[i]()
+			end
 		end
 
-		SDL.delay(16)
+		if settings.fast then
+			SDL.delay(16)
+		else
+			SDL.delay(math.max(start + (1000/20) - SDL.getTicks(), 1))
+		end
 	end
 end
 

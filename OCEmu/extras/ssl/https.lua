@@ -1,6 +1,6 @@
 ----------------------------------------------------------------------------
--- LuaSec 0.5
--- Copyright (C) 2009-2014 PUC-Rio
+-- LuaSec 0.9
+-- Copyright (C) 2009-2019 PUC-Rio
 --
 -- Author: Pablo Musa
 -- Author: Tomas Guisasola
@@ -12,25 +12,22 @@ local ltn12  = require("ltn12")
 local http   = require("socket.http")
 local url    = require("socket.url")
 
-local table  = require("table")
-local string = require("string")
+local try    = socket.try
 
-local try          = socket.try
-local type         = type
-local pairs        = pairs
-local getmetatable = getmetatable
+--
+-- Module
+--
+local _M = {
+  _VERSION   = "0.9",
+  _COPYRIGHT = "LuaSec 0.9 - Copyright (C) 2009-2019 PUC-Rio",
+  PORT       = 443,
+  TIMEOUT    = 60
+}
 
-module("ssl.https")
-
-_VERSION   = "0.5"
-_COPYRIGHT = "LuaSec 0.5 - Copyright (C) 2009-2014 PUC-Rio"
-
--- Default settings
-PORT = 443
-
+-- TLS configuration
 local cfg = {
-  protocol = "tlsv1",
-  options  = "all",
+  protocol = "any",
+  options  = {"all", "no_sslv2", "no_sslv3", "no_tlsv1"},
   verify   = "none",
 }
 
@@ -40,7 +37,7 @@ local cfg = {
 
 -- Insert default HTTPS port.
 local function default_https_port(u)
-   return url.build(url.parse(u, {port = PORT}))
+   return url.build(url.parse(u, {port = _M.PORT}))
 end
 
 -- Convert an URL to a table according to Luasocket needs.
@@ -87,12 +84,14 @@ local function tcp(params)
       conn.sock = try(socket.tcp())
       local st = getmetatable(conn.sock).__index.settimeout
       function conn:settimeout(...)
-         return st(self.sock, ...)
+         return st(self.sock, _M.TIMEOUT)
       end
       -- Replace TCP's connection function
       function conn:connect(host, port)
          try(self.sock:connect(host, port))
          self.sock = try(ssl.wrap(self.sock, params))
+         self.sock:sni(host)
+         self.sock:settimeout(_M.TIMEOUT)
          try(self.sock:dohandshake())
          reg(self, getmetatable(self.sock))
          return 1
@@ -113,7 +112,7 @@ end
 -- @param body optional (string)
 -- @return (string if url == string or 1), code, headers, status
 --
-function request(url, body)
+local function request(url, body)
   local result_table = {}
   local stringrequest = type(url) == "string"
   if stringrequest then
@@ -136,3 +135,12 @@ function request(url, body)
   end
   return res, code, headers, status
 end
+
+--------------------------------------------------------------------------------
+-- Export module
+--
+
+_M.request = request
+_M.tcp = tcp
+
+return _M

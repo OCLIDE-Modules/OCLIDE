@@ -386,6 +386,9 @@ void SDL_UnlockAudio(void);
 void SDL_UnlockAudioDevice(SDL_AudioDeviceID dev);
 void SDL_CloseAudio(void);
 void SDL_CloseAudioDevice(SDL_AudioDeviceID dev);
+int SDL_QueueAudio(SDL_AudioDeviceID dev,
+                   const void*       data,
+                   Uint32            len);
 int SDL_SetClipboardText(const char *text);
 char * SDL_GetClipboardText(void);
 SDL_bool SDL_HasClipboardText(void);
@@ -744,7 +747,9 @@ typedef enum
     SDL_WINDOW_INPUT_FOCUS = 0x00000200,
     SDL_WINDOW_MOUSE_FOCUS = 0x00000400,
     SDL_WINDOW_FULLSCREEN_DESKTOP = ( SDL_WINDOW_FULLSCREEN | 0x00001000 ),
-    SDL_WINDOW_FOREIGN = 0x00000800
+    SDL_WINDOW_FOREIGN = 0x00000800,
+    SDL_WINDOW_ALLOW_HIGHDPI = 0x00002000,
+    SDL_WINDOW_MOUSE_CAPTURE = 0x00004000
 } SDL_WindowFlags;
 typedef enum
 {
@@ -762,7 +767,9 @@ typedef enum
     SDL_WINDOWEVENT_LEAVE,
     SDL_WINDOWEVENT_FOCUS_GAINED,
     SDL_WINDOWEVENT_FOCUS_LOST,
-    SDL_WINDOWEVENT_CLOSE
+    SDL_WINDOWEVENT_CLOSE,
+    SDL_WINDOWEVENT_TAKE_FOCUS,
+    SDL_WINDOWEVENT_HIT_TEST
 } SDL_WindowEventID;
 typedef void *SDL_GLContext;
 typedef enum
@@ -1650,6 +1657,13 @@ typedef enum
     SDL_MULTIGESTURE,
     SDL_CLIPBOARDUPDATE = 0x900,
     SDL_DROPFILE = 0x1000,
+    SDL_DROPTEXT,
+    SDL_DROPBEGIN,
+    SDL_DROPCOMPLETE,
+    SDL_AUDIODEVICEADDED = 0x1100,
+    SDL_AUDIODEVICEREMOVED,
+    SDL_RENDER_TARGETS_RESET = 0x2000,
+    SDL_RENDER_DEVICE_RESET,
     SDL_USEREVENT = 0x8000,
     SDL_LASTEVENT = 0xFFFF
 } SDL_EventType;

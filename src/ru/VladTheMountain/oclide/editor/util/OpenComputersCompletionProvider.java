@@ -31,7 +31,6 @@ import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
 import org.fife.ui.autocomplete.FunctionCompletion;
 import org.fife.ui.autocomplete.LanguageAwareCompletionProvider;
-import org.fife.ui.autocomplete.ParameterizedCompletion;
 import org.fife.ui.autocomplete.ParameterizedCompletion.Parameter;
 
 /**
@@ -64,13 +63,13 @@ public class OpenComputersCompletionProvider {
         defaultProvider.addCompletion(new BasicCompletion(defaultProvider, "_VERSION"));
 
         FunctionCompletion assertF1 = new FunctionCompletion(defaultProvider, "assert", OPTS);
-        assertF1.setShortDescription(autocompletion.getString("ipairs")/*"Issues an error when the value of its argument v is false (i.e., nil or false); otherwise, returns all its arguments. message is an error message; when absent, it defaults to \"assertion failed!\""*/);
+        assertF1.setShortDescription(autocompletion.getString("assert")/*"Issues an error when the value of its argument v is false (i.e., nil or false); otherwise, returns all its arguments. message is an error message; when absent, it defaults to \"assertion failed!\""*/);
         assertF1.setParams(Arrays.asList(
                 new Parameter(BOOL, "v", true)
         ));
         defaultProvider.addCompletion(assertF1);
         FunctionCompletion assertF2 = new FunctionCompletion(defaultProvider, "assert", OPTS);
-        assertF2.setShortDescription("Issues an error when the value of its argument v is false (i.e., nil or false); otherwise, returns all its arguments. message is an error message; when absent, it defaults to \"assertion failed!\"");
+        assertF2.setShortDescription(autocompletion.getString("assert"));
         assertF2.setParams(Arrays.asList(
                 new Parameter(BOOL, "v, "),
                 new Parameter(STR, "message", true)
@@ -78,47 +77,54 @@ public class OpenComputersCompletionProvider {
         defaultProvider.addCompletion(assertF2);
 
         FunctionCompletion dofileF1 = new FunctionCompletion(defaultProvider, "dofile", OPTS);
-        dofileF1.setShortDescription("Opens the named file and executes its contents as a Lua chunk. Executes the contents of the standard input (stdin). In case of errors, dofile propagates the error to its caller (that is, dofile does not run in protected mode).");
-        dofileF1.setReturnValueDescription("Returns all values returned by the chunk.");
+        dofileF1.setShortDescription(autocompletion.getString("dofile"));
         defaultProvider.addCompletion(dofileF1);
         FunctionCompletion dofileF2 = new FunctionCompletion(defaultProvider, "dofile", OPTS);
-        dofileF2.setShortDescription("Opens the named file and executes its contents as a Lua chunk. In case of errors, dofile propagates the error to its caller (that is, dofile does not run in protected mode).");
-        dofileF2.setDefinedIn("Lua 5.2 basic library");
+        dofileF2.setShortDescription(autocompletion.getString("dofile"));
         dofileF2.setParams(Arrays.asList(
                 new Parameter(STR, "filename", true)
         ));
-        dofileF2.setReturnValueDescription("Returns all values returned by the chunk.");
         defaultProvider.addCompletion(dofileF2);
 
         FunctionCompletion errorF1 = new FunctionCompletion(defaultProvider, "error", NULL);
-        errorF1.setShortDescription("Terminates the last protected function called and returns message as the error object. Function error never returns.\n"
-                + "Usually, error adds some information about the error position at the beginning of the message, if the message is a string. The level argument specifies how to get the error position. With level 1 (the default), the error position is where the error function was called. Level 2 points the error to where the function that called error was called; and so on. Passing a level 0 avoids the addition of error position information to the message.");
+        errorF1.setShortDescription(autocompletion.getString("error"));
         errorF1.setParams(Arrays.asList(
                 new Parameter(STR, "message", true)
         ));
         defaultProvider.addCompletion(errorF1);
         FunctionCompletion errorF2 = new FunctionCompletion(defaultProvider, "error", NULL);
-        errorF2.setShortDescription("Terminates the last protected function called and returns message as the error object. Function error never returns.\n"
-                + "Usually, error adds some information about the error position at the beginning of the message, if the message is a string. The level argument specifies how to get the error position. With level 1 (the default), the error position is where the error function was called. Level 2 points the error to where the function that called error was called; and so on. Passing a level 0 avoids the addition of error position information to the message.");
+        errorF2.setShortDescription(autocompletion.getString("error"));
         errorF2.setParams(Arrays.asList(
                 new Parameter(STR, "message"),
                 new Parameter(NUM, "level", true)
         ));
         defaultProvider.addCompletion(errorF2);
 
-        FunctionCompletion test = new FunctionCompletion(defaultProvider, "name", "type");
+        FunctionCompletion getmetatableF = new FunctionCompletion(defaultProvider, "getmetatable", TABL);
+        getmetatableF.setShortDescription(autocompletion.getString("getmetatable"));
+        getmetatableF.setParams(Arrays.asList(
+                new Parameter(TABL, "object", true)));
+        defaultProvider.addCompletion(getmetatableF);
+
+        FunctionCompletion ipairsF = new FunctionCompletion(defaultProvider, "ipairs", NUM + ", " + TABL + ", " + 0);
+        ipairsF.setShortDescription(autocompletion.getString("ipairs"));
+        ipairsF.setParams(Arrays.asList(
+                new Parameter(TABL, "t", true)));
+        defaultProvider.addCompletion(ipairsF);
+
+        FunctionCompletion loadF1 = new FunctionCompletion(defaultProvider, "load", OPTS);
+        loadF1.setShortDescription(autocompletion.getString("load"));
+
+        /*FunctionCompletion test = new FunctionCompletion(defaultProvider, "name", "type");
         test.setDefinedIn("Defined In");
         test.setParams(Arrays.asList(new ParameterizedCompletion.Parameter("type1", "param1"), new ParameterizedCompletion.Parameter("type2", "param2", true)));
         test.setRelevance(1);
         test.setReturnValueDescription("Return description");
         test.setShortDescription("Short description");
         test.setSummary("Summary");
-        defaultProvider.addCompletion(test);
-        //OpenOS API
-
+        defaultProvider.addCompletion(test);*/ //OpenOS API
         //Shortcuts
-        /* TODO */
-        //
+        /* TODO */ //
         LanguageAwareCompletionProvider p = new LanguageAwareCompletionProvider(defaultProvider);
         return p;
     }
