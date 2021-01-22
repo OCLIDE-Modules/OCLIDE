@@ -22,4 +22,4 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java with Swing GUI
 ## Installation
 1. Download the latest version `dist.rar` at https://github.com/Vladg24YT/Oclide/releases
 2. Extract it to any folder you want. It will be OCLIDE's working directory.
-3. Follow the steps described in `README.txt`
+3. Run the `OCLIDE.jar` file
