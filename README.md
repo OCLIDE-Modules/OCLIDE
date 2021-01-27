@@ -1,6 +1,5 @@
 # OCLIDE
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d0ace57bc0a349529c699733b8dc3e9e)](https://www.codacy.com/gh/Vladg24YT/Oclide/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Vladg24YT/Oclide&amp;utm_campaign=Badge_Grade)<br>
-![Repo size](https://img.shields.io/github/languages/code-size/Vladg24YT/Oclide)
 
 ![Program screenshot](https://raw.githubusercontent.com/Vladg24YT/Oclide/gh-pages/images/screenshots/OCLIDE_screenshot.png) 
 Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java with Swing GUI
@@ -9,17 +8,19 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java with Swing GUI
 - [x] Editing tools (Undo/Redo, Clipboard)
 - [x] File management
 - [x] Syntax highlighting
-- [ ] <s>Version control (Git integration)</s>
-- [x] OCEmu support
+- [x] OCEmu integration
+- [ ] Code autocompletion
+- [ ] OCEmu debugging tools
 - [ ] Built-in [Ocelot Brain](https://gitlab.com/cc-ru/ocelot/ocelot-brain)-based emulator
-- [x] Debugging tools
+- [ ] <s>Version control (Git integration)</s>
+- [ ] Minecraft 1.7.10 - 1.12.2 integration
 
 ## Requirements
 * JRE/JDK 1.8 or later
 * Windows 10 (work on older versions is not guaranteed)
-* IDE will also work on any Linux-based distro, but there can be problems with launching/using OCEmu
+* IDE will also work on Linux-based distros like Ubuntu, but there can be problems with launching/using OCEmu
 
 ## Installation
 1. Download the latest version `dist.rar` at https://github.com/Vladg24YT/Oclide/releases
 2. Extract it to any folder you want. It will be OCLIDE's working directory.
-3. Follow the steps described in `README.txt`
+3. Run the `OCLIDE.jar` file
