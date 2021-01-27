@@ -23,6 +23,8 @@
  */
 package ru.VladTheMountain.oclide.editor;
 
+import java.io.File;
+
 /**
  *
  * @author VladTheMountain
@@ -200,6 +202,7 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         propertiesMenuItem = new javax.swing.JMenuItem();
         projectChooser = new javax.swing.JFileChooser();
+        fileChooser = new javax.swing.JFileChooser();
         jSplitPane1 = new javax.swing.JSplitPane();
         projectsScroll = new javax.swing.JScrollPane();
         projectsTree = new javax.swing.JTree();
@@ -326,6 +329,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         projectChooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
         projectChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+
+        fileChooser.setApproveButtonText("Open");
+        fileChooser.setApproveButtonToolTipText("Open selected file");
+        fileChooser.setCurrentDirectory(new java.io.File(System.getProperty("user.dir") + java.nio.file.FileSystems.getDefault().getSeparator() + "projects"));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (v0.0.5)");
@@ -483,10 +490,20 @@ public class MainFrame extends javax.swing.JFrame {
 
         createFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/doc_plus_icon&16.png"))); // NOI18N
         createFile.setText("Create file");
+        createFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createFileActionPerformed(evt);
+            }
+        });
         fileMenu.add(createFile);
 
         openFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/assets/icons/document_icon&16.png"))); // NOI18N
         openFile.setText("Open file");
+        openFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFileActionPerformed(evt);
+            }
+        });
         fileMenu.add(openFile);
         fileMenu.add(jSeparator10);
 
@@ -797,6 +814,27 @@ public class MainFrame extends javax.swing.JFrame {
         new ru.VladTheMountain.oclide.emulator.EmulatorFrame().setVisible(true);
     }//GEN-LAST:event_runOcelotButtonActionPerformed
 
+    private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
+        this.fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.getAbsolutePath().endsWith(".lua") || f.isDirectory();
+            }
+
+            @Override
+            public String getDescription() {
+                return "*.lua";
+            }
+        });
+        if (this.fileChooser.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
+            openFile(this.fileChooser.getSelectedFile());
+        }
+    }//GEN-LAST:event_openFileActionPerformed
+
+    private void createFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFileActionPerformed
+        this.addFileMenuItemActionPerformed(evt);
+    }//GEN-LAST:event_createFileActionPerformed
+
     private void runOCEmu() throws java.io.IOException {
         if (projectsTree.getSelectionPath().getPath().length > 1 && projectsTree.getSelectionPath().getPath().length < 3) {
             if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) == null || "".equals(String.valueOf(projectsTree.getSelectionPath().getPath()[1]))) {
@@ -843,6 +881,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu editMenu;
     private javax.swing.JTabbedPane editorTabs;
     private javax.swing.JMenuItem exit;
+    private javax.swing.JFileChooser fileChooser;
     private javax.swing.JPopupMenu fileManagementPopup;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuItem find;

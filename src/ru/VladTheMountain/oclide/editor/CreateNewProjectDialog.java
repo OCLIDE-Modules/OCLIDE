@@ -72,7 +72,8 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         projectNameField = new javax.swing.JTextField();
-        projectFolderField = new javax.swing.JTextField(new File("projects").getAbsolutePath() + java.nio.file.FileSystems.getDefault().getSeparator() + projectNameField.getText());
+        projectFolderField = new javax.swing.JTextField(new File(System.getProperty("user.dir") + java.nio.file.FileSystems.getDefault().getSeparator() + "projects").getAbsolutePath() + java.nio.file.FileSystems.getDefault().getSeparator() + projectNameField.getText())
+        ;
         scriptSeparator = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         librarySeparator = new javax.swing.JSeparator();

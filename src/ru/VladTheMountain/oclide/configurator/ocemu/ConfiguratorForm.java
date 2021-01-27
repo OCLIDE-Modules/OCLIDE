@@ -137,7 +137,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/home"), new File(machineDir.getAbsoluteFile() + "/home"));
             FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/lib"), new File(machineDir.getAbsoluteFile() + "/lib"));
             FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/usr"), new File(machineDir.getAbsoluteFile() + "/usr"));
-            Files.copy(new File("OCEmu/loot/OpenOS/.osprop").toPath(), new File(machineDir.getAbsoluteFile() + "/.osprop").toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(new File("OCEmu/loot/OpenOS/.prop").toPath(), new File(machineDir.getAbsoluteFile() + "/.prop").toPath(), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(new File("OCEmu/loot/OpenOS/init.lua").toPath(), new File(machineDir.getAbsoluteFile() + "/init.lua").toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
             Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
