@@ -23,7 +23,7 @@
  */
 package ru.VladTheMountain.oclide.configurator.ocelot;
 
-import ru.VladTheMountain.oclide.emulator.EmulatorFrame;
+import ru.VladTheMountain.oclide.ui.EmulatorFrame;
 
 /**
  *

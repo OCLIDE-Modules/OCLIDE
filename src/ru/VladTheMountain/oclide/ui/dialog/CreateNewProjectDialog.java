@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.editor;
+package ru.VladTheMountain.oclide.ui.dialog;
 
 import java.io.File;
+import ru.VladTheMountain.oclide.ui.EditorFrame;
 
 /**
  *
@@ -398,7 +399,7 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void finishButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishButtonActionPerformed
-        MainFrame.createProject(this.projectNameField.getText(), this.projectFolderField.getText());
+        EditorFrame.createProject(this.projectNameField.getText(), this.projectFolderField.getText());
         this.dispose();
     }//GEN-LAST:event_finishButtonActionPerformed
 

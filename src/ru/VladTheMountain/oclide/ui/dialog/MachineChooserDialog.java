@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurator.ocemu;
+package ru.VladTheMountain.oclide.ui.dialog;
 
 /**
  *
  * @author Vladi
  */
-public class MachineChooser extends javax.swing.JDialog {
+public class MachineChooserDialog extends javax.swing.JDialog {
 
     private static final long serialVersionUID = 1L;
     private String[] fileSystemList;
@@ -40,7 +40,7 @@ public class MachineChooser extends javax.swing.JDialog {
      * @param modal
      * @param fs Array of filesystem UUIDs
      */
-    public MachineChooser(java.awt.Frame parent, boolean modal, String[] fs) {
+    public MachineChooserDialog(java.awt.Frame parent, boolean modal, String[] fs) {
         super(parent, modal);
         this.fileSystemList = new String[fs.length];
         System.arraycopy(fs, 0, this.fileSystemList, 0, fs.length);

@@ -21,18 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurator.ocemu.component;
+package ru.VladTheMountain.oclide.ui.dialog;
 
-import ru.VladTheMountain.oclide.configurator.ocemu.UUIDGenerator;
+import java.io.File;
+import java.nio.file.FileSystems;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 
 /**
  *
  * @author VladTheMountain
  */
-public class Keyboard extends OCEmuComponent {
+public class OpenFileFileChooser extends JFileChooser {
 
-    public Keyboard() {
-        super(5, UUIDGenerator.create(), (String) null);
+    private static final long serialVersionUID = 1L;
+
+    public OpenFileFileChooser() {
+        this.setApproveButtonText("Open");
+        this.setApproveButtonToolTipText("Open selected file");
+        this.setCurrentDirectory(new File(System.getProperty("user.dir") + FileSystems.getDefault().getSeparator() + "projects"));
+        this.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.getAbsolutePath().endsWith(".lua") || f.isDirectory();
+            }
+
+            @Override
+            public String getDescription() {
+                return "*.lua";
+            }
+        });
     }
 
 }

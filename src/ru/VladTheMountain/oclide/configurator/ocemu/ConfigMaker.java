@@ -26,6 +26,7 @@ package ru.VladTheMountain.oclide.configurator.ocemu;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import javax.swing.JOptionPane;
 import ru.VladTheMountain.oclide.configurator.ocemu.component.Computer;
 import ru.VladTheMountain.oclide.configurator.ocemu.component.EEPROM;
 import ru.VladTheMountain.oclide.configurator.ocemu.component.Filesystem;
@@ -132,8 +133,22 @@ public class ConfigMaker {
      *
      * @throws IOException
      */
-    void createConfig() throws IOException {
-        File config = new File("OCEmu/.machine/ocemu.cfg");
+    public void createConfig() throws IOException {
+        String path = null;
+        if (System.getProperty("os.name").contains("Windows")) {
+            path = System.getenv("APPDATA") + "\\OCEmu\\ocemu.cfg";
+        } else if (System.getProperty("os.name").contains("Ubuntu") || System.getProperty("os.name").contains("Arch")) {
+            if (new File(System.getenv("XDG_CONFIG_HOME") + "/ocemu").exists()) {
+                path = System.getenv("XDG_CONFIG_HOME") + "/ocemu/ocemu.cfg";
+            } else {
+                path = System.getenv("HOME") + "/.config/ocemu/ocemu.cfg";
+            }
+        }
+        if (path == null) {
+            JOptionPane.showMessageDialog(null, "WARNING: Couldn't create config for your OS. Please create an issue about this problem at https://github.com/Vladg24YT/Oclide/issues", "Config creation error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        File config = new File(path);
         if (!(config.exists())) {
             if (!(new File(config.getParent()).exists())) {
                 new File(config.getParent()).mkdirs();
@@ -293,8 +308,4 @@ public class ConfigMaker {
         }
         return tmp;
     }
-
-    /*public static OCEmuComponent[] getDefaults() {
-        return defaultComponentSet;
-    }*/
 }

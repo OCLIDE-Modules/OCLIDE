@@ -23,7 +23,7 @@
  */
 package ru.VladTheMountain.oclide.configurator.ocemu.component;
 
-import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
+import ru.VladTheMountain.oclide.configurator.ocemu.UUIDGenerator;
 
 /**
  *

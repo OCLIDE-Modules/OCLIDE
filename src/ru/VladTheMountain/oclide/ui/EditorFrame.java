@@ -21,26 +21,57 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.editor;
+package ru.VladTheMountain.oclide.ui;
 
+import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.accessibility.AccessibleContext;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTree;
+import javax.swing.ToolTipManager;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.CaretEvent;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import org.apache.commons.io.FileUtils;
+import org.fife.ui.autocomplete.AutoCompletion;
+import org.fife.ui.autocomplete.CompletionCellRenderer;
+import org.fife.ui.autocomplete.CompletionProvider;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
+import org.fife.ui.rtextarea.ToolTipSupplier;
+import ru.VladTheMountain.oclide.editor.OpenComputersCompletionProvider;
+import ru.VladTheMountain.oclide.ui.dialog.CreateNewProjectDialog;
+import ru.VladTheMountain.oclide.ui.dialog.OpenFileFileChooser;
+import ru.VladTheMountain.oclide.ui.dialog.ProjectFileChooser;
 
 /**
  *
  * @author VladTheMountain
  */
-public class MainFrame extends javax.swing.JFrame {
+public class EditorFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    public EditorFrame() {
         try {
-            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
     }
@@ -50,11 +81,11 @@ public class MainFrame extends javax.swing.JFrame {
      *
      * @param file A file to save contents to
      */
-    private void newFile(java.io.File file) {
+    private void newFile(File file) {
         try {
             file.createNewFile();
-        } catch (java.io.IOException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         openFile(file); //:D
     }
@@ -65,27 +96,27 @@ public class MainFrame extends javax.swing.JFrame {
      *
      * @param file the {@link File}, which contents are to read
      */
-    private void openFile(java.io.File file) {
+    private void openFile(File file) {
         if (!(file.exists())) {
-            javax.swing.JOptionPane.showMessageDialog(this, "The requested file " + file.getAbsolutePath() + " does not exist.", "File does not exist", javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "The requested file " + file.getAbsolutePath() + " does not exist.", "File does not exist", JOptionPane.ERROR_MESSAGE);
         }
         String fileContent = "";
         try {
-            fileContent = new String(java.nio.file.Files.readAllBytes(file.toPath()));
-        } catch (java.io.IOException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            fileContent = new String(Files.readAllBytes(file.toPath()));
+        } catch (IOException ex) {
+            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        org.fife.ui.rsyntaxtextarea.RSyntaxTextArea newFile = new org.fife.ui.rsyntaxtextarea.RSyntaxTextArea(fileContent);
-        newFile.setSyntaxEditingStyle(org.fife.ui.rsyntaxtextarea.SyntaxConstants.SYNTAX_STYLE_LUA);
+        RSyntaxTextArea newFile = new RSyntaxTextArea(fileContent);
+        newFile.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LUA);
         newFile.setCodeFoldingEnabled(true);
-        newFile.addCaretListener((javax.swing.event.CaretEvent e) -> {
+        newFile.addCaretListener((CaretEvent e) -> {
             newFile.getAccessibleContext().setAccessibleDescription(newFile.getText());
         });
         newFile.getAccessibleContext().setAccessibleDescription(newFile.getText());
         //autocompletion
-        org.fife.ui.autocomplete.CompletionProvider occp = ru.VladTheMountain.oclide.editor.util.OpenComputersCompletionProvider.getProvider();
-        org.fife.ui.autocomplete.AutoCompletion occ = new org.fife.ui.autocomplete.AutoCompletion(occp);
-        occ.setListCellRenderer(new org.fife.ui.autocomplete.CompletionCellRenderer());
+        CompletionProvider occp = OpenComputersCompletionProvider.getProvider();
+        AutoCompletion occ = new AutoCompletion(occp);
+        occ.setListCellRenderer(new CompletionCellRenderer());
         occ.setAutoCompleteEnabled(true);
         occ.setAutoActivationEnabled(true);
         occ.setAutoActivationDelay(100);
@@ -93,10 +124,10 @@ public class MainFrame extends javax.swing.JFrame {
         occ.setParameterAssistanceEnabled(true);
         //occ.install(newFile);
         /*UNCOMMENT BEFORE BETA RELEASE*/
-        newFile.setToolTipSupplier((org.fife.ui.rtextarea.ToolTipSupplier) occp);
-        javax.swing.ToolTipManager.sharedInstance().registerComponent(newFile);
+        newFile.setToolTipSupplier((ToolTipSupplier) occp);
+        ToolTipManager.sharedInstance().registerComponent(newFile);
         //
-        org.fife.ui.rtextarea.RTextScrollPane sp = new org.fife.ui.rtextarea.RTextScrollPane(newFile);
+        RTextScrollPane sp = new RTextScrollPane(newFile);
         sp.setName(file.getAbsolutePath());
         this.editorTabs.add(file.getName(), sp);
         this.editorTabs.setSelectedIndex(this.editorTabs.getTabCount() - 1);
@@ -109,19 +140,19 @@ public class MainFrame extends javax.swing.JFrame {
      * @param f The {@link File} to save current {@link RSyntaxTextArea}
      * contents to
      */
-    void saveFile(java.io.File f) {
+    void saveFile(File f) {
         if (!(f.exists())) {
             f.mkdirs();
             try {
                 f.createNewFile();
-            } catch (java.io.IOException ex) {
-                java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         try {
-            java.nio.file.Files.write(f.toPath(), this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleDescription().getBytes());
-        } catch (java.io.IOException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Files.write(f.toPath(), this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleDescription().getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         updateProjectsTree();
     }
@@ -133,11 +164,11 @@ public class MainFrame extends javax.swing.JFrame {
      * @param projectDir Path to project's files
      */
     public static void createProject(String name, String projectDir) {
-        java.io.File proj = new java.io.File(projectDir);
+        File proj = new File(projectDir);
         if (!(proj.exists())) {
             proj.mkdirs();
         } else {
-            javax.swing.JOptionPane.showMessageDialog(null, "Such directory already exists", "Wrong project name", javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Such directory already exists", "Wrong project name", JOptionPane.ERROR_MESSAGE);
         }
         updateProjectsTree();
     }
@@ -147,10 +178,10 @@ public class MainFrame extends javax.swing.JFrame {
      */
     static void updateProjectsTree() {
         //Tree values
-        javax.swing.tree.DefaultMutableTreeNode rootNode = new javax.swing.tree.DefaultMutableTreeNode("Projects");
-        javax.swing.tree.DefaultTreeModel projTreeModel = new javax.swing.tree.DefaultTreeModel(rootNode);
+        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Projects");
+        DefaultTreeModel projTreeModel = new DefaultTreeModel(rootNode);
         //Files' bullsh*t
-        java.io.File projectsDir = new java.io.File("projects");
+        File projectsDir = new File("projects");
         if (projectsDir.exists()) {
             recursivelyAddFiles(projectsDir, rootNode);
         }
@@ -164,13 +195,13 @@ public class MainFrame extends javax.swing.JFrame {
      * @param file Project folder as a {@link File}
      * @param n Project's tree node
      */
-    static void recursivelyAddFiles(java.io.File file, javax.swing.tree.DefaultMutableTreeNode n) {
-        java.io.File[] files = file.listFiles();
+    static void recursivelyAddFiles(File file, DefaultMutableTreeNode n) {
+        File[] files = file.listFiles();
         if (files == null) {
             return;
         }
-        for (java.io.File f : files) {
-            javax.swing.tree.DefaultMutableTreeNode cNode = new javax.swing.tree.DefaultMutableTreeNode(f.getName());
+        for (File f : files) {
+            DefaultMutableTreeNode cNode = new DefaultMutableTreeNode(f.getName());
             n.add(cNode);
             if (f.isDirectory()) {
                 recursivelyAddFiles(f, cNode);
@@ -202,7 +233,6 @@ public class MainFrame extends javax.swing.JFrame {
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         propertiesMenuItem = new javax.swing.JMenuItem();
         projectChooser = new javax.swing.JFileChooser();
-        fileChooser = new javax.swing.JFileChooser();
         jSplitPane1 = new javax.swing.JSplitPane();
         projectsScroll = new javax.swing.JScrollPane();
         projectsTree = new javax.swing.JTree();
@@ -329,10 +359,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         projectChooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
         projectChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-
-        fileChooser.setApproveButtonText("Open");
-        fileChooser.setApproveButtonToolTipText("Open selected file");
-        fileChooser.setCurrentDirectory(new java.io.File(System.getProperty("user.dir") + java.nio.file.FileSystems.getDefault().getSeparator() + "projects"));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (v0.0.5)");
@@ -665,13 +691,13 @@ public class MainFrame extends javax.swing.JFrame {
     private void ocemuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ocemuActionPerformed
         try {
             runOCEmu();
-        } catch (java.io.IOException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ocemuActionPerformed
 
     private void settingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
-        new ru.VladTheMountain.oclide.settings.SettingsFrame().setVisible(true);
+        new SettingsFrame().setVisible(true);
     }//GEN-LAST:event_settingsActionPerformed
 
     private void createProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createProjectActionPerformed
@@ -688,41 +714,50 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exitActionPerformed
 
     private void deleteProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteProjectActionPerformed
-        int result = javax.swing.JOptionPane.showConfirmDialog(this, "Are you really want to delete your project?", "Deleting a project", javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE);
-        if (result == javax.swing.JOptionPane.YES_OPTION) {
+        int result = JOptionPane.showConfirmDialog(this, "Are you really want to delete your project?", "Deleting a project", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (result == JOptionPane.YES_OPTION) {
             String projectName = String.valueOf(projectsTree.getSelectionPath().getPath()[1]);
-            java.io.File f = new java.io.File("projects/" + projectName);
+            File f = new File("projects/" + projectName);
             if (f.delete()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Project successfully deleted.", "Deleting a project", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Project successfully deleted.", "Deleting a project", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_deleteProjectActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        this.saveFile(new java.io.File(this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getName()));
+        this.saveFile(new File(this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getName()));
     }//GEN-LAST:event_saveActionPerformed
 
     private void openProjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openProjectActionPerformed
-        projectChooser.showOpenDialog(this);
+        JFileChooser projectChoooser = new ProjectFileChooser();
+        if (projectChoooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File dir = projectChoooser.getSelectedFile();
+            try {
+                FileUtils.copyDirectory(dir, new File("projects"));
+            } catch (IOException ex) {
+                Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            updateProjectsTree();
+        }
     }//GEN-LAST:event_openProjectActionPerformed
 
     private void cutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutActionPerformed
-        javax.accessibility.AccessibleContext ac = this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext();
+        AccessibleContext ac = this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext();
         ac.getAccessibleEditableText().cut(ac.getAccessibleEditableText().getSelectionStart(), ac.getAccessibleEditableText().getSelectionEnd());
     }//GEN-LAST:event_cutActionPerformed
 
     private void copyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyActionPerformed
-        javax.accessibility.AccessibleContext ac = this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext();
+        AccessibleContext ac = this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext();
         ac.getAccessibleEditableText().getTextRange(ac.getAccessibleEditableText().getSelectionStart(), ac.getAccessibleEditableText().getSelectionEnd());
     }//GEN-LAST:event_copyActionPerformed
 
     private void pasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteActionPerformed
-        javax.accessibility.AccessibleContext ac = this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext();
+        AccessibleContext ac = this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext();
         ac.getAccessibleEditableText().paste(ac.getAccessibleEditableText().getCaretPosition());
     }//GEN-LAST:event_pasteActionPerformed
 
     private void findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findActionPerformed
-        javax.swing.JOptionPane.showMessageDialog(this, "Unimplemented feature. Wait for next updates");
+        JOptionPane.showMessageDialog(this, "Unimplemented feature. Wait for next updates");
     }//GEN-LAST:event_findActionPerformed
 
     private void popupSaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popupSaveFileActionPerformed
@@ -734,24 +769,24 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_popupCloseFileActionPerformed
 
     private void editorTabsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editorTabsMouseClicked
-        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
+        if (evt.getButton() == MouseEvent.BUTTON3) {
             this.fileManagementPopup.show(this.editorTabs, evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_editorTabsMouseClicked
 
     private void projectsTreeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_projectsTreeMouseClicked
-        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3 && projectsTree.getSelectionPath().getParentPath() == projectsTree.getPathForRow(0)) {
+        if (evt.getButton() == MouseEvent.BUTTON3 && projectsTree.getSelectionPath().getParentPath() == projectsTree.getPathForRow(0)) {
             this.projectManagementPopup.show(projectsTree, evt.getX(), evt.getY());
-        } else if (projectsTree.getSelectionCount() != 0 && java.nio.file.FileSystems.getDefault().getPath("", projectsTree.getSelectionPath().toString().substring(1, projectsTree.getSelectionPath().toString().length() - 1).split(", ")).toFile().isFile() && evt.getButton() == java.awt.event.MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
-            this.openFile(java.nio.file.FileSystems.getDefault().getPath("", projectsTree.getSelectionPath().toString().substring(1, projectsTree.getSelectionPath().toString().length() - 1).split(", ")).toFile());
+        } else if (projectsTree.getSelectionCount() != 0 && FileSystems.getDefault().getPath("", projectsTree.getSelectionPath().toString().substring(1, projectsTree.getSelectionPath().toString().length() - 1).split(", ")).toFile().isFile() && evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
+            this.openFile(FileSystems.getDefault().getPath("", projectsTree.getSelectionPath().toString().substring(1, projectsTree.getSelectionPath().toString().length() - 1).split(", ")).toFile());
         }
     }//GEN-LAST:event_projectsTreeMouseClicked
 
     private void runInOCEmuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runInOCEmuActionPerformed
         try {
             runOCEmu();
-        } catch (java.io.IOException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_runInOCEmuActionPerformed
 
@@ -760,7 +795,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_newProjectButtonActionPerformed
 
     private void openProjectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openProjectButtonActionPerformed
-        projectChooser.showOpenDialog(this);
+        this.openProjectActionPerformed(evt);
     }//GEN-LAST:event_openProjectButtonActionPerformed
 
     private void addFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFileButtonActionPerformed
@@ -768,21 +803,21 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addFileButtonActionPerformed
 
     private void addFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFileMenuItemActionPerformed
-        String name = javax.swing.JOptionPane.showInputDialog(this, "Name a new file:", "");
+        String name = JOptionPane.showInputDialog(this, "Name a new file:", "");
         if (name != null) {
-            this.newFile(new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1]) + java.nio.file.FileSystems.getDefault().getSeparator() + name));
+            this.newFile(new File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1]) + FileSystems.getDefault().getSeparator() + name));
         }
     }//GEN-LAST:event_addFileMenuItemActionPerformed
 
     private void addFolderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFolderMenuItemActionPerformed
-        String path = javax.swing.JOptionPane.showInputDialog(this, "Path to a new directory:", new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).getAbsolutePath());
+        String path = JOptionPane.showInputDialog(this, "Path to a new directory:", new File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).getAbsolutePath());
         if (path != null) {
-            new java.io.File(path).mkdirs();
+            new File(path).mkdirs();
         }
     }//GEN-LAST:event_addFolderMenuItemActionPerformed
 
     private void renameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameMenuItemActionPerformed
-        new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).renameTo(new java.io.File(javax.swing.JOptionPane.showInputDialog(this, "New project name:", String.valueOf(projectsTree.getSelectionPath().getPath()[1]))));
+        new File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).renameTo(new File(JOptionPane.showInputDialog(this, "New project name:", String.valueOf(projectsTree.getSelectionPath().getPath()[1]))));
     }//GEN-LAST:event_renameMenuItemActionPerformed
 
     private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
@@ -790,7 +825,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteMenuItemActionPerformed
 
     private void propertiesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesMenuItemActionPerformed
-        javax.swing.JOptionPane.showMessageDialog(this, "Project name: " + String.valueOf(projectsTree.getSelectionPath().getPath()[1]) + "\nProject path:" + new java.io.File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).getAbsolutePath() + "\nCreated with " + this.getTitle(), String.valueOf(projectsTree.getSelectionPath().getPath()[1]) + " project properties", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Project name: " + String.valueOf(projectsTree.getSelectionPath().getPath()[1]) + "\nProject path:" + new File("projects/" + String.valueOf(projectsTree.getSelectionPath().getPath()[1])).getAbsolutePath() + "\nCreated with " + this.getTitle(), String.valueOf(projectsTree.getSelectionPath().getPath()[1]) + " project properties", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_propertiesMenuItemActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -804,30 +839,20 @@ public class MainFrame extends javax.swing.JFrame {
     private void runOCEmuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runOCEmuButtonActionPerformed
         try {
             runOCEmu();
-        } catch (java.io.IOException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_runOCEmuButtonActionPerformed
 
     private void runOcelotButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runOcelotButtonActionPerformed
         //runOcelot();
-        new ru.VladTheMountain.oclide.emulator.EmulatorFrame().setVisible(true);
+        new EmulatorFrame().setVisible(true);
     }//GEN-LAST:event_runOcelotButtonActionPerformed
 
     private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
-        this.fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                return f.getAbsolutePath().endsWith(".lua") || f.isDirectory();
-            }
-
-            @Override
-            public String getDescription() {
-                return "*.lua";
-            }
-        });
-        if (this.fileChooser.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
-            openFile(this.fileChooser.getSelectedFile());
+        JFileChooser fileChooser = new OpenFileFileChooser();
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            openFile(fileChooser.getSelectedFile());
         }
     }//GEN-LAST:event_openFileActionPerformed
 
@@ -835,26 +860,26 @@ public class MainFrame extends javax.swing.JFrame {
         this.addFileMenuItemActionPerformed(evt);
     }//GEN-LAST:event_createFileActionPerformed
 
-    private void runOCEmu() throws java.io.IOException {
+    private void runOCEmu() throws IOException {
         if (projectsTree.getSelectionPath().getPath().length > 1 && projectsTree.getSelectionPath().getPath().length < 3) {
             if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) == null || "".equals(String.valueOf(projectsTree.getSelectionPath().getPath()[1]))) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Invalid project selection.", "Error: Can't run OCEmu", javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Invalid project selection.", "Error: Can't run OCEmu", JOptionPane.ERROR_MESSAGE);
             } else {
-                new ru.VladTheMountain.oclide.configurator.ocemu.ConfiguratorForm().setVisible(true);
+                new OCEmuConfiguratorForm().setVisible(true);
             }
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "No project chosen. Please select a project folder in the file tree and then launch OCEmu.", "Project not set", javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No project chosen. Please select a project folder in the file tree and then launch OCEmu.", "Project not set", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void runOcelot() {
         try {
-            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "Ocelot" + java.nio.file.FileSystems.getDefault().getSeparator() + "ocelot.jar");
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", "Ocelot" + FileSystems.getDefault().getSeparator() + "ocelot.jar");
             pb.redirectErrorStream(true);
             Process p = pb.start();
-            java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));
+            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String outLine;
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.INFO, "Starting Ocelot Desktop...");
+            Logger.getLogger(EditorFrame.class.getName()).log(Level.INFO, "Starting Ocelot Desktop...");
             while (true) {
                 outLine = r.readLine();
                 if (outLine == null) {
@@ -862,8 +887,8 @@ public class MainFrame extends javax.swing.JFrame {
                 }
                 System.out.println(outLine);
             }
-        } catch (java.io.IOException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -881,7 +906,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu editMenu;
     private javax.swing.JTabbedPane editorTabs;
     private javax.swing.JMenuItem exit;
-    private javax.swing.JFileChooser fileChooser;
     private javax.swing.JPopupMenu fileManagementPopup;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuItem find;

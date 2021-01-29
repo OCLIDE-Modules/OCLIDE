@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.editor.util;
+package ru.VladTheMountain.oclide.editor;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -51,7 +51,7 @@ public class OpenComputersCompletionProvider {
     private static final String TABL = "table";
     //Special
     private static final String OPTS = "...";
-    private static final String CHUNK = "chunk";
+    private static final String CHNK = "chunk";
 
     public static CompletionProvider getProvider() {
         ResourceBundle autocompletion = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.autocompletion.Autocompletion", Locale.getDefault());
@@ -118,14 +118,14 @@ public class OpenComputersCompletionProvider {
         loadF1.setParams(Arrays.asList(
                 new Parameter(CHNK, "chunk", true)));
         defaultProvider.addCompletion(loadF1);
-        
+
         FunctionCompletion loadF2 = new FunctionCompletion(defaultProvider, "load", OPTS);
         loadF2.setShortDescription(autocompletion.getString("load"));
         loadF2.setParams(Arrays.asList(
                 new Parameter(CHNK, "chunk"),
                 new Parameter(STR, "chunkname", true)));
         defaultProvider.addCompletion(loadF2);
-        
+
         FunctionCompletion loadF3 = new FunctionCompletion(defaultProvider, "load", OPTS);
         loadF3.setShortDescription(autocompletion.getString("load"));
         loadF3.setParams(Arrays.asList(
@@ -133,7 +133,7 @@ public class OpenComputersCompletionProvider {
                 new Parameter(STR, "chunkname"),
                 new Parameter(STR, "mode", true)));
         defaultProvider.addCompletion(loadF3);
-        
+
         FunctionCompletion loadF4 = new FunctionCompletion(defaultProvider, "load", OPTS);
         loadF4.setShortDescription(autocompletion.getString("load"));
         loadF4.setParams(Arrays.asList(
@@ -142,20 +142,20 @@ public class OpenComputersCompletionProvider {
                 new Parameter(STR, "mode"),
                 new Parameter(STR, "env", true)));
         defaultProvider.addCompletion(loadF4);
-        
+
         FunctionCompletion loadFileF1 = new FunctionCompletion(defaultProvider, "loadfile", OPTS);
         loadFileF1.setShortDescription(autocompletion.getString("loadfile"));
         loadFileF1.setParams(Arrays.asList(
                 new Parameter(STR, "filename", true)));
         defaultProvider.addCompletion(loadFileF1);
-        
+
         FunctionCompletion loadFileF2 = new FunctionCompletion(defaultProvider, "loadfile", OPTS);
         loadFileF2.setShortDescription(autocompletion.getString("loadfile"));
         loadFileF2.setParams(Arrays.asList(
                 new Parameter(STR, "filename"),
                 new Parameter(STR, "mode", true)));
         defaultProvider.addCompletion(loadFileF2);
-        
+
         FunctionCompletion loadFileF3 = new FunctionCompletion(defaultProvider, "loadfile", OPTS);
         loadFileF3.setShortDescription(autocompletion.getString("loadfile"));
         loadFileF3.setParams(Arrays.asList(
@@ -163,10 +163,10 @@ public class OpenComputersCompletionProvider {
                 new Parameter(STR, "mode"),
                 new Parameter(STR, "env", true)));
         defaultProvider.addCompletion(loadFileF3);
-        
+
         FunctionCompletion nextF1 = new FunctionCompletion(defaultProvider, "next", NUM);
         nextF1.setShortDescription(autocompletion.getString("next"));
-        nextF1.setparams(Arrays.asList(
+        nextF1.setParams(Arrays.asList(
                 new Parameter(TABL, "table", true)));
         defaultProvider.addCompletion(nextF1);
 
@@ -177,10 +177,10 @@ public class OpenComputersCompletionProvider {
         test.setReturnValueDescription("Return description");
         test.setShortDescription("Short description");
         test.setSummary("Summary");
-        defaultProvider.addCompletion(test);*/ 
+        defaultProvider.addCompletion(test);*/
         //OpenOS API
         //Shortcuts
-        /* TODO */ 
+        /* TODO */
         //
         LanguageAwareCompletionProvider p = new LanguageAwareCompletionProvider(defaultProvider);
         return p;

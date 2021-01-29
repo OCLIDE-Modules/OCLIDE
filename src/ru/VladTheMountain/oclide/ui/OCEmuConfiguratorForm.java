@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurator.ocemu;
+package ru.VladTheMountain.oclide.ui;
 
+import ru.VladTheMountain.oclide.configurator.ocemu.ConfigMaker;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -37,13 +38,13 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import org.apache.commons.io.FileUtils;
 import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
-import ru.VladTheMountain.oclide.configurator.ocemu.util.UUIDGenerator;
+import ru.VladTheMountain.oclide.configurator.ocemu.UUIDGenerator;
 
 /**
  *
  * @author VladTheMountain
  */
-public class ConfiguratorForm extends javax.swing.JFrame {
+public class OCEmuConfiguratorForm extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,7 +54,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
      * Creates new form ConfiguratorForm
      *
      */
-    public ConfiguratorForm() {
+    public OCEmuConfiguratorForm() {
         Timer t = new Timer(300, (ActionEvent e) -> {
             this.repaint();
         });
@@ -65,7 +66,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             try {
                 new ConfigMaker(this.componentsArray).readConfig(new File("OCEmu/.machine/ocemu.cfg"));
             } catch (IOException ex) {
-                Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         updateComponentList();
@@ -140,8 +141,9 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             Files.copy(new File("OCEmu/loot/OpenOS/.prop").toPath(), new File(machineDir.getAbsoluteFile() + "/.prop").toPath(), StandardCopyOption.REPLACE_EXISTING);
             Files.copy(new File("OCEmu/loot/OpenOS/init.lua").toPath(), new File(machineDir.getAbsoluteFile() + "/init.lua").toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
-            Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //}
         //}
     }
 
@@ -289,13 +291,13 @@ public class ConfiguratorForm extends javax.swing.JFrame {
                 try {
                     Files.copy(f.toPath(), new File(targ.getAbsolutePath() + FileSystems.getDefault().getSeparator() + f.getName()).toPath());
                 } catch (IOException ex) {
-                    Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 try {
                     FileUtils.copyDirectory(f, targ);
                 } catch (IOException ex) {
-                    Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (f.isDirectory()) {
@@ -644,7 +646,12 @@ public class ConfiguratorForm extends javax.swing.JFrame {
         if (!(isOSInstalled)) {
             installOpenOS();
         }
-
+        //Creating config
+        try {
+            new ConfigMaker(this.componentsArray).createConfig();
+        } catch (IOException ex) {
+            Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //Files' copy
         if (new File("projects").exists()) {
             try {
@@ -652,7 +659,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
                 FileUtils.copyDirectory(new File("projects"), new File("OCEmu" + FileSystems.getDefault().getSeparator() + ".machine" + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home"));
                 System.out.println("Copied " + new File("projects").getAbsolutePath() + " to " + new File("OCEmu" + FileSystems.getDefault().getSeparator() + ".machine" + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home").getAbsolutePath());
             } catch (IOException ex) {
-                Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         //
@@ -673,7 +680,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
                     Process p = pb.start();
                     java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));
                     String outLine;
-                    java.util.logging.Logger.getLogger(ConfiguratorForm.class.getName()).log(java.util.logging.Level.INFO, "Starting OCEmu...");
+                    java.util.logging.Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(java.util.logging.Level.INFO, "Starting OCEmu...");
                     while (true) {
                         outLine = r.readLine();
                         if (outLine == null) {
@@ -682,7 +689,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
                         System.out.println(outLine);
                     }
                 } catch (IOException ex) {
-                    Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         };
@@ -699,7 +706,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             try {
                 new ConfigMaker(this.componentsArray).readConfig(this.configChooser.getSelectedFile());
             } catch (IOException ex) {
-                Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
             }
             updateComponentList();
         }
@@ -709,7 +716,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
         try {
             new ConfigMaker(this.componentsArray).createConfig();
         } catch (IOException ex) {
-            Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_saveConfigItemActionPerformed
 
@@ -723,7 +730,7 @@ public class ConfiguratorForm extends javax.swing.JFrame {
             this.componentsArray = new OCEmuComponent[ConfigMaker.defaultComponentSet.length];
             System.arraycopy(ConfigMaker.defaultComponentSet, 0, this.componentsArray, 0, ConfigMaker.defaultComponentSet.length);
         } catch (IOException ex) {
-            Logger.getLogger(ConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         updateComponentList();
     }//GEN-LAST:event_resetConfigItemActionPerformed

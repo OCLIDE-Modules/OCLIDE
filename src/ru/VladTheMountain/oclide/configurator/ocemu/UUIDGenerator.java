@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurator.ocemu.util;
+package ru.VladTheMountain.oclide.configurator.ocemu;
 
 /**
  * Uses MightyPirates' original {@code UUID} library

@@ -21,18 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.settings;
+package ru.VladTheMountain.oclide.ui.settings;
 
 /**
  *
  * @author nogot
  */
-public class EditorPanel extends javax.swing.JPanel {
+public class LuaPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form EditorPanel
+     * Creates new form LuaPanel
      */
-    public EditorPanel() {
+    public LuaPanel() {
         initComponents();
     }
 

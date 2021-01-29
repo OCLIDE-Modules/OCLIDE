@@ -51,7 +51,7 @@ public class OCLIDE {
         }
         try {
             Thread.sleep(2000);
-            new ru.VladTheMountain.oclide.editor.MainFrame().setVisible(true);
+            new ru.VladTheMountain.oclide.ui.EditorFrame().setVisible(true);
         } catch (InterruptedException ex) {
             Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
         }

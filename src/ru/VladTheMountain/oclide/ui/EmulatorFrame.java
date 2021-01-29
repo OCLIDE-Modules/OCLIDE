@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.emulator;
+package ru.VladTheMountain.oclide.ui;
 
 import java.awt.Canvas;
 import java.awt.event.ActionEvent;
@@ -32,6 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import ru.VladTheMountain.oclide.emulator.CustomCanvas;
 import totoro.ocelot.brain.Ocelot;
 import totoro.ocelot.brain.entity.CPU;
 import totoro.ocelot.brain.entity.Case;

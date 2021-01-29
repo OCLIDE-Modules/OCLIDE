@@ -21,18 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurator.ocemu.component;
+package ru.VladTheMountain.oclide.ui.dialog;
 
-import ru.VladTheMountain.oclide.configurator.ocemu.UUIDGenerator;
+import java.io.File;
+import javax.swing.JFileChooser;
 
 /**
  *
  * @author VladTheMountain
  */
-public class Keyboard extends OCEmuComponent {
+public class ProjectFileChooser extends JFileChooser {
 
-    public Keyboard() {
-        super(5, UUIDGenerator.create(), (String) null);
+    private static final long serialVersionUID = 1L;
+
+    public ProjectFileChooser() {
+        this.setCurrentDirectory(new File(System.getProperty("user.home")));
+        this.setFileSelectionMode(DIRECTORIES_ONLY);
     }
 
 }
