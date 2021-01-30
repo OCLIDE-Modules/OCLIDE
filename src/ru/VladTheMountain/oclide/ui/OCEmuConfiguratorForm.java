@@ -679,7 +679,7 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
         if (new File("projects").exists()) {
             try {
                 //recursivelyCopyFiles(new File("projects"), new File("OCEmu"+FileSystems.getDefault().getSeparator()+".machine"+FileSystems.getDefault().getSeparator()+OpenOSUUID+FileSystems.getDefault().getSeparator()+"home"));
-                FileUtils.copyDirectory(new File("projects"), new File("OCEmu" + FileSystems.getDefault().getSeparator() + ".machine" + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home"));
+                FileUtils.copyDirectory(new File("projects"), new File(System.getenv("APPDATA") + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home"));
                 System.out.println("Copied " + new File("projects").getAbsolutePath() + " to " + new File("OCEmu" + FileSystems.getDefault().getSeparator() + ".machine" + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home").getAbsolutePath());
             } catch (IOException ex) {
                 Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
