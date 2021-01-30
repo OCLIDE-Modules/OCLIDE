@@ -663,15 +663,18 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
         } else {
             machineFolder.mkdirs();
         }
+        System.out.println("OpenOS installed = " + isOSInstalled);
         if (!(isOSInstalled)) {
             installOpenOS();
         }
+        System.out.println("OpenOS is installed");
         //Creating config
         try {
             new ConfigMaker(this.componentsArray).createConfig();
         } catch (IOException ex) {
             Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("Config ready");
         //Files' copy
         if (new File("projects").exists()) {
             try {
@@ -682,12 +685,14 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
                 Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        System.out.println("Files copied");
         //
         Thread t = new Thread() {
             @Override
             public void run() {
-                ProcessBuilder pb = System.getProperty("os.name").contains("Windows") ? new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && OCEmu.exe") : new ProcessBuilder("lua", "OCEmu/boot.lua", "./.machine");
-                pb.redirectErrorStream(true);
+                ProcessBuilder pb;
+                pb = System.getProperty("os.name").contains("Windows") ? new ProcessBuilder("cmd.exe", "/c" , "start", "/D", "OCEmu", "OCEmu\\OCEmu.exe") : new ProcessBuilder("lua", "OCEmu/boot.lua", "./.machine");
+                pb.redirectErrorStream(true).inheritIO();
                 try {
                     Process p = pb.start();
                     BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -706,6 +711,7 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
             }
         };
         t.start();
+        System.out.println("Tread started");
     }//GEN-LAST:event_launchButtonActionPerformed
 
     private void exitItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed

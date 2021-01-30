@@ -23,6 +23,7 @@
  */
 package ru.VladTheMountain.oclide.ui;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -422,6 +423,7 @@ public class EditorFrame extends JFrame {
         jSplitPane3.setLeftComponent(editorTabs);
 
         outputTextArea.setColumns(20);
+        outputTextArea.setFont(new Font("Lucida Console", 0, 12)); // NOI18N
         outputTextArea.setRows(5);
         jScrollPane2.setViewportView(outputTextArea);
 

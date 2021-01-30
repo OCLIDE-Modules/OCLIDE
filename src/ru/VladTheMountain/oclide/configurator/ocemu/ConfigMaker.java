@@ -55,6 +55,7 @@ public class ConfigMaker {
      * @param comps
      */
     public ConfigMaker(OCEmuComponent[] comps) {
+        this.computerComponents = "";
         for (OCEmuComponent comp : comps) {
             switch (comp.getComponentType()) {
                 case 0:
@@ -65,12 +66,12 @@ public class ConfigMaker {
                 case 1:
                     this.computerComponents = this.computerComponents + "      "
                             + "{\"eeprom\", "
-                            + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "" + comp.getOptionAt(1) + "},\n";
+                            + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "\"" + comp.getOptionAt(1) + "\"},\n";
                     break;
                 case 2:
                     this.computerComponents = this.computerComponents + "      "
                             + "{\"filesystem\", "
-                            + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "" + comp.getOptionAt(1) + ", " + "" + comp.getOptionAt(2) + "},\n";
+                            + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "\"" + comp.getOptionAt(1) + "\", " + "" + comp.getOptionAt(2) + "},\n";
                     break;
                 case 3:
                     this.computerComponents = this.computerComponents + "      "
