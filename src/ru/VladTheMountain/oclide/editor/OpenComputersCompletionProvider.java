@@ -164,11 +164,17 @@ public class OpenComputersCompletionProvider {
                 new Parameter(STR, "env", true)));
         defaultProvider.addCompletion(loadFileF3);
 
+        //
         FunctionCompletion nextF1 = new FunctionCompletion(defaultProvider, "next", NUM);
         nextF1.setShortDescription(autocompletion.getString("next"));
         nextF1.setParams(Arrays.asList(
                 new Parameter(TABL, "table", true)));
         defaultProvider.addCompletion(nextF1);
+        //=
+        createCompletion(defaultProvider, "next", NUM, "Lua 5.1", autocompletion.getString("next"), "Return description", new CustomParameter[][]{
+            {new CustomParameter(TABL, "table", true, "Parameter description")}
+        });
+        //
 
         /*FunctionCompletion test = new FunctionCompletion(defaultProvider, "name", "type");
         test.setDefinedIn("Defined In");
@@ -185,4 +191,37 @@ public class OpenComputersCompletionProvider {
         LanguageAwareCompletionProvider p = new LanguageAwareCompletionProvider(defaultProvider);
         return p;
     }
+
+    /**
+     * Creates a new FunctionCompletion with params
+     *
+     * @param p DefaultCompletionProvider to add to
+     * @param name Function name
+     * @param returnType Function return value's type
+     * @param definedIn API version where function is first defined
+     * @param shortDesc Function description
+     * @param returnDesc Function return value's description
+     * @param pars Function parameters' 2d-array
+     */
+    private static void createCompletion(DefaultCompletionProvider p, String name, String returnType, String definedIn, String shortDesc, String returnDesc, CustomParameter[][] pars) {
+        //Every possible parameter's variant
+        for (int i = 0; i < pars.length; i++) {
+            //Every exact param
+            FunctionCompletion f = new FunctionCompletion(p, name, returnType);
+            f.setDefinedIn(definedIn);
+            f.setShortDescription(shortDesc);
+            f.setReturnValueDescription(returnDesc);
+            f.setParams(Arrays.asList(pars[i]));
+            p.addCompletion(f);
+        }
+    }
+}
+
+class CustomParameter extends Parameter {
+
+    public CustomParameter(Object type, String name, boolean endParam, String desc) {
+        super(type, name, endParam);
+        setDescription(desc);
+    }
+
 }

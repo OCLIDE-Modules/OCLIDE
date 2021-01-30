@@ -128,11 +128,7 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
         System.arraycopy(this.componentsArray, 0, tmp, 0, tmp.length);
         this.componentsArray = new OCEmuComponent[tmp.length - 1];
         for (int i = 0; i < this.componentsArray.length; i++) {
-            if (i < index) {
-                this.componentsArray[i] = tmp[i];
-            } else {
-                this.componentsArray[i] = tmp[i + 1];
-            }
+            this.componentsArray[i] = i < index ? tmp[i] : tmp[i + 1];
         }
     }
 
@@ -151,16 +147,7 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
      * Copies OpenOS from OCEmu's loot folder to target filesystem
      */
     private void installOpenOS() {
-        /*String[] filesystems = new String[this.componentsArray.length];
-        int nextFreeIndex = 0;
-        for (OCEmuComponent component : this.componentsArray) {
-            if (component.getComponentType() == 2) {
-                filesystems[nextFreeIndex] = component.getComponentAddress();
-            }
-            nextFreeIndex++;
-        }*/
-        String input = /*new MachineChooser(this, true, filesystems).getSelectedFS()*/ "tmpfs";
-        //if (input != null) {
+        String input = "tmpfs";
         File machineDir = new File("OCEmu/.machine/" + input);
         try {
             FileUtils.copyDirectory(new File("OCEmu/loot/openos/bin"), new File(machineDir.getAbsoluteFile() + "/bin"));
@@ -398,10 +385,7 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
         configChooser.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f){
-                if(f.getName().equals("ocemu.cfg")){
-                    return true;
-                }
-                return false;
+                return f.getName().equals("ocemu.cfg") ? true : false;
             }
 
             @Override
@@ -702,15 +686,7 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
         Thread t = new Thread() {
             @Override
             public void run() {
-                ProcessBuilder pb = null;
-                if (System.getProperty("os.name").contains("Windows")) {
-                    pb = new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && OCEmu.exe");
-                    // NOT GUARANTEED TO WORK
-                    // but still
-                } else if (System.getProperty("os.name").contains("Ubuntu") || System.getProperty("os.name").contains("Arch")) {
-                    pb = new ProcessBuilder("lua", "boot.lua", "./.machine");
-                }
-
+                ProcessBuilder pb = System.getProperty("os.name").contains("Windows") ? new ProcessBuilder("cmd.exe", "/c", "cd OCEmu && OCEmu.exe") : new ProcessBuilder("lua", "OCEmu/boot.lua", "./.machine");
                 pb.redirectErrorStream(true);
                 try {
                     Process p = pb.start();
@@ -730,7 +706,6 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
             }
         };
         t.start();
-
     }//GEN-LAST:event_launchButtonActionPerformed
 
     private void exitItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
