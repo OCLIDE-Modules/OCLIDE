@@ -23,7 +23,32 @@
  */
 package ru.VladTheMountain.oclide.ui.dialog;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.nio.file.FileSystems;
+import javax.swing.AbstractListModel;
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import ru.VladTheMountain.oclide.ui.EditorFrame;
 
 /**
@@ -53,93 +78,91 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        controlPanel = new javax.swing.JPanel();
-        finishButton = new javax.swing.JButton();
-        nextButton = new javax.swing.JButton();
-        previousButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
-        projectTypePanel = new javax.swing.JPanel();
-        descriptionPanel = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        descriptionText = new javax.swing.JTextArea();
-        categoriesPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        categorylist = new javax.swing.JList<>();
-        projectsPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        projectTypeList = new javax.swing.JList<>();
-        projectPropertiesPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        projectNameField = new javax.swing.JTextField();
-        projectFolderField = new javax.swing.JTextField(new File(System.getProperty("user.dir") + java.nio.file.FileSystems.getDefault().getSeparator() + "projects").getAbsolutePath() + java.nio.file.FileSystems.getDefault().getSeparator() + projectNameField.getText())
+        controlPanel = new JPanel();
+        finishButton = new JButton();
+        nextButton = new JButton();
+        previousButton = new JButton();
+        cancelButton = new JButton();
+        jTabbedPane2 = new JTabbedPane();
+        projectTypePanel = new JPanel();
+        descriptionPanel = new JPanel();
+        jScrollPane3 = new JScrollPane();
+        descriptionText = new JTextArea();
+        categoriesPanel = new JPanel();
+        jScrollPane1 = new JScrollPane();
+        categorylist = new JList<>();
+        projectsPanel = new JPanel();
+        jScrollPane2 = new JScrollPane();
+        projectTypeList = new JList<>();
+        projectPropertiesPanel = new JPanel();
+        jLabel1 = new JLabel();
+        jLabel2 = new JLabel();
+        projectNameField = new JTextField();
+        projectFolderField = new JTextField(new File(System.getProperty("user.dir") + FileSystems.getDefault().getSeparator() + "projects").getAbsolutePath() + FileSystems.getDefault().getSeparator() + projectNameField.getText())
         ;
-        scriptSeparator = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        librarySeparator = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
-        libraryNameField = new javax.swing.JTextField();
-        scriptNameField = new javax.swing.JTextField();
+        scriptSeparator = new JSeparator();
+        jLabel3 = new JLabel();
+        librarySeparator = new JSeparator();
+        jLabel4 = new JLabel();
+        libraryNameField = new JTextField();
+        scriptNameField = new JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Creating a new project");
         setResizable(false);
 
-        finishButton.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        finishButton.setFont(new Font("Segoe UI", 0, 12)); // NOI18N
         finishButton.setText("Finish");
         finishButton.setEnabled(false);
-        finishButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        finishButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 finishButtonActionPerformed(evt);
             }
         });
 
-        nextButton.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        nextButton.setFont(new Font("Segoe UI", 0, 12)); // NOI18N
         nextButton.setText("Next >>");
-        nextButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        nextButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 nextButtonActionPerformed(evt);
             }
         });
 
-        previousButton.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        previousButton.setFont(new Font("Segoe UI", 0, 12)); // NOI18N
         previousButton.setText("<< Previous");
         previousButton.setEnabled(false);
-        previousButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        previousButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 previousButtonActionPerformed(evt);
             }
         });
 
-        cancelButton.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        cancelButton.setFont(new Font("Segoe UI", 0, 12)); // NOI18N
         cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
+        GroupLayout controlPanelLayout = new GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
-        controlPanelLayout.setHorizontalGroup(
-            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        controlPanelLayout.setHorizontalGroup(controlPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cancelButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(previousButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nextButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(finishButton)
                 .addContainerGap())
         );
-        controlPanelLayout.setVerticalGroup(
-            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        controlPanelLayout.setVerticalGroup(controlPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(controlPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(finishButton)
                     .addComponent(nextButton)
                     .addComponent(previousButton)
@@ -147,153 +170,144 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jTabbedPane2.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabbedPane2.setTabPlacement(JTabbedPane.LEFT);
         jTabbedPane2.setEnabled(false);
-        jTabbedPane2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jTabbedPane2.setFont(new Font("Segoe UI", 0, 12)); // NOI18N
 
-        descriptionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Description:", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        descriptionPanel.setBorder(BorderFactory.createTitledBorder(null, "Description:", TitledBorder.LEFT, TitledBorder.ABOVE_TOP, new Font("Segoe UI", 1, 12))); // NOI18N
 
-        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         descriptionText.setEditable(false);
         descriptionText.setColumns(20);
-        descriptionText.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        descriptionText.setFont(new Font("Monospaced", 0, 12)); // NOI18N
         descriptionText.setRows(5);
         descriptionText.setText("Creates a new, blank project.");
         jScrollPane3.setViewportView(descriptionText);
 
-        javax.swing.GroupLayout descriptionPanelLayout = new javax.swing.GroupLayout(descriptionPanel);
+        GroupLayout descriptionPanelLayout = new GroupLayout(descriptionPanel);
         descriptionPanel.setLayout(descriptionPanelLayout);
-        descriptionPanelLayout.setHorizontalGroup(
-            descriptionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        descriptionPanelLayout.setHorizontalGroup(descriptionPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane3)
         );
-        descriptionPanelLayout.setVerticalGroup(
-            descriptionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+        descriptionPanelLayout.setVerticalGroup(descriptionPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
         );
 
-        categoriesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Categories:", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        categoriesPanel.setBorder(BorderFactory.createTitledBorder(null, "Categories:", TitledBorder.LEFT, TitledBorder.ABOVE_TOP, new Font("Segoe UI", 1, 12))); // NOI18N
 
-        categorylist.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        categorylist.setModel(new javax.swing.AbstractListModel<String>() {
+        categorylist.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        categorylist.setModel(new AbstractListModel<String>() {
             String[] strings = { "OpenComputers" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        categorylist.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        categorylist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         categorylist.setSelectedIndex(0);
         jScrollPane1.setViewportView(categorylist);
 
-        javax.swing.GroupLayout categoriesPanelLayout = new javax.swing.GroupLayout(categoriesPanel);
+        GroupLayout categoriesPanelLayout = new GroupLayout(categoriesPanel);
         categoriesPanel.setLayout(categoriesPanelLayout);
-        categoriesPanelLayout.setHorizontalGroup(
-            categoriesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+        categoriesPanelLayout.setHorizontalGroup(categoriesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
         );
-        categoriesPanelLayout.setVerticalGroup(
-            categoriesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+        categoriesPanelLayout.setVerticalGroup(categoriesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
         );
 
-        projectsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Projects:", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        projectsPanel.setBorder(BorderFactory.createTitledBorder(null, "Projects:", TitledBorder.LEFT, TitledBorder.ABOVE_TOP, new Font("Segoe UI", 1, 12))); // NOI18N
 
-        projectTypeList.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        projectTypeList.setModel(new javax.swing.AbstractListModel<String>() {
+        projectTypeList.setFont(new Font("Tahoma", 0, 12)); // NOI18N
+        projectTypeList.setModel(new AbstractListModel<String>() {
             String[] strings = { "Blank Project", "OpenOS Script", "OpenOS Library" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        projectTypeList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        projectTypeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         projectTypeList.setSelectedIndex(0);
-        projectTypeList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+        projectTypeList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent evt) {
                 projectTypeListValueChanged(evt);
             }
         });
         jScrollPane2.setViewportView(projectTypeList);
 
-        javax.swing.GroupLayout projectsPanelLayout = new javax.swing.GroupLayout(projectsPanel);
+        GroupLayout projectsPanelLayout = new GroupLayout(projectsPanel);
         projectsPanel.setLayout(projectsPanelLayout);
-        projectsPanelLayout.setHorizontalGroup(
-            projectsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+        projectsPanelLayout.setHorizontalGroup(projectsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
         );
-        projectsPanelLayout.setVerticalGroup(
-            projectsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        projectsPanelLayout.setVerticalGroup(projectsPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2)
         );
 
-        javax.swing.GroupLayout projectTypePanelLayout = new javax.swing.GroupLayout(projectTypePanel);
+        GroupLayout projectTypePanelLayout = new GroupLayout(projectTypePanel);
         projectTypePanel.setLayout(projectTypePanelLayout);
-        projectTypePanelLayout.setHorizontalGroup(
-            projectTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        projectTypePanelLayout.setHorizontalGroup(projectTypePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(projectTypePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(projectTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(descriptionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(projectTypePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(descriptionPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(projectTypePanelLayout.createSequentialGroup()
-                        .addComponent(categoriesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(projectsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(categoriesPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(projectsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        projectTypePanelLayout.setVerticalGroup(
-            projectTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        projectTypePanelLayout.setVerticalGroup(projectTypePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(projectTypePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(projectTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(categoriesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(projectsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(descriptionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(projectTypePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(categoriesPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(projectsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(descriptionPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jTabbedPane2.addTab("Project type", projectTypePanel);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel1.setFont(new Font("Segoe UI", 0, 12)); // NOI18N
         jLabel1.setText("Project Name:");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel2.setFont(new Font("Segoe UI", 0, 12)); // NOI18N
         jLabel2.setText("Project Folder:");
 
-        projectNameField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        projectNameField.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         projectNameField.setText("LuaScript1");
-        projectNameField.addCaretListener(new javax.swing.event.CaretListener() {
-            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+        projectNameField.addCaretListener(new CaretListener() {
+            public void caretUpdate(CaretEvent evt) {
                 projectNameFieldCaretUpdate(evt);
             }
         });
 
         projectFolderField.setEditable(false);
-        projectFolderField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        projectFolderField.setFont(new Font("Tahoma", 0, 12)); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel3.setFont(new Font("Segoe UI", 0, 12)); // NOI18N
         jLabel3.setText("Script name:");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel4.setFont(new Font("Segoe UI", 0, 12)); // NOI18N
         jLabel4.setText("Library name:");
 
-        libraryNameField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        libraryNameField.setFont(new Font("Tahoma", 0, 12)); // NOI18N
 
-        scriptNameField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        scriptNameField.setFont(new Font("Tahoma", 0, 12)); // NOI18N
 
-        javax.swing.GroupLayout projectPropertiesPanelLayout = new javax.swing.GroupLayout(projectPropertiesPanel);
+        GroupLayout projectPropertiesPanelLayout = new GroupLayout(projectPropertiesPanel);
         projectPropertiesPanel.setLayout(projectPropertiesPanelLayout);
-        projectPropertiesPanelLayout.setHorizontalGroup(
-            projectPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        projectPropertiesPanelLayout.setHorizontalGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(projectPropertiesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(projectPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scriptSeparator, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, projectPropertiesPanelLayout.createSequentialGroup()
-                        .addGroup(projectPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(scriptSeparator, GroupLayout.Alignment.TRAILING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, projectPropertiesPanelLayout.createSequentialGroup()
+                        .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
                         .addGap(18, 18, 18)
-                        .addGroup(projectPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(projectNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                        .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(projectNameField, GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                             .addComponent(projectFolderField)))
                     .addComponent(librarySeparator)
                     .addGroup(projectPropertiesPanelLayout.createSequentialGroup()
@@ -306,65 +320,62 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
                         .addComponent(libraryNameField)))
                 .addContainerGap())
         );
-        projectPropertiesPanelLayout.setVerticalGroup(
-            projectPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        projectPropertiesPanelLayout.setVerticalGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(projectPropertiesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(projectPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(projectNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(projectPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(projectNameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(projectFolderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scriptSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(projectPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(projectFolderField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scriptSeparator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(scriptNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(librarySeparator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(projectPropertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(scriptNameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(librarySeparator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(libraryNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(libraryNameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(210, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Project configuration", projectPropertiesPanel);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(controlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(controlPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jTabbedPane2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(controlPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+    private void cancelButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
+    private void previousButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
         this.jTabbedPane2.setSelectedIndex(this.jTabbedPane2.getSelectedIndex() - 1);
         this.previousButton.setEnabled(false);
         this.nextButton.setEnabled(true);
         this.finishButton.setEnabled(false);
     }//GEN-LAST:event_previousButtonActionPerformed
 
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+    private void nextButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         this.jTabbedPane2.setSelectedIndex(this.jTabbedPane2.getSelectedIndex() + 1);
         this.previousButton.setEnabled(true);
         this.nextButton.setEnabled(false);
@@ -398,12 +409,12 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_nextButtonActionPerformed
 
-    private void finishButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishButtonActionPerformed
+    private void finishButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_finishButtonActionPerformed
         EditorFrame.createProject(this.projectNameField.getText(), this.projectFolderField.getText());
         this.dispose();
     }//GEN-LAST:event_finishButtonActionPerformed
 
-    private void projectTypeListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_projectTypeListValueChanged
+    private void projectTypeListValueChanged(ListSelectionEvent evt) {//GEN-FIRST:event_projectTypeListValueChanged
         switch (this.projectTypeList.getSelectedIndex()) {
             case 0:
                 this.descriptionText.setText("Creates a new, blank project.");
@@ -417,37 +428,37 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_projectTypeListValueChanged
 
-    private void projectNameFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_projectNameFieldCaretUpdate
+    private void projectNameFieldCaretUpdate(CaretEvent evt) {//GEN-FIRST:event_projectNameFieldCaretUpdate
         this.projectFolderField.setText(new File("projects").getAbsolutePath() + java.nio.file.FileSystems.getDefault().getSeparator() + projectNameField.getText());
     }//GEN-LAST:event_projectNameFieldCaretUpdate
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelButton;
-    private javax.swing.JPanel categoriesPanel;
-    private javax.swing.JList<String> categorylist;
-    private javax.swing.JPanel controlPanel;
-    private javax.swing.JPanel descriptionPanel;
-    private javax.swing.JTextArea descriptionText;
-    private javax.swing.JButton finishButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextField libraryNameField;
-    private javax.swing.JSeparator librarySeparator;
-    private javax.swing.JButton nextButton;
-    private javax.swing.JButton previousButton;
-    private javax.swing.JTextField projectFolderField;
-    private javax.swing.JTextField projectNameField;
-    private javax.swing.JPanel projectPropertiesPanel;
-    private javax.swing.JList<String> projectTypeList;
-    private javax.swing.JPanel projectTypePanel;
-    private javax.swing.JPanel projectsPanel;
-    private javax.swing.JTextField scriptNameField;
-    private javax.swing.JSeparator scriptSeparator;
+    private JButton cancelButton;
+    private JPanel categoriesPanel;
+    private JList<String> categorylist;
+    private JPanel controlPanel;
+    private JPanel descriptionPanel;
+    private JTextArea descriptionText;
+    private JButton finishButton;
+    private JLabel jLabel1;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JLabel jLabel4;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane2;
+    private JScrollPane jScrollPane3;
+    private JTabbedPane jTabbedPane2;
+    private JTextField libraryNameField;
+    private JSeparator librarySeparator;
+    private JButton nextButton;
+    private JButton previousButton;
+    private JTextField projectFolderField;
+    private JTextField projectNameField;
+    private JPanel projectPropertiesPanel;
+    private JList<String> projectTypeList;
+    private JPanel projectTypePanel;
+    private JPanel projectsPanel;
+    private JTextField scriptNameField;
+    private JSeparator scriptSeparator;
     // End of variables declaration//GEN-END:variables
 }
