@@ -65,6 +65,7 @@ public class EmulatorFrame extends JFrame {
         Timer t = new Timer(300, (ActionEvent e) -> {
             this.repaint();
         });
+        t.start();
         /*try {
             initWorkspace();
         } catch (InterruptedException ex) {
@@ -72,14 +73,14 @@ public class EmulatorFrame extends JFrame {
         }*/
     }
 
-    void initComponents() {
+    private void initComponents() {
         this.setTitle("Emulator");
         mainPanel = new CustomCanvas();
         //
         this.getContentPane().add(mainPanel);
     }
 
-    void initWorkspace() throws InterruptedException {
+    private void initWorkspace() throws InterruptedException {
         Ocelot.initialize();
         //Workspace initialization
         File tempWork = new File("workspace/current");
@@ -144,7 +145,7 @@ public class EmulatorFrame extends JFrame {
         Ocelot.shutdown();
     }
 
-    void saveWorkspace(Workspace w) {
+    private void saveWorkspace(Workspace w) {
         //Save the 'w'
         NBTTagCompound nbt = new NBTTagCompound();
         w.save(nbt);
