@@ -140,7 +140,7 @@ public class MachineChooserDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     JComboBox<String> jComboBox1;
-    JLabel jLabel1;
-    JButton proceedButton;
+    private JLabel jLabel1;
+    private JButton proceedButton;
     // End of variables declaration//GEN-END:variables
 }

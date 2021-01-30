@@ -27,6 +27,7 @@ import java.awt.Graphics2D;
 import java.awt.SplashScreen;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ru.VladTheMountain.oclide.ui.EditorFrame;
 
 /**
  *
@@ -51,7 +52,7 @@ public class OCLIDE {
         }
         try {
             Thread.sleep(2000);
-            new ru.VladTheMountain.oclide.ui.EditorFrame().setVisible(true);
+            new EditorFrame().setVisible(true);
         } catch (InterruptedException ex) {
             Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
         }

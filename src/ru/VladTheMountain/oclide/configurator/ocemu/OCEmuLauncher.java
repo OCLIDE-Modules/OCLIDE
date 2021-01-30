@@ -62,7 +62,7 @@ public class OCEmuLauncher {
      * Launcher constructor. Starts OCEmu with default config
      */
     public OCEmuLauncher() {
-        
+
     }
 
     /**

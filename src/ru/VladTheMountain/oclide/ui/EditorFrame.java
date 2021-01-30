@@ -161,7 +161,7 @@ public class EditorFrame extends JFrame {
      * @param f The {@link File} to save current {@link RSyntaxTextArea}
      * contents to
      */
-    void saveFile(File f) {
+    private void saveFile(File f) {
         if (!(f.exists())) {
             f.mkdirs();
             try {
@@ -197,7 +197,7 @@ public class EditorFrame extends JFrame {
     /**
      * Refreshes the {@code projectsTree} {@link JTree}
      */
-    static void updateProjectsTree() {
+    private static void updateProjectsTree() {
         //Tree values
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Projects");
         DefaultTreeModel projTreeModel = new DefaultTreeModel(rootNode);
@@ -216,7 +216,7 @@ public class EditorFrame extends JFrame {
      * @param file Project folder as a {@link File}
      * @param n Project's tree node
      */
-    static void recursivelyAddFiles(File file, DefaultMutableTreeNode n) {
+    private static void recursivelyAddFiles(File file, DefaultMutableTreeNode n) {
         File[] files = file.listFiles();
         if (files == null) {
             return;

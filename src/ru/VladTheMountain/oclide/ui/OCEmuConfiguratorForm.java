@@ -27,8 +27,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -65,6 +67,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import org.apache.commons.io.FileUtils;
 import ru.VladTheMountain.oclide.configurator.ocemu.ConfigMaker;
+import ru.VladTheMountain.oclide.configurator.ocemu.OCEmuLauncher;
 import ru.VladTheMountain.oclide.configurator.ocemu.UUIDGenerator;
 import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
 
@@ -88,8 +91,8 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
         });
         initComponents();
         if (!(new File("OCEmu/.machine/ocemu.cfg").exists()) || this.componentsArray == null || this.componentsArray.length == 0) {
-            this.componentsArray = new OCEmuComponent[ConfigMaker.defaultComponentSet.length];
-            System.arraycopy(ConfigMaker.defaultComponentSet, 0, componentsArray, 0, ConfigMaker.defaultComponentSet.length);
+            this.componentsArray = new OCEmuComponent[OCEmuLauncher.DEFAULT.length];
+            System.arraycopy(OCEmuLauncher.DEFAULT, 0, componentsArray, 0, OCEmuLauncher.DEFAULT.length);
         } else {
             try {
                 new ConfigMaker(this.componentsArray).readConfig(new File("OCEmu/.machine/ocemu.cfg"));
@@ -300,6 +303,19 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
                 this.option3Field.setEditable(true);
                 this.option4Field.setEditable(true);
                 break;
+            default:
+                this.componentDescriptionArea.setText("Couldn't read the component");
+                //Option change
+                this.option1Field.setText("");
+                this.option2Field.setText("");
+                this.option3Field.setText("");
+                this.option4Field.setText("");
+                //Option management
+                this.option1Field.setEditable(false);
+                this.option2Field.setEditable(false);
+                this.option3Field.setEditable(false);
+                this.option4Field.setEditable(false);
+                break;
         }
     }
 
@@ -309,8 +325,8 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
      * @param file Project folder as a {@link File}
      * @param n Project's tree node
      */
-    static void recursivelyCopyFiles(File src, File targ) {
-        java.io.File[] files = src.listFiles();
+    private static void recursivelyCopyFiles(File src, File targ) {
+        File[] files = src.listFiles();
         if (files == null) {
             return;
         }
@@ -344,39 +360,39 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
     private void initComponents() {
 
         configChooser = new JFileChooser();
-        JPanel controlPanel = new JPanel();
-        JButton launchButton = new JButton();
-        JButton cancelButton = new JButton();
-        JPanel componentSettingsPanel = new JPanel();
-        JLabel jLabel1 = new JLabel();
+        controlPanel = new JPanel();
+        launchButton = new JButton();
+        cancelButton = new JButton();
+        componentSettingsPanel = new JPanel();
+        jLabel1 = new JLabel();
         componentAddressField = new JTextField();
-        JLabel jLabel2 = new JLabel();
+        jLabel2 = new JLabel();
         option1Field = new JTextField();
-        JLabel jLabel3 = new JLabel();
+        jLabel3 = new JLabel();
         option2Field = new JTextField();
-        JLabel jLabel4 = new JLabel();
+        jLabel4 = new JLabel();
         option3Field = new JTextField();
-        JPanel descriptionPanel = new JPanel();
-        JScrollPane jScrollPane2 = new JScrollPane();
+        descriptionPanel = new JPanel();
+        jScrollPane2 = new JScrollPane();
         componentDescriptionArea = new JTextArea();
-        JLabel jLabel5 = new JLabel();
+        jLabel5 = new JLabel();
         componentTypeComboBox = new JComboBox<>();
-        JLabel jLabel6 = new JLabel();
+        jLabel6 = new JLabel();
         option4Field = new JTextField();
-        JScrollPane jScrollPane1 = new JScrollPane();
+        jScrollPane1 = new JScrollPane();
         componentList = new JList<>();
-        JMenuBar jMenuBar1 = new JMenuBar();
-        JMenu fileMenu = new JMenu();
-        JMenuItem resetConfigItem = new JMenuItem();
-        JPopupMenu.Separator jSeparator1 = new JPopupMenu.Separator();
-        JMenuItem importConfigItem = new JMenuItem();
-        JMenuItem saveConfigItem = new JMenuItem();
-        JPopupMenu.Separator jSeparator2 = new JPopupMenu.Separator();
-        JMenuItem exitItem = new JMenuItem();
-        JMenu componentMenu = new JMenu();
-        JMenuItem jMenuItem1 = new JMenuItem();
-        JMenuItem jMenuItem2 = new JMenuItem();
-        JMenu helpMenu = new JMenu();
+        jMenuBar1 = new JMenuBar();
+        fileMenu = new JMenu();
+        resetConfigItem = new JMenuItem();
+        jSeparator1 = new JPopupMenu.Separator();
+        importConfigItem = new JMenuItem();
+        saveConfigItem = new JMenuItem();
+        jSeparator2 = new JPopupMenu.Separator();
+        exitItem = new JMenuItem();
+        componentMenu = new JMenu();
+        jMenuItem1 = new JMenuItem();
+        jMenuItem2 = new JMenuItem();
+        helpMenu = new JMenu();
 
         configChooser.setDialogTitle("Open config...");
         configChooser.setFileFilter(new FileFilter() {
@@ -698,9 +714,9 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
                 pb.redirectErrorStream(true);
                 try {
                     Process p = pb.start();
-                    java.io.BufferedReader r = new java.io.BufferedReader(new java.io.InputStreamReader(p.getInputStream()));
+                    BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     String outLine;
-                    java.util.logging.Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(java.util.logging.Level.INFO, "Starting OCEmu...");
+                    Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.INFO, "Starting OCEmu...");
                     while (true) {
                         outLine = r.readLine();
                         if (outLine == null) {
@@ -746,9 +762,9 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
 
     private void resetConfigItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_resetConfigItemActionPerformed
         try {
-            new ConfigMaker(ConfigMaker.defaultComponentSet).createConfig();
-            this.componentsArray = new OCEmuComponent[ConfigMaker.defaultComponentSet.length];
-            System.arraycopy(ConfigMaker.defaultComponentSet, 0, this.componentsArray, 0, ConfigMaker.defaultComponentSet.length);
+            new ConfigMaker(OCEmuLauncher.DEFAULT).createConfig();
+            this.componentsArray = new OCEmuComponent[OCEmuLauncher.DEFAULT.length];
+            System.arraycopy(OCEmuLauncher.DEFAULT, 0, this.componentsArray, 0, OCEmuLauncher.DEFAULT.length);
         } catch (IOException ex) {
             Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -768,14 +784,39 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private JButton cancelButton;
     JTextField componentAddressField;
     JTextArea componentDescriptionArea;
     JList<String> componentList;
+    private JMenu componentMenu;
+    private JPanel componentSettingsPanel;
     JComboBox<String> componentTypeComboBox;
     JFileChooser configChooser;
+    private JPanel controlPanel;
+    private JPanel descriptionPanel;
+    private JMenuItem exitItem;
+    private JMenu fileMenu;
+    private JMenu helpMenu;
+    private JMenuItem importConfigItem;
+    private JLabel jLabel1;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JLabel jLabel4;
+    private JLabel jLabel5;
+    private JLabel jLabel6;
+    private JMenuBar jMenuBar1;
+    private JMenuItem jMenuItem1;
+    private JMenuItem jMenuItem2;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane2;
+    private JPopupMenu.Separator jSeparator1;
+    private JPopupMenu.Separator jSeparator2;
+    private JButton launchButton;
     JTextField option1Field;
     JTextField option2Field;
     JTextField option3Field;
     JTextField option4Field;
+    private JMenuItem resetConfigItem;
+    private JMenuItem saveConfigItem;
     // End of variables declaration//GEN-END:variables
 }
