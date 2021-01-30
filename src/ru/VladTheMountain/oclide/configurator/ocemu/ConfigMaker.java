@@ -27,16 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import javax.swing.JOptionPane;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Computer;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.EEPROM;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Filesystem;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.GPU;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Internet;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Keyboard;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Modem;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmu;
 import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.Screen;
 
 /**
  *
@@ -57,20 +48,6 @@ public class ConfigMaker {
     private static int maxWirelessRange = 400;
     //
     private String computerComponents;
-    //Config defaults
-    public final static OCEmuComponent[] defaultComponentSet = {
-        new GPU(0, 160, 50, 3),
-        new Modem(1, false),
-        new EEPROM(9, "lua/bios.lua"),
-        new Filesystem(7, ".machine/tmpfs", true),
-        new Filesystem("nil", "tmpfs", false),
-        new Filesystem(5, "nil", false),
-        new Internet(),
-        new Computer(),
-        new OCEmu(),
-        new Screen("nil", 80, 25, 3),
-        new Keyboard()
-    };
 
     /**
      * Initialization constructor

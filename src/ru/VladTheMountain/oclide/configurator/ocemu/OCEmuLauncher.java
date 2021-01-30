@@ -24,7 +24,16 @@
 package ru.VladTheMountain.oclide.configurator.ocemu;
 
 import javax.swing.JOptionPane;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Computer;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.EEPROM;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Filesystem;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.GPU;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Internet;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Keyboard;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Modem;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmu;
 import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.Screen;
 
 /**
  *
@@ -32,11 +41,28 @@ import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
  */
 public class OCEmuLauncher {
 
+    //Config itself
+    private ConfigMaker currentConfiguration;
+    //Config defaults
+    public final static OCEmuComponent[] DEFAULT = {
+        new GPU(0, 160, 50, 3),
+        new Modem(1, false),
+        new EEPROM(9, "lua/bios.lua"),
+        new Filesystem(7, ".machine/tmpfs", true),
+        new Filesystem("nil", "tmpfs", false),
+        new Filesystem(5, "nil", false),
+        new Internet(),
+        new Computer(),
+        new OCEmu(),
+        new Screen("nil", 80, 25, 3),
+        new Keyboard()
+    };
+
     /**
      * Launcher constructor. Starts OCEmu with default config
      */
     public OCEmuLauncher() {
-
+        
     }
 
     /**
@@ -45,10 +71,9 @@ public class OCEmuLauncher {
      *
      * @param configuration Array for component config
      */
-    public OCEmuLauncher(OCEmuComponent[] configuration) {
-
-    }
-
+    /*public OCEmuLauncher(OCEmuComponent[] configuration) {
+        
+    }*/
     /**
      * Attempts to recreate the config file. The result of an attempt is
      * returned in {@link JOptionPane} message types.
