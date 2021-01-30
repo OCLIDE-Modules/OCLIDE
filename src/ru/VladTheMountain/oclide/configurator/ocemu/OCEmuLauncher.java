@@ -23,10 +23,41 @@
  */
 package ru.VladTheMountain.oclide.configurator.ocemu;
 
+import javax.swing.JOptionPane;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
+
 /**
  *
  * @author VladTheMountain
  */
 public class OCEmuLauncher {
-    
+
+    /**
+     * Launcher constructor. Starts OCEmu with default config
+     */
+    public OCEmuLauncher() {
+
+    }
+
+    /**
+     * Launcher constructor. Starts OCEmu with {@link OCEmuComponent} as a
+     * source for config
+     *
+     * @param configuration Array for component config
+     */
+    public OCEmuLauncher(OCEmuComponent[] configuration) {
+
+    }
+
+    /**
+     * Attempts to recreate the config file. The result of an attempt is
+     * returned in {@link JOptionPane} message types.
+     *
+     * @return {@code JOptionPane.INFROMATION_MESSAGE} if the attempt succeeds,
+     * {@code JOptionPane.ERROR_MESSAGE} if the attempt fails
+     */
+    public int reloadConfig() {
+
+        return JOptionPane.ERROR_MESSAGE;
+    }
 }

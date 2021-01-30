@@ -23,7 +23,6 @@
  */
 package ru.VladTheMountain.oclide.ui;
 
-import ru.VladTheMountain.oclide.configurator.ocemu.ConfigMaker;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
@@ -37,8 +36,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import org.apache.commons.io.FileUtils;
-import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
+import ru.VladTheMountain.oclide.configurator.ocemu.ConfigMaker;
 import ru.VladTheMountain.oclide.configurator.ocemu.UUIDGenerator;
+import ru.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
 
 /**
  *
@@ -132,14 +132,14 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
         //if (input != null) {
         File machineDir = new File("OCEmu/.machine/" + input);
         try {
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/bin"), new File(machineDir.getAbsoluteFile() + "/bin"));
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/boot"), new File(machineDir.getAbsoluteFile() + "/boot"));
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/etc"), new File(machineDir.getAbsoluteFile() + "/etc"));
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/home"), new File(machineDir.getAbsoluteFile() + "/home"));
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/lib"), new File(machineDir.getAbsoluteFile() + "/lib"));
-            FileUtils.copyDirectory(new File("OCEmu/loot/OpenOS/usr"), new File(machineDir.getAbsoluteFile() + "/usr"));
-            Files.copy(new File("OCEmu/loot/OpenOS/.prop").toPath(), new File(machineDir.getAbsoluteFile() + "/.prop").toPath(), StandardCopyOption.REPLACE_EXISTING);
-            Files.copy(new File("OCEmu/loot/OpenOS/init.lua").toPath(), new File(machineDir.getAbsoluteFile() + "/init.lua").toPath(), StandardCopyOption.REPLACE_EXISTING);
+            FileUtils.copyDirectory(new File("OCEmu/loot/openos/bin"), new File(machineDir.getAbsoluteFile() + "/bin"));
+            FileUtils.copyDirectory(new File("OCEmu/loot/openos/boot"), new File(machineDir.getAbsoluteFile() + "/boot"));
+            FileUtils.copyDirectory(new File("OCEmu/loot/openos/etc"), new File(machineDir.getAbsoluteFile() + "/etc"));
+            FileUtils.copyDirectory(new File("OCEmu/loot/openos/home"), new File(machineDir.getAbsoluteFile() + "/home"));
+            FileUtils.copyDirectory(new File("OCEmu/loot/openos/lib"), new File(machineDir.getAbsoluteFile() + "/lib"));
+            FileUtils.copyDirectory(new File("OCEmu/loot/openos/usr"), new File(machineDir.getAbsoluteFile() + "/usr"));
+            Files.copy(new File("OCEmu/loot/openos/.prop").toPath(), new File(machineDir.getAbsoluteFile() + "/.prop").toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(new File("OCEmu/loot/openos/init.lua").toPath(), new File(machineDir.getAbsoluteFile() + "/init.lua").toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
             Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
