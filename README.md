@@ -19,9 +19,10 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 ## Requirements
 * JRE/JDK 1.8 or later
 * Windows 10 (work on older versions is not guaranteed)
-* IDE will also work on Linux-based distros like Ubuntu, but there can be problems with launching/using OCEmu
+* IDE will also work on Linux-based distros or Mac OS, but there can be problems with launching/using OCEmu
 
 ## Installation
-1. Download the latest version `dist.rar` at https://github.com/Vladg24YT/Oclide/releases
+- **STABLE (RECOMMENDED)** Download the latest version `dist.rar` at https://github.com/Vladg24YT/Oclide/releases  
+- **EXPERIMENTAL** Download `OCLIDE.jar` and `lib` folder from `dist` directory  
 2. Extract it to any folder you want. It will be OCLIDE's working directory.
 3. Run the `OCLIDE.jar` file
