@@ -613,7 +613,8 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+            .addContainerGap()
+            .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(componentSettingsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addComponent(controlPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -622,7 +623,9 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
         .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                 .addComponent(componentSettingsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1))
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1)))
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(controlPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
     );
@@ -679,8 +682,8 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
         if (new File("projects").exists()) {
             try {
                 //recursivelyCopyFiles(new File("projects"), new File("OCEmu"+FileSystems.getDefault().getSeparator()+".machine"+FileSystems.getDefault().getSeparator()+OpenOSUUID+FileSystems.getDefault().getSeparator()+"home"));
-                FileUtils.copyDirectory(new File("projects"), new File(System.getenv("APPDATA") + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home"));
-                System.out.println("Copied " + new File("projects").getAbsolutePath() + " to " + new File("OCEmu" + FileSystems.getDefault().getSeparator() + ".machine" + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home").getAbsolutePath());
+                FileUtils.copyDirectory(new File("projects"), new File(/*System.getenv("APPDATA") + FileSystems.getDefault().getSeparator() + "OCEmu"*/".machine" + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home"));
+                System.out.println("Copied " + new File("projects").getAbsolutePath() + " to " + new File(/*System.getenv("APPDATA") + FileSystems.getDefault().getSeparator() + "OCEmu"*/".machine" + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home").getAbsolutePath());
             } catch (IOException ex) {
                 Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -691,7 +694,7 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
             @Override
             public void run() {
                 ProcessBuilder pb;
-                pb = System.getProperty("os.name").contains("Windows") ? new ProcessBuilder("cmd.exe", "/c" , "start", "/D", "OCEmu", "OCEmu\\OCEmu.exe") : new ProcessBuilder("lua", "OCEmu/boot.lua", "./.machine");
+                pb = System.getProperty("os.name").contains("Windows") ? new ProcessBuilder("cmd.exe", "/c", "start", "/D", "OCEmu", "OCEmu\\OCEmu.exe") : new ProcessBuilder("lua", "OCEmu/boot.lua", "./.machine");
                 pb.redirectErrorStream(true).inheritIO();
                 try {
                     Process p = pb.start();
