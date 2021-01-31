@@ -115,7 +115,7 @@ public class ConfigMaker {
         String path = null;
         if (System.getProperty("os.name").contains("Windows")) {
             path = System.getenv("APPDATA") + "\\OCEmu\\ocemu.cfg";
-        } else if (System.getProperty("os.name").contains("Ubuntu") || System.getProperty("os.name").contains("Arch")) {
+        } else {
             if (new File(System.getenv("XDG_CONFIG_HOME") + "/ocemu").exists()) {
                 path = System.getenv("XDG_CONFIG_HOME") + "/ocemu/ocemu.cfg";
             } else {
