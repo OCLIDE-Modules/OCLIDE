@@ -23,6 +23,7 @@
  */
 package ru.VladTheMountain.oclide.ui;
 
+import ru.VladTheMountain.oclide.ui.emulator.OCEmuForm;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -919,7 +920,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     private void runOcelotButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_runOcelotButtonActionPerformed
         //runOcelot();
-        new EmulatorFrame().setVisible(true);
+        new OcelotEmulatorFrame().setVisible(true);
     }//GEN-LAST:event_runOcelotButtonActionPerformed
 
     private void openFileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
@@ -938,7 +939,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
             if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) == null || "".equals(String.valueOf(projectsTree.getSelectionPath().getPath()[1]))) {
                 JOptionPane.showMessageDialog(this, "Invalid project selection.", "Error: Can't run OCEmu", JOptionPane.ERROR_MESSAGE);
             } else {
-                new OCEmuConfiguratorForm().setVisible(true);
+                new OCEmuForm().setVisible(true);
             }
         } else {
             JOptionPane.showMessageDialog(this, "No project chosen. Please select a project folder in the file tree and then launch OCEmu.", "Project not set", JOptionPane.ERROR_MESSAGE);

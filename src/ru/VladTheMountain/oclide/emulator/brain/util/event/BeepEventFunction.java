@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 Vladislav Gorskii.
+ * Copyright 2021 Vladi.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,28 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
+package ru.VladTheMountain.oclide.emulator.brain.util.event;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
+import totoro.ocelot.brain.event.BeepEvent;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
  *
- * @author VladTheMountain
+ * @author Vladi
  */
-public class ConsoleOutputStream extends OutputStream {
+public abstract class BeepEventFunction extends BeepEvent{
 
-    private JTextArea target;
-
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
+    private static final long serialVersionUID = 1L;
+    
+    public BeepEventFunction(String address, short frequency, short duration) {
+        super(address, frequency, duration);
     }
-
-    @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
-    }
-
+    
+    public abstract void onEventActivated();
 }

@@ -23,26 +23,6 @@
  */
 package ru.VladTheMountain.oclide.util;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
-
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
- *
- * @author VladTheMountain
+ * Just a bunch of random classes used all around OCLIDE
  */
-public class ConsoleOutputStream extends OutputStream {
-
-    private JTextArea target;
-
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
-    }
-
-    @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
-    }
-
-}

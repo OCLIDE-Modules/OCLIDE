@@ -21,28 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
+package ru.VladTheMountain.oclide.emulator.ocemu.component;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
  *
  * @author VladTheMountain
  */
-public class ConsoleOutputStream extends OutputStream {
+public class OCEmuComponent {
 
-    private JTextArea target;
+    //FIELD 1
+    private int type;
+    //FIELD 2
+    private String address;
+    //the rest
+    private String[] opts;
 
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
+    public OCEmuComponent(int componentType, String componentAddress, String... options) {
+        this.type = componentType;
+        this.address = componentAddress;
+        this.opts = new String[4];
+        System.arraycopy(options, 0, opts, 0, options.length);
     }
 
-    @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
+    public int getComponentType() {
+        return type;
     }
 
+    public String getComponentAddress() {
+        return address;
+    }
+
+    public String getOptionAt(int pos) {
+        return opts[pos];
+    }
 }

@@ -24,15 +24,17 @@
 package ru.VladTheMountain.oclide.util;
 
 /**
+ * Downloads OCEmu binaries from https://github.com/OCLIDE-Modules/OCLIDE-OCEmu
  *
  * @author VladTheMountain
  */
 public class OCEmuModule {
-    public static void downloadOCEmu(String osName){
-        if(osName.toLowerCase().contains("windows")){
-            
+
+    public static void downloadOCEmu(String osName) {
+        if (osName.toLowerCase().contains("windows")) {
+
         } else {
-            
+
         }
     }
 }

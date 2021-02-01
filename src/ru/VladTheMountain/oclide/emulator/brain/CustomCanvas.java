@@ -21,28 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
+package ru.VladTheMountain.oclide.emulator.brain;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
  *
  * @author VladTheMountain
  */
-public class ConsoleOutputStream extends OutputStream {
+public class CustomCanvas extends Canvas {
 
-    private JTextArea target;
+    private static final long serialVersionUID = 1L;
 
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
+    public CustomCanvas() {
+        this.setBackground(Color.BLACK);
+        this.setForeground(Color.WHITE);
+        this.setFont(Font.getFont("Monospaced 12 Plain"));
     }
-
+    
     @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
+    public void paint(Graphics gr){
+        
     }
 
 }

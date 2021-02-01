@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 Vladislav Gorskii.
+ * Copyright 2021 Vladislav Gorskiis.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,28 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
+package ru.VladTheMountain.oclide.emulator.ocemu.component;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
+import ru.VladTheMountain.oclide.util.UUIDGenerator;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
  *
  * @author VladTheMountain
  */
-public class ConsoleOutputStream extends OutputStream {
+public class GPU extends OCEmuComponent {
 
-    private JTextArea target;
-
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
-    }
-
-    @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
+    public GPU(int i1, int i2, int i3, int i4) {
+        super(3, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
     }
 
 }

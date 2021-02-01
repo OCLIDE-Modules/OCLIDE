@@ -21,28 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
+package ru.VladTheMountain.oclide.emulator.ocemu.component;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
+import ru.VladTheMountain.oclide.util.UUIDGenerator;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
  *
  * @author VladTheMountain
  */
-public class ConsoleOutputStream extends OutputStream {
+public class Screen extends OCEmuComponent {
 
-    private JTextArea target;
-
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
+    public Screen(int i1, int i2, int i3, int i4) {
+        super(8, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
     }
 
-    @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
+    /**
+     * Use only if the first param is null
+     *
+     * @param i1
+     * @param i2
+     * @param i3
+     * @param i4
+     */
+    public Screen(String i1, int i2, int i3, int i4) {
+        super(8, UUIDGenerator.create(), i1, String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
     }
-
 }
