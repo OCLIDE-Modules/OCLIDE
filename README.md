@@ -19,7 +19,7 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 - [ ] [AurumEmulator](https://github.com/Zabqer/AurumEmulator) integration
 - [ ] Built-in [Ocelot Brain](https://gitlab.com/cc-ru/ocelot/ocelot-brain)-based emulator
 - [ ] Internationalization
-- [ ] Code autocompletion
+- [ ] Modularity
 
 ## Requirements
 * JRE/JDK 1.8 or later
