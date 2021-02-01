@@ -161,8 +161,6 @@ public class OCEmuConfiguratorForm extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(OCEmuConfiguratorForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //}
-        //}
     }
 
     /**

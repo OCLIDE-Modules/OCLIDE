@@ -115,23 +115,31 @@ public class EmulatorFrame extends JFrame {
         tPC.connect(tScreen);
         //Custom Data (for some reason)
         tPC.setCustomData(new PersistableString("hi?"));
-        //EventListeners (I wonder if to turn this thing off...)
+
+        //EventListeners
+        // Они ещё мало изучены
+        // Потому что от них получали больше ошибок чем информации
         /*
         totoro.ocelot.brain.event.EventBus.listenTo(totoro.ocelot.brain.event.BeepEvent.class, new EventListener(){});
-         */
+        EventBus.listenTo(BeepEvent.class, new BeepEventFunction(){
+            @Override
+            public void onEventActivated() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });*/
+        
         //Turnin' on
         tPC.turnOn();
-        //Why update? Really
-        while (this.temporaryWorkspace.getIngameTime() < 20) //Why 20?
-        {
+
+        while (this.temporaryWorkspace.getIngameTime() < 20) {
             this.temporaryWorkspace.update();
             Thread.sleep(50);
         }
-        //Why should I make a snapshot?... Ah, whatever
+
         saveWorkspace(this.temporaryWorkspace);
 
-        //100 секунд и нихрена
-        while (this.temporaryWorkspace.getIngameTime() < 100000) {
+        while (this.temporaryWorkspace.getIngameTime()
+                < 100000) {
             for (int i = 1; i <= tScreen.getHeight(); i++) {
                 for (int j = 1; j <= tScreen.getWidth(); j++) {
                     //
@@ -142,6 +150,7 @@ public class EmulatorFrame extends JFrame {
         }
 
         tPC.turnOff();
+
         Ocelot.shutdown();
     }
 
