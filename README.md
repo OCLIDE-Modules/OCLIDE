@@ -6,15 +6,20 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 
 ## Feature list
 - [x] Editing tools (Undo/Redo, Clipboard)
-- [x] File management
+- [x] Refactoring tools
 - [x] Syntax highlighting
-- [x] OCEmu integration
+- [ ] Code autocompletion
+- [ ] Code autoformatting
+- [ ] Variable navigator
+- [ ] Static code analyzer
+- [ ] Minecraft 1.7.10 - 1.12.2 integration
+- [x] [OCEmu](https://github.com/zenith391/OCEmu) integration
+- [ ] [Ocelot Desktop](https://gitlab.com/cc-ru/ocelot/ocelot-desktop/) integration
+- [ ] [CODE](https://github.com/Avevad/code) integration
+- [ ] [AurumEmulator](https://github.com/Zabqer/AurumEmulator) integration
+- [ ] Built-in [Ocelot Brain](https://gitlab.com/cc-ru/ocelot/ocelot-brain)-based emulator
 - [ ] Internationalization
 - [ ] Code autocompletion
-- [ ] Modularity
-- [ ] OCEmu debugging tools
-- [ ] Built-in [Ocelot Brain](https://gitlab.com/cc-ru/ocelot/ocelot-brain)-based emulator
-- [ ] Minecraft 1.7.10 - 1.12.2 integration
 
 ## Requirements
 * JRE/JDK 1.8 or later
@@ -23,6 +28,6 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 
 ## Installation
 - **STABLE (RECOMMENDED)** Download the latest version `dist.rar` at https://github.com/Vladg24YT/Oclide/releases  
-- **EXPERIMENTAL** Download `OCLIDE.jar` and `lib` folder from `dist` directory  
-2. Extract/Copy it to any folder you want. It will be OCLIDE's working directory.
+- **EXPERIMENTAL** Download `OCLIDE.jar` and `lib` folder from `dist` directory (Also download OCEmu binaries from https://github.com/OCLIDE-Modules/OCLIDE-OCEmu) 
+2. Extract `.rar`/Copy `.jar` and `lib` to any folder you want. It will be OCLIDE's working directory.
 3. Run the `OCLIDE.jar` file
