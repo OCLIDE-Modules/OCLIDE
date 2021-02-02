@@ -80,21 +80,31 @@ public class OCLIDECompletionProvider {
             {new CustomParameter("chunk", "chunk", false, "Chunk to load"), new CustomParameter("string", "chunkname", false, "The name of the chunk for error messages and debug information"), new CustomParameter("string", "mode", false, "Controls whether the chunk can be text or binary"), new CustomParameter("object", "env", true, "The value to set the first upvalue of the chunk to")}
         });
 
-        createCompletion(defaultProvider, "loadfile", "Lua 5.2", autocompletion.getString("loadfile"), "The same as load()", new CustomParameter[][]{
+        createCompletion(defaultProvider, "loadfile", "Lua 5.2", autocompletion.getString("loadfile"), "The same as <code>load()</code>", new CustomParameter[][]{
             {new CustomParameter("string", "filename", true, "The file to get the chunk from")},
             {new CustomParameter("string", "filename", false, "The file to get the chunk from"), new CustomParameter("string", "mode", false, "Controls whether the chunk can be text or binary")},
             {new CustomParameter("string", "filename", false, "The file to get the chunk from"), new CustomParameter("string", "mode", false, "Controls whether the chunk can be text or binary"), new CustomParameter("object", "env", true, "The value to set the first upvalue of the chunk to")},
             {}
         });
 
-        /*FunctionCompletion test = new FunctionCompletion(defaultProvider, "name", "type");
-        test.setDefinedIn("Defined In");
-        test.setParams(Arrays.asList(new ParameterizedCompletion.Parameter("type1", "param1"), new ParameterizedCompletion.Parameter("type2", "param2", true)));
-        test.setRelevance(1);
-        test.setReturnValueDescription("Return description");
-        test.setShortDescription("Short description");
-        test.setSummary("Summary");
-        defaultProvider.addCompletion(test);*/
+        createCompletion(defaultProvider, "next", "Lua 5.2", autocompletion.getString("next"), "Returns the next index of the table and its associated value", new CustomParameter[][]{
+            {new CustomParameter("table", "table", true, "The table to traverse all fields of")},
+            {new CustomParameter("table", "table", false, "The table to traverse all fields of"), new CustomParameter("number", "index", true, "The initial index")}
+        });
+
+        createCompletion(defaultProvider, "pairs", "Lua 5.2", autocompletion.getString("pairs"), "Returns <code>next(t)</code>, <code>t</code> and <code>nil</code>", new CustomParameter[][]{
+            {new CustomParameter("table", "t", true, "The table to iterate through")}
+        });
+
+        createCompletion(defaultProvider, "pcall", "Lua 5.2", autocompletion.getString("pcall"), "Returns the status code of calling <code>f(...)</code>", new CustomParameter[][]{
+            {new CustomParameter("function", "f", true, "Function to call")},
+            {new CustomParameter("function", "f", false, "Function to call"), new CustomParameter("", "...", true, "Function arguments")}
+        });
+        
+        createCompletion(defaultProvider, "print", "Lua 5.2", autocompletion.getString("print"), "", new CustomParameter[][]{
+            {new CustomParameter("", "...", true, "Object(-s) to print")}
+        });
+
         //OpenOS API
         //Shortcuts
         /* TODO */
