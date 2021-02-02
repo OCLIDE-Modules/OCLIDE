@@ -23,7 +23,7 @@
  */
 package ru.VladTheMountain.oclide.ui.emulator;
 
-import ru.VladTheMountain.oclide.ui.OcelotEmulatorFrame;
+import ru.VladTheMountain.emulator.ui.OcelotEmulatorFrame;
 
 /**
  * Ocelot Desktop by LeshaInc

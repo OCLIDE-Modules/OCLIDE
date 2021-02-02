@@ -319,33 +319,76 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="runMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Run"/>
+            <Property name="text" type="java.lang.String" value="Deploy"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="ocemu">
+            <Menu class="javax.swing.JMenu" name="emulatorMenu">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/app_window_shell&amp;16.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Run OCEmu"/>
+                <Property name="text" type="java.lang.String" value="Deploy to Emulator"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ocemuActionPerformed"/>
-              </Events>
-            </MenuItem>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="ocemuMenuItem">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/app_window_shell&amp;16.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Run OCEmu"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ocemuMenuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="ocelotMenuItem">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&amp;16.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Run Ocelot"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ocelotMenuItemActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="ocemulatorMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Run OCEmulator"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="aurumMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Run Aurum Emulator"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="codeMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Run CODE"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="vmMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Deploy to VM"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="ocvmMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Run OCVM"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="ocvmFXMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Run OpenComputersVM"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="ocelotD">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&amp;16.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Run Ocelot"/>
-                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="Deploy to Minecraft world..."/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ocelotDActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -354,16 +397,28 @@
             <Property name="text" type="java.lang.String" value="Help"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="settings">
+            <MenuItem class="javax.swing.JMenuItem" name="aboutMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="About"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aboutMenuItemActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="wikiMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Wiki"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator11">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="settingsMenuItem">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/cogs_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="About"/>
+                <Property name="text" type="java.lang.String" value="Settings"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingsActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -699,8 +754,6 @@
               <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&amp;24.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Launch Ocelot Desktop"/>
-            <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>

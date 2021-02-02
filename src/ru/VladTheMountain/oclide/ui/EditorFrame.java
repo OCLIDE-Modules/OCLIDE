@@ -23,7 +23,6 @@
  */
 package ru.VladTheMountain.oclide.ui;
 
-import ru.VladTheMountain.oclide.ui.emulator.OCEmuForm;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -75,10 +74,12 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.fife.ui.rtextarea.ToolTipSupplier;
-import ru.VladTheMountain.oclide.editor.OpenComputersCompletionProvider;
+import ru.VladTheMountain.emulator.ui.OcelotEmulatorFrame;
+import ru.VladTheMountain.oclide.editor.OCLIDECompletionProvider;
 import ru.VladTheMountain.oclide.ui.dialog.CreateNewProjectDialog;
 import ru.VladTheMountain.oclide.ui.dialog.OpenFileFileChooser;
 import ru.VladTheMountain.oclide.ui.dialog.ProjectFileChooser;
+import ru.VladTheMountain.oclide.ui.emulator.OCEmuForm;
 import ru.VladTheMountain.oclide.util.ConsoleOutputStream;
 
 /**
@@ -140,7 +141,7 @@ public class EditorFrame extends JFrame {
         });
         newFile.getAccessibleContext().setAccessibleDescription(newFile.getText());
         //autocompletion
-        CompletionProvider occp = OpenComputersCompletionProvider.getProvider();
+        CompletionProvider occp = OCLIDECompletionProvider.getProvider();
         AutoCompletion occ = new AutoCompletion(occp);
         occ.setListCellRenderer(new CompletionCellRenderer());
         occ.setAutoCompleteEnabled(true);
@@ -148,8 +149,7 @@ public class EditorFrame extends JFrame {
         occ.setAutoActivationDelay(100);
         occ.setShowDescWindow(true);
         occ.setParameterAssistanceEnabled(true);
-        //occ.install(newFile);
-        /*UNCOMMENT BEFORE BETA RELEASE*/
+        occ.install(newFile);
         newFile.setToolTipSupplier((ToolTipSupplier) occp);
         ToolTipManager.sharedInstance().registerComponent(newFile);
         //
@@ -317,11 +317,22 @@ public class EditorFrame extends JFrame {
         jSeparator4 = new JPopupMenu.Separator();
         find = new JMenuItem();
         runMenu = new JMenu();
-        ocemu = new JMenuItem();
+        emulatorMenu = new JMenu();
+        ocemuMenuItem = new JMenuItem();
+        ocelotMenuItem = new JMenuItem();
+        ocemulatorMenuItem = new JMenuItem();
+        aurumMenuItem = new JMenuItem();
+        codeMenuItem = new JMenuItem();
+        vmMenu = new JMenu();
+        ocvmMenuItem = new JMenuItem();
+        ocvmFXMenuItem = new JMenuItem();
         jSeparator5 = new JPopupMenu.Separator();
-        ocelotD = new JMenuItem();
+        jMenuItem1 = new JMenuItem();
         helpMenu = new JMenu();
-        settings = new JMenuItem();
+        aboutMenuItem = new JMenuItem();
+        wikiMenuItem = new JMenuItem();
+        jSeparator11 = new JPopupMenu.Separator();
+        settingsMenuItem = new JMenuItem();
 
         popupSaveFile.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/save_icon&16.png"))); // NOI18N
         popupSaveFile.setText("Save current file");
@@ -556,8 +567,6 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     runOcelotButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&24.png"))); // NOI18N
     runOcelotButton.setToolTipText("Launch Ocelot Desktop");
-    runOcelotButton.setEnabled(false);
-    runOcelotButton.setFocusable(false);
     runOcelotButton.setHorizontalTextPosition(SwingConstants.CENTER);
     runOcelotButton.setVerticalTextPosition(SwingConstants.BOTTOM);
     runOcelotButton.addActionListener(new ActionListener() {
@@ -696,40 +705,72 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     menuBar.add(editMenu);
 
-    runMenu.setText("Run");
+    runMenu.setText("Deploy");
 
-    ocemu.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_shell&16.png"))); // NOI18N
-    ocemu.setText("Run OCEmu");
-    ocemu.addActionListener(new ActionListener() {
+    emulatorMenu.setText("Deploy to Emulator");
+
+    ocemuMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_shell&16.png"))); // NOI18N
+    ocemuMenuItem.setText("Run OCEmu");
+    ocemuMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            ocemuActionPerformed(evt);
+            ocemuMenuItemActionPerformed(evt);
         }
     });
-    runMenu.add(ocemu);
+    emulatorMenu.add(ocemuMenuItem);
+
+    ocelotMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&16.png"))); // NOI18N
+    ocelotMenuItem.setText("Run Ocelot");
+    ocelotMenuItem.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            ocelotMenuItemActionPerformed(evt);
+        }
+    });
+    emulatorMenu.add(ocelotMenuItem);
+
+    ocemulatorMenuItem.setText("Run OCEmulator");
+    emulatorMenu.add(ocemulatorMenuItem);
+
+    aurumMenuItem.setText("Run Aurum Emulator");
+    emulatorMenu.add(aurumMenuItem);
+
+    codeMenuItem.setText("Run CODE");
+    emulatorMenu.add(codeMenuItem);
+
+    runMenu.add(emulatorMenu);
+
+    vmMenu.setText("Deploy to VM");
+
+    ocvmMenuItem.setText("Run OCVM");
+    vmMenu.add(ocvmMenuItem);
+
+    ocvmFXMenuItem.setText("Run OpenComputersVM");
+    vmMenu.add(ocvmFXMenuItem);
+
+    runMenu.add(vmMenu);
     runMenu.add(jSeparator5);
 
-    ocelotD.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&16.png"))); // NOI18N
-    ocelotD.setText("Run Ocelot");
-    ocelotD.setEnabled(false);
-    ocelotD.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent evt) {
-            ocelotDActionPerformed(evt);
-        }
-    });
-    runMenu.add(ocelotD);
+    jMenuItem1.setText("Deploy to Minecraft world...");
+    runMenu.add(jMenuItem1);
 
     menuBar.add(runMenu);
 
     helpMenu.setText("Help");
 
-    settings.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/cogs_icon&16.png"))); // NOI18N
-    settings.setText("About");
-    settings.addActionListener(new ActionListener() {
+    aboutMenuItem.setText("About");
+    aboutMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            settingsActionPerformed(evt);
+            aboutMenuItemActionPerformed(evt);
         }
     });
-    helpMenu.add(settings);
+    helpMenu.add(aboutMenuItem);
+
+    wikiMenuItem.setText("Wiki");
+    helpMenu.add(wikiMenuItem);
+    helpMenu.add(jSeparator11);
+
+    settingsMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/cogs_icon&16.png"))); // NOI18N
+    settingsMenuItem.setText("Settings");
+    helpMenu.add(settingsMenuItem);
 
     menuBar.add(helpMenu);
 
@@ -762,25 +803,25 @@ projectsTree.addMouseListener(new MouseAdapter() {
     setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ocemuActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ocemuActionPerformed
+    private void ocemuMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ocemuMenuItemActionPerformed
         try {
             runOCEmu();
         } catch (IOException ex) {
             Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_ocemuActionPerformed
+    }//GEN-LAST:event_ocemuMenuItemActionPerformed
 
-    private void settingsActionPerformed(ActionEvent evt) {//GEN-FIRST:event_settingsActionPerformed
+    private void aboutMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         new SettingsFrame().setVisible(true);
-    }//GEN-LAST:event_settingsActionPerformed
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void createProjectActionPerformed(ActionEvent evt) {//GEN-FIRST:event_createProjectActionPerformed
         new CreateNewProjectDialog(this).setVisible(true);
     }//GEN-LAST:event_createProjectActionPerformed
 
-    private void ocelotDActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ocelotDActionPerformed
+    private void ocelotMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ocelotMenuItemActionPerformed
         runOcelot();
-    }//GEN-LAST:event_ocelotDActionPerformed
+    }//GEN-LAST:event_ocelotMenuItemActionPerformed
 
     private void exitActionPerformed(ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         this.saveActionPerformed(evt);
@@ -967,9 +1008,12 @@ projectsTree.addMouseListener(new MouseAdapter() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private JMenuItem aboutMenuItem;
     private JButton addFileButton;
     private JMenuItem addFileMenuItem;
     private JMenuItem addFolderMenuItem;
+    private JMenuItem aurumMenuItem;
+    private JMenuItem codeMenuItem;
     private JMenuItem copy;
     private JMenuItem createFile;
     private JMenuItem createProject;
@@ -979,15 +1023,18 @@ projectsTree.addMouseListener(new MouseAdapter() {
     private JButton deleteProjectButton;
     private JMenu editMenu;
     private JTabbedPane editorTabs;
+    private JMenu emulatorMenu;
     private JMenuItem exit;
     private JPopupMenu fileManagementPopup;
     private JMenu fileMenu;
     private JMenuItem find;
     private JMenu helpMenu;
+    private JMenuItem jMenuItem1;
     private JScrollPane jScrollPane1;
     private JScrollPane jScrollPane2;
     private JPopupMenu.Separator jSeparator1;
     private JPopupMenu.Separator jSeparator10;
+    private JPopupMenu.Separator jSeparator11;
     private JPopupMenu.Separator jSeparator2;
     private JPopupMenu.Separator jSeparator3;
     private JPopupMenu.Separator jSeparator4;
@@ -1004,8 +1051,11 @@ projectsTree.addMouseListener(new MouseAdapter() {
     private JMenuBar menuBar;
     private JMenu newMenu;
     private JButton newProjectButton;
-    private JMenuItem ocelotD;
-    private JMenuItem ocemu;
+    private JMenuItem ocelotMenuItem;
+    private JMenuItem ocemuMenuItem;
+    private JMenuItem ocemulatorMenuItem;
+    private JMenuItem ocvmFXMenuItem;
+    private JMenuItem ocvmMenuItem;
     private JMenuItem openFile;
     private JMenuItem openProject;
     private JButton openProjectButton;
@@ -1028,10 +1078,12 @@ projectsTree.addMouseListener(new MouseAdapter() {
     private JButton runOcelotButton;
     private JMenuItem save;
     private JButton saveButton;
-    private JMenuItem settings;
+    private JMenuItem settingsMenuItem;
     private JMenuItem undo;
     private JButton undoButton;
     private JToolBar undoRedoToolbar;
     private JTree variableTree;
+    private JMenu vmMenu;
+    private JMenuItem wikiMenuItem;
     // End of variables declaration//GEN-END:variables
 }
