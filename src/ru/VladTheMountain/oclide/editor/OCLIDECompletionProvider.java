@@ -100,11 +100,22 @@ public class OCLIDECompletionProvider {
             {new CustomParameter("function", "f", true, "Function to call")},
             {new CustomParameter("function", "f", false, "Function to call"), new CustomParameter("", "...", true, "Function arguments")}
         });
-        
+
         createCompletion(defaultProvider, "print", "Lua 5.2", autocompletion.getString("print"), "", new CustomParameter[][]{
             {new CustomParameter("", "...", true, "Object(-s) to print")}
         });
 
+        createCompletion(defaultProvider, "rawequal", "Lua 5.2", autocompletion.getString("rawequal"), "Returns boolean - result of __eq metamethod", new CustomParameter[][]{
+            {new CustomParameter("object", "v1", false, "First object to compare"), new CustomParameter("object", "v2", true, "Second object to compare")}
+        });
+
+        createCompletion(defaultProvider, "rawget", "Lua 5.2", autocompletion.getString("rawget"), "Returns value at <code>index</code> of <code>table</code>", new CustomParameter[][]{
+            {new CustomParameter("table", "table", false, "Table to get value from"), new CustomParameter("number", "index", true, "Index of the <code>table</code> to get value of")}
+        });
+
+        createCompletion(defaultProvider, "rawlen", "Lua 5.2", autocompletion.getString("rawlen"), "Returns the length of the object", new CustomParameter[][]{
+            {new CustomParameter("table", "v", true, "Object to measure length of")}
+        });
         //OpenOS API
         //Shortcuts
         /* TODO */
