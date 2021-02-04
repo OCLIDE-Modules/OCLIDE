@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 Vladi.
+ * Copyright 2021 Vladislav Gorskii.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,19 +23,22 @@
  */
 package ru.VladTheMountain.emulator.util.event;
 
+import scala.Function1;
+import scala.runtime.BoxedUnit;
 import totoro.ocelot.brain.event.BeepEvent;
 
 /**
  *
- * @author Vladi
+ * @author VladTheMountain
  */
-public abstract class BeepEventFunction extends BeepEvent{
+public class BeepEventFunction implements Function1<BeepEvent, BoxedUnit> {
 
-    private static final long serialVersionUID = 1L;
-    
-    public BeepEventFunction(String address, short frequency, short duration) {
-        super(address, frequency, duration);
+    public BeepEventFunction() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public abstract void onEventActivated();
+
+    @Override
+    public BoxedUnit apply(BeepEvent v1) {
+        return null;
+    }
 }

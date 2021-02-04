@@ -27,9 +27,9 @@ import ru.VladTheMountain.emulator.ui.OcelotEmulatorFrame;
 
 /**
  * Ocelot Desktop by LeshaInc
- * 
+ *
  * Workspace configurator UI.
- * 
+ *
  * @author VladTheMountain
  */
 public class OcelotDesktopForm extends javax.swing.JFrame {
@@ -120,7 +120,7 @@ public class OcelotDesktopForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        extensionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Additional Components", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        extensionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Storage", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
         extensionsPanel.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         extensionsPanel.setMinimumSize(new java.awt.Dimension(200, 200));
 
@@ -148,10 +148,12 @@ public class OcelotDesktopForm extends javax.swing.JFrame {
 
         eepromButtons.add(customEEPROMButton);
         customEEPROMButton.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        customEEPROMButton.setText("Custom");
+        customEEPROMButton.setText(" AdvLoader");
 
+        customEEPROMField.setEditable(false);
         customEEPROMField.setFont(new java.awt.Font("Monospaced", 0, 10)); // NOI18N
         customEEPROMField.setToolTipText("Path to custom EEPROM script");
+        customEEPROMField.setOpaque(false);
 
         javax.swing.GroupLayout eepromPanelLayout = new javax.swing.GroupLayout(eepromPanel);
         eepromPanel.setLayout(eepromPanelLayout);
@@ -177,7 +179,7 @@ public class OcelotDesktopForm extends javax.swing.JFrame {
         jLabel2.setText("Floppy:");
 
         floppyComboBox.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        floppyComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OpenOS", "OpenLoader", "OPPM" }));
+        floppyComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "OpenOS", "Plan9k", "OPPM", "OpenLoader", "Network", "OpenIRC", "Data Card Software", "Empty" }));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel3.setLabelFor(caseTierComboBox);

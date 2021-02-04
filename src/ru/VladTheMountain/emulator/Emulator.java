@@ -24,7 +24,10 @@
 package ru.VladTheMountain.emulator;
 
 import java.io.File;
+import scala.Function1;
+import scala.runtime.BoxedUnit;
 import totoro.ocelot.brain.Ocelot;
+import totoro.ocelot.brain.event.BeepEvent;
 import totoro.ocelot.brain.nbt.NBTTagCompound;
 import totoro.ocelot.brain.workspace.Workspace;
 
@@ -63,6 +66,11 @@ public class Emulator {
         Ocelot.initialize();
         //
 
+        //Events
+        /*EventBus.listenTo(BeepEvent.class, (BeepEvent v1) -> {
+            System.out.println("[EVENT] Beep (address = "+v1.address()+", frequency = "+v1.frequency()+", duration = "+v1.duration()+")");
+            return null;
+        });*/
         // DO NOT MODIFY //
         while (true) {
             if (loop() != 1) {
@@ -85,6 +93,7 @@ public class Emulator {
      * @return status of performed operation
      */
     private int loop() {
+
         return 1;
     }
 
@@ -96,4 +105,8 @@ public class Emulator {
         // DO NOT MODIFY //
         world.save(emulation);
     }
+
+    //Event functions
 }
+
+abstract class BeepEventFunc implements Function1<BeepEvent, BoxedUnit> {}

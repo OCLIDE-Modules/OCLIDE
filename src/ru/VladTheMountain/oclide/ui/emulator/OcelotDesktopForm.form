@@ -169,7 +169,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder justification="1" position="2" title="Additional Components">
+            <TitledBorder justification="1" position="2" title="Storage">
               <Font PropertyName="font" name="Segoe UI" size="14" style="1"/>
             </TitledBorder>
           </Border>
@@ -308,15 +308,17 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Custom"/>
+                <Property name="text" type="java.lang.String" value=" AdvLoader"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="customEEPROMField">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Monospaced" size="10" style="0"/>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Path to custom EEPROM script"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -338,10 +340,15 @@
               <Font name="Segoe UI" size="12" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
+              <StringArray count="8">
                 <StringItem index="0" value="OpenOS"/>
-                <StringItem index="1" value="OpenLoader"/>
+                <StringItem index="1" value="Plan9k"/>
                 <StringItem index="2" value="OPPM"/>
+                <StringItem index="3" value="OpenLoader"/>
+                <StringItem index="4" value="Network"/>
+                <StringItem index="5" value="OpenIRC"/>
+                <StringItem index="6" value="Data Card Software"/>
+                <StringItem index="7" value="Empty"/>
               </StringArray>
             </Property>
           </Properties>
