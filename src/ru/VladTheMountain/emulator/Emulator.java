@@ -28,6 +28,8 @@ import scala.Function1;
 import scala.runtime.BoxedUnit;
 import totoro.ocelot.brain.Ocelot;
 import totoro.ocelot.brain.event.BeepEvent;
+import totoro.ocelot.brain.event.Event;
+import totoro.ocelot.brain.event.EventBus;
 import totoro.ocelot.brain.nbt.NBTTagCompound;
 import totoro.ocelot.brain.workspace.Workspace;
 
@@ -67,10 +69,9 @@ public class Emulator {
         //
 
         //Events
-        /*EventBus.listenTo(BeepEvent.class, (BeepEvent v1) -> {
-            System.out.println("[EVENT] Beep (address = "+v1.address()+", frequency = "+v1.frequency()+", duration = "+v1.duration()+")");
-            return null;
-        });*/
+        EventBus.listenTo(BeepEvent.class, (Event v1) -> {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        });
         // DO NOT MODIFY //
         while (true) {
             if (loop() != 1) {
@@ -109,4 +110,5 @@ public class Emulator {
     //Event functions
 }
 
-abstract class BeepEventFunc implements Function1<BeepEvent, BoxedUnit> {}
+abstract class BeepEventUnit implements Function1<BeepEvent, BoxedUnit> {
+}

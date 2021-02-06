@@ -70,8 +70,6 @@ public class SettingsFrame extends javax.swing.JFrame {
         setTitle("Settings");
         setResizable(false);
 
-        jTabbedPane1.setTabPlacement(JTabbedPane.LEFT);
-
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new Font("Monospaced", 0, 12)); // NOI18N
         jTextArea1.setRows(5);
@@ -83,13 +81,13 @@ public class SettingsFrame extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
