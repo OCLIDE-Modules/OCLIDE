@@ -23,19 +23,27 @@
  */
 package ru.VladTheMountain.oclide.ui;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.FileSystems;
 import javax.swing.AbstractListModel;
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.border.TitledBorder;
 
 /**
  *
@@ -64,45 +72,73 @@ public class SettingsFrame extends javax.swing.JFrame {
         settingTabs = new JTabbedPane();
         idePanel = new JPanel();
         jLabel1 = new JLabel();
-        jTextField1 = new JTextField();
+        workingDirTextField = new JTextField();
+        jCheckBox1 = new JCheckBox();
         editorPanel = new JPanel();
         jScrollPane1 = new JScrollPane();
         settingList = new JList<>();
         emulatorTabs = new JTabbedPane();
         ocemuPanel = new JPanel();
+        jLabel3 = new JLabel();
+        ocemuTextField = new JTextField();
         ocbrainPanel = new JPanel();
+        brainOutputRedirectionCheckBox = new JCheckBox();
         ocdesktopPanel = new JPanel();
         codePanel = new JPanel();
+        jLabel4 = new JLabel();
         aurumPanel = new JPanel();
+        jLabel5 = new JLabel();
         ocemulatorPanel = new JPanel();
         environmentTabs = new JTabbedPane();
         envGeneralPanel = new JPanel();
+        jCheckBox2 = new JCheckBox();
+        jCheckBox3 = new JCheckBox();
+        jCheckBox4 = new JCheckBox();
         minecraftPanel = new JPanel();
+        jLabel2 = new JLabel();
+        minecraftTextField = new JTextField();
+        jPanel1 = new JPanel();
+        jScrollPane2 = new JScrollPane();
+        jList1 = new JList<>();
+        jSeparator1 = new JSeparator();
+        jScrollPane4 = new JScrollPane();
+        jList2 = new JList<>();
         ocvmPanel = new JPanel();
+        jLabel6 = new JLabel();
         opencomputersvmPanel = new JPanel();
         modulesPanel = new JPanel();
         luaPanel = new JPanel();
+        jLabel7 = new JLabel();
+        jTextField1 = new JTextField();
         controlPanel = new JPanel();
         okButton = new JButton();
         cancelButton = new JButton();
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Settings");
+        setTitle("Settings (UI PREVIEW MODE)");
         setResizable(false);
 
         jLabel1.setText("OCLIDE directory:");
 
-        jTextField1.setEditable(false);
-        jTextField1.setText(System.getProperty("user.dir"));
+        workingDirTextField.setEditable(false);
+        workingDirTextField.setText(System.getProperty("user.dir"));
+
+        jCheckBox1.setFont(new Font("Tahoma", 1, 11)); // NOI18N
+        jCheckBox1.setSelected(true);
+        jCheckBox1.setText("UI preview mode (will be disabled in the next update)");
+        jCheckBox1.setEnabled(false);
 
         GroupLayout idePanelLayout = new GroupLayout(idePanel);
         idePanel.setLayout(idePanelLayout);
         idePanelLayout.setHorizontalGroup(idePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(idePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
+            .addGroup(GroupLayout.Alignment.TRAILING, idePanelLayout.createSequentialGroup()
+                .addGroup(idePanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(jCheckBox1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(GroupLayout.Alignment.LEADING, idePanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                        .addComponent(workingDirTextField, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         idePanelLayout.setVerticalGroup(idePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -110,8 +146,10 @@ public class SettingsFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(idePanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(193, Short.MAX_VALUE))
+                    .addComponent(workingDirTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox1)
+                .addContainerGap(230, Short.MAX_VALUE))
         );
 
         settingTabs.addTab("IDE", idePanel);
@@ -121,6 +159,7 @@ public class SettingsFrame extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        settingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(settingList);
 
         GroupLayout editorPanelLayout = new GroupLayout(editorPanel);
@@ -129,35 +168,62 @@ public class SettingsFrame extends javax.swing.JFrame {
             .addGroup(editorPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(371, Short.MAX_VALUE))
+                .addContainerGap(395, Short.MAX_VALUE))
         );
         editorPanelLayout.setVerticalGroup(editorPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(editorPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         settingTabs.addTab("Editor", editorPanel);
 
+        jLabel3.setText("Path to OCEmu:");
+
+        ocemuTextField.setEditable(false);
+        ocemuTextField.setText(System.getProperty("user.dir") + FileSystems.getDefault().getSeparator() + "OCEmu");
+
         GroupLayout ocemuPanelLayout = new GroupLayout(ocemuPanel);
         ocemuPanel.setLayout(ocemuPanelLayout);
         ocemuPanelLayout.setHorizontalGroup(ocemuPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGroup(ocemuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ocemuPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(ocemuPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 433, Short.MAX_VALUE))
+                    .addComponent(ocemuTextField))
+                .addContainerGap())
         );
         ocemuPanelLayout.setVerticalGroup(ocemuPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGroup(ocemuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ocemuTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         emulatorTabs.addTab("OCEmu", ocemuPanel);
 
+        brainOutputRedirectionCheckBox.setSelected(true);
+        brainOutputRedirectionCheckBox.setText("Redirect output to IDE's console");
+        brainOutputRedirectionCheckBox.setEnabled(false);
+
         GroupLayout ocbrainPanelLayout = new GroupLayout(ocbrainPanel);
         ocbrainPanel.setLayout(ocbrainPanelLayout);
         ocbrainPanelLayout.setHorizontalGroup(ocbrainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGroup(ocbrainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(brainOutputRedirectionCheckBox)
+                .addContainerGap(345, Short.MAX_VALUE))
         );
         ocbrainPanelLayout.setVerticalGroup(ocbrainPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGroup(ocbrainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(brainOutputRedirectionCheckBox)
+                .addContainerGap(244, Short.MAX_VALUE))
         );
 
         emulatorTabs.addTab("Ocelot Brain", ocbrainPanel);
@@ -165,32 +231,50 @@ public class SettingsFrame extends javax.swing.JFrame {
         GroupLayout ocdesktopPanelLayout = new GroupLayout(ocdesktopPanel);
         ocdesktopPanel.setLayout(ocdesktopPanelLayout);
         ocdesktopPanelLayout.setHorizontalGroup(ocdesktopPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
         ocdesktopPanelLayout.setVerticalGroup(ocdesktopPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGap(0, 274, Short.MAX_VALUE)
         );
 
         emulatorTabs.addTab("Ocelot Desktop", ocdesktopPanel);
 
+        jLabel4.setFont(new Font("Tahoma", 2, 11)); // NOI18N
+        jLabel4.setText("Linux only");
+
         GroupLayout codePanelLayout = new GroupLayout(codePanel);
         codePanel.setLayout(codePanelLayout);
         codePanelLayout.setHorizontalGroup(codePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGroup(codePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .addContainerGap())
         );
         codePanelLayout.setVerticalGroup(codePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGroup(codePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addContainerGap(249, Short.MAX_VALUE))
         );
 
         emulatorTabs.addTab("CODE", codePanel);
 
+        jLabel5.setFont(new Font("Tahoma", 2, 11)); // NOI18N
+        jLabel5.setText("Linux only");
+
         GroupLayout aurumPanelLayout = new GroupLayout(aurumPanel);
         aurumPanel.setLayout(aurumPanelLayout);
         aurumPanelLayout.setHorizontalGroup(aurumPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGroup(aurumPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .addContainerGap())
         );
         aurumPanelLayout.setVerticalGroup(aurumPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGroup(aurumPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addContainerGap(249, Short.MAX_VALUE))
         );
 
         emulatorTabs.addTab("Aurum Emulator", aurumPanel);
@@ -198,45 +282,134 @@ public class SettingsFrame extends javax.swing.JFrame {
         GroupLayout ocemulatorPanelLayout = new GroupLayout(ocemulatorPanel);
         ocemulatorPanel.setLayout(ocemulatorPanelLayout);
         ocemulatorPanelLayout.setHorizontalGroup(ocemulatorPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
         ocemulatorPanelLayout.setVerticalGroup(ocemulatorPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGap(0, 274, Short.MAX_VALUE)
         );
 
         emulatorTabs.addTab("OCEmulator", ocemulatorPanel);
 
         settingTabs.addTab("Emulators", emulatorTabs);
 
+        jCheckBox2.setText("Minecraft integration");
+        jCheckBox2.setEnabled(false);
+
+        jCheckBox3.setText("OCVM integration");
+        jCheckBox3.setEnabled(false);
+
+        jCheckBox4.setText("OpenComputers VM integration");
+        jCheckBox4.setEnabled(false);
+
         GroupLayout envGeneralPanelLayout = new GroupLayout(envGeneralPanel);
         envGeneralPanel.setLayout(envGeneralPanelLayout);
         envGeneralPanelLayout.setHorizontalGroup(envGeneralPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGroup(envGeneralPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(envGeneralPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jCheckBox4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBox3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBox2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(349, Short.MAX_VALUE))
         );
         envGeneralPanelLayout.setVerticalGroup(envGeneralPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGroup(envGeneralPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox2)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox3)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox4)
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
         environmentTabs.addTab("General", envGeneralPanel);
 
+        jLabel2.setText("Path to .minecraft directory:");
+
+        jPanel1.setBorder(BorderFactory.createTitledBorder(null, "Target machine", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Tahoma", 1, 14))); // NOI18N
+
+        jList1.setBorder(BorderFactory.createTitledBorder(null, "World", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
+        jList1.setModel(new AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        jSeparator1.setOrientation(SwingConstants.VERTICAL);
+
+        jList2.setBorder(BorderFactory.createTitledBorder(null, "Machine UUID", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION));
+        jList2.setModel(new AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(jList2);
+
+        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, GroupLayout.Alignment.LEADING))
+                .addContainerGap())
+        );
+
         GroupLayout minecraftPanelLayout = new GroupLayout(minecraftPanel);
         minecraftPanel.setLayout(minecraftPanelLayout);
         minecraftPanelLayout.setHorizontalGroup(minecraftPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGroup(GroupLayout.Alignment.TRAILING, minecraftPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(minecraftPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(GroupLayout.Alignment.LEADING, minecraftPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, 0))
+                    .addComponent(minecraftTextField, GroupLayout.Alignment.LEADING))
+                .addContainerGap())
         );
         minecraftPanelLayout.setVerticalGroup(minecraftPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGroup(minecraftPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(minecraftTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         environmentTabs.addTab("Minecraft", minecraftPanel);
 
+        jLabel6.setFont(new Font("Tahoma", 2, 11)); // NOI18N
+        jLabel6.setText("Linux only");
+
         GroupLayout ocvmPanelLayout = new GroupLayout(ocvmPanel);
         ocvmPanel.setLayout(ocvmPanelLayout);
         ocvmPanelLayout.setHorizontalGroup(ocvmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGroup(ocvmPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .addContainerGap())
         );
         ocvmPanelLayout.setVerticalGroup(ocvmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGroup(ocvmPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addContainerGap(249, Short.MAX_VALUE))
         );
 
         environmentTabs.addTab("OCVM", ocvmPanel);
@@ -244,10 +417,10 @@ public class SettingsFrame extends javax.swing.JFrame {
         GroupLayout opencomputersvmPanelLayout = new GroupLayout(opencomputersvmPanel);
         opencomputersvmPanel.setLayout(opencomputersvmPanelLayout);
         opencomputersvmPanelLayout.setHorizontalGroup(opencomputersvmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
         opencomputersvmPanelLayout.setVerticalGroup(opencomputersvmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 196, Short.MAX_VALUE)
+            .addGap(0, 274, Short.MAX_VALUE)
         );
 
         environmentTabs.addTab("OpenComputers VM", opencomputersvmPanel);
@@ -257,21 +430,37 @@ public class SettingsFrame extends javax.swing.JFrame {
         GroupLayout modulesPanelLayout = new GroupLayout(modulesPanel);
         modulesPanel.setLayout(modulesPanelLayout);
         modulesPanelLayout.setHorizontalGroup(modulesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
+            .addGap(0, 535, Short.MAX_VALUE)
         );
         modulesPanelLayout.setVerticalGroup(modulesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 224, Short.MAX_VALUE)
+            .addGap(0, 302, Short.MAX_VALUE)
         );
 
         settingTabs.addTab("Modules", modulesPanel);
 
+        jLabel7.setText("Lua path:");
+
+        jTextField1.setText(System.getenv("LUA_PATH").length()<2 ? "LUA_PATH not set in current environment" : System.getenv("LUA_PATH"));
+
         GroupLayout luaPanelLayout = new GroupLayout(luaPanel);
         luaPanel.setLayout(luaPanelLayout);
         luaPanelLayout.setHorizontalGroup(luaPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
+            .addGroup(luaPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(luaPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(luaPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextField1, GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE))
+                .addContainerGap())
         );
         luaPanelLayout.setVerticalGroup(luaPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 224, Short.MAX_VALUE)
+            .addGroup(luaPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel7)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(251, Short.MAX_VALUE))
         );
 
         settingTabs.addTab("Lua", luaPanel);
@@ -284,6 +473,11 @@ public class SettingsFrame extends javax.swing.JFrame {
         });
 
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         GroupLayout controlPanelLayout = new GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
@@ -312,7 +506,7 @@ public class SettingsFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(settingTabs, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)
+                .addComponent(settingTabs)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(controlPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
@@ -325,8 +519,13 @@ public class SettingsFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
+    private void cancelButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JPanel aurumPanel;
+    private JCheckBox brainOutputRedirectionCheckBox;
     private JButton cancelButton;
     private JPanel codePanel;
     private JPanel controlPanel;
@@ -335,20 +534,39 @@ public class SettingsFrame extends javax.swing.JFrame {
     private JPanel envGeneralPanel;
     private JTabbedPane environmentTabs;
     private JPanel idePanel;
+    private JCheckBox jCheckBox1;
+    private JCheckBox jCheckBox2;
+    private JCheckBox jCheckBox3;
+    private JCheckBox jCheckBox4;
     private JLabel jLabel1;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JLabel jLabel4;
+    private JLabel jLabel5;
+    private JLabel jLabel6;
+    private JLabel jLabel7;
+    private JList<String> jList1;
+    private JList<String> jList2;
+    private JPanel jPanel1;
     private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane2;
+    private JScrollPane jScrollPane4;
+    private JSeparator jSeparator1;
     private JTextField jTextField1;
     private JPanel luaPanel;
     private JPanel minecraftPanel;
+    private JTextField minecraftTextField;
     private JPanel modulesPanel;
     private JPanel ocbrainPanel;
     private JPanel ocdesktopPanel;
     private JPanel ocemuPanel;
+    private JTextField ocemuTextField;
     private JPanel ocemulatorPanel;
     private JPanel ocvmPanel;
     private JButton okButton;
     private JPanel opencomputersvmPanel;
     private JList<String> settingList;
     private JTabbedPane settingTabs;
+    private JTextField workingDirTextField;
     // End of variables declaration//GEN-END:variables
 }

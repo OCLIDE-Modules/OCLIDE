@@ -79,6 +79,8 @@ import ru.VladTheMountain.oclide.editor.OCLIDECompletionProvider;
 import ru.VladTheMountain.oclide.ui.dialog.CreateNewProjectDialog;
 import ru.VladTheMountain.oclide.ui.dialog.OpenFileFileChooser;
 import ru.VladTheMountain.oclide.ui.dialog.ProjectFileChooser;
+import ru.VladTheMountain.oclide.ui.emulator.AurumEmulatorForm;
+import ru.VladTheMountain.oclide.ui.emulator.CODEForm;
 import ru.VladTheMountain.oclide.ui.emulator.OCEmuForm;
 import ru.VladTheMountain.oclide.util.ConsoleOutputStream;
 
@@ -242,7 +244,7 @@ public class EditorFrame extends JFrame {
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(this.editorTabs.getTitleAt(this.editorTabs.getSelectedIndex()));
         DefaultTreeModel model = new DefaultTreeModel(rootNode);
         //
-        
+
         //
         this.variableTree.setModel(model);
     }
@@ -728,12 +730,27 @@ projectsTree.addMouseListener(new MouseAdapter() {
     emulatorMenu.add(ocelotMenuItem);
 
     ocemulatorMenuItem.setText("Run OCEmulator");
+    ocemulatorMenuItem.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            ocemulatorMenuItemActionPerformed(evt);
+        }
+    });
     emulatorMenu.add(ocemulatorMenuItem);
 
     aurumMenuItem.setText("Run Aurum Emulator");
+    aurumMenuItem.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            aurumMenuItemActionPerformed(evt);
+        }
+    });
     emulatorMenu.add(aurumMenuItem);
 
     codeMenuItem.setText("Run CODE");
+    codeMenuItem.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            codeMenuItemActionPerformed(evt);
+        }
+    });
     emulatorMenu.add(codeMenuItem);
 
     runMenu.add(emulatorMenu);
@@ -974,6 +991,30 @@ projectsTree.addMouseListener(new MouseAdapter() {
     private void createFileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_createFileActionPerformed
         this.addFileMenuItemActionPerformed(evt);
     }//GEN-LAST:event_createFileActionPerformed
+
+    private void ocemulatorMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ocemulatorMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ocemulatorMenuItemActionPerformed
+
+    private void aurumMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_aurumMenuItemActionPerformed
+        Thread aurum = new Thread() {
+            @Override
+            public void run() {
+                new AurumEmulatorForm().setVisible(true);
+            }
+        };
+        aurum.start();
+    }//GEN-LAST:event_aurumMenuItemActionPerformed
+
+    private void codeMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_codeMenuItemActionPerformed
+        Thread code = new Thread() {
+            @Override
+            public void run() {
+                new CODEForm().setVisible(true);
+            }
+        };
+        code.start();
+    }//GEN-LAST:event_codeMenuItemActionPerformed
 
     private void runOCEmu() throws IOException {
         if (projectsTree.getSelectionPath().getPath().length > 1 && projectsTree.getSelectionPath().getPath().length < 3) {

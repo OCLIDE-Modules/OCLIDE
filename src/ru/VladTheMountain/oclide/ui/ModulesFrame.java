@@ -23,6 +23,22 @@
  */
 package ru.VladTheMountain.oclide.ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.AbstractListModel;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextPane;
+import javax.swing.LayoutStyle;
+import javax.swing.WindowConstants;
+
 /**
  *
  * @author VladTheMountain
@@ -47,57 +63,172 @@ public class ModulesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        controlPanel = new JPanel();
+        okButton = new JButton();
+        cancelButton = new JButton();
+        progressBar = new JProgressBar();
+        statusLabel = new JLabel();
+        jTabbedPane1 = new JTabbedPane();
+        installedModules = new JPanel();
+        jSplitPane1 = new JSplitPane();
+        jScrollPane1 = new JScrollPane();
+        installedModuleList = new JList<>();
+        jScrollPane2 = new JScrollPane();
+        infoInstalledTextPane = new JTextPane();
+        availablePanel = new JPanel();
+        jSplitPane2 = new JSplitPane();
+        jScrollPane3 = new JScrollPane();
+        installedModuleList1 = new JList<>();
+        jScrollPane4 = new JScrollPane();
+        infoAvailableTextPane = new JTextPane();
+        customPanel = new JPanel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("OCLIDE Settings");
+
+        okButton.setText("OK");
+
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
+        statusLabel.setText("jLabel1");
+
+        GroupLayout controlPanelLayout = new GroupLayout(controlPanel);
+        controlPanel.setLayout(controlPanelLayout);
+        controlPanelLayout.setHorizontalGroup(controlPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(controlPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statusLabel))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cancelButton)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(okButton)
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        controlPanelLayout.setVerticalGroup(controlPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addGroup(controlPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
+                        .addGap(0, 4, Short.MAX_VALUE)
+                        .addComponent(statusLabel)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(controlPanelLayout.createSequentialGroup()
+                        .addContainerGap(15, Short.MAX_VALUE)
+                        .addGroup(controlPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(cancelButton)
+                            .addComponent(okButton))))
+                .addContainerGap())
+        );
+
+        installedModuleList.setModel(new AbstractListModel<String>() {
+            String[] strings = { "OCEmu", "Ocelot Brain", "Ocelot Desktop", "CODE", "Aurum Emulator", "OCEmulator", "OCVM", "OpenComputers VM" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(installedModuleList);
+
+        jSplitPane1.setLeftComponent(jScrollPane1);
+
+        jScrollPane2.setViewportView(infoInstalledTextPane);
+
+        jSplitPane1.setRightComponent(jScrollPane2);
+
+        GroupLayout installedModulesLayout = new GroupLayout(installedModules);
+        installedModules.setLayout(installedModulesLayout);
+        installedModulesLayout.setHorizontalGroup(installedModulesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(jSplitPane1)
+        );
+        installedModulesLayout.setVerticalGroup(installedModulesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(jSplitPane1)
+        );
+
+        jTabbedPane1.addTab("Installed", installedModules);
+
+        installedModuleList1.setModel(new AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(installedModuleList1);
+
+        jSplitPane2.setLeftComponent(jScrollPane3);
+
+        jScrollPane4.setViewportView(infoAvailableTextPane);
+
+        jSplitPane2.setRightComponent(jScrollPane4);
+
+        GroupLayout availablePanelLayout = new GroupLayout(availablePanel);
+        availablePanel.setLayout(availablePanelLayout);
+        availablePanelLayout.setHorizontalGroup(availablePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(jSplitPane2)
+        );
+        availablePanelLayout.setVerticalGroup(availablePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(jSplitPane2)
+        );
+
+        jTabbedPane1.addTab("Available", availablePanel);
+
+        GroupLayout customPanelLayout = new GroupLayout(customPanel);
+        customPanel.setLayout(customPanelLayout);
+        customPanelLayout.setHorizontalGroup(customPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGap(0, 375, Short.MAX_VALUE)
+        );
+        customPanelLayout.setVerticalGroup(customPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGap(0, 206, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Custom", customPanel);
+
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(controlPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(controlPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModulesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModulesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModulesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModulesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ModulesFrame().setVisible(true);
-            }
-        });
-    }
+    private void cancelButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    JPanel availablePanel;
+    JButton cancelButton;
+    JPanel controlPanel;
+    JPanel customPanel;
+    JTextPane infoAvailableTextPane;
+    JTextPane infoInstalledTextPane;
+    JList<String> installedModuleList;
+    JList<String> installedModuleList1;
+    JPanel installedModules;
+    JScrollPane jScrollPane1;
+    JScrollPane jScrollPane2;
+    JScrollPane jScrollPane3;
+    JScrollPane jScrollPane4;
+    JSplitPane jSplitPane1;
+    JSplitPane jSplitPane2;
+    JTabbedPane jTabbedPane1;
+    JButton okButton;
+    JProgressBar progressBar;
+    JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 }
