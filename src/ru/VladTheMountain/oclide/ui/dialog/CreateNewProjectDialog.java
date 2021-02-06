@@ -271,7 +271,7 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
         jLabel1.setText("Project Name:");
 
         jLabel2.setFont(new Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel2.setText("Project Folder:");
+        jLabel2.setText("Created folder:");
 
         projectNameField.setFont(new Font("Tahoma", 0, 12)); // NOI18N
         projectNameField.setText("LuaScript1");
@@ -302,22 +302,22 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
                 .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(scriptSeparator, GroupLayout.Alignment.TRAILING)
                     .addGroup(GroupLayout.Alignment.TRAILING, projectPropertiesPanelLayout.createSequentialGroup()
-                        .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                        .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(projectNameField, GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                            .addComponent(projectNameField)
                             .addComponent(projectFolderField)))
                     .addComponent(librarySeparator)
                     .addGroup(projectPropertiesPanelLayout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(scriptNameField))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(scriptNameField, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE))
                     .addGroup(projectPropertiesPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(libraryNameField)))
+                        .addComponent(libraryNameField, GroupLayout.PREFERRED_SIZE, 348, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         projectPropertiesPanelLayout.setVerticalGroup(projectPropertiesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)

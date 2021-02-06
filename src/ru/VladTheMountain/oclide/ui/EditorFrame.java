@@ -420,7 +420,7 @@ public class EditorFrame extends JFrame {
         projectChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (v0.0.7)");
+        setTitle("OCLIDE - OpenComputers Lua Integrated Development Environment (beta v0.1.0)");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         jSplitPane3.setOrientation(JSplitPane.VERTICAL_SPLIT);
@@ -434,6 +434,7 @@ public class EditorFrame extends JFrame {
         });
         jSplitPane3.setLeftComponent(editorTabs);
 
+        outputTextArea.setEditable(false);
         outputTextArea.setColumns(20);
         outputTextArea.setFont(new Font("Lucida Console", 0, 12)); // NOI18N
         outputTextArea.setRows(5);
@@ -441,7 +442,7 @@ public class EditorFrame extends JFrame {
 
         jTabbedPane1.addTab("IDE Output", jScrollPane2);
 
-        jSplitPane3.setRightComponent(jTabbedPane1);
+        jSplitPane3.setBottomComponent(jTabbedPane1);
 
         jSplitPane1.setRightComponent(jSplitPane3);
 
@@ -567,7 +568,6 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     runOcelotButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&24.png"))); // NOI18N
     runOcelotButton.setToolTipText("Launch Ocelot Desktop");
-    runOcelotButton.setHorizontalTextPosition(SwingConstants.CENTER);
     runOcelotButton.setVerticalTextPosition(SwingConstants.BOTTOM);
     runOcelotButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -781,11 +781,11 @@ projectsTree.addMouseListener(new MouseAdapter() {
     layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
             .addComponent(projectToolbar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(undoRedoToolbar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jToolBar1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(209, Short.MAX_VALUE))
+            .addContainerGap(270, Short.MAX_VALUE))
         .addComponent(jSplitPane1)
     );
     layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -795,7 +795,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
                 .addComponent(projectToolbar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jToolBar1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jSplitPane1, GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
             .addContainerGap())
     );
 

@@ -23,25 +23,36 @@
  */
 package ru.VladTheMountain.emulator.ui;
 
-import java.awt.Canvas;
+import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
 /**
  *
  * @author VladTheMountain
  */
-public class OcelotEmulatorFrame extends javax.swing.JFrame {
+public class OcelotEmulatorFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
+
+    private static CustomCanvas graphics;
 
     /**
      * Creates new form EmulatorFrame
      */
     public OcelotEmulatorFrame() {
+        graphics = new CustomCanvas(this.getGraphics());
         initComponents();
+        Timer t = new Timer(300, (ActionEvent e) -> {
+            graphics.repaint();
+        });
+        t.start();
     }
 
     /**
@@ -53,16 +64,33 @@ public class OcelotEmulatorFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainCanvas = new Canvas();
+        canvasPanel = new JPanel();
         jMenuBar1 = new JMenuBar();
         fileMenu = new JMenu();
+        jMenuItem1 = new JMenuItem();
         viewMenu = new JMenu();
         windowMenu = new JMenu();
 
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("OCLIDE Built-In Emulator");
 
+        canvasPanel.add(graphics);
+        graphics.setBounds(0, 0, canvasPanel.getWidth(), canvasPanel.getHeight());
+
+        GroupLayout canvasPanelLayout = new GroupLayout(canvasPanel);
+        canvasPanel.setLayout(canvasPanelLayout);
+        canvasPanelLayout.setHorizontalGroup(canvasPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGap(0, 113, Short.MAX_VALUE)
+        );
+        canvasPanelLayout.setVerticalGroup(canvasPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGap(0, 152, Short.MAX_VALUE)
+        );
+
         fileMenu.setText("File");
+
+        jMenuItem1.setText("jMenuItem1");
+        fileMenu.add(jMenuItem1);
+
         jMenuBar1.add(fileMenu);
 
         viewMenu.setText("View");
@@ -76,19 +104,28 @@ public class OcelotEmulatorFrame extends javax.swing.JFrame {
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(mainCanvas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(canvasPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(mainCanvas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(canvasPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*public static void main(String[] args) {
+        new OcelotEmulatorFrame().setVisible(true);
+        graphics.setBackgroundColor("000000");
+        graphics.setForegroundColor("FFFFFF");
+        graphics.fill(1, 1, 500, 200, "A");
+        graphics.repaint();
+    }*/
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    JPanel canvasPanel;
     JMenu fileMenu;
     JMenuBar jMenuBar1;
-    Canvas mainCanvas;
+    JMenuItem jMenuItem1;
     JMenu viewMenu;
     JMenu windowMenu;
     // End of variables declaration//GEN-END:variables

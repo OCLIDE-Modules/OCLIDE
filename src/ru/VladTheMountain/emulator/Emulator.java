@@ -24,12 +24,23 @@
 package ru.VladTheMountain.emulator;
 
 import java.io.File;
-import scala.Function1;
-import scala.runtime.BoxedUnit;
 import totoro.ocelot.brain.Ocelot;
 import totoro.ocelot.brain.event.BeepEvent;
+import totoro.ocelot.brain.event.BeepPatternEvent;
 import totoro.ocelot.brain.event.Event;
 import totoro.ocelot.brain.event.EventBus;
+import totoro.ocelot.brain.event.FileSystemActivityEvent;
+import totoro.ocelot.brain.event.MachineCrashEvent;
+import totoro.ocelot.brain.event.RelayActivityEvent;
+import totoro.ocelot.brain.event.TextBufferCopyEvent;
+import totoro.ocelot.brain.event.TextBufferFillEvent;
+import totoro.ocelot.brain.event.TextBufferSetBackgroundColorEvent;
+import totoro.ocelot.brain.event.TextBufferSetColorDepthEvent;
+import totoro.ocelot.brain.event.TextBufferSetEvent;
+import totoro.ocelot.brain.event.TextBufferSetForegroundColorEvent;
+import totoro.ocelot.brain.event.TextBufferSetPaletteColorEvent;
+import totoro.ocelot.brain.event.TextBufferSetResolutionEvent;
+import totoro.ocelot.brain.event.TextBufferSetViewportEvent;
 import totoro.ocelot.brain.nbt.NBTTagCompound;
 import totoro.ocelot.brain.workspace.Workspace;
 
@@ -59,18 +70,72 @@ public class Emulator {
      */
     public Emulator(File workspaceDir) {
         world = new Workspace(workspaceDir.toPath());
+        start();
     }
 
     /**
      * What to do when emulation starting
      */
     private void start() {
-        Ocelot.initialize();
+        emulator.initialize();
         //
 
-        //Events
+        //Event handlers
         EventBus.listenTo(BeepEvent.class, (Event v1) -> {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            BeepEvent event = (BeepEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(BeepPatternEvent.class, (Event v1) -> {
+            BeepPatternEvent event = (BeepPatternEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(FileSystemActivityEvent.class, (Event v1) -> {
+            FileSystemActivityEvent event = (FileSystemActivityEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(MachineCrashEvent.class, (Event v1) -> {
+            MachineCrashEvent event = (MachineCrashEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(RelayActivityEvent.class, (Event v1) -> {
+            RelayActivityEvent event = (RelayActivityEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(TextBufferCopyEvent.class, (Event v1) -> {
+            TextBufferCopyEvent event = (TextBufferCopyEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(TextBufferFillEvent.class, (Event v1) -> {
+            TextBufferFillEvent event = (TextBufferFillEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(TextBufferSetBackgroundColorEvent.class, (Event v1) -> {
+            TextBufferSetBackgroundColorEvent event = (TextBufferSetBackgroundColorEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(TextBufferSetColorDepthEvent.class, (Event v1) -> {
+            TextBufferSetColorDepthEvent event = (TextBufferSetColorDepthEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(TextBufferSetEvent.class, (Event v1) -> {
+            TextBufferSetEvent event = (TextBufferSetEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(TextBufferSetForegroundColorEvent.class, (Event v1) -> {
+            TextBufferSetForegroundColorEvent event = (TextBufferSetForegroundColorEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(TextBufferSetPaletteColorEvent.class, (Event v1) -> {
+            TextBufferSetPaletteColorEvent event = (TextBufferSetPaletteColorEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(TextBufferSetResolutionEvent.class, (Event v1) -> {
+            TextBufferSetResolutionEvent event = (TextBufferSetResolutionEvent) v1;
+            return null;
+        });
+        EventBus.listenTo(TextBufferSetViewportEvent.class, (Event v1) -> {
+            TextBufferSetViewportEvent event = (TextBufferSetViewportEvent) v1;
+            return null;
         });
         // DO NOT MODIFY //
         while (true) {
@@ -107,8 +172,8 @@ public class Emulator {
         world.save(emulation);
     }
 
-    //Event functions
-}
-
-abstract class BeepEventUnit implements Function1<BeepEvent, BoxedUnit> {
+    public void exit() {
+        stop();
+        emulator.shutdown();
+    }
 }
