@@ -14,12 +14,12 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 - [ ] Static code analyzer
 - [ ] Minecraft 1.7.10 - 1.12.2 integration
 - [x] [OCEmu](https://github.com/zenith391/OCEmu) integration
-- [ ] [Ocelot Desktop](https://gitlab.com/cc-ru/ocelot/ocelot-desktop/) integration
-- [ ] [CODE](https://github.com/Avevad/code) integration
-- [ ] [AurumEmulator](https://github.com/Zabqer/AurumEmulator) integration
-- [ ] Built-in [Ocelot Brain](https://gitlab.com/cc-ru/ocelot/ocelot-brain)-based emulator
-- [ ] [OCVM](https://github.com/payonel/ocvm) support
-- [ ] [OpenComputersVM](https://github.com/FrostyPenguin/OpenComputersVM) support
+- [x] [Ocelot Desktop](https://gitlab.com/cc-ru/ocelot/ocelot-desktop/) integration
+- [x] [CODE](https://github.com/Avevad/code) integration
+- [x] [AurumEmulator](https://github.com/Zabqer/AurumEmulator) integration
+- [x] Built-in [Ocelot Brain](https://gitlab.com/cc-ru/ocelot/ocelot-brain)-based emulator
+- [x] [OCVM](https://github.com/payonel/ocvm) support
+- [x] [OpenComputersVM](https://github.com/FrostyPenguin/OpenComputersVM) support
 - [ ] Internationalization
 - [ ] Modularity
 
