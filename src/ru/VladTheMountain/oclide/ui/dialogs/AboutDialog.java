@@ -21,40 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide;
+package ru.VladTheMountain.oclide.ui.dialogs;
 
-import java.awt.Graphics2D;
-import java.awt.SplashScreen;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import ru.VladTheMountain.oclide.ui.frames.EditorFrame;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
+ * Yes, it's a separate class for a single call of a single function. Don't ask
+ * why and just scroll further.
  *
- * @author VladTheMountain
+ * @author VladTheMounatin
  */
-public class OCLIDE {
+public class AboutDialog {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // DECOMMENT AT RELEASE
-        final SplashScreen splash = SplashScreen.getSplashScreen();
-        if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
-            return;
-        }
-        Graphics2D g = splash.createGraphics();
-        if (g == null) {
-            System.out.println("g is null");
-            return;
-        }
-        try {
-            Thread.sleep(2000);
-            new EditorFrame().setVisible(true);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public AboutDialog(JFrame parent) {
+        JOptionPane.showMessageDialog(parent,
+                "OCLIDE RC1-1.0.0\n"
+                + "THIS VERSION IS FOR INDEV PREVIEW PURPOSES ONLY. DO NOT DISTRIBUTE."
+                + "Copyright (c) VladTheMountain (Vladislav Gorskii) 2021.\n"
+                + "\n"
+                + "OCLIDE (OpenComputers Lua Integrated Development Environment) is an open-source Lua IDE for developing software for OpenComputers Minecraft mod.\n"
+                + "This program and it's source, until otherwise noted, are distributed under the MIT License.\n"
+                + "\n"
+                + ""
+        );
     }
 }

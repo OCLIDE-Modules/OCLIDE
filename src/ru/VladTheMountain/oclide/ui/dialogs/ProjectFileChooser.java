@@ -21,40 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide;
+package ru.VladTheMountain.oclide.ui.dialogs;
 
-import java.awt.Graphics2D;
-import java.awt.SplashScreen;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import ru.VladTheMountain.oclide.ui.frames.EditorFrame;
+import java.io.File;
+import javax.swing.JFileChooser;
 
 /**
  *
  * @author VladTheMountain
  */
-public class OCLIDE {
+public class ProjectFileChooser extends JFileChooser {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // DECOMMENT AT RELEASE
-        final SplashScreen splash = SplashScreen.getSplashScreen();
-        if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
-            return;
-        }
-        Graphics2D g = splash.createGraphics();
-        if (g == null) {
-            System.out.println("g is null");
-            return;
-        }
-        try {
-            Thread.sleep(2000);
-            new EditorFrame().setVisible(true);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private static final long serialVersionUID = 1L;
+
+    public ProjectFileChooser() {
+        this.setCurrentDirectory(new File(System.getProperty("user.home")));
+        this.setFileSelectionMode(DIRECTORIES_ONLY);
     }
+
 }

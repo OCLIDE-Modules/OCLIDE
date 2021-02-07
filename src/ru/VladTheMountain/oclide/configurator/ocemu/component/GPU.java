@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 Vladislav Gorskii.
+ * Copyright 2021 Vladislav Gorskiis.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,40 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide;
+package ru.VladTheMountain.oclide.configurator.ocemu.component;
 
-import java.awt.Graphics2D;
-import java.awt.SplashScreen;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import ru.VladTheMountain.oclide.ui.frames.EditorFrame;
+import ru.VladTheMountain.oclide.util.UUIDGenerator;
 
 /**
  *
  * @author VladTheMountain
  */
-public class OCLIDE {
+public class GPU extends OCEmuComponent {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // DECOMMENT AT RELEASE
-        final SplashScreen splash = SplashScreen.getSplashScreen();
-        if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
-            return;
-        }
-        Graphics2D g = splash.createGraphics();
-        if (g == null) {
-            System.out.println("g is null");
-            return;
-        }
-        try {
-            Thread.sleep(2000);
-            new EditorFrame().setVisible(true);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public GPU(int i1, int i2, int i3, int i4) {
+        super(3, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
     }
+
 }

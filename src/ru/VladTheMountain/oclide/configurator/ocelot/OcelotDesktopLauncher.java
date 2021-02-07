@@ -21,40 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide;
-
-import java.awt.Graphics2D;
-import java.awt.SplashScreen;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import ru.VladTheMountain.oclide.ui.frames.EditorFrame;
+package ru.VladTheMountain.oclide.configurator.ocelot;
 
 /**
+ * Util class for launching Ocelot Desktop
  *
  * @author VladTheMountain
  */
-public class OCLIDE {
+public class OcelotDesktopLauncher {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // DECOMMENT AT RELEASE
-        final SplashScreen splash = SplashScreen.getSplashScreen();
-        if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
-            return;
-        }
-        Graphics2D g = splash.createGraphics();
-        if (g == null) {
-            System.out.println("g is null");
-            return;
-        }
-        try {
-            Thread.sleep(2000);
-            new EditorFrame().setVisible(true);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

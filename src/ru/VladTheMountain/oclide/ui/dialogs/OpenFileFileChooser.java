@@ -21,40 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide;
+package ru.VladTheMountain.oclide.ui.dialogs;
 
-import java.awt.Graphics2D;
-import java.awt.SplashScreen;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import ru.VladTheMountain.oclide.ui.frames.EditorFrame;
+import java.io.File;
+import java.nio.file.FileSystems;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 
 /**
  *
  * @author VladTheMountain
  */
-public class OCLIDE {
+public class OpenFileFileChooser extends JFileChooser {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // DECOMMENT AT RELEASE
-        final SplashScreen splash = SplashScreen.getSplashScreen();
-        if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
-            return;
-        }
-        Graphics2D g = splash.createGraphics();
-        if (g == null) {
-            System.out.println("g is null");
-            return;
-        }
-        try {
-            Thread.sleep(2000);
-            new EditorFrame().setVisible(true);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private static final long serialVersionUID = 1L;
+
+    public OpenFileFileChooser() {
+        this.setApproveButtonText("Open");
+        this.setApproveButtonToolTipText("Open selected file");
+        this.setCurrentDirectory(new File(System.getProperty("user.dir") + FileSystems.getDefault().getSeparator() + "projects"));
+        this.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.getAbsolutePath().endsWith(".lua") || f.isDirectory();
+            }
+
+            @Override
+            public String getDescription() {
+                return "*.lua";
+            }
+        });
     }
+
 }
