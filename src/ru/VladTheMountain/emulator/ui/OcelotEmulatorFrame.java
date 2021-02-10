@@ -23,7 +23,12 @@
  */
 package ru.VladTheMountain.emulator.ui;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.logging.Level;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -32,6 +37,35 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.WindowConstants;
+import ru.VladTheMountain.emulator.EmuLogger;
+import totoro.ocelot.brain.Ocelot;
+import totoro.ocelot.brain.entity.CPU;
+import totoro.ocelot.brain.entity.Case;
+import totoro.ocelot.brain.entity.GraphicsCard;
+import totoro.ocelot.brain.entity.HDDManaged;
+import totoro.ocelot.brain.entity.Memory;
+import totoro.ocelot.brain.entity.Screen;
+import totoro.ocelot.brain.event.BeepEvent;
+import totoro.ocelot.brain.event.BeepPatternEvent;
+import totoro.ocelot.brain.event.Event;
+import totoro.ocelot.brain.event.EventBus;
+import totoro.ocelot.brain.event.FileSystemActivityEvent;
+import totoro.ocelot.brain.event.MachineCrashEvent;
+import totoro.ocelot.brain.event.RelayActivityEvent;
+import totoro.ocelot.brain.event.TextBufferCopyEvent;
+import totoro.ocelot.brain.event.TextBufferFillEvent;
+import totoro.ocelot.brain.event.TextBufferSetBackgroundColorEvent;
+import totoro.ocelot.brain.event.TextBufferSetColorDepthEvent;
+import totoro.ocelot.brain.event.TextBufferSetEvent;
+import totoro.ocelot.brain.event.TextBufferSetForegroundColorEvent;
+import totoro.ocelot.brain.event.TextBufferSetPaletteColorEvent;
+import totoro.ocelot.brain.event.TextBufferSetResolutionEvent;
+import totoro.ocelot.brain.event.TextBufferSetViewportEvent;
+import totoro.ocelot.brain.loot.Loot;
+import totoro.ocelot.brain.nbt.NBTTagCompound;
+import totoro.ocelot.brain.nbt.persistence.PersistableString;
+import totoro.ocelot.brain.util.Tier;
+import totoro.ocelot.brain.workspace.Workspace;
 
 /**
  *
@@ -41,16 +75,22 @@ public class OcelotEmulatorFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    private static CustomCanvas graphics;
+    private static Emulator graphics;
 
     /**
      * Creates new form EmulatorFrame
      */
     public OcelotEmulatorFrame() {
-        graphics = new CustomCanvas(this.getGraphics());
+        Thread thr = new Thread() {
+            @Override
+            public void run() {
+                graphics.start();
+            }
+        };
+        graphics = new Emulator();
         initComponents();
         Timer t = new Timer(300, (ActionEvent e) -> {
-            graphics.repaint();
+            this.revalidate();
         });
         t.start();
     }
@@ -64,7 +104,7 @@ public class OcelotEmulatorFrame extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        canvasPanel = new JPanel();
+        canvasPanel = new JPanel(null);
         jMenuBar1 = new JMenuBar();
         fileMenu = new JMenu();
         jMenuItem1 = new JMenuItem();
@@ -74,9 +114,6 @@ public class OcelotEmulatorFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("OCLIDE Built-In Emulator");
 
-        canvasPanel.add(graphics);
-        graphics.setBounds(0, 0, canvasPanel.getWidth(), canvasPanel.getHeight());
-
         GroupLayout canvasPanelLayout = new GroupLayout(canvasPanel);
         canvasPanel.setLayout(canvasPanelLayout);
         canvasPanelLayout.setHorizontalGroup(canvasPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -85,6 +122,9 @@ public class OcelotEmulatorFrame extends JFrame {
         canvasPanelLayout.setVerticalGroup(canvasPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGap(0, 152, Short.MAX_VALUE)
         );
+
+        graphics.setBackground(Color.BLACK);
+        canvasPanel.add(graphics);
 
         fileMenu.setText("File");
 
@@ -113,20 +153,239 @@ public class OcelotEmulatorFrame extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         new OcelotEmulatorFrame().setVisible(true);
-        graphics.setBackgroundColor("000000");
-        graphics.setForegroundColor("FFFFFF");
-        graphics.fill(1, 1, 500, 200, "A");
-        graphics.repaint();
-    }*/
+        graphics.start();
+    }
+
+    //Emulator class
+    class Emulator extends JPanel {
+
+        private static final long serialVersionUID = 1L;
+
+        //JComponent
+        private Color back = Color.BLACK;
+        private Color fore = Color.WHITE;
+        private final int CHAR_WIDTH = 9;
+        private final int CHAR_HEIGHT = 22;
+        private final Font font = Font.getFont("Monospaced Plain 16");
+        //Ocelot
+        private Workspace world;
+        private NBTTagCompound emulation;
+        private Screen screen;
+        //Custom
+        private EmuLogger logger;
+
+        //Emulator-specific
+        private Color[] colors = { //Data was taken from https://minecraft-ru.gamepedia.com/OpenComputers/Colors_API
+            new Color(255, 255, 255), //White
+            new Color(255, 127, 0), //Orange
+            new Color(255, 0, 255), //Magenta
+            new Color(0, 127, 127), //Lightblue
+            new Color(255, 255, 0), //Yellow
+            new Color(0, 255, 0),//Lime,
+            new Color(255, 127, 255), //Pink
+            new Color(85, 85, 85), //Gray
+            new Color(170, 170, 170), //Silver
+            new Color(0, 255, 255), //Cyan
+            new Color(127, 0, 127), //Purple
+            new Color(0, 0, 127), //Blue
+            new Color(127, 0, 0), //Brown
+            new Color(0, 127, 0), //Green
+            new Color(255, 0, 0), //Red
+            new Color(0, 0, 0) //Black
+        };
+
+        /**
+         * Launch emulator with a premade workspace
+         *
+         * @param workspace Workspace to deploy
+         */
+        public Emulator() {
+            super();
+            logger = new EmuLogger();
+        }
+
+        /**
+         * Launch emulator with a premade workspace
+         *
+         * @param workspaceDir File to get workspace from
+         */
+        public Emulator(File workspaceDir) {
+            world = new Workspace(workspaceDir.toPath());
+            start();
+        }
+
+        /**
+         * What to do when emulation starting
+         */
+        public void start() {
+            Ocelot.initialize();
+            world = new Workspace(new File(System.getProperty("user.dir") + "/Ocelot/test").toPath());
+            Case computer = world.add(new Case(Tier.Three()));
+            CPU cpu = new CPU(Tier.Three());
+            computer.add(cpu);
+            GraphicsCard gpu = new GraphicsCard(Tier.Two());
+            computer.add(gpu);
+            Memory mem1 = new Memory(Tier.Six());
+            computer.add(mem1);
+            Memory mem2 = new Memory(Tier.Three());
+            computer.add(mem2);
+            HDDManaged hdd = new HDDManaged(Tier.Three());
+            computer.add(hdd);
+            computer.add(Loot.OpenOsEEPROM().create());
+            computer.add(Loot.OpenOsFloppy().create());
+            screen = world.add(new Screen(Tier.Two()));
+            computer.connect(screen);
+            computer.setCustomData(new PersistableString("xxx"));
+            //
+            computer.turnOn();
+            //Event handlers
+            EventBus.listenTo(BeepEvent.class, (Event v1) -> {
+                BeepEvent event = (BeepEvent) v1;
+                logger.log(Level.INFO, "Computer beeped with " + event.frequency() + " Hz for " + event.duration());
+                return null;
+            });
+            EventBus.listenTo(BeepPatternEvent.class, (Event v1) -> {
+                BeepPatternEvent event = (BeepPatternEvent) v1;
+                logger.log(Level.INFO, "Computer beeped with pattern " + event.pattern().toString());
+                return null;
+            });
+            EventBus.listenTo(FileSystemActivityEvent.class, (Event v1) -> {
+                FileSystemActivityEvent event = (FileSystemActivityEvent) v1;
+                logger.log(Level.INFO, "Filesystem actvity at " + event.address());
+                return null;
+            });
+            EventBus.listenTo(MachineCrashEvent.class, (Event v1) -> {
+                MachineCrashEvent event = (MachineCrashEvent) v1;
+                logger.log(Level.WARNING, "Machine crashed. Info:\n" + event.message());
+                return null;
+            });
+            EventBus.listenTo(RelayActivityEvent.class, (Event v1) -> {
+                RelayActivityEvent event = (RelayActivityEvent) v1;
+                logger.log(Level.INFO, "Relay activity at " + event.relay().toString());
+                return null;
+            });
+            // DO NOT MODIFY //
+            while (true) {
+                if (loop() != 1) {
+                    break;
+                } else {
+                    world.update();
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException ex) {
+                        System.out.println("[" + ru.VladTheMountain.emulator.Emulator.class.getName() + "]" + ex.getMessage());
+                    }
+                }
+            }
+            exit();
+        }
+
+        /**
+         * What to perform while working
+         *
+         * @return status of performed operation
+         */
+        private int loop() {
+            repaint();
+            System.out.println("Called repaint()");
+            return 1;
+        }
+
+        /**
+         * What to do when stopping the emulation
+         */
+        private void stop() {
+
+            // DO NOT MODIFY //
+            world.save(emulation);
+        }
+
+        public void exit() {
+            stop();
+            Ocelot.shutdown();
+        }
+
+        /**
+         * GPU-related event handling
+         *
+         * @param gr
+         */
+        @Override
+        public void paintComponent(Graphics gr) {
+            super.paintComponent(gr);
+            System.out.println("paintComponent");
+            gr.setColor(Color.BLACK);
+            EventBus.listenTo(TextBufferCopyEvent.class, (Event v1) -> {
+                TextBufferCopyEvent event = (TextBufferCopyEvent) v1;
+                logger.log(Level.INFO, "GPU: Copied area " + event.width() + "x" + event.height() + "at" + event.x() + ":" + event.y() + " to " + (event.x() + event.horizontalTranslation()) + ":" + (event.y() + event.verticalTranslation()));
+                gr.copyArea(event.x(), event.y(), event.width(), event.height(), event.x() + event.horizontalTranslation(), event.y() + event.verticalTranslation());
+                return null;
+            });
+            EventBus.listenTo(TextBufferFillEvent.class, (Event v1) -> {
+                TextBufferFillEvent event = (TextBufferFillEvent) v1;
+                logger.log(Level.INFO, "GPU: Filled area at " + event.x() + ":" + event.y() + " with size of " + event.width() + "x" + event.height());
+                gr.fillRect(event.x(), event.y(), event.width(), event.height());
+                return null;
+            });
+            EventBus.listenTo(TextBufferSetBackgroundColorEvent.class, (Event v1) -> {
+                TextBufferSetBackgroundColorEvent event = (TextBufferSetBackgroundColorEvent) v1;
+                logger.log(Level.INFO, "GPU: Background set to " + event.color());
+                this.setBackground(new Color(event.color()));
+                return null;
+            });
+            EventBus.listenTo(TextBufferSetColorDepthEvent.class, (Event v1) -> {
+                TextBufferSetColorDepthEvent event = (TextBufferSetColorDepthEvent) v1;
+                logger.log(Level.INFO, "GPU: Set color depth to " + event.depth());
+                return null;
+            });
+            EventBus.listenTo(TextBufferSetEvent.class, (Event v1) -> {
+                TextBufferSetEvent event = (TextBufferSetEvent) v1;
+                logger.log(Level.INFO, "GPU: Printed string " + event.value() + " at " + event.x() + ":" + event.y());
+                gr.drawString(event.value(), event.x() * this.CHAR_WIDTH, event.y() * this.CHAR_HEIGHT);
+                return null;
+            });
+            EventBus.listenTo(TextBufferSetForegroundColorEvent.class, (Event v1) -> {
+                TextBufferSetForegroundColorEvent event = (TextBufferSetForegroundColorEvent) v1;
+                logger.log(Level.INFO, "GPU: Foreground set to " + event.color());
+                gr.setColor(new Color(event.color()));
+                return null;
+            });
+            EventBus.listenTo(TextBufferSetPaletteColorEvent.class, (Event v1) -> {
+                TextBufferSetPaletteColorEvent event = (TextBufferSetPaletteColorEvent) v1;
+                logger.log(Level.INFO, "GPU: Set palette color " + event.index());
+                gr.setColor(colors[event.index()]);
+                return null;
+            });
+            EventBus.listenTo(TextBufferSetResolutionEvent.class, (Event v1) -> {
+                TextBufferSetResolutionEvent event = (TextBufferSetResolutionEvent) v1;
+                logger.log(Level.INFO, "GPU: Resolution is set to " + event.width() + "x" + event.height());
+                this.setSize(event.width() * this.CHAR_WIDTH, event.height() * this.CHAR_HEIGHT);
+                return null;
+            });
+            EventBus.listenTo(TextBufferSetViewportEvent.class, (Event v1) -> {
+                TextBufferSetViewportEvent event = (TextBufferSetViewportEvent) v1;
+                // TODO
+                return null;
+            });
+            logger.log(Level.WARNING, "GPU: Drawing screen");
+            for (int i = 0; i < screen._data().buffer().length; i++) {
+                for (int j = 0; j < screen._data().buffer()[i].length; j++) {
+                    gr.drawString(String.valueOf(screen._data().buffer()[i][j]), j * this.CHAR_WIDTH, i * this.CHAR_HEIGHT);
+                    System.out.print(String.valueOf(screen._data().buffer()[i][j]));
+                }
+                System.out.print("\n");
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    JPanel canvasPanel;
-    JMenu fileMenu;
-    JMenuBar jMenuBar1;
-    JMenuItem jMenuItem1;
-    JMenu viewMenu;
-    JMenu windowMenu;
+    private JPanel canvasPanel;
+    private JMenu fileMenu;
+    private JMenuBar jMenuBar1;
+    private JMenuItem jMenuItem1;
+    private JMenu viewMenu;
+    private JMenu windowMenu;
     // End of variables declaration//GEN-END:variables
 }

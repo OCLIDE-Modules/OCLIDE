@@ -429,7 +429,7 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_projectTypeListValueChanged
 
     private void projectNameFieldCaretUpdate(CaretEvent evt) {//GEN-FIRST:event_projectNameFieldCaretUpdate
-        this.projectFolderField.setText(new File("projects").getAbsolutePath() + java.nio.file.FileSystems.getDefault().getSeparator() + projectNameField.getText());
+        this.projectFolderField.setText(new File("projects").getAbsolutePath() + FileSystems.getDefault().getSeparator() + projectNameField.getText());
     }//GEN-LAST:event_projectNameFieldCaretUpdate
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

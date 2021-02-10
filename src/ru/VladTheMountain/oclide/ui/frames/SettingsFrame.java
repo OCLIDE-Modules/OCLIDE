@@ -29,9 +29,11 @@ import java.awt.event.ActionListener;
 import java.nio.file.FileSystems;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -91,9 +93,6 @@ public class SettingsFrame extends javax.swing.JFrame {
         ocemulatorPanel = new JPanel();
         environmentTabs = new JTabbedPane();
         envGeneralPanel = new JPanel();
-        jCheckBox2 = new JCheckBox();
-        jCheckBox3 = new JCheckBox();
-        jCheckBox4 = new JCheckBox();
         minecraftPanel = new JPanel();
         jLabel2 = new JLabel();
         minecraftTextField = new JTextField();
@@ -103,13 +102,16 @@ public class SettingsFrame extends javax.swing.JFrame {
         jSeparator1 = new JSeparator();
         jScrollPane4 = new JScrollPane();
         jList2 = new JList<>();
+        openComputersEnvironment = new JComboBox<>();
+        jLabel8 = new JLabel();
+        thirdPartyCheckBox = new JCheckBox();
         ocvmPanel = new JPanel();
         jLabel6 = new JLabel();
         opencomputersvmPanel = new JPanel();
         modulesPanel = new JPanel();
         luaPanel = new JPanel();
         jLabel7 = new JLabel();
-        jTextField1 = new JTextField();
+        luaPathField = new JTextField();
         controlPanel = new JPanel();
         okButton = new JButton();
         cancelButton = new JButton();
@@ -132,10 +134,10 @@ public class SettingsFrame extends javax.swing.JFrame {
         idePanel.setLayout(idePanelLayout);
         idePanelLayout.setHorizontalGroup(idePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(GroupLayout.Alignment.TRAILING, idePanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(idePanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox1, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(GroupLayout.Alignment.LEADING, idePanelLayout.createSequentialGroup()
-                        .addContainerGap()
+                    .addComponent(jCheckBox1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(idePanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(workingDirTextField, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)))
@@ -149,7 +151,7 @@ public class SettingsFrame extends javax.swing.JFrame {
                     .addComponent(workingDirTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jCheckBox1)
-                .addContainerGap(230, Short.MAX_VALUE))
+                .addContainerGap(276, Short.MAX_VALUE))
         );
 
         settingTabs.addTab("IDE", idePanel);
@@ -173,7 +175,7 @@ public class SettingsFrame extends javax.swing.JFrame {
         editorPanelLayout.setVerticalGroup(editorPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(editorPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -202,7 +204,7 @@ public class SettingsFrame extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ocemuTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(269, Short.MAX_VALUE))
         );
 
         emulatorTabs.addTab("OCEmu", ocemuPanel);
@@ -223,7 +225,7 @@ public class SettingsFrame extends javax.swing.JFrame {
             .addGroup(ocbrainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(brainOutputRedirectionCheckBox)
-                .addContainerGap(244, Short.MAX_VALUE))
+                .addContainerGap(290, Short.MAX_VALUE))
         );
 
         emulatorTabs.addTab("Ocelot Brain", ocbrainPanel);
@@ -234,7 +236,7 @@ public class SettingsFrame extends javax.swing.JFrame {
             .addGap(0, 530, Short.MAX_VALUE)
         );
         ocdesktopPanelLayout.setVerticalGroup(ocdesktopPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
         );
 
         emulatorTabs.addTab("Ocelot Desktop", ocdesktopPanel);
@@ -254,7 +256,7 @@ public class SettingsFrame extends javax.swing.JFrame {
             .addGroup(codePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
 
         emulatorTabs.addTab("CODE", codePanel);
@@ -274,7 +276,7 @@ public class SettingsFrame extends javax.swing.JFrame {
             .addGroup(aurumPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
 
         emulatorTabs.addTab("Aurum Emulator", aurumPanel);
@@ -285,42 +287,20 @@ public class SettingsFrame extends javax.swing.JFrame {
             .addGap(0, 530, Short.MAX_VALUE)
         );
         ocemulatorPanelLayout.setVerticalGroup(ocemulatorPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
         );
 
         emulatorTabs.addTab("OCEmulator", ocemulatorPanel);
 
         settingTabs.addTab("Emulators", emulatorTabs);
 
-        jCheckBox2.setText("Minecraft integration");
-        jCheckBox2.setEnabled(false);
-
-        jCheckBox3.setText("OCVM integration");
-        jCheckBox3.setEnabled(false);
-
-        jCheckBox4.setText("OpenComputers VM integration");
-        jCheckBox4.setEnabled(false);
-
         GroupLayout envGeneralPanelLayout = new GroupLayout(envGeneralPanel);
         envGeneralPanel.setLayout(envGeneralPanelLayout);
         envGeneralPanelLayout.setHorizontalGroup(envGeneralPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(envGeneralPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(envGeneralPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jCheckBox4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(349, Short.MAX_VALUE))
+            .addGap(0, 530, Short.MAX_VALUE)
         );
         envGeneralPanelLayout.setVerticalGroup(envGeneralPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(envGeneralPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jCheckBox2)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox3)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox4)
-                .addContainerGap(162, Short.MAX_VALUE))
+            .addGap(0, 320, Short.MAX_VALUE)
         );
 
         environmentTabs.addTab("General", envGeneralPanel);
@@ -356,29 +336,44 @@ public class SettingsFrame extends javax.swing.JFrame {
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(jScrollPane4)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                     .addComponent(jSeparator1, GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, GroupLayout.Alignment.LEADING))
+                    .addComponent(jScrollPane4, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
+
+        openComputersEnvironment.setModel(new DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel8.setText("Target OpenComputers build:");
+
+        thirdPartyCheckBox.setText("Allow 3rd-party modifications");
+        thirdPartyCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                thirdPartyCheckBoxActionPerformed(evt);
+            }
+        });
 
         GroupLayout minecraftPanelLayout = new GroupLayout(minecraftPanel);
         minecraftPanel.setLayout(minecraftPanelLayout);
         minecraftPanelLayout.setHorizontalGroup(minecraftPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, minecraftPanelLayout.createSequentialGroup()
+            .addGroup(minecraftPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(minecraftPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                .addGroup(minecraftPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(minecraftTextField, GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                     .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(GroupLayout.Alignment.LEADING, minecraftPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, 0))
-                    .addComponent(minecraftTextField, GroupLayout.Alignment.LEADING))
+                    .addComponent(openComputersEnvironment, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(minecraftPanelLayout.createSequentialGroup()
+                        .addGroup(minecraftPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addComponent(thirdPartyCheckBox, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         minecraftPanelLayout.setVerticalGroup(minecraftPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -388,6 +383,12 @@ public class SettingsFrame extends javax.swing.JFrame {
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(minecraftTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(thirdPartyCheckBox)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(openComputersEnvironment, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -409,7 +410,7 @@ public class SettingsFrame extends javax.swing.JFrame {
             .addGroup(ocvmPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
 
         environmentTabs.addTab("OCVM", ocvmPanel);
@@ -420,7 +421,7 @@ public class SettingsFrame extends javax.swing.JFrame {
             .addGap(0, 530, Short.MAX_VALUE)
         );
         opencomputersvmPanelLayout.setVerticalGroup(opencomputersvmPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
         );
 
         environmentTabs.addTab("OpenComputers VM", opencomputersvmPanel);
@@ -433,14 +434,14 @@ public class SettingsFrame extends javax.swing.JFrame {
             .addGap(0, 535, Short.MAX_VALUE)
         );
         modulesPanelLayout.setVerticalGroup(modulesPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 302, Short.MAX_VALUE)
+            .addGap(0, 348, Short.MAX_VALUE)
         );
 
         settingTabs.addTab("Modules", modulesPanel);
 
         jLabel7.setText("Lua path:");
 
-        jTextField1.setText(System.getenv("LUA_PATH").length()<2 ? "LUA_PATH not set in current environment" : System.getenv("LUA_PATH"));
+        luaPathField.setText(System.getenv("LUA_PATH").length()<2 ? "LUA_PATH not set in current environment" : System.getenv("LUA_PATH"));
 
         GroupLayout luaPanelLayout = new GroupLayout(luaPanel);
         luaPanel.setLayout(luaPanelLayout);
@@ -451,7 +452,7 @@ public class SettingsFrame extends javax.swing.JFrame {
                     .addGroup(luaPanelLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField1, GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE))
+                    .addComponent(luaPathField, GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE))
                 .addContainerGap())
         );
         luaPanelLayout.setVerticalGroup(luaPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -459,8 +460,8 @@ public class SettingsFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(251, Short.MAX_VALUE))
+                .addComponent(luaPathField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(297, Short.MAX_VALUE))
         );
 
         settingTabs.addTab("Lua", luaPanel);
@@ -523,6 +524,16 @@ public class SettingsFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    private void thirdPartyCheckBoxActionPerformed(ActionEvent evt) {//GEN-FIRST:event_thirdPartyCheckBoxActionPerformed
+        if (thirdPartyCheckBox.isSelected()) {
+            openComputersEnvironment.addItem("OpenComputers 1.7.5 + Fingercomp's debugger");
+            openComputersEnvironment.addItem("OpenComputers 1.7.5 + Fingercomp's profiler");
+        } else {
+            openComputersEnvironment.removeItem("OpenComputers 1.7.5 + Fingercomp's debugger");
+            openComputersEnvironment.removeItem("OpenComputers 1.7.5 + Fingercomp's profiler");
+        }
+    }//GEN-LAST:event_thirdPartyCheckBoxActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JPanel aurumPanel;
     private JCheckBox brainOutputRedirectionCheckBox;
@@ -535,9 +546,6 @@ public class SettingsFrame extends javax.swing.JFrame {
     private JTabbedPane environmentTabs;
     private JPanel idePanel;
     private JCheckBox jCheckBox1;
-    private JCheckBox jCheckBox2;
-    private JCheckBox jCheckBox3;
-    private JCheckBox jCheckBox4;
     private JLabel jLabel1;
     private JLabel jLabel2;
     private JLabel jLabel3;
@@ -545,6 +553,7 @@ public class SettingsFrame extends javax.swing.JFrame {
     private JLabel jLabel5;
     private JLabel jLabel6;
     private JLabel jLabel7;
+    private JLabel jLabel8;
     private JList<String> jList1;
     private JList<String> jList2;
     private JPanel jPanel1;
@@ -552,8 +561,8 @@ public class SettingsFrame extends javax.swing.JFrame {
     private JScrollPane jScrollPane2;
     private JScrollPane jScrollPane4;
     private JSeparator jSeparator1;
-    private JTextField jTextField1;
     private JPanel luaPanel;
+    private JTextField luaPathField;
     private JPanel minecraftPanel;
     private JTextField minecraftTextField;
     private JPanel modulesPanel;
@@ -564,9 +573,11 @@ public class SettingsFrame extends javax.swing.JFrame {
     private JPanel ocemulatorPanel;
     private JPanel ocvmPanel;
     private JButton okButton;
+    private JComboBox<String> openComputersEnvironment;
     private JPanel opencomputersvmPanel;
     private JList<String> settingList;
     private JTabbedPane settingTabs;
+    private JCheckBox thirdPartyCheckBox;
     private JTextField workingDirTextField;
     // End of variables declaration//GEN-END:variables
 }

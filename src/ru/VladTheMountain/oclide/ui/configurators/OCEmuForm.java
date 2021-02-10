@@ -770,13 +770,13 @@ public class OCEmuForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton cancelButton;
-    JTextField componentAddressField;
-    JTextArea componentDescriptionArea;
-    JList<String> componentList;
+    private JTextField componentAddressField;
+    private JTextArea componentDescriptionArea;
+    private JList<String> componentList;
     private JMenu componentMenu;
     private JPanel componentSettingsPanel;
-    JComboBox<String> componentTypeComboBox;
-    JFileChooser configChooser;
+    private JComboBox<String> componentTypeComboBox;
+    private JFileChooser configChooser;
     private JPanel controlPanel;
     private JPanel descriptionPanel;
     private JMenuItem exitItem;
@@ -797,10 +797,10 @@ public class OCEmuForm extends javax.swing.JFrame {
     private JPopupMenu.Separator jSeparator1;
     private JPopupMenu.Separator jSeparator2;
     private JButton launchButton;
-    JTextField option1Field;
-    JTextField option2Field;
-    JTextField option3Field;
-    JTextField option4Field;
+    private JTextField option1Field;
+    private JTextField option2Field;
+    private JTextField option3Field;
+    private JTextField option4Field;
     private JMenuItem resetConfigItem;
     private JMenuItem saveConfigItem;
     // End of variables declaration//GEN-END:variables

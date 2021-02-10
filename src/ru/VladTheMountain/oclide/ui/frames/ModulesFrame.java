@@ -217,8 +217,8 @@ public class ModulesFrame extends javax.swing.JFrame {
     private JPanel customPanel;
     private JTextPane infoAvailableTextPane;
     private JTextPane infoInstalledTextPane;
-    JList<String> installedModuleList;
-    JList<String> installedModuleList1;
+    private JList<String> installedModuleList;
+    private JList<String> installedModuleList1;
     private JPanel installedModules;
     private JScrollPane jScrollPane1;
     private JScrollPane jScrollPane2;

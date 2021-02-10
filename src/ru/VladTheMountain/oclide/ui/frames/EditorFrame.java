@@ -76,12 +76,12 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 import org.fife.ui.rtextarea.ToolTipSupplier;
 import ru.VladTheMountain.emulator.ui.OcelotEmulatorFrame;
 import ru.VladTheMountain.oclide.editor.OCLIDECompletionProvider;
-import ru.VladTheMountain.oclide.ui.dialogs.CreateNewProjectDialog;
-import ru.VladTheMountain.oclide.ui.dialogs.OpenFileFileChooser;
-import ru.VladTheMountain.oclide.ui.dialogs.ProjectFileChooser;
 import ru.VladTheMountain.oclide.ui.configurators.AurumEmulatorForm;
 import ru.VladTheMountain.oclide.ui.configurators.CODEForm;
 import ru.VladTheMountain.oclide.ui.configurators.OCEmuForm;
+import ru.VladTheMountain.oclide.ui.dialogs.CreateNewProjectDialog;
+import ru.VladTheMountain.oclide.ui.dialogs.OpenFileFileChooser;
+import ru.VladTheMountain.oclide.ui.dialogs.ProjectFileChooser;
 import ru.VladTheMountain.oclide.util.ConsoleOutputStream;
 
 /**
@@ -787,6 +787,11 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     settingsMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/cogs_icon&16.png"))); // NOI18N
     settingsMenuItem.setText("Settings");
+    settingsMenuItem.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent evt) {
+            settingsMenuItemActionPerformed(evt);
+        }
+    });
     helpMenu.add(settingsMenuItem);
 
     menuBar.add(helpMenu);
@@ -1015,6 +1020,10 @@ projectsTree.addMouseListener(new MouseAdapter() {
         };
         code.start();
     }//GEN-LAST:event_codeMenuItemActionPerformed
+
+    private void settingsMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_settingsMenuItemActionPerformed
+        new SettingsFrame().setVisible(true);
+    }//GEN-LAST:event_settingsMenuItemActionPerformed
 
     private void runOCEmu() throws IOException {
         if (projectsTree.getSelectionPath().getPath().length > 1 && projectsTree.getSelectionPath().getPath().length < 3) {
