@@ -147,6 +147,7 @@ public class OCLIDECompletionProvider {
             {new CustomParameter("function", "f", false, "function to call"), new CustomParameter("object", "msgh", false, "message handler"), new CustomParameter("...", "args", true, "arguments to pass to <code>f</code>")}
         });
         
+        //Bit32
         //Coroutine
         createCompletion(defaultProvider, "coroutine.create", "Lua 5.2", autocompletion.getString("coroutine_create"), "Returns a new coroutine", new CustomParameter[][]{
             {new CustomParameter("function", "f", true, "function to wrap into the coroutine")}   
@@ -170,9 +171,32 @@ public class OCLIDECompletionProvider {
         });
         
         createCompletion(defaultProvider, "coroutine.yield", "Lua 5.2", autocompletion.getString("coroutine_yield"), "", new CustomParameter[][]{
-            {new CustomPararmeter("...", "", true, "arguments for <code>coroutine.resume</code>")}
+            {new CustomParameter("...", "", true, "arguments for <code>coroutine.resume</code>")}
         });
-                                                                                                                                            
+        
+        //Debug
+        createCompletion(defaultProvider, "debug.getinfo", "Lua 5.2", autocompletion("debug_getinfo"), "Returns a table with information about a function", new CustomParameter[][]{
+            {new CustomParameter("function", "f", true, "function to get information about")},
+            {new CustomParameter("function", "f", false, "function to get information about"), new CustomParameter("string", "what", true, "the string describing which fields to fill in")},
+            {new CustomParameter("thread", "thread", false, "the thread to get running level from"), new CustomParameter("function", "f", true, "function to get information about")},
+            {new CustomParameter("thread", "thread", false, "the thread to get running level from"), new CustomParameter("function", "f", false, "function to get information about"), new CustomParameter("string", "what", true, "the string describing which fields to fill in")}
+        });
+        
+        createCompletion(defaultProvider, "debug.traceback", "Lua 5.2", autocompletion.getString("debug_traceback"), "Returns a string with a traceback of the call stack", new CustomParameter[][]{
+            {},
+            {new CustomParameter("string", "message", true, "message to return before traceback")},
+            {new CustomParameter("string", "message", false, "message to return before traceback"), new CustomParameter("number", "level", true, "at which level to start the traceback")},
+            {new CustomParameter("thread", "thread", true, "the thread to get running level from")},
+            {new CustomParameter("thread", "thread", false, "the thread to get running level from"), new CustomParameter("string", "message", false, "message to return before traceback")},
+            {new CustomParameter("thread", "thread", false, "the thread to get running level from"), new CustomParameter("string", "message", false, "message to return before traceback"), new CustomParameter("number", "level", true, "at which level to start the traceback")}
+        });
+        
+        //IO
+        //Math
+        //OS
+        //Package
+        //String
+        //Table
         /* OpenOS API */
         //
         LanguageAwareCompletionProvider p = new LanguageAwareCompletionProvider(defaultProvider);
