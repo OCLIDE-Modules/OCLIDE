@@ -21,7 +21,78 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 - [x] [OCVM](https://github.com/payonel/ocvm) support *(ongoing)*
 - [ ] [OpenComputersVM](https://github.com/FrostyPenguin/OpenComputersVM) support
 - [x] Internationalization *(ongoing)*
-- [ ] Modularity
+- [ ] <s>Modularity</s>
+
+### Code autocompletion
+- [x] Default Lua 5.2
+- [ ] Default Lua 5.3
+- [x] `bit32`
+- [x] `coroutine`
+- [x] `debug`
+- [ ] `io`
+- [ ] `math`
+- [ ] `os`
+- [ ] `package`
+- [ ] `string`
+- [ ] `table`
+- [ ] `buffer`
+- [ ] `colors`
+- [ ] `component`
+  - [ ] `component.printer3d`
+  - [ ] `component.abstract_bus`
+  - [ ] `component.access_point`
+  - [ ] `component.chunkloader`
+  - [ ] `component.computer`
+  - [ ] `component.crafting`
+  - [ ] `component.data`
+  - [ ] `component.database`
+  - [ ] `component.debug`
+  - [ ] `component.drone`
+  - [ ] `component.drive`
+  - [ ] `component.eeprom`
+  - [ ] `component.experience`
+  - [ ] `component.filesystem`
+  - [ ] `component.generator`
+  - [ ] `component.geolyzer`
+  - [ ] `component.gpu`
+  - [ ] `component.hologram`
+  - [ ] `component.internet`
+  - [ ] `component.inventory_controller`
+  - [ ] `component.leash`
+  - [ ] `component.microcontroller`
+  - [ ] `component.modem`
+  - [ ] `component.motion_sensor`
+  - [ ] `component.navigation`
+  - [ ] `component.net_splitter`
+  - [ ] `component.piston`
+  - [ ] `component.redstone`
+  - [ ] `component.robot`
+  - [ ] `component.screen`
+  - [ ] `component.sign`
+  - [ ] `component.tank_controller`
+  - [ ] `component.tractor_beam`
+  - [ ] `component.transposer`
+  - [ ] `component.tunnel`
+  - [ ] `component.world_sensor`
+- [ ] `computer`
+- [ ] `event`
+- [ ] `uuid`
+- [ ] `filesystem`
+- [ ] `internet`
+- [ ] `keyboard`
+- [ ] `note`
+- [ ] `process`
+- [ ] `rc`
+- [ ] `robot`
+- [ ] `serialization`
+- [ ] `shell`
+- [ ] `sides`
+- [ ] `term`
+- [ ] `text`
+- [ ] `thread`
+- [ ] `transforms`
+- [ ] `unicode`
+
 
 ## Requirements
 * JRE/JDK 1.8 or later
