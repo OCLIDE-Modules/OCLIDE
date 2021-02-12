@@ -134,8 +134,8 @@ public class OCLIDECompletionProvider {
             {new CustomParameter("object", "e", false, "object to translate to a number"), new CustomParameter("number", "base", true, "the base number for <code>e</code>")}
         });
         
-        createCompletion(defaultProvider, "tostring", "Lua 5.2", autocompletion.getString("tostring"), "", new CustomParameter[][]{
-            {new CustomParameter("", "", false, "")}
+        createCompletion(defaultProvider, "tostring", "Lua 5.2", autocompletion.getString("tostring"), "Returns <code>e</code> as a string", new CustomParameter[][]{
+            {new CustomParameter("object", "e", true, "object to translate to a string")}
         });
         //OpenOS API
         //Shortcuts
