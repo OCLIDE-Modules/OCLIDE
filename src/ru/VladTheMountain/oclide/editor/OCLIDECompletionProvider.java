@@ -148,6 +148,56 @@ public class OCLIDECompletionProvider {
         });
         
         //Bit32
+        createCompletion(defaultProvider, "bit32.arshift", "Lua 5.2", autocompletion.getString("bit32_arshift"),"Returns the number <code>x</code> shifted <code>disp</code> bits to the right",new CustomParameter[][]{
+            {new CustomParameter("number", "x", false, "number to shift"), new CustomParameter("number", "disp", true, "how much to shift")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.band", "Lua 5.2", autocompletion.getString("bit32_band"),"Returns the bitwise and of its operands",new CustomParameter[][]{
+            {new CustomParameter("...", "", true, "operands")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.bnot", "Lua 5.2", autocompletion.getString("bit32_bnot"),"Returns the bitwise negation of <code>x</code>",new CustomParameter[][]{
+            {new CustomParameter("object", "x", true, "operand")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.bor", "Lua 5.2", autocompletion.getString("bit32_bor"),"Returns the bitwise or of its operands",new CustomParameter[][]{
+            {new CustomParameter("...", "", true, "operands")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.btest", "Lua 5.2", autocompletion.getString("bit32_btest"),"Returns a boolean signaling whether the bitwise and of its operands is different from zero",new CustomParameter[][]{
+            {new CustomParameter("...", "", true, "operands")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.bxor", "Lua 5.2", autocompletion.getString("bit32_bxor"),"Returns the bitwise exclusive or of its operands",new CustomParameter[][]{
+            {new CustomParameter("...", "", true, "operands")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.extract", "Lua 5.2", autocompletion.getString("bit32_extract"),"Returns the unsigned number formed by the bits <code>field</code> to <code>field + width - 1</code> from <code>n</code>",new CustomParameter[][]{
+            {new CustomPararmeter("number", "n", false, ""), new CustomPararmeter("bits", "field", true, "")},
+            {new CustomPararmeter("number", "n", false, ""), new CustomPararmeter("bits", "field", false, ""), new CustomPararmeter("number", "width", true, "")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.replace", "Lua 5.2", autocompletion.getString("bit32_replace"),"Returns a copy of n with the bits <code>field</code> to <code>field + width - 1</code> replaced by the value <code>v</code>",new CustomParameter[][]{
+            {new CustomPararmeter("number", "n", false, ""), new CustomPararmeter("object", "v", false, "new value"), new CustomPararmeter("bits", "field", true, "")},
+            {new CustomPararmeter("number", "n", false, ""), new CustomPararmeter("object", "v", false, "new value"), new CustomPararmeter("bits", "field", false, ""), new CustomPararmeter("number", "width", true, "")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.lrotate", "Lua 5.2", autocompletion.getString("bit32_lrotate"),"Returns the number <code>x</code> rotated <code>disp</code> bits to the left",new CustomParameter[][]{
+            {new CustomParameter("number", "x", false, "number to rotate"), new CustomParameter("number", "disp", true, "how much to shift")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.lshift", "Lua 5.2", autocompletion.getString("bit32_lshift"),"Returns the number <code>x</code> shifted <code>disp</code> bits to the left",new CustomParameter[][]{
+            {new CustomParameter("number", "x", false, "number to shift"), new CustomParameter("number", "disp", true, "how much to shift")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.rrotate", "Lua 5.2", autocompletion.getString("bit32_rrotate"),"Returns the number <code>x</code> rotated <code>disp</code> bits to the right",new CustomParameter[][]{
+            {new CustomParameter("number", "x", false, "number to rotate"), new CustomParameter("number", "disp", true, "how much to shift")}
+        });
+        
+        createCompletion(defaultProvider, "bit32.rshift", "Lua 5.2", autocompletion.getString("bit32_rshift"),"Returns the number <code>x</code> shifted <code>disp</code> bits to the right",new CustomParameter[][]{
+            {new CustomParameter("number", "x", false, "number to shift"), new CustomParameter("number", "disp", true, "how much to shift")}
+        });
+        
         //Coroutine
         createCompletion(defaultProvider, "coroutine.create", "Lua 5.2", autocompletion.getString("coroutine_create"), "Returns a new coroutine", new CustomParameter[][]{
             {new CustomParameter("function", "f", true, "function to wrap into the coroutine")}   
