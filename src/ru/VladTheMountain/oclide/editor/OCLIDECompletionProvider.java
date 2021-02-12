@@ -134,12 +134,46 @@ public class OCLIDECompletionProvider {
             {new CustomParameter("object", "e", false, "object to translate to a number"), new CustomParameter("number", "base", true, "the base number for <code>e</code>")}
         });
         
-        createCompletion(defaultProvider, "tostring", "Lua 5.2", autocompletion.getString("tostring"), "Returns <code>e</code> as a string", new CustomParameter[][]{
-            {new CustomParameter("object", "e", true, "object to translate to a string")}
+        createCompletion(defaultProvider, "tostring", "Lua 5.2", autocompletion.getString("tostring"), "Returns <code>v</code> as a string", new CustomParameter[][]{
+            {new CustomParameter("object", "v", true, "object to translate to a string")}
         });
-        //OpenOS API
-        //Shortcuts
-        /* TODO */
+        
+        createCompletion(defaultProvider, "type", "Lua 5.2", autocompletion.getString("type"), "Returns the type of <code>v</code>", new CustomParameter[][]{
+            {new CustomParameter("object", "v", true, "object to get type of")} 
+        });
+        
+        createCompletion(defaultProvider, "xpcall", "Lua 5.2", autocompletion.getString("xpcall"), "Returns the same as <code>pcall</code>", new CustomParameter[][]{
+            {new CustomParameter("function", "f", false, "function to call"), new CustomParameter("object", "msgh", true, "message handler")},
+            {new CustomParameter("function", "f", false, "function to call"), new CustomParameter("object", "msgh", false, "message handler"), new CustomParameter("...", "args", true, "arguments to pass to <code>f</code>")}
+        });
+        
+        //Coroutine
+        createCompletion(defaultProvider, "coroutine.create", "Lua 5.2", autocompletion.getString("coroutine_create"), "Returns a new coroutine", new CustomParameter[][]{
+            {new CustomParameter("function", "f", true, "function to wrap into the coroutine")}   
+        });
+        
+        createCompletion(defaultProvider, "coroutine.resume", "Lua 5.2", autocompletion.getString("coroutine_resume"), "Returns function output", new CustomParameter[][]{
+            {new CustomParameter("coroutine", "co", true, "coroutine to continue execution of")},
+            {new CustomParameter("coroutine", "co", false, "coroutine to continue execution of"), new CustomParameter("...", "vals", true, "values to pass to the function")}
+        });
+        
+        createCompletion(defaultProvider, "coroutine.running", "Lua 5.2", autocompletion.getString("coroutine_running"), "Returns the current coroutine + boolean", new CustomParameter[][]{
+            {}
+        });
+        
+        createCompletion(defaultProvider, "coroutine.status", "Lua 5.2", autocompletion.getString("coroutine_status"), "Returns the status of the coroutine", new CustomParameter[][]{
+            {new CustomParameter("coroutine", "co", true, "coroutine to get status of")}
+        });
+        
+        createCompletion(defaultProvider, "coroutine.wrap", "Lua 5.2", autocompletion.getString("coroutine_wrap"), "Returns a function that resumes the coroutine each time it is called", new CustomParameter[][]{
+            {new CustomParameter("function", "f", true, "function to wrap into the coroutine")}
+        });
+        
+        createCompletion(defaultProvider, "coroutine.yield", "Lua 5.2", autocompletion.getString("coroutine_yield"), "", new CustomParameter[][]{
+            {new CustomPararmeter("...", "", true, "arguments for <code>coroutine.resume</code>")}
+        });
+                                                                                                                                            
+        /* OpenOS API */
         //
         LanguageAwareCompletionProvider p = new LanguageAwareCompletionProvider(defaultProvider);
         return p;
