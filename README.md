@@ -24,8 +24,7 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 - [ ] <s>Modularity</s>
 
 ### Code autocompletion
-- [x] Default Lua 5.2
-- [ ] Default Lua 5.3
+- [x] Default Lua 5.2 + 5.3 functions
 - [x] `bit32`
 - [x] `coroutine`
 - [x] `debug`
