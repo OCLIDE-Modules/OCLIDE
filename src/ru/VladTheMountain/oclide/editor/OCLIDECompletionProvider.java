@@ -116,6 +116,27 @@ public class OCLIDECompletionProvider {
         createCompletion(defaultProvider, "rawlen", "Lua 5.2", autocompletion.getString("rawlen"), "Returns the length of the object", new CustomParameter[][]{
             {new CustomParameter("table", "v", true, "Object to measure length of")}
         });
+        
+        createCompletion(defaultProvider, "rawset", "Lua 5.2", autocompletion.getString("rawset"), "Returns <code>table</code>", new CustomParameter[][]{
+            {new CustomParameter("table", "table", false, "the <code>table</code> in which you need to change the value"), new CustomParameter("number", "index", false, "the index of the table's cell to change value of"), new CustomParameter("object", "value", true, "the new value of the <code>table[index]</code>")}
+        });
+
+        createCompletion(defaultProvider, "select", "Lua 5.2", autocompletion.getString("select"), "Returns argument <code>index</code>", new CustomParameter[][]{
+            {new CustomParameter("number", "index", false, "the argument to return"), new CustomParameter("obejct", "...", true, "arguments")}
+        });
+
+        createCompletion(defaultProvider, "setmetatable", "Lua 5.2", autocompletion.getString("setmetatable"), "Returns <code>table</code>", new CustomParameter[][]{
+            {new CustomParameter("table", "table", false, "table to set metatable for"), new CustomParameter("metatable", "metatable", true, "metatable to set")}
+        });
+        
+        createCompletion(defaultProvider, "tonumber", "Lua 5.2", autocompletion.getString("tonumber"), "Returns <code>e</code> as a number", new CustomParameter[][]{
+            {new CustomParameter("object", "e", true, "object to translate to a number")},
+            {new CustomParameter("object", "e", false, "object to translate to a number"), new CustomParameter("number", "base", true, "the base number for <code>e</code>")}
+        });
+        
+        createCompletion(defaultProvider, "tostring", "Lua 5.2", autocompletion.getString("tostring"), "", new CustomParameter[][]{
+            {new CustomParameter("", "", false, "")}
+        });
         //OpenOS API
         //Shortcuts
         /* TODO */
