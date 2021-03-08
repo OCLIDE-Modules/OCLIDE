@@ -64,7 +64,12 @@
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
     </path>
 
+    <property name="myclasspath" refid="classpath"/>
     <target name="-pre-compile">
+        <echo message="Classpath = ${myclasspath}"/>
+        
+        <echo message="Classes = ${classes.dir}"/>
+        <echo message="Src = ${src.dir}"/>
         <mkdir dir="${classes.dir}"/>
         <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
     </target>
