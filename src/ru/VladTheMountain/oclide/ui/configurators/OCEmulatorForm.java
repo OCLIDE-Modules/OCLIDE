@@ -23,6 +23,8 @@
  */
 package ru.VladTheMountain.oclide.ui.configurators;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.WindowConstants;
 
@@ -32,6 +34,8 @@ import javax.swing.WindowConstants;
  */
 public class OCEmulatorForm extends javax.swing.JFrame {
 
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.configurator.ocemulator.OCEmulator", Locale.getDefault());
+    
     private static final long serialVersionUID = 1L;
 
     /**

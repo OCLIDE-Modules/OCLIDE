@@ -26,6 +26,8 @@ package ru.VladTheMountain.oclide.ui.dialogs;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -37,6 +39,8 @@ import javax.swing.LayoutStyle;
  * @author Vladi
  */
 public class MachineChooserDialog extends javax.swing.JDialog {
+    
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
     private static final long serialVersionUID = 1L;
     private String[] fileSystemList;

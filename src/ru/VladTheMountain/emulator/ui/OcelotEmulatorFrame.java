@@ -28,6 +28,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
@@ -73,6 +75,8 @@ import totoro.ocelot.brain.workspace.Workspace;
  */
 public class OcelotEmulatorFrame extends JFrame {
 
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.emulator.resources.Emulator", Locale.getDefault());
+    
     private static final long serialVersionUID = 1L;
 
     private static Emulator graphics;

@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
 
 /**
- * Just a bunch of random classes used all around OCLIDE
+ * Just a bunch of random classes used all around OCLIDE's code
  */
+package ru.VladTheMountain.oclide.util;

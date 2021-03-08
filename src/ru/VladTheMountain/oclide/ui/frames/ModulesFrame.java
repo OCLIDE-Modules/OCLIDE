@@ -25,6 +25,8 @@ package ru.VladTheMountain.oclide.ui.frames;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.AbstractListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -45,6 +47,7 @@ import javax.swing.WindowConstants;
  */
 public class ModulesFrame extends javax.swing.JFrame {
 
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
     private static final long serialVersionUID = 1L;
 
     /**

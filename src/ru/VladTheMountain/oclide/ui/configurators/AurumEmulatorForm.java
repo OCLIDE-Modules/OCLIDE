@@ -23,18 +23,21 @@
  */
 package ru.VladTheMountain.oclide.ui.configurators;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.WindowConstants;
 
 /**
  * AurumEmulator by Alexey Gutnik
- * 
+ *
  * PLACEHOLDER CLASS
- * 
+ *
  * @author VladTheMountain
  */
 public class AurumEmulatorForm extends javax.swing.JFrame {
 
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.configurator.aurum.Aurum", Locale.getDefault());
     private static final long serialVersionUID = 1L;
 
     /**

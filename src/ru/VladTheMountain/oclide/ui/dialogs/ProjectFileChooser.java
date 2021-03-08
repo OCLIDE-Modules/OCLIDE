@@ -24,6 +24,8 @@
 package ru.VladTheMountain.oclide.ui.dialogs;
 
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JFileChooser;
 
 /**
@@ -31,6 +33,8 @@ import javax.swing.JFileChooser;
  * @author VladTheMountain
  */
 public class ProjectFileChooser extends JFileChooser {
+    
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
     private static final long serialVersionUID = 1L;
 

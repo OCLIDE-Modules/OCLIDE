@@ -37,6 +37,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.accessibility.AccessibleContext;
@@ -90,6 +92,8 @@ import ru.VladTheMountain.oclide.util.ConsoleOutputStream;
  */
 public class EditorFrame extends JFrame {
 
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.editor.Editor", Locale.getDefault());
+    
     private static final long serialVersionUID = 1L;
 
     /**
@@ -578,7 +582,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     jToolBar1.add(runOcelotButton);
 
-    fileMenu.setText("File");
+    fileMenu.setText(localiztionResource.getString("fileMenu"));
 
     createProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
     createProject.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&16.png"))); // NOI18N

@@ -27,6 +27,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.file.FileSystems;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -53,6 +55,7 @@ import javax.swing.border.TitledBorder;
  */
 public class SettingsFrame extends javax.swing.JFrame {
 
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
     private static final long serialVersionUID = 1L;
 
     /**

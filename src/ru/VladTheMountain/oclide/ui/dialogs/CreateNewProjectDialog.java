@@ -28,6 +28,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.FileSystems;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -56,6 +58,8 @@ import ru.VladTheMountain.oclide.ui.frames.EditorFrame;
  * @author VladTheMountain
  */
 public class CreateNewProjectDialog extends javax.swing.JDialog {
+    
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
     private static final long serialVersionUID = 1L;
 

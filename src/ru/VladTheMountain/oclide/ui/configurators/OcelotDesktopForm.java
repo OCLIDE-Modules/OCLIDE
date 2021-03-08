@@ -28,6 +28,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -57,6 +59,7 @@ import ru.VladTheMountain.emulator.ui.OcelotEmulatorFrame;
  */
 public class OcelotDesktopForm extends javax.swing.JFrame {
 
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.configurator.ocelot.Ocelot", Locale.getDefault());
     private static final long serialVersionUID = 1L;
 
     /**

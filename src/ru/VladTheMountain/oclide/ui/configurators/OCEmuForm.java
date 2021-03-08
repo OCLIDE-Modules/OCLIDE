@@ -34,6 +34,8 @@ import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
@@ -80,6 +82,7 @@ import ru.VladTheMountain.oclide.util.UUIDGenerator;
  */
 public class OCEmuForm extends javax.swing.JFrame {
 
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.configurator.ocemu.OCEmu", Locale.getDefault());
     private static final long serialVersionUID = 1L;
 
     private OCEmuComponent[] componentsArray = {};
