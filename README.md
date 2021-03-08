@@ -23,7 +23,9 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 - [x] Internationalization *(ongoing)*
 - [ ] <s>Modularity</s>
 
-### Code autocompletion
+<details>
+  <summary>Code autocompletion</summary>  
+  
 - [x] Default Lua 5.2 + 5.3 functions
   - [x] `bit32`
   - [x] `coroutine`
@@ -91,15 +93,17 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 - [ ] `thread`
 - [ ] `transforms`
 - [ ] `unicode`
+</details>
 
 
 ## Requirements
-* JRE/JDK 1.8 or later
-* Windows 10 (work on older versions is possible, but not guaranteed)
-* IDE will also work on Linux-based distros or Mac OS, but there can be problems with launching/using OCEmu
+- JRE/JDK 1.8 or later
+- Windows 10 (work on older versions is possible, but not guaranteed)
+- IDE will also work on Linux-based distros or Mac OS, but there can be problems with launching/using OCEmu
 
 ## Installation
 - **STABLE (RECOMMENDED)** Download the latest version `dist.rar` at https://github.com/Vladg24YT/Oclide/releases  
 - **EXPERIMENTAL** Download `OCLIDE.jar` and `lib` folder from `dist` directory (Also download OCEmu binaries from https://github.com/OCLIDE-Modules/OCLIDE-OCEmu) 
 2. Extract `.rar`/Copy `.jar` and `lib` to any folder you want. It will be OCLIDE's working directory.
 3. Run the `OCLIDE.jar` file
+
