@@ -58,7 +58,7 @@
     nbproject/build-impl.xml file. 	
     -->	
     
-    <property name="lib.dir" value="lib"/>
+    <property name="lib.dir" value="./lib"/>
 
     <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
