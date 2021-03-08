@@ -57,4 +57,15 @@
     properties which you can use, check the target you are overriding in the	
     nbproject/build-impl.xml file. 	
     -->	
+    
+    <property name="lib.dir" value="lib"/>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="-pre-compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+    </target>
 </project>
