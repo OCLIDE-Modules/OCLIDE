@@ -21,28 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
+package ru.VladTheMountain.oclide.ui.dialogs;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
+import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import javax.swing.JFileChooser;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
  *
  * @author VladTheMountain
  */
-public class ConsoleOutputStream extends OutputStream {
+public class ProjectFileChooser extends JFileChooser {
+    
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
-    private JTextArea target;
+    private static final long serialVersionUID = 1L;
 
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
-    }
-
-    @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
+    public ProjectFileChooser() {
+        this.setCurrentDirectory(new File(System.getProperty("user.home")));
+        this.setFileSelectionMode(DIRECTORIES_ONLY);
     }
 
 }

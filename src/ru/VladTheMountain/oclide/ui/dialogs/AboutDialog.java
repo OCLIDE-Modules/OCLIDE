@@ -21,28 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
+package ru.VladTheMountain.oclide.ui.dialogs;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
+ * Yes, it's a separate class for a single call of a single function. Don't ask
+ * why and just scroll further.
  *
- * @author VladTheMountain
+ * @author VladTheMounatin
  */
-public class ConsoleOutputStream extends OutputStream {
+public class AboutDialog {
 
-    private JTextArea target;
-
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
+    
+    public AboutDialog(JFrame parent) {
+        JOptionPane.showMessageDialog(parent,
+                "OCLIDE RC1-1.0.0\n"
+                + "THIS VERSION IS FOR INDEV PREVIEW PURPOSES ONLY. DO NOT DISTRIBUTE."
+                + "Copyright (c) VladTheMountain (Vladislav Gorskii) 2021.\n"
+                + "\n"
+                + "OCLIDE (OpenComputers Lua Integrated Development Environment) is an open-source Lua IDE for developing software for OpenComputers Minecraft mod.\n"
+                + "This program and it's source, until otherwise noted, are distributed under the MIT License.\n"
+                + "\n"
+                + ""
+        );
     }
-
-    @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
-    }
-
 }

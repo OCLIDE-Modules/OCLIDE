@@ -61,10 +61,10 @@ public class OCEmuLauncher {
     /**
      * Launcher constructor. Starts OCEmu with default config
      */
-    public OCEmuLauncher() {
+    /*public OCEmuLauncher() {
 
-    }
-
+    }*/
+    
     /**
      * Launcher constructor. Starts OCEmu with {@link OCEmuComponent} as a
      * source for config

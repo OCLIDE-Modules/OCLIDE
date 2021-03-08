@@ -21,28 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
+package ru.VladTheMountain.oclide.ui.dialogs;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
+import java.io.File;
+import java.nio.file.FileSystems;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
  *
  * @author VladTheMountain
  */
-public class ConsoleOutputStream extends OutputStream {
+public class OpenFileFileChooser extends JFileChooser {
+    
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
-    private JTextArea target;
+    private static final long serialVersionUID = 1L;
 
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
-    }
+    public OpenFileFileChooser() {
+        this.setApproveButtonText("Open");
+        this.setApproveButtonToolTipText("Open selected file");
+        this.setCurrentDirectory(new File(System.getProperty("user.dir") + FileSystems.getDefault().getSeparator() + "projects"));
+        this.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.getAbsolutePath().endsWith(".lua") || f.isDirectory();
+            }
 
-    @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
+            @Override
+            public String getDescription() {
+                return "*.lua";
+            }
+        });
     }
 
 }

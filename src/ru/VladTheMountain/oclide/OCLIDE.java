@@ -27,7 +27,7 @@ import java.awt.Graphics2D;
 import java.awt.SplashScreen;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ru.VladTheMountain.oclide.ui.EditorFrame;
+import ru.VladTheMountain.oclide.ui.frames.EditorFrame;
 
 /**
  *

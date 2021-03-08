@@ -21,28 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
+package ru.VladTheMountain.oclide.configurator.ocelot;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
+ * Util class for launching Ocelot Desktop
  *
  * @author VladTheMountain
  */
-public class ConsoleOutputStream extends OutputStream {
-
-    private JTextArea target;
-
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
-    }
-
-    @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
-    }
+public class OcelotDesktopLauncher {
 
 }

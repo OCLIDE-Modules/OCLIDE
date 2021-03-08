@@ -21,28 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.util;
+package ru.VladTheMountain.emulator;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.swing.JTextArea;
+import java.time.LocalTime;
+import java.util.logging.Level;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
  *
  * @author VladTheMountain
  */
-public class ConsoleOutputStream extends OutputStream {
+public class EmuLogger {
 
-    private JTextArea target;
-
-    public ConsoleOutputStream(JTextArea area) {
-        target = area;
+    public void log(Level lvl, String msg) {
+        System.out.println("[" + LocalTime.now() + "][Ocelot/" + lvl.getName() + "] " + msg);
     }
-
-    @Override
-    public void write(int b) throws IOException {
-        target.append(String.valueOf((char) b));
-    }
-
 }
