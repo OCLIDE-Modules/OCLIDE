@@ -139,7 +139,7 @@ public class OCEmuForm extends javax.swing.JFrame {
     }
 
     /**
-     * Updates componentList {@link JTree}
+     * Updates componentList {@code JTree}
      */
     private void updateComponentList() {
         DefaultListModel<String> model = new DefaultListModel<>();
@@ -313,8 +313,8 @@ public class OCEmuForm extends javax.swing.JFrame {
     /**
      * Recursively gets all files in the project folder
      *
-     * @param file Project folder as a {@link File}
-     * @param n Project's tree node
+     * @param src Project folder as a {@code File}
+     * @param targ Project's tree node
      */
     private static void recursivelyCopyFiles(File src, File targ) {
         File[] files = src.listFiles();

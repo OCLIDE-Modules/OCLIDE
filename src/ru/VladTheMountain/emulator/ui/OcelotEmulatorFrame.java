@@ -203,7 +203,6 @@ public class OcelotEmulatorFrame extends JFrame {
         /**
          * Launch emulator with a premade workspace
          *
-         * @param workspace Workspace to deploy
          */
         public Emulator() {
             super();

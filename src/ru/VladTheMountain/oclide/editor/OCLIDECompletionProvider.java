@@ -34,7 +34,7 @@ import org.fife.ui.autocomplete.LanguageAwareCompletionProvider;
 import org.fife.ui.autocomplete.ParameterizedCompletion.Parameter;
 
 /**
- * This class provides an instance of {@link LanguageAwareProvider}, which
+ * This class provides an instance of {@code LanguageAwareProvider}, which
  * contains autocompletion stuff for both Lua 5.3 and OpenOS 1.7
  *
  * @author VladTheMountain

@@ -28,7 +28,7 @@ import java.io.OutputStream;
 import javax.swing.JTextArea;
 
 /**
- * Util class for redirecting {@link System.out} to {@code outputArea}
+ * Util class for redirecting {@code System.out} to {@code outputArea}
  *
  * @author VladTheMountain
  */
