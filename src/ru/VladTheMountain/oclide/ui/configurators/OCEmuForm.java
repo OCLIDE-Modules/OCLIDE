@@ -172,7 +172,7 @@ public class OCEmuForm extends javax.swing.JFrame {
     /**
      * Updates description and option fields
      *
-     * @param type
+     * @param c
      */
     private void updateFields(OCEmuComponent c) {
         switch (c.getComponentType()) {

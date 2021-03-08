@@ -292,7 +292,6 @@ public class OCLIDECompletionProvider {
      *
      * @param p DefaultCompletionProvider to add to
      * @param name Function name
-     * @param returnType Function return value's type
      * @param definedIn API version where function is first defined
      * @param shortDesc Function description
      * @param returnDesc Function return value's description
