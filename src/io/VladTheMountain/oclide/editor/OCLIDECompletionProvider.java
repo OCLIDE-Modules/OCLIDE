@@ -55,7 +55,8 @@ public class OCLIDECompletionProvider {
     /**
      * Constructs and returns the {@code LanguageAwareProvider}
      *
-     * @return An instance of {@code LanguageAwareProvider} with ready autocompletion rules
+     * @return An instance of {@code LanguageAwareProvider} with ready
+     * autocompletion rules
      * @deprecated Will be reworked to be automated via Parser.
      * @see io.VladTheMountain.parser
      */
@@ -270,12 +271,12 @@ public class OCLIDECompletionProvider {
         createCompletion("io.flush", LUA_53, autocompletion.getString("io_flush"), "", new CustomParameter[][]{
             {}
         });
-        
+
         createCompletion("io.input", LUA_53, autocompletion.getString("io_input"), "", new CustomParameter[][]{
             {},
             {new CustomParameter("file", "file", true, "the file to open in text mode")}
         });
-        
+
         //Math
         //OS
         //Package
@@ -315,7 +316,6 @@ public class OCLIDECompletionProvider {
     /**
      * Creates a new FunctionCompletion with params
      *
-     * @param p DefaultCompletionProvider to add to
      * @param name Function name
      * @param definedIn API version where function is first defined
      * @param shortDesc Function description
