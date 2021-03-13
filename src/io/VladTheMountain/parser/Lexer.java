@@ -24,10 +24,10 @@
 package io.VladTheMountain.parser;
 
 /**
- * <q>The lexer reads characters from the input/character reader and produces
+ * <code>The lexer reads characters from the input/character reader and produces
  * tokens. In other words, it converts a character stream into a token stream.
  * Hence its sometimes also called the tokenizer. These tokens are produced
- * according to the defined grammar.</q>
+ * according to the defined grammar.</code>
  *
  * @author VladTheMountain
  */

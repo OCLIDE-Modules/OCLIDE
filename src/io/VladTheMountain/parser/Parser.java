@@ -24,11 +24,11 @@
 package io.VladTheMountain.parser;
 
 /**
- * <q>The parser is responsible for reading the tokens from the lexer and
+ * <code>The parser is responsible for reading the tokens from the lexer and
  * producing the parse-tree. It gets the next token from the lexer, analyzes it,
  * and compare it against a defined grammar. Then decides which of the grammar
  * rule should be considered, and continue to parse according to the
- * grammar.</q>
+ * grammar.</code>
  *
  * @see #parse()
  *

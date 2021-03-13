@@ -32,8 +32,8 @@ import java.util.Queue;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 /**
- * <q>The character reader, also called the input reader, reads the source code
- * and provides characters/code-points to the lexer upon request.</q>
+ * <code>The character reader, also called the input reader, reads the source code
+ * and provides characters/code-points to the lexer upon request.</code>
  *
  * @author VladTheMountain
  */
@@ -84,6 +84,7 @@ public class InputReader {
      *
      * @param k the index of the character to get
      * @return The k-th character from the input
+     * @throws java.io.IOException
      * @see #peek()
      */
     char peek(int k) throws IOException {
@@ -127,6 +128,7 @@ public class InputReader {
      * Checks whether the reader has reached the end of the input.
      *
      * @return {@code true} if the file ended, {@code false} otherwise
+     * @throws java.io.IOException
      */
     boolean isEOF() throws IOException {
         if (reader.readLine() == null) {
