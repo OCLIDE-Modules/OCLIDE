@@ -24,7 +24,7 @@
 /**
  * An attempt to create a Lua 5.3 parser in Java using
  * <a href="https://medium.com/swlh/writing-a-parser-getting-started-44ba70bb6cc9">Supun
- * Setunga's "Writing a Parser"<a> articles.
+ * Setunga's "Writing a Parser"</a> articles.
  * 
  * <br><br><i>Might make it a standalone API later, but idk as for now</i>
  *

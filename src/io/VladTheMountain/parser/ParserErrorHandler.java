@@ -24,10 +24,10 @@
 package io.VladTheMountain.parser;
 
 /**
- * <q>The objective of an error handler is to recover upon a syntax error. It
+ * <code>The objective of an error handler is to recover upon a syntax error. It
  * plays a key role in a modern resilient parser, especially to be able to
  * produce a valid parser tree even with syntax errors and to give proper and
- * meaningful error messages.</q>
+ * meaningful error messages.</code>
  *
  * @author VladTheMountain
  */
