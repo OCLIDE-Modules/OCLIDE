@@ -11,7 +11,6 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 - [x] Syntax highlighting
 - [x] OCEmu integration
 - [ ] Built-in [Ocelot Brain](https://gitlab.com/cc-ru/ocelot/ocelot-brain)-based emulator
-- [ ] Minecraft 1.7.10 - 1.12.2 integration
 - [x] Code autocompletion *(ongoing)*
 - [ ] Code autoformatting
 - [ ] Variable navigator
@@ -110,3 +109,6 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 2. Extract `.rar`/Copy `.jar` and `lib` to any folder you want. It will be OCLIDE's working directory.
 3. Run the `OCLIDE.jar` file
 
+## Contributing
+Feel free to create push requests with translation files (`io.VladTheMountain.oclide.resources` and `io.VladTheMountain.emulator.resources` packages).  
+The project is also open to issues about bugs, incorrectly working things or feature requests.
