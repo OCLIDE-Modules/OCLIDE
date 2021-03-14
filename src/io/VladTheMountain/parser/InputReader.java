@@ -42,18 +42,19 @@ public class InputReader {
     private BufferedReader reader;
 
     private Queue<Character> ringBuffer;
-    private int bufferSize;
+    private final int bufferSize = 256;
     /**
      * Stores the index of the caret (not the index of the last character read
      * to buffer)
      */
-    private int currentPos;
+    protected int currentPos;
 
     /**
      * Sets the file at <code>path</code> as the code source
      *
      * @param path the path to the file, which contains the source code
-     * @throws java.io.FileNotFoundException
+     * @throws java.io.FileNotFoundException if the specified file could not be
+     * found
      */
     public InputReader(String path) throws FileNotFoundException {
         this(new File(path));
@@ -63,7 +64,8 @@ public class InputReader {
      * Sets the <code>file</code> as the code source.
      *
      * @param file the file to get source code from
-     * @throws java.io.FileNotFoundException
+     * @throws java.io.FileNotFoundException if the specified file could not be
+     * found
      */
     public InputReader(File file) throws FileNotFoundException {
         ringBuffer = new CircularFifoQueue<>(bufferSize);
@@ -77,23 +79,23 @@ public class InputReader {
      * the {@code peek()} method more than once will return the same character.
      *
      * @return The next character from the input
+     * @throws java.io.IOException if an I/O error occures
      * @see #peek(int)
-     * @throws java.io.IOException
      */
     char peek() throws IOException {
         ringBuffer.add((char) reader.read());
-        currentPos++;
         return ringBuffer.peek();
     }
 
     /**
-     * Get the next k-th character from the input.This is used to look ahead the
-     * characters without consuming/removing them from the input stream. Calling
-     * the {@code peek()} method more than once will return the same character.
+     * Get the next k-th character from the input. This is used to look ahead
+     * the characters without consuming/removing them from the input stream.
+     * Calling the {@code peek()} method more than once will return the same
+     * character.
      *
      * @param k the index of the character to get
      * @return The k-th character from the input
-     * @throws java.io.IOException
+     * @throws java.io.IOException if an I/O error occures
      * @see #peek()
      */
     char peek(int k) throws IOException {
@@ -109,7 +111,6 @@ public class InputReader {
                 currentPos++;
             }
         } else {
-            currentPos++;
             return (char) ringBuffer.toArray()[k];
         }
         return 0;
@@ -122,10 +123,11 @@ public class InputReader {
      *
      * @return The next character from the input
      * @see #consume(int)
-     * @throws java.io.IOException
+     * @throws java.io.IOException if an I/O error occures
      */
     char consume() throws IOException {
         ringBuffer.add((char) reader.read());
+        currentPos++;
         return ringBuffer.peek();
     }
 
@@ -139,6 +141,7 @@ public class InputReader {
      * @see #consume()
      */
     char consume(int k) {
+        currentPos++;
         return (char) ringBuffer.toArray()[k];
     }
 
@@ -146,7 +149,7 @@ public class InputReader {
      * Checks whether the reader has reached the end of the input.
      *
      * @return {@code true} if the file ended, {@code false} otherwise
-     * @throws java.io.IOException
+     * @throws java.io.IOException if an I/O error occures
      */
     boolean isEOF() throws IOException {
         if (reader.read() == -1) {
