@@ -42,7 +42,12 @@ public class InputReader {
     private BufferedReader reader;
 
     private Queue<Character> ringBuffer;
-    private int bufferSize, startPos;
+    private int bufferSize;
+    /**
+     * Stores the index of the caret (not the index of the last character read
+     * to buffer)
+     */
+    private int currentPos;
 
     /**
      * Sets the file at <code>path</code> as the code source
@@ -63,6 +68,7 @@ public class InputReader {
     public InputReader(File file) throws FileNotFoundException {
         ringBuffer = new CircularFifoQueue<>(bufferSize);
         reader = new BufferedReader(new FileReader(file));
+        currentPos = 0;
     }
 
     /**
@@ -72,8 +78,11 @@ public class InputReader {
      *
      * @return The next character from the input
      * @see #peek(int)
+     * @throws java.io.IOException
      */
-    char peek() {
+    char peek() throws IOException {
+        ringBuffer.add((char) reader.read());
+        currentPos++;
         return ringBuffer.peek();
     }
 
@@ -90,13 +99,20 @@ public class InputReader {
     char peek(int k) throws IOException {
         if (k >= bufferSize) {
             /*
-            Read up to the k-th character and add it to the buffer. Since already n characters are in the buffer, total k-n number of characters will be read.
+            Read up to the k-th character and add it to the buffer.
+            Since already n characters are in the buffer, total k-n number of 
+            characters will be read.
              */
-            for (int i = startPos; i < k; i++) {
-                //TODO
+            //Looping through [currentPos; k] and reading every value to the buffer
+            for (int i = currentPos; i < k; i++) {
+                ringBuffer.add((char) reader.read());
+                currentPos++;
             }
+        } else {
+            currentPos++;
+            return (char) ringBuffer.toArray()[k];
         }
-        return (char) ringBuffer.toArray()[k];
+        return 0;
     }
 
     /**
@@ -106,9 +122,11 @@ public class InputReader {
      *
      * @return The next character from the input
      * @see #consume(int)
+     * @throws java.io.IOException
      */
-    char consume() {
-        return 0;
+    char consume() throws IOException {
+        ringBuffer.add((char) reader.read());
+        return ringBuffer.peek();
     }
 
     /**
@@ -117,11 +135,11 @@ public class InputReader {
      * return a new character at each invocation.
      *
      * @param k the index of the character to get
-     * @return The k-th character from the input
+     * @return The k-th character from the input buffer
      * @see #consume()
      */
     char consume(int k) {
-        return 0;
+        return (char) ringBuffer.toArray()[k];
     }
 
     /**
@@ -131,7 +149,7 @@ public class InputReader {
      * @throws java.io.IOException
      */
     boolean isEOF() throws IOException {
-        if (reader.readLine() == null) {
+        if (reader.read() == -1) {
             reader.close();
             return true;
         }
