@@ -41,23 +41,23 @@ public class Lexer {
 
     private InputReader input;
 
-    private Queue<String> ringBuffer;
+    private Queue<String/*LexToken*/> ringBuffer;
     private final int bufferSize = 256;
 
-    private int currentLexPos;
+    private String lexerState;
 
     //Tokens
-    private static final String NIL = "NIL";
-    private static final String FALSE = "FALSE";
-    private static final String TRUE = "TRUE";
-    private static final String NUMBER = "NUMERICAL";
-    private static final String STRING = "LITERALSTRING";
-    private static final String TRIPLE_DOT = "...";
-    private static final String FUNCTION = "FUNCTIONDEF";
-    private static final String PREFIX = "PREFIXEXP";
-    private static final String TABLE = "TABLECONSTRUCTOR";
-    private static final String BINOP = "BINOP";
-    private static final String UNOP = "UNOP";
+    private static final String NIL = "nil";
+    private static final String FALSE = "false";
+    private static final String TRUE = "true";
+    private static final String NUMBER = "Numerical";
+    private static final String STRING = "LiteralLString";
+    private static final String TRIPLE_DOT = "\'...\'";
+    private static final String FUNCTION = "functiondef";
+    private static final String PREFIX = "prefixexp";
+    private static final String TABLE = "tableconstructor";
+    private static final String BINOP = "binop";
+    private static final String UNOP = "unop";
     //End of Tokens
 
     /**
@@ -81,7 +81,7 @@ public class Lexer {
     public Lexer(File file) throws FileNotFoundException {
         input = new InputReader(file);
         ringBuffer = new CircularFifoQueue<>(bufferSize);
-        currentLexPos = 0;
+        lexerState = LexToken.TYPE_CHUNK;
     }
 
     /**
@@ -108,7 +108,7 @@ public class Lexer {
      * @see #peek()
      */
     public String peek(int k) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return (String) ringBuffer.toArray()[k];
     }
 
     /**
@@ -145,65 +145,52 @@ public class Lexer {
      * @throws java.io.IOException if an I/O error occures
      */
     private String nextToken() throws IOException {
-        char c = input.consume();
-        switch (c) {
-            case 'n':
-                if (input.peek(input.currentPos + 1) == 'i' && input.peek(input.currentPos + 1) == 'l') {
-                    return processNil();
-                }
-                break;
-            case 'f':
-                if (input.peek(input.currentPos + 1) == 'a'
-                        && input.peek(input.currentPos + 2) == 'l'
-                        && input.peek(input.currentPos + 3) == 's'
-                        && input.peek(input.currentPos + 4) == 'e') {
-                    return processFalse();
-                } else if (input.peek(input.currentPos + 1) == 'u'
-                        && input.peek(input.currentPos + 2) == 'n'
-                        && input.peek(input.currentPos + 3) == 'c'
-                        && input.peek(input.currentPos + 4) == 't'
-                        && input.peek(input.currentPos + 1) == 'i'
-                        && input.peek(input.currentPos + 2) == 'o'
-                        && input.peek(input.currentPos + 3) == 'n') {
-                    return processFunction();
-                }
-                break;
-            case 't':
-                if (input.peek(input.currentPos + 1) == 'r'
-                        && input.peek(input.currentPos + 2) == 'u'
-                        && input.peek(input.currentPos + 3) == 'e') {
-                    return processTrue();
-                }
-                break;
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-                return processNumeral();
-            case '"':
-                return processLiteralString();
-            case '.':
-                if (input.peek(input.currentPos + 1) == '.'
-                        && input.peek(input.currentPos + 2) == '.') {
-                    return processTripleDot();
-                }
-                break;
-            case ' ':
-            case '\n':
-            default:
-                //TODO
-                break;
+        if (input.peek() == 'n'
+                && input.peek(input.currentPos + 1) == 'i'
+                && input.peek(input.currentPos + 1) == 'l') {
+            return processNil();
+        } else if (input.peek() == 'f'
+                && input.peek(input.currentPos + 1) == 'a'
+                && input.peek(input.currentPos + 2) == 'l'
+                && input.peek(input.currentPos + 3) == 's'
+                && input.peek(input.currentPos + 4) == 'e') {
+            return processFalse();
+        } else if (input.peek() == 'f'
+                && input.peek(input.currentPos + 1) == 'u'
+                && input.peek(input.currentPos + 2) == 'n'
+                && input.peek(input.currentPos + 3) == 'c'
+                && input.peek(input.currentPos + 4) == 't'
+                && input.peek(input.currentPos + 1) == 'i'
+                && input.peek(input.currentPos + 2) == 'o'
+                && input.peek(input.currentPos + 3) == 'n') {
+            return processFunction();
+        } else if (input.peek() == 't'
+                && input.peek(input.currentPos + 1) == 'r'
+                && input.peek(input.currentPos + 2) == 'u'
+                && input.peek(input.currentPos + 3) == 'e') {
+            return processTrue();
+        } else if (input.peek() == '0'
+                || input.peek() == '1'
+                || input.peek() == '2'
+                || input.peek() == '3'
+                || input.peek() == '4'
+                || input.peek() == '5'
+                || input.peek() == '6'
+                || input.peek() == '7'
+                || input.peek() == '8'
+                || input.peek() == '9') {
+            return processNumeral();
+        } else if (input.peek() == '"') {
+            return processLiteralString();
+        } else if (input.peek() == '.' && input.peek(input.currentPos + 1) == '.'
+                && input.peek(input.currentPos + 2) == '.') {
+            return processTripleDot();
+        } else {
+            return processChunk();
         }
-        return null;
     }
-
     // WARNING: LESS-DOCUMENTED PROCESSING FUNCTIONS AHEAD
+
     private String processNil() {
         return null;
     }
@@ -245,6 +232,10 @@ public class Lexer {
     }
 
     private String processUnOP() {
+        return null;
+    }
+
+    private String processChunk() {
         return null;
     }
 }
