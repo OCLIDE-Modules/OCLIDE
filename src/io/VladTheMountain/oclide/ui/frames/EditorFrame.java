@@ -1032,6 +1032,10 @@ projectsTree.addMouseListener(new MouseAdapter() {
         new SettingsFrame().setVisible(true);
     }//GEN-LAST:event_settingsMenuItemActionPerformed
 
+    /**
+     * 
+     * @throws IOException 
+     */
     private void runOCEmu() throws IOException {
         if (projectsTree.getSelectionPath().getPath().length > 1 && projectsTree.getSelectionPath().getPath().length < 3) {
             if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) == null || "".equals(String.valueOf(projectsTree.getSelectionPath().getPath()[1]))) {
@@ -1044,6 +1048,9 @@ projectsTree.addMouseListener(new MouseAdapter() {
         }
     }
 
+    /**
+     * 
+     */
     private void runOcelot() {
         try {
             ProcessBuilder pb = new ProcessBuilder("java", "-jar", "Ocelot" + FileSystems.getDefault().getSeparator() + "ocelot.jar");

@@ -38,6 +38,10 @@ public class AboutDialog {
 
     final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
     
+    /**
+     * 
+     * @param parent 
+     */
     public AboutDialog(JFrame parent) {
         JOptionPane.showMessageDialog(parent,
                 "OCLIDE RC1-1.0.0\n"

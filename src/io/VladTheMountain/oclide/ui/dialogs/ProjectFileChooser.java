@@ -38,6 +38,9 @@ public class ProjectFileChooser extends JFileChooser {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 
+     */
     public ProjectFileChooser() {
         this.setCurrentDirectory(new File(System.getProperty("user.home")));
         this.setFileSelectionMode(DIRECTORIES_ONLY);

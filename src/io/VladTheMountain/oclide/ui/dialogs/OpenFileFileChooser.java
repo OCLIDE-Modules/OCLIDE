@@ -40,6 +40,9 @@ public class OpenFileFileChooser extends JFileChooser {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 
+     */
     public OpenFileFileChooser() {
         this.setApproveButtonText("Open");
         this.setApproveButtonToolTipText("Open selected file");
