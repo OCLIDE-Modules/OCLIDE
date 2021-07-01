@@ -83,7 +83,7 @@ public class InputReader {
      * @see #peek(int)
      */
     char peek() throws IOException {
-        ringBuffer.add((char) reader.read());
+        //ringBuffer.add((char) reader.read());
         return ringBuffer.peek();
     }
 

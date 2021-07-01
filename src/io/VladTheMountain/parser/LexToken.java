@@ -83,18 +83,33 @@ public class LexToken {
     public static final String TYPE_FIELDSEP = "fieldsep";
     public static final String TYPE_BINOP = "binop";
     public static final String TYPE_UNOP = "unop";
+    
+    public static final String TYPE_EOFTOKEN = "EOFToken";
 
     private String tokenType, tokenValue;
 
+    /**
+     *
+     * @param type
+     * @param value
+     */
     public LexToken(String type, String value) {
         tokenType = type;
         tokenValue = value;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getType() {
         return tokenType;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getValue() {
         return tokenValue;
     }

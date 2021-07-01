@@ -46,19 +46,12 @@ public class Lexer {
 
     private String lexerState;
 
-    //Tokens
-    private static final String NIL = "nil";
-    private static final String FALSE = "false";
-    private static final String TRUE = "true";
-    private static final String NUMBER = "Numerical";
-    private static final String STRING = "LiteralLString";
-    private static final String TRIPLE_DOT = "\'...\'";
-    private static final String FUNCTION = "functiondef";
-    private static final String PREFIX = "prefixexp";
-    private static final String TABLE = "tableconstructor";
-    private static final String BINOP = "binop";
-    private static final String UNOP = "unop";
-    //End of Tokens
+    //States
+    private static final int NULL = 1;
+    private static final int TOKEN = 2;
+    private static final int SPECIAL_TOKEN = 3;
+    private static final int EOF = 4;
+    //End of Statess
 
     /**
      * Initializes the {@code InputReader}, which is neccessary for peeeking and
