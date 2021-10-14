@@ -759,7 +759,7 @@
             <Component class="javax.swing.JTextField" name="luaPathField">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="System.getenv(&quot;LUA_PATH&quot;).length()&lt;2 ? &quot;LUA_PATH not set in current environment&quot; : System.getenv(&quot;LUA_PATH&quot;)" type="code"/>
+                  <Connection code="/*System.getenv(&quot;LUA_PATH&quot;).length()&lt;2 ? &quot;LUA_PATH not set in current environment&quot; : System.getenv(&quot;LUA_PATH&quot;)*/&quot;LUA_PATH&quot;" type="code"/>
                 </Property>
               </Properties>
             </Component>

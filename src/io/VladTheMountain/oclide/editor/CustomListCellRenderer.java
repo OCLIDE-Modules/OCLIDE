@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 Vladislav Gorskii.
+ * Copyright 2021 VladTheMountain.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,40 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package io.VladTheMountain.oclide;
+package io.VladTheMountain.oclide.editor;
 
-import io.VladTheMountain.oclide.ui.frames.EditorFrame;
-import java.awt.Graphics2D;
-import java.awt.SplashScreen;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.Component;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 
 /**
- *
+ * Custom {@link ListCellRenderer} for autocompletion tooltips
  * @author VladTheMountain
  */
-public class OCLIDE {
+public class CustomListCellRenderer implements ListCellRenderer<String> {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        final SplashScreen splash = SplashScreen.getSplashScreen();
-        if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
-            //return;
-        } else {
-            Graphics2D g = splash.createGraphics();
-            if (g == null) {
-                System.out.println("g is null");
-                return;
-            }
-        }
-        try {
-            Thread.sleep(2000);
-            new EditorFrame().setVisible(true);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    @Override
+    public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
+    
 }

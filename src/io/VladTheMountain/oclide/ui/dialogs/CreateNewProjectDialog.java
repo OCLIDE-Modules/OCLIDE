@@ -23,6 +23,7 @@
  */
 package io.VladTheMountain.oclide.ui.dialogs;
 
+import io.VladTheMountain.oclide.ui.frames.EditorFrame;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,8 @@ import java.io.File;
 import java.nio.file.FileSystems;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -51,7 +54,6 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import io.VladTheMountain.oclide.ui.frames.EditorFrame;
 
 /**
  *
@@ -429,6 +431,8 @@ public class CreateNewProjectDialog extends javax.swing.JDialog {
             case 2:
                 this.descriptionText.setText("Creates a new project with /lib/ folder.\nAllows to customize the name of the library.");
                 break;
+            default:
+                Logger.getLogger(CreateNewProjectDialog.class.getName()).log(Level.SEVERE, "Something's wrong at projectTypeListValueChanged - wrong index: {0}", this.projectTypeList.getSelectedIndex());
         }
     }//GEN-LAST:event_projectTypeListValueChanged
 

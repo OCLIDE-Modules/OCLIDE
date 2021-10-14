@@ -55,7 +55,7 @@ import javax.swing.border.TitledBorder;
  */
 public class SettingsFrame extends javax.swing.JFrame {
 
-    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
     private static final long serialVersionUID = 1L;
 
     /**
@@ -444,7 +444,7 @@ public class SettingsFrame extends javax.swing.JFrame {
 
         jLabel7.setText("Lua path:");
 
-        luaPathField.setText(System.getenv("LUA_PATH").length()<2 ? "LUA_PATH not set in current environment" : System.getenv("LUA_PATH"));
+        luaPathField.setText(/*System.getenv("LUA_PATH").length()<2 ? "LUA_PATH not set in current environment" : System.getenv("LUA_PATH")*/"LUA_PATH");
 
         GroupLayout luaPanelLayout = new GroupLayout(luaPanel);
         luaPanel.setLayout(luaPanelLayout);

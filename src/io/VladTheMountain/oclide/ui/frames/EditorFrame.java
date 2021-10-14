@@ -95,7 +95,7 @@ import org.fife.ui.rtextarea.ToolTipSupplier;
  */
 public class EditorFrame extends JFrame {
 
-    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.editor.Editor", Locale.getDefault());
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.editor.Editor", Locale.getDefault());
 
     private static final long serialVersionUID = 1L;
 
@@ -343,7 +343,7 @@ public class EditorFrame extends JFrame {
         jSeparator11 = new JPopupMenu.Separator();
         settingsMenuItem = new JMenuItem();
 
-        popupSaveFile.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/save_icon&16.png"))); // NOI18N
+        popupSaveFile.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/save_icon&16.png"))); // NOI18N
         popupSaveFile.setText("Save current file");
         popupSaveFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -352,7 +352,7 @@ public class EditorFrame extends JFrame {
         });
         fileManagementPopup.add(popupSaveFile);
 
-        popupCloseFile.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/doc_delete_icon&16.png"))); // NOI18N
+        popupCloseFile.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/doc_delete_icon&16.png"))); // NOI18N
         popupCloseFile.setText("Close current file");
         popupCloseFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -364,7 +364,7 @@ public class EditorFrame extends JFrame {
         newMenu.setText("Add...");
         newMenu.setToolTipText("");
 
-        addFileMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/document_icon&16.png"))); // NOI18N
+        addFileMenuItem.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/document_icon&16.png"))); // NOI18N
         addFileMenuItem.setText("File");
         addFileMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -373,7 +373,7 @@ public class EditorFrame extends JFrame {
         });
         newMenu.add(addFileMenuItem);
 
-        addFolderMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/folder_icon&16.png"))); // NOI18N
+        addFolderMenuItem.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_icon&16.png"))); // NOI18N
         addFolderMenuItem.setText("Folder");
         addFolderMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -385,7 +385,7 @@ public class EditorFrame extends JFrame {
         projectManagementPopup.add(newMenu);
         projectManagementPopup.add(jSeparator7);
 
-        runInOCEmu.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_shell&16.png"))); // NOI18N
+        runInOCEmu.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/app_window_shell&16.png"))); // NOI18N
         runInOCEmu.setText("Launch OCEmu");
         runInOCEmu.setToolTipText("");
         runInOCEmu.addActionListener(new ActionListener() {
@@ -405,7 +405,7 @@ public class EditorFrame extends JFrame {
         });
         projectManagementPopup.add(renameMenuItem);
 
-        deleteMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&16.png"))); // NOI18N
+        deleteMenuItem.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&16.png"))); // NOI18N
         deleteMenuItem.setText("Delete");
         deleteMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -415,7 +415,7 @@ public class EditorFrame extends JFrame {
         projectManagementPopup.add(deleteMenuItem);
         projectManagementPopup.add(jSeparator9);
 
-        propertiesMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/cogs_icon&16.png"))); // NOI18N
+        propertiesMenuItem.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/cogs_icon&16.png"))); // NOI18N
         propertiesMenuItem.setText("Properties");
         propertiesMenuItem.setToolTipText("");
         propertiesMenuItem.addActionListener(new ActionListener() {
@@ -483,7 +483,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     projectToolbar.setFloatable(false);
     projectToolbar.setRollover(true);
 
-    newProjectButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&24.png"))); // NOI18N
+    newProjectButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&24.png"))); // NOI18N
     newProjectButton.setToolTipText("Create a new project");
     newProjectButton.setFocusable(false);
     newProjectButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -495,7 +495,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     projectToolbar.add(newProjectButton);
 
-    openProjectButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&24.png"))); // NOI18N
+    openProjectButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&24.png"))); // NOI18N
     openProjectButton.setToolTipText("Open project");
     openProjectButton.setFocusable(false);
     openProjectButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -507,7 +507,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     projectToolbar.add(openProjectButton);
 
-    addFileButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&24.png"))); // NOI18N
+    addFileButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&24.png"))); // NOI18N
     addFileButton.setToolTipText("Add a file");
     addFileButton.setFocusable(false);
     addFileButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -519,7 +519,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     projectToolbar.add(addFileButton);
 
-    saveButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/save_icon&24.png"))); // NOI18N
+    saveButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/save_icon&24.png"))); // NOI18N
     saveButton.setToolTipText("Save current file");
     saveButton.setFocusable(false);
     saveButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -531,7 +531,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     projectToolbar.add(saveButton);
 
-    deleteProjectButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&24.png"))); // NOI18N
+    deleteProjectButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&24.png"))); // NOI18N
     deleteProjectButton.setToolTipText("Delete project");
     deleteProjectButton.setFocusable(false);
     deleteProjectButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -546,14 +546,14 @@ projectsTree.addMouseListener(new MouseAdapter() {
     undoRedoToolbar.setFloatable(false);
     undoRedoToolbar.setRollover(true);
 
-    undoButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/undo_icon&24.png"))); // NOI18N
+    undoButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/undo_icon&24.png"))); // NOI18N
     undoButton.setToolTipText("Undo");
     undoButton.setFocusable(false);
     undoButton.setHorizontalTextPosition(SwingConstants.CENTER);
     undoButton.setVerticalTextPosition(SwingConstants.BOTTOM);
     undoRedoToolbar.add(undoButton);
 
-    redoButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/redo_icon&24.png"))); // NOI18N
+    redoButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/redo_icon&24.png"))); // NOI18N
     redoButton.setToolTipText("Redo");
     redoButton.setFocusable(false);
     redoButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -563,7 +563,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     jToolBar1.setFloatable(false);
     jToolBar1.setRollover(true);
 
-    runOCEmuButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_shell&24.png"))); // NOI18N
+    runOCEmuButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/app_window_shell&24.png"))); // NOI18N
     runOCEmuButton.setToolTipText("Launch OCEmu");
     runOCEmuButton.setFocusable(false);
     runOCEmuButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -575,7 +575,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     jToolBar1.add(runOCEmuButton);
 
-    runOcelotButton.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&24.png"))); // NOI18N
+    runOcelotButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/app_window_black&24.png"))); // NOI18N
     runOcelotButton.setToolTipText("Launch Ocelot Desktop");
     runOcelotButton.setVerticalTextPosition(SwingConstants.BOTTOM);
     runOcelotButton.addActionListener(new ActionListener() {
@@ -587,8 +587,8 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     fileMenu.setText(localiztionResource.getString("fileMenu"));
 
-    createProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
-    createProject.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&16.png"))); // NOI18N
+    createProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+    createProject.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&16.png"))); // NOI18N
     createProject.setText("Create project");
     createProject.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -597,8 +597,8 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     fileMenu.add(createProject);
 
-    openProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
-    openProject.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&16.png"))); // NOI18N
+    openProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
+    openProject.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&16.png"))); // NOI18N
     openProject.setText("Open project");
     openProject.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -608,7 +608,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     fileMenu.add(openProject);
     fileMenu.add(jSeparator1);
 
-    createFile.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&16.png"))); // NOI18N
+    createFile.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&16.png"))); // NOI18N
     createFile.setText("Create file");
     createFile.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -617,7 +617,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     fileMenu.add(createFile);
 
-    openFile.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/document_icon&16.png"))); // NOI18N
+    openFile.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/document_icon&16.png"))); // NOI18N
     openFile.setText("Open file");
     openFile.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -627,8 +627,8 @@ projectsTree.addMouseListener(new MouseAdapter() {
     fileMenu.add(openFile);
     fileMenu.add(jSeparator10);
 
-    save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-    save.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/save_icon&16.png"))); // NOI18N
+    save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
+    save.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/save_icon&16.png"))); // NOI18N
     save.setText("Save");
     save.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -638,8 +638,8 @@ projectsTree.addMouseListener(new MouseAdapter() {
     fileMenu.add(save);
     fileMenu.add(jSeparator6);
 
-    deleteProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_MASK));
-    deleteProject.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&16.png"))); // NOI18N
+    deleteProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_DOWN_MASK));
+    deleteProject.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&16.png"))); // NOI18N
     deleteProject.setText("Delete project");
     deleteProject.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -661,19 +661,19 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     editMenu.setText("Edit");
 
-    undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
-    undo.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/undo_icon&16.png"))); // NOI18N
+    undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
+    undo.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/undo_icon&16.png"))); // NOI18N
     undo.setText("Undo");
     editMenu.add(undo);
 
-    redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_MASK));
-    redo.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/redo_icon&16.png"))); // NOI18N
+    redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK));
+    redo.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/redo_icon&16.png"))); // NOI18N
     redo.setText("Redo");
     editMenu.add(redo);
     editMenu.add(jSeparator3);
 
-    cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
-    cut.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/clipboard_cut_icon&16.png"))); // NOI18N
+    cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
+    cut.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/clipboard_cut_icon&16.png"))); // NOI18N
     cut.setText("Cut");
     cut.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -682,8 +682,8 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     editMenu.add(cut);
 
-    copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
-    copy.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/clipboard_copy_icon&16.png"))); // NOI18N
+    copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
+    copy.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/clipboard_copy_icon&16.png"))); // NOI18N
     copy.setText("Copy");
     copy.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -692,8 +692,8 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     editMenu.add(copy);
 
-    paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
-    paste.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/clipboard_past_icon&16.png"))); // NOI18N
+    paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
+    paste.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/clipboard_past_icon&16.png"))); // NOI18N
     paste.setText("Paste");
     paste.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -703,7 +703,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     editMenu.add(paste);
     editMenu.add(jSeparator4);
 
-    find.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
+    find.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_DOWN_MASK));
     find.setText("Find...");
     find.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -718,7 +718,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     emulatorMenu.setText("Deploy to Emulator");
 
-    ocemuMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_shell&16.png"))); // NOI18N
+    ocemuMenuItem.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/app_window_shell&16.png"))); // NOI18N
     ocemuMenuItem.setText("Run OCEmu");
     ocemuMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -727,7 +727,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     emulatorMenu.add(ocemuMenuItem);
 
-    ocelotMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&16.png"))); // NOI18N
+    ocelotMenuItem.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/app_window_black&16.png"))); // NOI18N
     ocelotMenuItem.setText("Run Ocelot");
     ocelotMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -792,7 +792,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     helpMenu.add(wikiMenuItem);
     helpMenu.add(jSeparator11);
 
-    settingsMenuItem.setIcon(new ImageIcon(getClass().getResource("/ru/VladTheMountain/oclide/resources/assets/icons/cogs_icon&16.png"))); // NOI18N
+    settingsMenuItem.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/cogs_icon&16.png"))); // NOI18N
     settingsMenuItem.setText("Settings");
     settingsMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -814,7 +814,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
             .addComponent(undoRedoToolbar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jToolBar1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(270, Short.MAX_VALUE))
+            .addContainerGap(54, Short.MAX_VALUE))
         .addComponent(jSplitPane1)
     );
     layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -824,7 +824,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
                 .addComponent(projectToolbar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jToolBar1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jSplitPane1, GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
             .addContainerGap())
     );
 

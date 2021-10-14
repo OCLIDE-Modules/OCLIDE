@@ -26,6 +26,8 @@ package io.VladTheMountain.oclide.editor;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.fife.ui.autocomplete.BasicCompletion;
 import org.fife.ui.autocomplete.CompletionProvider;
 import org.fife.ui.autocomplete.DefaultCompletionProvider;
@@ -309,6 +311,7 @@ public class OCLIDECompletionProvider {
         /* Component API */
 
         //
+        Logger.getLogger(OCLIDECompletionProvider.class.getName()).log(Level.INFO, "Autocompletion complete");
         LanguageAwareCompletionProvider p = new LanguageAwareCompletionProvider(defaultProvider);
         return p;
     }

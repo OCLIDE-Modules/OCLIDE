@@ -11,7 +11,7 @@
         <MenuItem class="javax.swing.JMenuItem" name="popupSaveFile">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/save_icon&amp;16.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/save_icon&amp;16.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Save current file"/>
           </Properties>
@@ -22,7 +22,7 @@
         <MenuItem class="javax.swing.JMenuItem" name="popupCloseFile">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/doc_delete_icon&amp;16.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/doc_delete_icon&amp;16.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Close current file"/>
           </Properties>
@@ -47,7 +47,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="addFileMenuItem">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/document_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/document_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="File"/>
               </Properties>
@@ -58,7 +58,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="addFolderMenuItem">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/folder_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Folder"/>
               </Properties>
@@ -73,7 +73,7 @@
         <MenuItem class="javax.swing.JMenuItem" name="runInOCEmu">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/app_window_shell&amp;16.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/app_window_shell&amp;16.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Launch OCEmu"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -96,7 +96,7 @@
         <MenuItem class="javax.swing.JMenuItem" name="deleteMenuItem">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&amp;16.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&amp;16.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Delete"/>
           </Properties>
@@ -109,7 +109,7 @@
         <MenuItem class="javax.swing.JMenuItem" name="propertiesMenuItem">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/cogs_icon&amp;16.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/cogs_icon&amp;16.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Properties"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -143,7 +143,7 @@
                   <KeyStroke key="Ctrl+N"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Create project"/>
               </Properties>
@@ -157,7 +157,7 @@
                   <KeyStroke key="Ctrl+O"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Open project"/>
               </Properties>
@@ -170,7 +170,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="createFile">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Create file"/>
               </Properties>
@@ -181,7 +181,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="openFile">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/document_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/document_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Open file"/>
               </Properties>
@@ -197,7 +197,7 @@
                   <KeyStroke key="Ctrl+S"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/save_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/save_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Save"/>
               </Properties>
@@ -213,7 +213,7 @@
                   <KeyStroke key="Ctrl+DELETE"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Delete project"/>
               </Properties>
@@ -244,7 +244,7 @@
                   <KeyStroke key="Ctrl+Z"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/undo_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/undo_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Undo"/>
               </Properties>
@@ -255,7 +255,7 @@
                   <KeyStroke key="Ctrl+Y"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/redo_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/redo_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Redo"/>
               </Properties>
@@ -268,7 +268,7 @@
                   <KeyStroke key="Ctrl+X"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/clipboard_cut_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/clipboard_cut_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Cut"/>
               </Properties>
@@ -282,7 +282,7 @@
                   <KeyStroke key="Ctrl+C"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/clipboard_copy_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/clipboard_copy_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Copy"/>
               </Properties>
@@ -296,7 +296,7 @@
                   <KeyStroke key="Ctrl+V"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/clipboard_past_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/clipboard_past_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Paste"/>
               </Properties>
@@ -332,7 +332,7 @@
                 <MenuItem class="javax.swing.JMenuItem" name="ocemuMenuItem">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/app_window_shell&amp;16.png"/>
+                      <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/app_window_shell&amp;16.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Run OCEmu"/>
                   </Properties>
@@ -343,7 +343,7 @@
                 <MenuItem class="javax.swing.JMenuItem" name="ocelotMenuItem">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&amp;16.png"/>
+                      <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/app_window_black&amp;16.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Run Ocelot"/>
                   </Properties>
@@ -426,7 +426,7 @@
             <MenuItem class="javax.swing.JMenuItem" name="settingsMenuItem">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/cogs_icon&amp;16.png"/>
+                  <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/cogs_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Settings"/>
               </Properties>
@@ -472,7 +472,7 @@
               <Component id="undoRedoToolbar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="270" max="32767" attributes="0"/>
+              <EmptySpace pref="54" max="32767" attributes="0"/>
           </Group>
           <Component id="jSplitPane1" max="32767" attributes="0"/>
       </Group>
@@ -486,7 +486,7 @@
                   <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jSplitPane1" pref="488" max="32767" attributes="0"/>
+              <Component id="jSplitPane1" pref="464" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -640,7 +640,7 @@
         <Component class="javax.swing.JButton" name="newProjectButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&amp;24.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&amp;24.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Create a new project"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -654,7 +654,7 @@
         <Component class="javax.swing.JButton" name="openProjectButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&amp;24.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&amp;24.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Open project"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -668,7 +668,7 @@
         <Component class="javax.swing.JButton" name="addFileButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&amp;24.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&amp;24.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Add a file"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -682,7 +682,7 @@
         <Component class="javax.swing.JButton" name="saveButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/save_icon&amp;24.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/save_icon&amp;24.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Save current file"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -696,7 +696,7 @@
         <Component class="javax.swing.JButton" name="deleteProjectButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&amp;24.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&amp;24.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Delete project"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -720,7 +720,7 @@
         <Component class="javax.swing.JButton" name="undoButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/undo_icon&amp;24.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/undo_icon&amp;24.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Undo"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -731,7 +731,7 @@
         <Component class="javax.swing.JButton" name="redoButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/redo_icon&amp;24.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/redo_icon&amp;24.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Redo"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -752,7 +752,7 @@
         <Component class="javax.swing.JButton" name="runOCEmuButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/app_window_shell&amp;24.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/app_window_shell&amp;24.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Launch OCEmu"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -766,7 +766,7 @@
         <Component class="javax.swing.JButton" name="runOcelotButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/ru/VladTheMountain/oclide/resources/assets/icons/app_window_black&amp;24.png"/>
+              <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/app_window_black&amp;24.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Launch Ocelot Desktop"/>
             <Property name="verticalTextPosition" type="int" value="3"/>

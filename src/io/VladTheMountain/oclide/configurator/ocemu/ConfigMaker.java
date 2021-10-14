@@ -23,11 +23,13 @@
  */
 package io.VladTheMountain.oclide.configurator.ocemu;
 
+import io.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import io.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
 
 /**
  *
@@ -101,6 +103,9 @@ public class ConfigMaker {
                     this.computerComponents = this.computerComponents + "      "
                             + "{\"screen_sdl2\", "
                             + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "" + comp.getOptionAt(1) + ", " + "" + comp.getOptionAt(2) + ", " + "" + comp.getOptionAt(3) + "},\n";
+                    break;
+                default:
+                    Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, "ConfigMaker received an invalid component type: {0}", comp.getComponentType());
                     break;
             }
         }
@@ -286,6 +291,8 @@ public class ConfigMaker {
                     case "screen":
                         type = 8;
                         break;
+                    default:
+                        Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, "ConfigMaker detected an invalid component type: {0}", configContents[i].substring(configContents[i].indexOf("\""), configContents[i].indexOf("\"", configContents[i].indexOf("\""))));
                 }
                 address = configContents[i].substring(comma1 + 2, comma2 - 1);
                 opts[0] = configContents[i].substring(comma2 + 2, comma3 - 1);
