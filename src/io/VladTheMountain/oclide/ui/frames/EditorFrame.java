@@ -23,11 +23,12 @@
  */
 package io.VladTheMountain.oclide.ui.frames;
 
-import io.VladTheMountain.emulator.ui.OcelotEmulatorFrame;
+//import io.VladTheMountain.emulator.ui.OcelotEmulatorFrame;
+//import io.VladTheMountain.oclide.ui.configurators.AurumEmulatorForm;
+//import io.VladTheMountain.oclide.ui.configurators.CODEForm;
 import io.VladTheMountain.oclide.editor.OCLIDECompletionProvider;
-import io.VladTheMountain.oclide.ui.configurators.AurumEmulatorForm;
-import io.VladTheMountain.oclide.ui.configurators.CODEForm;
 import io.VladTheMountain.oclide.ui.configurators.OCEmuForm;
+import io.VladTheMountain.oclide.ui.dialogs.AboutDialog;
 import io.VladTheMountain.oclide.ui.dialogs.CreateNewProjectDialog;
 import io.VladTheMountain.oclide.ui.dialogs.OpenFileFileChooser;
 import io.VladTheMountain.oclide.ui.dialogs.ProjectFileChooser;
@@ -87,9 +88,9 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 import org.fife.ui.rtextarea.ToolTipSupplier;
 
 /**
- * Probably the most important class in the whole application. It describes main
- * Frame's UI, it's logic and sets {@link ActionListener}s for almost every
- * dialog present in {@code io.VladTheMountain.oclide.ui.dialogs}
+ * Probably the most important and complicated class in the whole application.
+ * It describes main Frame's UI, it's logic and sets {@link ActionListener}s for
+ * almost every dialog present in {@code io.VladTheMountain.oclide.ui.dialogs}
  *
  * @author VladTheMountain
  */
@@ -833,15 +834,11 @@ projectsTree.addMouseListener(new MouseAdapter() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ocemuMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_ocemuMenuItemActionPerformed
-        try {
-            runOCEmu();
-        } catch (IOException ex) {
-            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        runOCEmu();
     }//GEN-LAST:event_ocemuMenuItemActionPerformed
 
     private void aboutMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
-        new SettingsFrame().setVisible(true);
+        new AboutDialog(this);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void createProjectActionPerformed(ActionEvent evt) {//GEN-FIRST:event_createProjectActionPerformed
@@ -927,11 +924,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     }//GEN-LAST:event_projectsTreeMouseClicked
 
     private void runInOCEmuActionPerformed(ActionEvent evt) {//GEN-FIRST:event_runInOCEmuActionPerformed
-        try {
-            runOCEmu();
-        } catch (IOException ex) {
-            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        runOCEmu();
     }//GEN-LAST:event_runInOCEmuActionPerformed
 
     private void newProjectButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_newProjectButtonActionPerformed
@@ -981,16 +974,12 @@ projectsTree.addMouseListener(new MouseAdapter() {
     }//GEN-LAST:event_deleteProjectButtonActionPerformed
 
     private void runOCEmuButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_runOCEmuButtonActionPerformed
-        try {
-            runOCEmu();
-        } catch (IOException ex) {
-            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        runOCEmu();
     }//GEN-LAST:event_runOCEmuButtonActionPerformed
 
     private void runOcelotButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_runOcelotButtonActionPerformed
-        //runOcelot();
-        new OcelotEmulatorFrame().setVisible(true);
+        runOcelot();
+        //new OcelotEmulatorFrame().setVisible(true);
     }//GEN-LAST:event_runOcelotButtonActionPerformed
 
     private void openFileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
@@ -1009,23 +998,25 @@ projectsTree.addMouseListener(new MouseAdapter() {
     }//GEN-LAST:event_ocemulatorMenuItemActionPerformed
 
     private void aurumMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_aurumMenuItemActionPerformed
-        Thread aurum = new Thread() {
+        /*Thread aurum = new Thread() {
             @Override
             public void run() {
                 new AurumEmulatorForm().setVisible(true);
             }
         };
-        aurum.start();
+        aurum.start();*/
+        throw new UnsupportedOperationException("Not supported yet");
     }//GEN-LAST:event_aurumMenuItemActionPerformed
 
     private void codeMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_codeMenuItemActionPerformed
-        Thread code = new Thread() {
+        /*Thread code = new Thread() {
             @Override
             public void run() {
                 new CODEForm().setVisible(true);
             }
         };
-        code.start();
+        code.start();*/
+        throw new UnsupportedOperationException("Not supported yet");
     }//GEN-LAST:event_codeMenuItemActionPerformed
 
     private void settingsMenuItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_settingsMenuItemActionPerformed
@@ -1033,15 +1024,17 @@ projectsTree.addMouseListener(new MouseAdapter() {
     }//GEN-LAST:event_settingsMenuItemActionPerformed
 
     /**
-     * 
-     * @throws IOException 
+     * Attempts to open
+     * {@link io.VladTheMountain.oclide.configurator.ocemu.OCEmuLauncher}
      */
-    private void runOCEmu() throws IOException {
-        if (projectsTree.getSelectionPath().getPath().length > 1 && projectsTree.getSelectionPath().getPath().length < 3) {
-            if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) == null || "".equals(String.valueOf(projectsTree.getSelectionPath().getPath()[1]))) {
-                JOptionPane.showMessageDialog(this, "Invalid project selection.", "Error: Can't run OCEmu", JOptionPane.ERROR_MESSAGE);
-            } else {
-                new OCEmuForm().setVisible(true);
+    private void runOCEmu() {
+        if (!(projectsTree.getSelectionPath() == null)) {
+            if (projectsTree.getSelectionPath().getPath().length > 1 && projectsTree.getSelectionPath().getPath().length < 3) {
+                if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) == null || "".equals(String.valueOf(projectsTree.getSelectionPath().getPath()[1]))) {
+                    JOptionPane.showMessageDialog(this, "Invalid project selection.", "Error: Can't run OCEmu", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    new OCEmuForm().setVisible(true);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "No project chosen. Please select a project folder in the file tree and then launch OCEmu.", "Project not set", JOptionPane.ERROR_MESSAGE);
@@ -1049,7 +1042,8 @@ projectsTree.addMouseListener(new MouseAdapter() {
     }
 
     /**
-     * 
+     * Attempts to create a new instance of {@link java.lang.Process} with
+     * <b>Ocelot Desktop</b> running in it
      */
     private void runOcelot() {
         try {

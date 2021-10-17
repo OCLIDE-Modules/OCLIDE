@@ -49,6 +49,7 @@ public class OCLIDECompletionProvider {
 
     // 'Since' //
     //Lua
+    private static final String LUA_52 = "Lua 5.2";
     private static final String LUA_53 = "Lua 5.3";
     //OpenOS
     private static final String OPENOS_16 = "OpenOS 1.6";
@@ -63,7 +64,7 @@ public class OCLIDECompletionProvider {
      * @see io.VladTheMountain.parser
      */
     public static CompletionProvider getProvider() {
-        ResourceBundle autocompletion = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.autocompletion.Autocompletion", Locale.getDefault());
+        ResourceBundle autocompletion = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.autocompletion.Autocompletion", Locale.getDefault());
         defaultProvider = new DefaultCompletionProvider();
         defaultProvider.setAutoActivationRules(true, null);
         defaultProvider.setParameterizedCompletionParams('(', ", ", ')');
@@ -73,189 +74,189 @@ public class OCLIDECompletionProvider {
         defaultProvider.addCompletion(new BasicCompletion(defaultProvider, "_G"));
         defaultProvider.addCompletion(new BasicCompletion(defaultProvider, "_VERSION"));
 
-        createCompletion("assert", LUA_53, autocompletion.getString("assert"), "v's arguments", new CustomParameter[][]{
+        createCompletion("assert", LUA_52, autocompletion.getString("assert"), "v's arguments", new CustomParameter[][]{
             {new CustomParameter("object", "v", true, "Object to return")},
             {new CustomParameter("object", "v", false, "Object to return"), new CustomParameter("string", "message", true, "Message to print if 'v' is false")}
         });
 
-        createCompletion("dofile", LUA_53, autocompletion.getString("dofile"), "Chunk's return values", new CustomParameter[][]{
+        createCompletion("dofile", LUA_52, autocompletion.getString("dofile"), "Chunk's return values", new CustomParameter[][]{
             {new CustomParameter("string", "filename", true, "File to execute")},
             {}
         });
 
-        createCompletion("error", LUA_53, autocompletion.getString("error"), "", new CustomParameter[][]{
+        createCompletion("error", LUA_52, autocompletion.getString("error"), "", new CustomParameter[][]{
             {new CustomParameter("string", "message", true, "Message to print")},
             {new CustomParameter("string", "message", false, "Message to print"), new CustomParameter("number", "level", true, "Way of getting the error position")}
         });
 
-        createCompletion("getmetatable", LUA_53, autocompletion.getString("getmetatable"), "Returns 'object's __metatable field", new CustomParameter[][]{
+        createCompletion("getmetatable", LUA_52, autocompletion.getString("getmetatable"), "Returns 'object's __metatable field", new CustomParameter[][]{
             {new CustomParameter("table", "object", true, "Table to return __metatable value of")}
         });
 
-        createCompletion("ipairs", LUA_53, autocompletion.getString("ipairs"), "Returns three values - an iterator function, the table t, and 0", new CustomParameter[][]{
+        createCompletion("ipairs", LUA_52, autocompletion.getString("ipairs"), "Returns three values - an iterator function, the table t, and 0", new CustomParameter[][]{
             {new CustomParameter("table", "t", true, "Table to iterate through")}
         });
 
-        createCompletion("load", LUA_53, autocompletion.getString("load"), "Returns the compiled chunk as a function", new CustomParameter[][]{
+        createCompletion("load", LUA_52, autocompletion.getString("load"), "Returns the compiled chunk as a function", new CustomParameter[][]{
             {new CustomParameter("chunk", "chunk", true, "Chunk to load")},
             {new CustomParameter("chunk", "chunk", false, "Chunk to load"), new CustomParameter("string", "chunkname", true, "The name of the chunk for error messages and debug information")},
             {new CustomParameter("chunk", "chunk", false, "Chunk to load"), new CustomParameter("string", "chunkname", false, "The name of the chunk for error messages and debug information"), new CustomParameter("string", "mode", true, "Controls whether the chunk can be text or binary")},
             {new CustomParameter("chunk", "chunk", false, "Chunk to load"), new CustomParameter("string", "chunkname", false, "The name of the chunk for error messages and debug information"), new CustomParameter("string", "mode", false, "Controls whether the chunk can be text or binary"), new CustomParameter("object", "env", true, "The value to set the first upvalue of the chunk to")}
         });
 
-        createCompletion("loadfile", LUA_53, autocompletion.getString("loadfile"), "The same as <code>load()</code>", new CustomParameter[][]{
+        createCompletion("loadfile", LUA_52, autocompletion.getString("loadfile"), "The same as <code>load()</code>", new CustomParameter[][]{
             {new CustomParameter("string", "filename", true, "The file to get the chunk from")},
             {new CustomParameter("string", "filename", false, "The file to get the chunk from"), new CustomParameter("string", "mode", false, "Controls whether the chunk can be text or binary")},
             {new CustomParameter("string", "filename", false, "The file to get the chunk from"), new CustomParameter("string", "mode", false, "Controls whether the chunk can be text or binary"), new CustomParameter("object", "env", true, "The value to set the first upvalue of the chunk to")},
             {}
         });
 
-        createCompletion("next", LUA_53, autocompletion.getString("next"), "Returns the next index of the table and its associated value", new CustomParameter[][]{
+        createCompletion("next", LUA_52, autocompletion.getString("next"), "Returns the next index of the table and its associated value", new CustomParameter[][]{
             {new CustomParameter("table", "table", true, "The table to traverse all fields of")},
             {new CustomParameter("table", "table", false, "The table to traverse all fields of"), new CustomParameter("number", "index", true, "The initial index")}
         });
 
-        createCompletion("pairs", LUA_53, autocompletion.getString("pairs"), "Returns <code>next(t)</code>, <code>t</code> and <code>nil</code>", new CustomParameter[][]{
+        createCompletion("pairs", LUA_52, autocompletion.getString("pairs"), "Returns <code>next(t)</code>, <code>t</code> and <code>nil</code>", new CustomParameter[][]{
             {new CustomParameter("table", "t", true, "The table to iterate through")}
         });
 
-        createCompletion("pcall", LUA_53, autocompletion.getString("pcall"), "Returns the status code of calling <code>f(...)</code>", new CustomParameter[][]{
+        createCompletion("pcall", LUA_52, autocompletion.getString("pcall"), "Returns the status code of calling <code>f(...)</code>", new CustomParameter[][]{
             {new CustomParameter("function", "f", true, "Function to call")},
             {new CustomParameter("function", "f", false, "Function to call"), new CustomParameter("", "...", true, "Function arguments")}
         });
 
-        createCompletion("print", LUA_53, autocompletion.getString("print"), "", new CustomParameter[][]{
+        createCompletion("print", LUA_52, autocompletion.getString("print"), "", new CustomParameter[][]{
             {new CustomParameter("", "...", true, "Object(-s) to print")}
         });
 
-        createCompletion("rawequal", LUA_53, autocompletion.getString("rawequal"), "Returns boolean - result of __eq metamethod", new CustomParameter[][]{
+        createCompletion("rawequal", LUA_52, autocompletion.getString("rawequal"), "Returns boolean - result of __eq metamethod", new CustomParameter[][]{
             {new CustomParameter("object", "v1", false, "First object to compare"), new CustomParameter("object", "v2", true, "Second object to compare")}
         });
 
-        createCompletion("rawget", LUA_53, autocompletion.getString("rawget"), "Returns value at <code>index</code> of <code>table</code>", new CustomParameter[][]{
+        createCompletion("rawget", LUA_52, autocompletion.getString("rawget"), "Returns value at <code>index</code> of <code>table</code>", new CustomParameter[][]{
             {new CustomParameter("table", "table", false, "Table to get value from"), new CustomParameter("number", "index", true, "Index of the <code>table</code> to get value of")}
         });
 
-        createCompletion("rawlen", LUA_53, autocompletion.getString("rawlen"), "Returns the length of the object", new CustomParameter[][]{
+        createCompletion("rawlen", LUA_52, autocompletion.getString("rawlen"), "Returns the length of the object", new CustomParameter[][]{
             {new CustomParameter("table", "v", true, "Object to measure length of")}
         });
 
-        createCompletion("rawset", LUA_53, autocompletion.getString("rawset"), "Returns <code>table</code>", new CustomParameter[][]{
+        createCompletion("rawset", LUA_52, autocompletion.getString("rawset"), "Returns <code>table</code>", new CustomParameter[][]{
             {new CustomParameter("table", "table", false, "the <code>table</code> in which you need to change the value"), new CustomParameter("number", "index", false, "the index of the table's cell to change value of"), new CustomParameter("object", "value", true, "the new value of the <code>table[index]</code>")}
         });
 
-        createCompletion("select", LUA_53, autocompletion.getString("select"), "Returns argument <code>index</code>", new CustomParameter[][]{
+        createCompletion("select", LUA_52, autocompletion.getString("select"), "Returns argument <code>index</code>", new CustomParameter[][]{
             {new CustomParameter("number", "index", false, "the argument to return"), new CustomParameter("obejct", "...", true, "arguments")}
         });
 
-        createCompletion("setmetatable", LUA_53, autocompletion.getString("setmetatable"), "Returns <code>table</code>", new CustomParameter[][]{
+        createCompletion("setmetatable", LUA_52, autocompletion.getString("setmetatable"), "Returns <code>table</code>", new CustomParameter[][]{
             {new CustomParameter("table", "table", false, "table to set metatable for"), new CustomParameter("metatable", "metatable", true, "metatable to set")}
         });
 
-        createCompletion("tonumber", LUA_53, autocompletion.getString("tonumber"), "Returns <code>e</code> as a number", new CustomParameter[][]{
+        createCompletion("tonumber", LUA_52, autocompletion.getString("tonumber"), "Returns <code>e</code> as a number", new CustomParameter[][]{
             {new CustomParameter("object", "e", true, "object to translate to a number")},
             {new CustomParameter("object", "e", false, "object to translate to a number"), new CustomParameter("number", "base", true, "the base number for <code>e</code>")}
         });
 
-        createCompletion("tostring", LUA_53, autocompletion.getString("tostring"), "Returns <code>v</code> as a string", new CustomParameter[][]{
+        createCompletion("tostring", LUA_52, autocompletion.getString("tostring"), "Returns <code>v</code> as a string", new CustomParameter[][]{
             {new CustomParameter("object", "v", true, "object to translate to a string")}
         });
 
-        createCompletion("type", LUA_53, autocompletion.getString("type"), "Returns the type of <code>v</code>", new CustomParameter[][]{
+        createCompletion("type", LUA_52, autocompletion.getString("type"), "Returns the type of <code>v</code>", new CustomParameter[][]{
             {new CustomParameter("object", "v", true, "object to get type of")}
         });
 
-        createCompletion("xpcall", LUA_53, autocompletion.getString("xpcall"), "Returns the same as <code>pcall</code>", new CustomParameter[][]{
+        createCompletion("xpcall", LUA_52, autocompletion.getString("xpcall"), "Returns the same as <code>pcall</code>", new CustomParameter[][]{
             {new CustomParameter("function", "f", false, "function to call"), new CustomParameter("object", "msgh", true, "message handler")},
             {new CustomParameter("function", "f", false, "function to call"), new CustomParameter("object", "msgh", false, "message handler"), new CustomParameter("...", "args", true, "arguments to pass to <code>f</code>")}
         });
 
         //Bit32
-        createCompletion("bit32.arshift", LUA_53, autocompletion.getString("bit32_arshift"), "Returns the number <code>x</code> shifted <code>disp</code> bits to the right", new CustomParameter[][]{
+        createCompletion("bit32.arshift", LUA_52, autocompletion.getString("bit32_arshift"), "Returns the number <code>x</code> shifted <code>disp</code> bits to the right", new CustomParameter[][]{
             {new CustomParameter("number", "x", false, "number to shift"), new CustomParameter("number", "disp", true, "how much to shift")}
         });
 
-        createCompletion("bit32.band", LUA_53, autocompletion.getString("bit32_band"), "Returns the bitwise and of its operands", new CustomParameter[][]{
+        createCompletion("bit32.band", LUA_52, autocompletion.getString("bit32_band"), "Returns the bitwise and of its operands", new CustomParameter[][]{
             {new CustomParameter("...", "", true, "operands")}
         });
 
-        createCompletion("bit32.bnot", LUA_53, autocompletion.getString("bit32_bnot"), "Returns the bitwise negation of <code>x</code>", new CustomParameter[][]{
+        createCompletion("bit32.bnot", LUA_52, autocompletion.getString("bit32_bnot"), "Returns the bitwise negation of <code>x</code>", new CustomParameter[][]{
             {new CustomParameter("object", "x", true, "operand")}
         });
 
-        createCompletion("bit32.bor", LUA_53, autocompletion.getString("bit32_bor"), "Returns the bitwise or of its operands", new CustomParameter[][]{
+        createCompletion("bit32.bor", LUA_52, autocompletion.getString("bit32_bor"), "Returns the bitwise or of its operands", new CustomParameter[][]{
             {new CustomParameter("...", "", true, "operands")}
         });
 
-        createCompletion("bit32.btest", LUA_53, autocompletion.getString("bit32_btest"), "Returns a boolean signaling whether the bitwise and of its operands is different from zero", new CustomParameter[][]{
+        createCompletion("bit32.btest", LUA_52, autocompletion.getString("bit32_btest"), "Returns a boolean signaling whether the bitwise and of its operands is different from zero", new CustomParameter[][]{
             {new CustomParameter("...", "", true, "operands")}
         });
 
-        createCompletion("bit32.bxor", LUA_53, autocompletion.getString("bit32_bxor"), "Returns the bitwise exclusive or of its operands", new CustomParameter[][]{
+        createCompletion("bit32.bxor", LUA_52, autocompletion.getString("bit32_bxor"), "Returns the bitwise exclusive or of its operands", new CustomParameter[][]{
             {new CustomParameter("...", "", true, "operands")}
         });
 
-        createCompletion("bit32.extract", LUA_53, autocompletion.getString("bit32_extract"), "Returns the unsigned number formed by the bits <code>field</code> to <code>field + width - 1</code> from <code>n</code>", new CustomParameter[][]{
+        createCompletion("bit32.extract", LUA_52, autocompletion.getString("bit32_extract"), "Returns the unsigned number formed by the bits <code>field</code> to <code>field + width - 1</code> from <code>n</code>", new CustomParameter[][]{
             {new CustomParameter("number", "n", false, ""), new CustomParameter("bits", "field", true, "")},
             {new CustomParameter("number", "n", false, ""), new CustomParameter("bits", "field", false, ""), new CustomParameter("number", "width", true, "")}
         });
 
-        createCompletion("bit32.replace", LUA_53, autocompletion.getString("bit32_replace"), "Returns a copy of n with the bits <code>field</code> to <code>field + width - 1</code> replaced by the value <code>v</code>", new CustomParameter[][]{
+        createCompletion("bit32.replace", LUA_52, autocompletion.getString("bit32_replace"), "Returns a copy of n with the bits <code>field</code> to <code>field + width - 1</code> replaced by the value <code>v</code>", new CustomParameter[][]{
             {new CustomParameter("number", "n", false, ""), new CustomParameter("object", "v", false, "new value"), new CustomParameter("bits", "field", true, "")},
             {new CustomParameter("number", "n", false, ""), new CustomParameter("object", "v", false, "new value"), new CustomParameter("bits", "field", false, ""), new CustomParameter("number", "width", true, "")}
         });
 
-        createCompletion("bit32.lrotate", LUA_53, autocompletion.getString("bit32_lrotate"), "Returns the number <code>x</code> rotated <code>disp</code> bits to the left", new CustomParameter[][]{
+        createCompletion("bit32.lrotate", LUA_52, autocompletion.getString("bit32_lrotate"), "Returns the number <code>x</code> rotated <code>disp</code> bits to the left", new CustomParameter[][]{
             {new CustomParameter("number", "x", false, "number to rotate"), new CustomParameter("number", "disp", true, "how much to shift")}
         });
 
-        createCompletion("bit32.lshift", LUA_53, autocompletion.getString("bit32_lshift"), "Returns the number <code>x</code> shifted <code>disp</code> bits to the left", new CustomParameter[][]{
+        createCompletion("bit32.lshift", LUA_52, autocompletion.getString("bit32_lshift"), "Returns the number <code>x</code> shifted <code>disp</code> bits to the left", new CustomParameter[][]{
             {new CustomParameter("number", "x", false, "number to shift"), new CustomParameter("number", "disp", true, "how much to shift")}
         });
 
-        createCompletion("bit32.rrotate", LUA_53, autocompletion.getString("bit32_rrotate"), "Returns the number <code>x</code> rotated <code>disp</code> bits to the right", new CustomParameter[][]{
+        createCompletion("bit32.rrotate", LUA_52, autocompletion.getString("bit32_rrotate"), "Returns the number <code>x</code> rotated <code>disp</code> bits to the right", new CustomParameter[][]{
             {new CustomParameter("number", "x", false, "number to rotate"), new CustomParameter("number", "disp", true, "how much to shift")}
         });
 
-        createCompletion("bit32.rshift", LUA_53, autocompletion.getString("bit32_rshift"), "Returns the number <code>x</code> shifted <code>disp</code> bits to the right", new CustomParameter[][]{
+        createCompletion("bit32.rshift", LUA_52, autocompletion.getString("bit32_rshift"), "Returns the number <code>x</code> shifted <code>disp</code> bits to the right", new CustomParameter[][]{
             {new CustomParameter("number", "x", false, "number to shift"), new CustomParameter("number", "disp", true, "how much to shift")}
         });
 
         //Coroutine
-        createCompletion("coroutine.create", LUA_53, autocompletion.getString("coroutine_create"), "Returns a new coroutine", new CustomParameter[][]{
+        createCompletion("coroutine.create", LUA_52, autocompletion.getString("coroutine_create"), "Returns a new coroutine", new CustomParameter[][]{
             {new CustomParameter("function", "f", true, "function to wrap into the coroutine")}
         });
 
-        createCompletion("coroutine.resume", LUA_53, autocompletion.getString("coroutine_resume"), "Returns function output", new CustomParameter[][]{
+        createCompletion("coroutine.resume", LUA_52, autocompletion.getString("coroutine_resume"), "Returns function output", new CustomParameter[][]{
             {new CustomParameter("coroutine", "co", true, "coroutine to continue execution of")},
             {new CustomParameter("coroutine", "co", false, "coroutine to continue execution of"), new CustomParameter("...", "vals", true, "values to pass to the function")}
         });
 
-        createCompletion("coroutine.running", LUA_53, autocompletion.getString("coroutine_running"), "Returns the current coroutine + boolean", new CustomParameter[][]{
+        createCompletion("coroutine.running", LUA_52, autocompletion.getString("coroutine_running"), "Returns the current coroutine + boolean", new CustomParameter[][]{
             {}
         });
 
-        createCompletion("coroutine.status", LUA_53, autocompletion.getString("coroutine_status"), "Returns the status of the coroutine", new CustomParameter[][]{
+        createCompletion("coroutine.status", LUA_52, autocompletion.getString("coroutine_status"), "Returns the status of the coroutine", new CustomParameter[][]{
             {new CustomParameter("coroutine", "co", true, "coroutine to get status of")}
         });
 
-        createCompletion("coroutine.wrap", LUA_53, autocompletion.getString("coroutine_wrap"), "Returns a function that resumes the coroutine each time it is called", new CustomParameter[][]{
+        createCompletion("coroutine.wrap", LUA_52, autocompletion.getString("coroutine_wrap"), "Returns a function that resumes the coroutine each time it is called", new CustomParameter[][]{
             {new CustomParameter("function", "f", true, "function to wrap into the coroutine")}
         });
 
-        createCompletion("coroutine.yield", LUA_53, autocompletion.getString("coroutine_yield"), "", new CustomParameter[][]{
+        createCompletion("coroutine.yield", LUA_52, autocompletion.getString("coroutine_yield"), "", new CustomParameter[][]{
             {new CustomParameter("...", "", true, "arguments for <code>coroutine.resume</code>")}
         });
 
         //Debug
-        createCompletion("debug.getinfo", LUA_53, autocompletion.getString("debug_getinfo"), "Returns a table with information about a function", new CustomParameter[][]{
+        createCompletion("debug.getinfo", LUA_52, autocompletion.getString("debug_getinfo"), "Returns a table with information about a function", new CustomParameter[][]{
             {new CustomParameter("function", "f", true, "function to get information about")},
             {new CustomParameter("function", "f", false, "function to get information about"), new CustomParameter("string", "what", true, "the string describing which fields to fill in")},
             {new CustomParameter("thread", "thread", false, "the thread to get running level from"), new CustomParameter("function", "f", true, "function to get information about")},
             {new CustomParameter("thread", "thread", false, "the thread to get running level from"), new CustomParameter("function", "f", false, "function to get information about"), new CustomParameter("string", "what", true, "the string describing which fields to fill in")}
         });
 
-        createCompletion("debug.traceback", LUA_53, autocompletion.getString("debug_traceback"), "Returns a string with a traceback of the call stack", new CustomParameter[][]{
+        createCompletion("debug.traceback", LUA_52, autocompletion.getString("debug_traceback"), "Returns a string with a traceback of the call stack", new CustomParameter[][]{
             {},
             {new CustomParameter("string", "message", true, "message to return before traceback")},
             {new CustomParameter("string", "message", false, "message to return before traceback"), new CustomParameter("number", "level", true, "at which level to start the traceback")},
@@ -265,16 +266,16 @@ public class OCLIDECompletionProvider {
         });
 
         //IO
-        createCompletion("io.close", LUA_53, autocompletion.getString("io_close"), "", new CustomParameter[][]{
+        createCompletion("io.close", LUA_52, autocompletion.getString("io_close"), "", new CustomParameter[][]{
             {},
             {new CustomParameter("file", "file", true, "the file to close")}
         });
 
-        createCompletion("io.flush", LUA_53, autocompletion.getString("io_flush"), "", new CustomParameter[][]{
+        createCompletion("io.flush", LUA_52, autocompletion.getString("io_flush"), "", new CustomParameter[][]{
             {}
         });
 
-        createCompletion("io.input", LUA_53, autocompletion.getString("io_input"), "", new CustomParameter[][]{
+        createCompletion("io.input", LUA_52, autocompletion.getString("io_input"), "", new CustomParameter[][]{
             {},
             {new CustomParameter("file", "file", true, "the file to open in text mode")}
         });
@@ -317,7 +318,7 @@ public class OCLIDECompletionProvider {
     }
 
     /**
-     * Creates a new FunctionCompletion with params
+     * Creates a new FunctionCompletion with all possible parameters
      *
      * @param name Function name
      * @param definedIn API version where function is first defined
@@ -341,6 +342,11 @@ public class OCLIDECompletionProvider {
 class CustomParameter extends Parameter {
 
     /**
+     * A {@code CustomParameter} is an extended version of
+     * {@link org.fife.ui.autocomplete.ParameterizedCompletion.Parameter} that
+     * allows to add parameter's description right in the constructor.
+     * 
+     * <i>Yes, this is the only reason for this subclass to exist</i>
      *
      * @param type Parameter's type
      * @param name Parameter's name

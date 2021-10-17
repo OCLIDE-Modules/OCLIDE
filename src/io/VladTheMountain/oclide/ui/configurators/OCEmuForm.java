@@ -23,6 +23,10 @@
  */
 package io.VladTheMountain.oclide.ui.configurators;
 
+import io.VladTheMountain.oclide.configurator.ocemu.ConfigMaker;
+import io.VladTheMountain.oclide.configurator.ocemu.OCEmuLauncher;
+import io.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
+import io.VladTheMountain.oclide.util.UUIDGenerator;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -68,10 +72,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import org.apache.commons.io.FileUtils;
-import io.VladTheMountain.oclide.configurator.ocemu.ConfigMaker;
-import io.VladTheMountain.oclide.configurator.ocemu.OCEmuLauncher;
-import io.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
-import io.VladTheMountain.oclide.util.UUIDGenerator;
 
 /**
  * OCEmu by James Coonradt and Zen1th
@@ -82,7 +82,7 @@ import io.VladTheMountain.oclide.util.UUIDGenerator;
  */
 public class OCEmuForm extends javax.swing.JFrame {
 
-    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.configurator.ocemu.OCEmu", Locale.getDefault());
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.configurator.ocemu.OCEmu", Locale.getDefault());
     private static final long serialVersionUID = 1L;
 
     private OCEmuComponent[] componentsArray = {};

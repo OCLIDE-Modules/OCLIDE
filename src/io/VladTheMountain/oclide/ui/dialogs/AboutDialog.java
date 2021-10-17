@@ -36,22 +36,35 @@ import javax.swing.JOptionPane;
  */
 public class AboutDialog {
 
-    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
-    
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
+
     /**
-     * 
-     * @param parent 
+     *
+     * @param parent
      */
     public AboutDialog(JFrame parent) {
         JOptionPane.showMessageDialog(parent,
-                "OCLIDE RC1-1.0.0\n"
-                + "THIS VERSION IS FOR INDEV PREVIEW PURPOSES ONLY. DO NOT DISTRIBUTE."
-                + "Copyright (c) VladTheMountain (Vladislav Gorskii) 2021.\n"
-                + "\n"
-                + "OCLIDE (OpenComputers Lua Integrated Development Environment) is an open-source Lua IDE for developing software for OpenComputers Minecraft mod.\n"
-                + "This program and it's source, until otherwise noted, are distributed under the MIT License.\n"
-                + "\n"
-                + ""
-        );
+                "<html><body>"
+                + "<h2>OCLIDE beta 0.1.0</h2>"
+                + "<pre>Copyright (c) VladTheMountain (Vladislav Gorskii) 2021.</pre>"
+                + "<p>"
+                + "OCLIDE (OpenComputers Lua Integrated Development Environment) is an open-source Lua IDE for developing software for OpenComputers Minecraft mod.<br>"
+                + "This program and it's source, until otherwise stated, are distributed under the MIT License."
+                + "</p><br><p>"
+                + "Lua 5.2 and Lua 5.3 documentation is taken from official Lua website <a href=\"https:\\lua.org\">lua.org</a>"
+                + "</p>"
+                + "<h3>Special thanks to:</h3><ul>"
+                + "<li><a href=\"https://computercraft.ru/\">ComputerCraft.RU forum</a> for testing and reviewing the program during its development</li>"
+                + "<li><a href=\"https://codacy.com\">Codacy</a> for creating such a powerful automated code review platform</li>"
+                + "<li>Developers of the following open-source projects:<ul>"
+                + "<li><a href=\"https://github.com/bobbylight/RSyntaxTextArea\">RSyntaxTextArea</a>, <a href=\"https://github.com/bobbylight/AutoComplete\">AutoComplete</a>, <a href=\"https://github.com/bobbylight/RSTAUI\">RSTAUI</a>, <a href=\"https://github.com/bobbylight/SpellChecker\">Spellchecker</a></li>"
+                + "<li><a href=\"https://netbeans.apache.org/\">Apache NetBeans IDE</a></li>"
+                + "<li><a href=\"https://github.com/zenith391/OCEmu\">OCEmu</a></li>"
+                + "<li><a href=\"https://gitlab.com/cc-ru/ocelot/ocelot-brain\">Ocelot Brain</a> and <a href=\"https://gitlab.com/cc-ru/ocelot/ocelot-desktop\">Ocelot Desktop</a></li>"
+                + "<li><a href=\"https://github.com/payonel/ocvm\">OCVM</a></li>"
+                + "</ul></li>"
+                + "<li><a href=\"https://github.com/misiuji\">misiuji</a> for help with compiling OCEmu binaries</li></ul>"
+                + "</body></html>",
+                "About", JOptionPane.INFORMATION_MESSAGE);
     }
 }
