@@ -40,7 +40,7 @@ public class AboutDialog {
 
     /**
      *
-     * @param parent
+     * @param parent parent JFrame
      */
     public AboutDialog(JFrame parent) {
         JOptionPane.showMessageDialog(parent,

@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle;
 
@@ -38,7 +39,7 @@ import javax.swing.LayoutStyle;
  *
  * @author Vladi
  */
-public class MachineChooserDialog extends javax.swing.JDialog {
+public class MachineChooserDialog extends JDialog {
 
     final ResourceBundle localiztionResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
@@ -49,8 +50,11 @@ public class MachineChooserDialog extends javax.swing.JDialog {
     /**
      * Creates new form MachineChooser
      *
-     * @param parent
-     * @param modal
+     * @param parent parent JFrame
+     * @param modal specifies whether dialog blocks user input to other
+     * top-level windows when shown. If {@code true}, the modality type property
+     * is set to {@code DEFAULT_MODALITY_TYPE}, otherwise the dialog is
+     * modeless.
      * @param fs Array of filesystem UUIDs
      */
     public MachineChooserDialog(java.awt.Frame parent, boolean modal, String[] fs) {

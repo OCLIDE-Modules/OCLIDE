@@ -109,7 +109,9 @@ public class OCEmuForm extends javax.swing.JFrame {
     /**
      * Adds a new component to the list
      *
-     * @param c
+     * @param c an OCEmuComponent to add
+     * @see
+     * io.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent
      */
     private void addComponent(OCEmuComponent c) {
         OCEmuComponent[] tmp = new OCEmuComponent[this.componentsArray.length + 1];
@@ -123,7 +125,7 @@ public class OCEmuForm extends javax.swing.JFrame {
     /**
      * Deletes a component at {@code index}
      *
-     * @param index
+     * @param index the index of the component to delete
      */
     private void deleteComponent(int index) {
         OCEmuComponent[] tmp = new OCEmuComponent[this.componentsArray.length];
@@ -169,7 +171,7 @@ public class OCEmuForm extends javax.swing.JFrame {
     /**
      * Updates description and option fields
      *
-     * @param c
+     * @param c the OCEmuComponent to view
      */
     private void updateFields(OCEmuComponent c) {
         switch (c.getComponentType()) {

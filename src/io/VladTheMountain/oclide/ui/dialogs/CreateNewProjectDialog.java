@@ -69,7 +69,7 @@ public class CreateNewProjectDialog extends JDialog {
     /**
      * Creates new form createNewProject
      *
-     * @param parent
+     * @param parent parent JFrame
      */
     public CreateNewProjectDialog(java.awt.Frame parent) {
         super(parent, true);

@@ -38,9 +38,9 @@ public class Filesystem extends OCEmuComponent {
     /**
      * Only if the first parameter is {@code null}
      *
-     * @param i1
-     * @param s1
-     * @param b1
+     * @param i1 i1
+     * @param s1 s1
+     * @param b1 b1
      */
     public Filesystem(String i1, String s1, boolean b1) {
         super(2, UUIDGenerator.create(), i1, s1, String.valueOf(b1));

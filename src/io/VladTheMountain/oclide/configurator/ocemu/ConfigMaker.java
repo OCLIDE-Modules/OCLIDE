@@ -55,7 +55,8 @@ public class ConfigMaker {
     /**
      * Initialization constructor
      *
-     * @param comps
+     * @param comps array of OCEmuComponent
+     * @see io.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent
      */
     public ConfigMaker(OCEmuComponent[] comps) {
         if (comps == null || comps.length < 2) {

@@ -38,10 +38,10 @@ public class Screen extends OCEmuComponent {
     /**
      * Use only if the first param is null
      *
-     * @param i1
-     * @param i2
-     * @param i3
-     * @param i4
+     * @param i1 i1
+     * @param i2 i2
+     * @param i3 i3
+     * @param i4 i4
      */
     public Screen(String i1, int i2, int i3, int i4) {
         super(8, UUIDGenerator.create(), i1, String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));

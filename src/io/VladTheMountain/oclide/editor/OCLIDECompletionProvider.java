@@ -61,7 +61,6 @@ public class OCLIDECompletionProvider {
      * @return An instance of {@code LanguageAwareProvider} with ready
      * autocompletion rules
      * @deprecated Will be reworked to be automated via Parser.
-     * @see io.VladTheMountain.parser
      */
     public static CompletionProvider getProvider() {
         ResourceBundle autocompletion = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.autocompletion.Autocompletion", Locale.getDefault());
