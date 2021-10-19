@@ -7,21 +7,20 @@ Oclide is an INDEV IDE for OpenComputers 1.7.5 written in Java 8
 
 ## Feature list
 - [x] Editing tools (Undo/Redo, Clipboard)
-- [x] Refactoring tools
+- [ ] Refactoring tools
 - [x] Syntax highlighting
 - [x] OCEmu integration
-- [ ] Built-in [Ocelot Brain](https://gitlab.com/cc-ru/ocelot/ocelot-brain)-based emulator
 - [x] Code autocompletion *(ongoing)*
 - [ ] Code autoformatting
 - [ ] Variable navigator
 - [ ] Static code analyzer
-- [x] Minecraft 1.7.10 - 1.12.2 integration *(ongoing)*
+- [ ] Minecraft 1.7.10 - 1.12.2 integration *(ongoing)*
 - [x] [OCEmu](https://github.com/zenith391/OCEmu) integration
 - [x] [Ocelot Desktop](https://gitlab.com/cc-ru/ocelot/ocelot-desktop/) integration *(done, but blocked in UI)*
 - [ ] [CODE](https://github.com/Avevad/code) integration
 - [ ] [AurumEmulator](https://github.com/Zabqer/AurumEmulator) integration
-- [x] Built-in [Ocelot Brain](https://gitlab.com/cc-ru/ocelot/ocelot-brain)-based emulator *(ongoing)*
-- [x] [OCVM](https://github.com/payonel/ocvm) support *(ongoing)*
+- [ ] Built-in [Ocelot Brain](https://gitlab.com/cc-ru/ocelot/ocelot-brain)-based emulator *(ongoing)*
+- [ ] [OCVM](https://github.com/payonel/ocvm) support *(ongoing)*
 - [ ] [OpenComputersVM](https://github.com/FrostyPenguin/OpenComputersVM) support
 - [x] Internationalization *(ongoing)*
 - [ ] <s>Modularity</s>
