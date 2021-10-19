@@ -30,23 +30,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Launchong script
  *
  * @author VladTheMountain
  */
 public class OCLIDE {
 
     /**
+     * Main method of the application
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         final SplashScreen splash = SplashScreen.getSplashScreen();
         if (splash == null) {
-            System.out.println("SplashScreen.getSplashScreen() returned null");
+            Logger.getLogger(OCLIDE.class.getName()).log(Level.INFO, "No splash was found to display, ignoring...");
             //return;
         } else {
             Graphics2D g = splash.createGraphics();
             if (g == null) {
-                System.out.println("g is null");
+                Logger.getLogger(OCLIDE.class.getName()).log(Level.WARNING, "No suitable Graphics2D was found to display the splash");
                 return;
             }
         }
@@ -54,7 +57,7 @@ public class OCLIDE {
             Thread.sleep(2000);
             new EditorFrame().setVisible(true);
         } catch (InterruptedException ex) {
-            Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OCLIDE.class.getName()).log(Level.SEVERE, "Couldn't start main JFrame", ex);
         }
     }
 }

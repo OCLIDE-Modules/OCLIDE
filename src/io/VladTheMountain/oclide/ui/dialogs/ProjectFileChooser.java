@@ -33,13 +33,13 @@ import javax.swing.JFileChooser;
  * @author VladTheMountain
  */
 public class ProjectFileChooser extends JFileChooser {
-    
-    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
+
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 
+     *
      */
     public ProjectFileChooser() {
         this.setCurrentDirectory(new File(System.getProperty("user.home")));

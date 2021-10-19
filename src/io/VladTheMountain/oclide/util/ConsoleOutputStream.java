@@ -37,6 +37,9 @@ public class ConsoleOutputStream extends OutputStream {
     private JTextArea target;
 
     public ConsoleOutputStream(JTextArea area) {
+        if (area == null) {
+            throw new NullPointerException("No JTextArea was specified");
+        }
         target = area;
     }
 

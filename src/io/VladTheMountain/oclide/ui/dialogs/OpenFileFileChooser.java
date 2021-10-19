@@ -35,13 +35,13 @@ import javax.swing.filechooser.FileFilter;
  * @author VladTheMountain
  */
 public class OpenFileFileChooser extends JFileChooser {
-    
-    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
+
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 
+     *
      */
     public OpenFileFileChooser() {
         this.setApproveButtonText("Open");

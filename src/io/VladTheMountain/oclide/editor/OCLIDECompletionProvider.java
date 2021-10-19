@@ -70,7 +70,7 @@ public class OCLIDECompletionProvider {
         defaultProvider.setParameterizedCompletionParams('(', ", ", ')');
 
         //Lua default
-        /* Do we really need those two global vars in autocompletion? */
+        /* Do we really need these two global vars in autocompletion? */
         defaultProvider.addCompletion(new BasicCompletion(defaultProvider, "_G"));
         defaultProvider.addCompletion(new BasicCompletion(defaultProvider, "_VERSION"));
 
@@ -312,7 +312,7 @@ public class OCLIDECompletionProvider {
         /* Component API */
 
         //
-        Logger.getLogger(OCLIDECompletionProvider.class.getName()).log(Level.INFO, "Autocompletion complete");
+        Logger.getLogger(OCLIDECompletionProvider.class.getName()).log(Level.FINE, "Autocompletion complete");
         LanguageAwareCompletionProvider p = new LanguageAwareCompletionProvider(defaultProvider);
         return p;
     }

@@ -23,7 +23,12 @@
  */
 package io.VladTheMountain.oclide.configurator.ocemu.component;
 
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
+ * Superclass for all components used in OCEmu
  *
  * @author VladTheMountain
  */
@@ -36,22 +41,58 @@ public class OCEmuComponent {
     //the rest
     private String[] opts;
 
+    /**
+     * Creates a new OCEmu component of defined type, address and options. It is
+     * recommended to override the constructor in a sub-class, then call it from
+     * this class.
+     *
+     * @param componentType the type of the component, see
+     * {@link io.VladTheMountain.oclide.configurator.ocemu.ConfigMaker} to see
+     * which id corresponds to which component
+     * @param componentAddress the UUID of the component in OCEmu's machine
+     * @param options additional options/parameters that can be passed with the
+     * component (maximum of 5)
+     */
     public OCEmuComponent(int componentType, String componentAddress, String... options) {
+        if (componentAddress == null) {
+            Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Attempted to create an OCEmuComponent with no address. The result is unpredictable.");
+        }
         this.type = componentType;
         this.address = componentAddress;
         this.opts = new String[4];
         System.arraycopy(options, 0, opts, 0, options.length);
     }
 
+    /**
+     * Returns component type
+     *
+     * @return int, which stores the component's type
+     */
     public int getComponentType() {
         return type;
     }
 
+    /**
+     * Returns component address
+     *
+     * @return UUID as a String
+     */
     public String getComponentAddress() {
         return address;
     }
 
+    /**
+     * Returns a specific parameter of the component
+     *
+     * @param pos position of the parameter (beginning with 0)
+     * @return value of the parameter
+     */
     public String getOptionAt(int pos) {
         return opts[pos];
+    }
+
+    @Override
+    public String toString() {
+        return "OCEmuComponent {" + type + "," + address + "," + Arrays.toString(opts) + "}";
     }
 }

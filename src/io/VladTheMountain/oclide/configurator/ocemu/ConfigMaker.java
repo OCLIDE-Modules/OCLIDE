@@ -27,6 +27,7 @@ import io.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -57,6 +58,10 @@ public class ConfigMaker {
      * @param comps
      */
     public ConfigMaker(OCEmuComponent[] comps) {
+        if (comps == null || comps.length < 2) {
+            Logger.getLogger(ConfigMaker.class.getName()).log(Level.WARNING, "ConfigMaker received an incomplete configutation", comps);
+            JOptionPane.showMessageDialog(null, "Couldn't create ConfigMaker for OCEmu: Incomplete configuration:\n" + Arrays.toString(comps), "Caught " + "", JOptionPane.WARNING_MESSAGE);
+        }
         this.computerComponents = "";
         for (OCEmuComponent comp : comps) {
             switch (comp.getComponentType()) {
@@ -108,16 +113,15 @@ public class ConfigMaker {
                     Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, "ConfigMaker received an invalid component type: {0}", comp.getComponentType());
                     break;
             }
+            Logger.getLogger(this.getClass().getName()).log(Level.CONFIG, "Added component to OCEmu config:", comp.toString());
         }
     }
 
     /**
      * Creates the new config file
-     *
-     * @throws IOException
      */
-    public void createConfig() throws IOException {
-        String path = null;
+    public void createConfig() {
+        String path;
         if (System.getProperty("os.name").contains("Windows")) {
             path = System.getenv("APPDATA") + "\\OCEmu\\ocemu.cfg";
         } else {
@@ -128,7 +132,7 @@ public class ConfigMaker {
             }
         }
         if (path == null) {
-            JOptionPane.showMessageDialog(null, "WARNING: Couldn't create config for your OS. Please create an issue about this problem at https://github.com/Vladg24YT/Oclide/issues", "Config creation error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "WARNING: Couldn't create path for config file for your OS. Please create an issue about this problem at https://github.com/Vladg24YT/Oclide/issues", "Config creation error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         File config = new File(path);
@@ -136,7 +140,12 @@ public class ConfigMaker {
             if (!(new File(config.getParent()).exists())) {
                 new File(config.getParent()).mkdirs();
             }
-            config.createNewFile();
+            try {
+                config.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, "Couldn't create config file:", ex);
+                JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+            }
         }
         //
         String contents
@@ -238,7 +247,12 @@ public class ConfigMaker {
                 + "  }\n"
                 + "}";
         //
-        Files.write(config.toPath(), contents.getBytes());
+        try {
+            Files.write(config.toPath(), contents.getBytes());
+        } catch (IOException ex) {
+            Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, "Couldn't write to config file", ex);
+            JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -246,12 +260,22 @@ public class ConfigMaker {
      *
      * @param f Config gile
      * @return Array of {@link OCEmuComponent}
-     * @throws IOException
      */
-    public OCEmuComponent[] readConfig(File f) throws IOException {
-        int lines = Files.readAllLines(f.toPath()).toArray().length;
+    public OCEmuComponent[] readConfig(File f) {
+        int lines = 0;
+        try {
+            lines = Files.readAllLines(f.toPath()).toArray().length;
+        } catch (IOException ex) {
+            Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+        }
         String[] configContents = new String[lines];
-        System.arraycopy(Files.readAllLines(f.toPath()).toArray(configContents), 0, configContents, 0, lines);
+        try {
+            System.arraycopy(Files.readAllLines(f.toPath()).toArray(configContents), 0, configContents, 0, lines);
+        } catch (IOException ex) {
+            Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
+        }
         OCEmuComponent[] tmp = {};
         for (int i = 47; i < configContents.length; i++) {
             if (configContents[i].startsWith("{") && (configContents[i].endsWith("}") || configContents[i].endsWith("},"))) {
@@ -292,7 +316,7 @@ public class ConfigMaker {
                         type = 8;
                         break;
                     default:
-                        Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, "ConfigMaker detected an invalid component type: {0}", configContents[i].substring(configContents[i].indexOf("\""), configContents[i].indexOf("\"", configContents[i].indexOf("\""))));
+                        Logger.getLogger(ConfigMaker.class.getName()).log(Level.WARNING, "ConfigMaker detected an invalid component type: {0}", configContents[i].substring(configContents[i].indexOf("\""), configContents[i].indexOf("\"", configContents[i].indexOf("\""))));
                 }
                 address = configContents[i].substring(comma1 + 2, comma2 - 1);
                 opts[0] = configContents[i].substring(comma2 + 2, comma3 - 1);

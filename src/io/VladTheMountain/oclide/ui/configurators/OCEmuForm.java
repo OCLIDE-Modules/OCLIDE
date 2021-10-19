@@ -100,11 +100,7 @@ public class OCEmuForm extends javax.swing.JFrame {
             this.componentsArray = new OCEmuComponent[OCEmuLauncher.DEFAULT.length];
             System.arraycopy(OCEmuLauncher.DEFAULT, 0, componentsArray, 0, OCEmuLauncher.DEFAULT.length);
         } else {
-            try {
-                new ConfigMaker(this.componentsArray).readConfig(new File("OCEmu/.machine/ocemu.cfg"));
-            } catch (IOException ex) {
-                Logger.getLogger(OCEmuForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            new ConfigMaker(this.componentsArray).readConfig(new File("OCEmu/.machine/ocemu.cfg"));
         }
         updateComponentList();
         t.start();
@@ -166,6 +162,7 @@ public class OCEmuForm extends javax.swing.JFrame {
             Files.copy(new File("OCEmu/loot/openos/init.lua").toPath(), new File(machineDir.getAbsoluteFile() + "/init.lua").toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
             Logger.getLogger(OCEmuForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -327,12 +324,14 @@ public class OCEmuForm extends javax.swing.JFrame {
                     Files.copy(f.toPath(), new File(targ.getAbsolutePath() + FileSystems.getDefault().getSeparator() + f.getName()).toPath());
                 } catch (IOException ex) {
                     Logger.getLogger(OCEmuForm.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 try {
                     FileUtils.copyDirectory(f, targ);
                 } catch (IOException ex) {
                     Logger.getLogger(OCEmuForm.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
                 }
             }
             if (f.isDirectory()) {
@@ -676,11 +675,7 @@ public class OCEmuForm extends javax.swing.JFrame {
         }
         System.out.println("OpenOS is installed");
         //Creating config
-        try {
-            new ConfigMaker(this.componentsArray).createConfig();
-        } catch (IOException ex) {
-            Logger.getLogger(OCEmuForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        new ConfigMaker(this.componentsArray).createConfig();
         System.out.println("Config ready");
         //Files' copy
         if (new File("projects").exists()) {
@@ -690,6 +685,7 @@ public class OCEmuForm extends javax.swing.JFrame {
                 System.out.println("Copied " + new File("projects").getAbsolutePath() + " to " + new File(/*System.getenv("APPDATA") + FileSystems.getDefault().getSeparator() + "OCEmu"*/".machine" + FileSystems.getDefault().getSeparator() + OpenOSUUID + FileSystems.getDefault().getSeparator() + "home").getAbsolutePath());
             } catch (IOException ex) {
                 Logger.getLogger(OCEmuForm.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
             }
         }
         System.out.println("Files copied");
@@ -704,7 +700,7 @@ public class OCEmuForm extends javax.swing.JFrame {
                     Process p = pb.start();
                     BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     String outLine;
-                    Logger.getLogger(OCEmuForm.class.getName()).log(Level.INFO, "Starting OCEmu...");
+                    Logger.getLogger(OCEmuForm.class.getName()).log(Level.FINE, "Starting OCEmu...");
                     while (true) {
                         outLine = r.readLine();
                         if (outLine == null) {
@@ -714,6 +710,7 @@ public class OCEmuForm extends javax.swing.JFrame {
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(OCEmuForm.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -727,21 +724,13 @@ public class OCEmuForm extends javax.swing.JFrame {
 
     private void importConfigItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_importConfigItemActionPerformed
         if (this.configChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            try {
-                new ConfigMaker(this.componentsArray).readConfig(this.configChooser.getSelectedFile());
-            } catch (IOException ex) {
-                Logger.getLogger(OCEmuForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            new ConfigMaker(this.componentsArray).readConfig(this.configChooser.getSelectedFile());
             updateComponentList();
         }
     }//GEN-LAST:event_importConfigItemActionPerformed
 
     private void saveConfigItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_saveConfigItemActionPerformed
-        try {
-            new ConfigMaker(this.componentsArray).createConfig();
-        } catch (IOException ex) {
-            Logger.getLogger(OCEmuForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        new ConfigMaker(this.componentsArray).createConfig();
     }//GEN-LAST:event_saveConfigItemActionPerformed
 
     private void componentTypeComboBoxActionPerformed(ActionEvent evt) {//GEN-FIRST:event_componentTypeComboBoxActionPerformed
@@ -749,13 +738,9 @@ public class OCEmuForm extends javax.swing.JFrame {
     }//GEN-LAST:event_componentTypeComboBoxActionPerformed
 
     private void resetConfigItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_resetConfigItemActionPerformed
-        try {
-            new ConfigMaker(OCEmuLauncher.DEFAULT).createConfig();
-            this.componentsArray = new OCEmuComponent[OCEmuLauncher.DEFAULT.length];
-            System.arraycopy(OCEmuLauncher.DEFAULT, 0, this.componentsArray, 0, OCEmuLauncher.DEFAULT.length);
-        } catch (IOException ex) {
-            Logger.getLogger(OCEmuForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        new ConfigMaker(OCEmuLauncher.DEFAULT).createConfig();
+        this.componentsArray = new OCEmuComponent[OCEmuLauncher.DEFAULT.length];
+        System.arraycopy(OCEmuLauncher.DEFAULT, 0, this.componentsArray, 0, OCEmuLauncher.DEFAULT.length);
         updateComponentList();
     }//GEN-LAST:event_resetConfigItemActionPerformed
 

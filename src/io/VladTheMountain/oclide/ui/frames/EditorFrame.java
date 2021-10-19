@@ -108,6 +108,7 @@ public class EditorFrame extends JFrame {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
         }
         initComponents();
         System.setOut(new PrintStream(new ConsoleOutputStream(outputTextArea)));
@@ -123,6 +124,7 @@ public class EditorFrame extends JFrame {
             file.createNewFile();
         } catch (IOException ex) {
             Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
         }
         openFile(file); //:D
     }
@@ -142,6 +144,7 @@ public class EditorFrame extends JFrame {
             fileContent = new String(Files.readAllBytes(file.toPath()));
         } catch (IOException ex) {
             Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
         }
         RSyntaxTextArea newFile = new RSyntaxTextArea(fileContent);
         newFile.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LUA);
@@ -183,12 +186,14 @@ public class EditorFrame extends JFrame {
                 f.createNewFile();
             } catch (IOException ex) {
                 Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
             }
         }
         try {
             Files.write(f.toPath(), this.editorTabs.getComponentAt(this.editorTabs.getSelectedIndex()).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleChild(0).getAccessibleContext().getAccessibleDescription().getBytes());
         } catch (IOException ex) {
             Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
         }
         updateProjectsTree();
     }
@@ -877,6 +882,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
                 FileUtils.copyDirectory(dir, new File("projects"));
             } catch (IOException ex) {
                 Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
             }
             updateProjectsTree();
         }
@@ -1062,6 +1068,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
             }
         } catch (IOException ex) {
             Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -23,7 +23,6 @@
  */
 package io.VladTheMountain.oclide.configurator.ocemu;
 
-import javax.swing.JOptionPane;
 import io.VladTheMountain.oclide.configurator.ocemu.component.Computer;
 import io.VladTheMountain.oclide.configurator.ocemu.component.EEPROM;
 import io.VladTheMountain.oclide.configurator.ocemu.component.Filesystem;
@@ -34,6 +33,7 @@ import io.VladTheMountain.oclide.configurator.ocemu.component.Modem;
 import io.VladTheMountain.oclide.configurator.ocemu.component.OCEmu;
 import io.VladTheMountain.oclide.configurator.ocemu.component.OCEmuComponent;
 import io.VladTheMountain.oclide.configurator.ocemu.component.Screen;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -64,7 +64,6 @@ public class OCEmuLauncher {
     /*public OCEmuLauncher() {
 
     }*/
-    
     /**
      * Launcher constructor. Starts OCEmu with {@link OCEmuComponent} as a
      * source for config
@@ -82,7 +81,6 @@ public class OCEmuLauncher {
      * {@code JOptionPane.ERROR_MESSAGE} if the attempt fails
      */
     public int reloadConfig() {
-
         return JOptionPane.ERROR_MESSAGE;
     }
 }

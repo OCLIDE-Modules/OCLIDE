@@ -37,6 +37,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -59,9 +60,9 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author VladTheMountain
  */
-public class CreateNewProjectDialog extends javax.swing.JDialog {
-    
-    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
+public class CreateNewProjectDialog extends JDialog {
+
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
     private static final long serialVersionUID = 1L;
 
