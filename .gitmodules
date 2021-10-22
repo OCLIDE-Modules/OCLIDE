@@ -1,6 +1,0 @@
-[submodule "OCEmu"]
-	path = OCEmu
-	url = https://github.com/zenith391/OCEmu
-[submodule "ocelot-brain"]
-	path = ocelot-brain
-	url = https://gitlab.com/cc-ru/ocelot/ocelot-brain.git
