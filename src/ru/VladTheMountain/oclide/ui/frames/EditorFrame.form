@@ -133,7 +133,7 @@
         <Menu class="javax.swing.JMenu" name="fileMenu">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="localiztionResource.getString(&quot;menuFile&quot;)" type="code"/>
+              <Connection code="localizationResource.getString(&quot;menuFile&quot;)" type="code"/>
             </Property>
           </Properties>
           <SubComponents>
@@ -145,7 +145,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Create project"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemCreateProject&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createProjectActionPerformed"/>
@@ -159,7 +161,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Open project"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemOpenProject&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openProjectActionPerformed"/>
@@ -172,7 +176,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Create file"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemCreateFile&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createFileActionPerformed"/>
@@ -183,7 +189,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/document_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Open file"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemOpenFile&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openFileActionPerformed"/>
@@ -199,7 +207,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/save_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Save"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemSaveFile&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveActionPerformed"/>
@@ -215,7 +225,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Delete project"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemDeleteProject&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteProjectActionPerformed"/>
@@ -225,7 +237,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="exit">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Exit"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemExit&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitActionPerformed"/>
@@ -236,7 +250,7 @@
         <Menu class="javax.swing.JMenu" name="editMenu">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="localiztionResource.getString(&quot;menuEdit&quot;)" type="code"/>
+              <Connection code="localizationResource.getString(&quot;menuEdit&quot;)" type="code"/>
             </Property>
           </Properties>
           <SubComponents>
@@ -248,7 +262,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/undo_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Undo"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemUndo&quot;)" type="code"/>
+                </Property>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="redo">
@@ -259,7 +275,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/redo_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Redo"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemRedo&quot;)" type="code"/>
+                </Property>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
@@ -272,7 +290,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/clipboard_cut_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Cut"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemCut&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cutActionPerformed"/>
@@ -286,7 +306,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/clipboard_copy_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Copy"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemCopy&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="copyActionPerformed"/>
@@ -300,7 +322,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/clipboard_past_icon&amp;16.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Paste"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemPaste&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pasteActionPerformed"/>
@@ -313,7 +337,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+F"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Find..."/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemFind&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="findActionPerformed"/>
@@ -324,13 +350,15 @@
         <Menu class="javax.swing.JMenu" name="runMenu">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="localiztionResource.getString(&quot;menuDeploy&quot;)" type="code"/>
+              <Connection code="localizationResource.getString(&quot;menuDeploy&quot;)" type="code"/>
             </Property>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="emulatorMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Deploy to Emulator"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemDeployToEmulator&quot;)" type="code"/>
+                </Property>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="ocemuMenuItem">
@@ -338,7 +366,9 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/app_window_shell&amp;16.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Run OCEmu"/>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="localizationResource.getString(&quot;menuItemOCEmu&quot;)" type="code"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ocemuMenuItemActionPerformed"/>
@@ -349,7 +379,9 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/app_window_black&amp;16.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Run Ocelot"/>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="localizationResource.getString(&quot;menuItemOcelot&quot;)" type="code"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ocelotMenuItemActionPerformed"/>
@@ -357,7 +389,10 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="ocemulatorMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Run OCEmulator"/>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="localizationResource.getString(&quot;menuItemOCEmulator&quot;)" type="code"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ocemulatorMenuItemActionPerformed"/>
@@ -365,7 +400,10 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="aurumMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Run Aurum Emulator"/>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="localizationResource.getString(&quot;menuItemAurum&quot;)" type="code"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aurumMenuItemActionPerformed"/>
@@ -373,7 +411,10 @@
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="codeMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Run CODE"/>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="localizationResource.getString(&quot;menuItemCODE&quot;)" type="code"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="codeMenuItemActionPerformed"/>
@@ -383,17 +424,25 @@
             </Menu>
             <Menu class="javax.swing.JMenu" name="vmMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Deploy to VM"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemDeployToVM&quot;)" type="code"/>
+                </Property>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="ocvmMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Run OCVM"/>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="localizationResource.getString(&quot;menuItemOCVM&quot;)" type="code"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="ocvmFXMenuItem">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Run OpenComputersVM"/>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="localizationResource.getString(&quot;menuItemOpenComputersVM&quot;)" type="code"/>
+                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>
@@ -402,7 +451,10 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Deploy to Minecraft world..."/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemDeployToMinecraft&quot;)" type="code"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -410,13 +462,15 @@
         <Menu class="javax.swing.JMenu" name="helpMenu">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="localiztionResource.getString(&quot;menuHelp&quot;)" type="code"/>
+              <Connection code="localizationResource.getString(&quot;menuHelp&quot;)" type="code"/>
             </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="aboutMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="About"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemAbout&quot;)" type="code"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aboutMenuItemActionPerformed"/>
@@ -424,7 +478,10 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="wikiMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Wiki"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="localizationResource.getString(&quot;menuItemWiki&quot;)" type="code"/>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator11">
@@ -435,7 +492,7 @@
                   <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/cogs_icon&amp;16.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="localiztionResource.getString(&quot;menuItemSettings&quot;)" type="code"/>
+                  <Connection code="localizationResource.getString(&quot;menuItemSettings&quot;)" type="code"/>
                 </Property>
               </Properties>
               <Events>
@@ -547,8 +604,10 @@
                 <Container class="javax.swing.JScrollPane" name="jScrollPane2">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="IDE Output">
-                        <Property name="tabTitle" type="java.lang.String" value="IDE Output"/>
+                      <JTabbedPaneConstraints tabName="&lt;User Code&gt;">
+                        <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="localizationResource.getString(&quot;tabIDEOutput&quot;)" type="code"/>
+                        </Property>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>
@@ -588,6 +647,9 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
           <SubComponents>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                   <JSplitPaneConstraints position="bottom"/>
@@ -601,6 +663,7 @@
                     <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new DefaultTreeModel(new DefaultMutableTreeNode(&#xa;    this.editorTabs.getSelectedIndex()==-1 ? &#xa;    &quot;Variables&quot; &#xa;    : this.editorTabs.getTitleAt(this.editorTabs.getSelectedIndex())))" type="code"/>
                     </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -650,7 +713,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&amp;24.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Create a new project"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="localizationResource.getString(&quot;tooltipCreateProject&quot;)" type="code"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -664,7 +729,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&amp;24.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Open project"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="localizationResource.getString(&quot;tooltipOpenProject&quot;)" type="code"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -678,7 +745,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&amp;24.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Add a file"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="localizationResource.getString(&quot;tooltipCreateFile&quot;)" type="code"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -692,7 +761,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/save_icon&amp;24.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Save current file"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="localizationResource.getString(&quot;tooltipSaveFile&quot;)" type="code"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -706,7 +777,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&amp;24.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Delete project"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="localizationResource.getString(&quot;tooltipDeleteProject&quot;)" type="code"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -730,7 +803,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/undo_icon&amp;24.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Undo"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="localizationResource.getString(&quot;tooltipUndo&quot;)" type="code"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -741,7 +816,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/redo_icon&amp;24.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Redo"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="localizationResource.getString(&quot;tooltipRedo&quot;)" type="code"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -762,7 +839,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/app_window_shell&amp;24.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Launch OCEmu"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="localizationResource.getString(&quot;tooltipOCEmu&quot;)" type="code"/>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -776,7 +855,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/io/VladTheMountain/oclide/resources/assets/icons/app_window_black&amp;24.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Launch Ocelot Desktop"/>
+            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="localizationResource.getString(&quot;tooltipOcelot&quot;)" type="code"/>
+            </Property>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
           <Events>

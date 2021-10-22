@@ -96,7 +96,7 @@ import ru.VladTheMountain.oclide.util.ConsoleOutputStream;
  */
 public class EditorFrame extends JFrame {
 
-    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.editor.Editor", Locale.getDefault());
+    final static ResourceBundle localizationResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.editor.Editor", Locale.getDefault());
 
     private static final long serialVersionUID = 1L;
 
@@ -220,7 +220,7 @@ public class EditorFrame extends JFrame {
      */
     private static void updateProjectsTree() {
         //Tree values
-        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Projects");
+        DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode(localizationResource.getString("treeProjects"));
         DefaultTreeModel projTreeModel = new DefaultTreeModel(rootNode);
         //Files' bullsh*t
         File projectsDir = new File("projects");
@@ -456,7 +456,7 @@ public class EditorFrame extends JFrame {
         outputTextArea.setRows(5);
         jScrollPane2.setViewportView(outputTextArea);
 
-        jTabbedPane1.addTab("IDE Output", jScrollPane2);
+        jTabbedPane1.addTab(localizationResource.getString("tabIDEOutput"), jScrollPane2);
 
         jSplitPane3.setBottomComponent(jTabbedPane1);
 
@@ -465,10 +465,13 @@ public class EditorFrame extends JFrame {
         jSplitPane2.setOrientation(JSplitPane.VERTICAL_SPLIT);
         jSplitPane2.setResizeWeight(1.0);
 
+        jScrollPane1.setEnabled(false);
+
         variableTree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode(
             this.editorTabs.getSelectedIndex()==-1 ?
             "Variables"
             : this.editorTabs.getTitleAt(this.editorTabs.getSelectedIndex()))));
+variableTree.setEnabled(false);
 jScrollPane1.setViewportView(variableTree);
 
 jSplitPane2.setBottomComponent(jScrollPane1);
@@ -491,7 +494,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     projectToolbar.setRollover(true);
 
     newProjectButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&24.png"))); // NOI18N
-    newProjectButton.setToolTipText("Create a new project");
+    newProjectButton.setToolTipText(localizationResource.getString("tooltipCreateProject"));
     newProjectButton.setFocusable(false);
     newProjectButton.setHorizontalTextPosition(SwingConstants.CENTER);
     newProjectButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -503,7 +506,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     projectToolbar.add(newProjectButton);
 
     openProjectButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&24.png"))); // NOI18N
-    openProjectButton.setToolTipText("Open project");
+    openProjectButton.setToolTipText(localizationResource.getString("tooltipOpenProject"));
     openProjectButton.setFocusable(false);
     openProjectButton.setHorizontalTextPosition(SwingConstants.CENTER);
     openProjectButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -515,7 +518,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     projectToolbar.add(openProjectButton);
 
     addFileButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&24.png"))); // NOI18N
-    addFileButton.setToolTipText("Add a file");
+    addFileButton.setToolTipText(localizationResource.getString("tooltipCreateFile"));
     addFileButton.setFocusable(false);
     addFileButton.setHorizontalTextPosition(SwingConstants.CENTER);
     addFileButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -527,7 +530,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     projectToolbar.add(addFileButton);
 
     saveButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/save_icon&24.png"))); // NOI18N
-    saveButton.setToolTipText("Save current file");
+    saveButton.setToolTipText(localizationResource.getString("tooltipSaveFile"));
     saveButton.setFocusable(false);
     saveButton.setHorizontalTextPosition(SwingConstants.CENTER);
     saveButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -539,7 +542,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     projectToolbar.add(saveButton);
 
     deleteProjectButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&24.png"))); // NOI18N
-    deleteProjectButton.setToolTipText("Delete project");
+    deleteProjectButton.setToolTipText(localizationResource.getString("tooltipDeleteProject"));
     deleteProjectButton.setFocusable(false);
     deleteProjectButton.setHorizontalTextPosition(SwingConstants.CENTER);
     deleteProjectButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -554,14 +557,14 @@ projectsTree.addMouseListener(new MouseAdapter() {
     undoRedoToolbar.setRollover(true);
 
     undoButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/undo_icon&24.png"))); // NOI18N
-    undoButton.setToolTipText("Undo");
+    undoButton.setToolTipText(localizationResource.getString("tooltipUndo"));
     undoButton.setFocusable(false);
     undoButton.setHorizontalTextPosition(SwingConstants.CENTER);
     undoButton.setVerticalTextPosition(SwingConstants.BOTTOM);
     undoRedoToolbar.add(undoButton);
 
     redoButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/redo_icon&24.png"))); // NOI18N
-    redoButton.setToolTipText("Redo");
+    redoButton.setToolTipText(localizationResource.getString("tooltipRedo"));
     redoButton.setFocusable(false);
     redoButton.setHorizontalTextPosition(SwingConstants.CENTER);
     redoButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -571,7 +574,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     jToolBar1.setRollover(true);
 
     runOCEmuButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/app_window_shell&24.png"))); // NOI18N
-    runOCEmuButton.setToolTipText("Launch OCEmu");
+    runOCEmuButton.setToolTipText(localizationResource.getString("tooltipOCEmu"));
     runOCEmuButton.setFocusable(false);
     runOCEmuButton.setHorizontalTextPosition(SwingConstants.CENTER);
     runOCEmuButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -583,7 +586,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     jToolBar1.add(runOCEmuButton);
 
     runOcelotButton.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/app_window_black&24.png"))); // NOI18N
-    runOcelotButton.setToolTipText("Launch Ocelot Desktop");
+    runOcelotButton.setToolTipText(localizationResource.getString("tooltipOcelot"));
     runOcelotButton.setVerticalTextPosition(SwingConstants.BOTTOM);
     runOcelotButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
@@ -592,11 +595,11 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     jToolBar1.add(runOcelotButton);
 
-    fileMenu.setText(localiztionResource.getString("menuFile"));
+    fileMenu.setText(localizationResource.getString("menuFile"));
 
     createProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
     createProject.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_plus_icon&16.png"))); // NOI18N
-    createProject.setText("Create project");
+    createProject.setText(localizationResource.getString("menuItemCreateProject"));
     createProject.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             createProjectActionPerformed(evt);
@@ -606,7 +609,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     openProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK));
     openProject.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_open_icon&16.png"))); // NOI18N
-    openProject.setText("Open project");
+    openProject.setText(localizationResource.getString("menuItemOpenProject"));
     openProject.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             openProjectActionPerformed(evt);
@@ -616,7 +619,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     fileMenu.add(jSeparator1);
 
     createFile.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/doc_plus_icon&16.png"))); // NOI18N
-    createFile.setText("Create file");
+    createFile.setText(localizationResource.getString("menuItemCreateFile"));
     createFile.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             createFileActionPerformed(evt);
@@ -625,7 +628,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     fileMenu.add(createFile);
 
     openFile.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/document_icon&16.png"))); // NOI18N
-    openFile.setText("Open file");
+    openFile.setText(localizationResource.getString("menuItemOpenFile"));
     openFile.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             openFileActionPerformed(evt);
@@ -636,7 +639,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
     save.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/save_icon&16.png"))); // NOI18N
-    save.setText("Save");
+    save.setText(localizationResource.getString("menuItemSaveFile"));
     save.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             saveActionPerformed(evt);
@@ -647,7 +650,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     deleteProject.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_DOWN_MASK));
     deleteProject.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/folder_delete_icon&16.png"))); // NOI18N
-    deleteProject.setText("Delete project");
+    deleteProject.setText(localizationResource.getString("menuItemDeleteProject"));
     deleteProject.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             deleteProjectActionPerformed(evt);
@@ -656,7 +659,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     fileMenu.add(deleteProject);
     fileMenu.add(jSeparator2);
 
-    exit.setText("Exit");
+    exit.setText(localizationResource.getString("menuItemExit"));
     exit.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             exitActionPerformed(evt);
@@ -666,22 +669,22 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     menuBar.add(fileMenu);
 
-    editMenu.setText(localiztionResource.getString("menuEdit"));
+    editMenu.setText(localizationResource.getString("menuEdit"));
 
     undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK));
     undo.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/undo_icon&16.png"))); // NOI18N
-    undo.setText("Undo");
+    undo.setText(localizationResource.getString("menuItemUndo"));
     editMenu.add(undo);
 
     redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_DOWN_MASK));
     redo.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/redo_icon&16.png"))); // NOI18N
-    redo.setText("Redo");
+    redo.setText(localizationResource.getString("menuItemRedo"));
     editMenu.add(redo);
     editMenu.add(jSeparator3);
 
     cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
     cut.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/clipboard_cut_icon&16.png"))); // NOI18N
-    cut.setText("Cut");
+    cut.setText(localizationResource.getString("menuItemCut"));
     cut.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             cutActionPerformed(evt);
@@ -691,7 +694,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     copy.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
     copy.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/clipboard_copy_icon&16.png"))); // NOI18N
-    copy.setText("Copy");
+    copy.setText(localizationResource.getString("menuItemCopy"));
     copy.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             copyActionPerformed(evt);
@@ -701,7 +704,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     paste.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
     paste.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/clipboard_past_icon&16.png"))); // NOI18N
-    paste.setText("Paste");
+    paste.setText(localizationResource.getString("menuItemPaste"));
     paste.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             pasteActionPerformed(evt);
@@ -711,7 +714,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     editMenu.add(jSeparator4);
 
     find.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_DOWN_MASK));
-    find.setText("Find...");
+    find.setText(localizationResource.getString("menuItemFind"));
     find.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             findActionPerformed(evt);
@@ -721,12 +724,12 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     menuBar.add(editMenu);
 
-    runMenu.setText(localiztionResource.getString("menuDeploy"));
+    runMenu.setText(localizationResource.getString("menuDeploy"));
 
-    emulatorMenu.setText("Deploy to Emulator");
+    emulatorMenu.setText(localizationResource.getString("menuItemDeployToEmulator"));
 
     ocemuMenuItem.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/app_window_shell&16.png"))); // NOI18N
-    ocemuMenuItem.setText("Run OCEmu");
+    ocemuMenuItem.setText(localizationResource.getString("menuItemOCEmu"));
     ocemuMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             ocemuMenuItemActionPerformed(evt);
@@ -735,7 +738,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
     emulatorMenu.add(ocemuMenuItem);
 
     ocelotMenuItem.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/app_window_black&16.png"))); // NOI18N
-    ocelotMenuItem.setText("Run Ocelot");
+    ocelotMenuItem.setText(localizationResource.getString("menuItemOcelot"));
     ocelotMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             ocelotMenuItemActionPerformed(evt);
@@ -743,7 +746,8 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     emulatorMenu.add(ocelotMenuItem);
 
-    ocemulatorMenuItem.setText("Run OCEmulator");
+    ocemulatorMenuItem.setText(localizationResource.getString("menuItemOCEmulator"));
+    ocemulatorMenuItem.setEnabled(false);
     ocemulatorMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             ocemulatorMenuItemActionPerformed(evt);
@@ -751,7 +755,8 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     emulatorMenu.add(ocemulatorMenuItem);
 
-    aurumMenuItem.setText("Run Aurum Emulator");
+    aurumMenuItem.setText(localizationResource.getString("menuItemAurum"));
+    aurumMenuItem.setEnabled(false);
     aurumMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             aurumMenuItemActionPerformed(evt);
@@ -759,7 +764,8 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     emulatorMenu.add(aurumMenuItem);
 
-    codeMenuItem.setText("Run CODE");
+    codeMenuItem.setText(localizationResource.getString("menuItemCODE"));
+    codeMenuItem.setEnabled(false);
     codeMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             codeMenuItemActionPerformed(evt);
@@ -769,25 +775,28 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     runMenu.add(emulatorMenu);
 
-    vmMenu.setText("Deploy to VM");
+    vmMenu.setText(localizationResource.getString("menuItemDeployToVM"));
 
-    ocvmMenuItem.setText("Run OCVM");
+    ocvmMenuItem.setText(localizationResource.getString("menuItemOCVM"));
+    ocvmMenuItem.setEnabled(false);
     vmMenu.add(ocvmMenuItem);
 
-    ocvmFXMenuItem.setText("Run OpenComputersVM");
+    ocvmFXMenuItem.setText(localizationResource.getString("menuItemOpenComputersVM"));
+    ocvmFXMenuItem.setEnabled(false);
     vmMenu.add(ocvmFXMenuItem);
 
     runMenu.add(vmMenu);
     runMenu.add(jSeparator5);
 
-    jMenuItem1.setText("Deploy to Minecraft world...");
+    jMenuItem1.setText(localizationResource.getString("menuItemDeployToMinecraft"));
+    jMenuItem1.setEnabled(false);
     runMenu.add(jMenuItem1);
 
     menuBar.add(runMenu);
 
-    helpMenu.setText(localiztionResource.getString("menuHelp"));
+    helpMenu.setText(localizationResource.getString("menuHelp"));
 
-    aboutMenuItem.setText("About");
+    aboutMenuItem.setText(localizationResource.getString("menuItemAbout"));
     aboutMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             aboutMenuItemActionPerformed(evt);
@@ -795,12 +804,13 @@ projectsTree.addMouseListener(new MouseAdapter() {
     });
     helpMenu.add(aboutMenuItem);
 
-    wikiMenuItem.setText("Wiki");
+    wikiMenuItem.setText(localizationResource.getString("menuItemWiki"));
+    wikiMenuItem.setEnabled(false);
     helpMenu.add(wikiMenuItem);
     helpMenu.add(jSeparator11);
 
     settingsMenuItem.setIcon(new ImageIcon(getClass().getResource("/io/VladTheMountain/oclide/resources/assets/icons/cogs_icon&16.png"))); // NOI18N
-    settingsMenuItem.setText(localiztionResource.getString("menuItemSettings"));
+    settingsMenuItem.setText(localizationResource.getString("menuItemSettings"));
     settingsMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             settingsMenuItemActionPerformed(evt);
@@ -821,7 +831,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
             .addComponent(undoRedoToolbar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(jToolBar1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(54, Short.MAX_VALUE))
+            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         .addComponent(jSplitPane1)
     );
     layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
