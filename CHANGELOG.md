@@ -8,7 +8,7 @@
 * Added default cases for `switch` statements  
 ### Deletions
 * Removed variable navigator GUI placeholder
-* Removed WIP Lua lexer and parser
+* Removed WIP Lua lexer and parser  
 
 ## Alpha 0.0.7
 ### Additions
@@ -19,7 +19,7 @@
 * Fixed issue [#7](https://github.com/Vladg24YT/OCLIDE/issues/7)
 * Re-organized all the code
 * Added space between component list and window border in OCEmu's configuration master
-* Re-built OCEmu, using [misiuji's](https://github.com/misiuji) rewritten MSYS2 script (background noise fix)
+* Re-built OCEmu, using [misiuji's](https://github.com/misiuji) rewritten MSYS2 script (background noise fix)  
 
 ## Alpha 0.0.6
 ### Additions
@@ -28,7 +28,7 @@
 * Updated OCEmu to [Zen1th's fork](https://github.com/zenith391/OCEmu) to support OpenOS `1.7`
 * Removed Windows Lua 5.2 binaries. This may break the OCEmu startup algorithm on Linux-based distros (NOTE: you need Lua 5.3 and all necessary libraries installed to launch OCEmu from OCLIDE environment on Linux)
 * Fixed issue [#5](https://github.com/Vladg24YT/OCLIDE/issues/5)
-* Fixed issue [#6](https://github.com/Vladg24YT/OCLIDE/issues/6)
+* Fixed issue [#6](https://github.com/Vladg24YT/OCLIDE/issues/6)  
 
 ## Alpha 0.0.5
 ### Additions
@@ -43,7 +43,7 @@
 * Updated *AutoComplete* to `3.1.1`
 * Updated *SpellChecker* to `3.1.1`  
 ### Deletions
-* Removed *LuaJ* library due to the use of MightyPirates' repack
+* Removed *LuaJ* library due to the use of MightyPirates' repack  
 
 ## Alpha 0.0.4
 ### Additions
@@ -58,7 +58,7 @@
 ## Alpha 0.0.3
 ### Fixes
 * Fixed algorythm of copying the project into *OCEmu*'s virtual machine
-* Added a pre-installed OCEmu default machine for correct project copying algorythm behavior
+* Added a pre-installed OCEmu default machine for correct project copying algorythm behavior  
 
 ## Alpha 0.0.2
 ### What's new
@@ -73,9 +73,9 @@
 * Fixed project's renaming  
 ### Deletions
 * Deleted **Move** option in project's popup
-* Deleted **Undo** and **Redo** event listeners, use `Ctrl+Z` and `Ctrl+Y` instead
+* Deleted **Undo** and **Redo** event listeners, use `Ctrl+Z` and `Ctrl+Y` instead  
 
 ## Alpha 0.0.1
 * Initial version
 * Lua Syntax Highlighting
-* OCEmu configuration and launching master
+* OCEmu configuration and launching master  
