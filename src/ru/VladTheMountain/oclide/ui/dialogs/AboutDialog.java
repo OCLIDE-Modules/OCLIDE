@@ -36,7 +36,7 @@ import javax.swing.JOptionPane;
  */
 public class AboutDialog {
 
-    final ResourceBundle localiztionResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
+    final ResourceBundle localizationResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
     /**
      *
@@ -65,6 +65,6 @@ public class AboutDialog {
                 + "</ul></li>"
                 + "<li><a href=\"https://github.com/misiuji\">misiuji</a> for help with compiling OCEmu binaries</li></ul>"
                 + "</body></html>",
-                "About", JOptionPane.INFORMATION_MESSAGE);
+                localizationResource.getString("about_title"), JOptionPane.INFORMATION_MESSAGE);
     }
 }

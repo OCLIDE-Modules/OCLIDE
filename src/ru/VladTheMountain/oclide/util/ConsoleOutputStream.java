@@ -25,6 +25,8 @@ package ru.VladTheMountain.oclide.util;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextArea;
 
 /**
@@ -38,7 +40,7 @@ public class ConsoleOutputStream extends OutputStream {
 
     public ConsoleOutputStream(JTextArea area) {
         if (area == null) {
-            throw new NullPointerException("No JTextArea was specified");
+            Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "No JTextArea was specified");
         }
         target = area;
     }

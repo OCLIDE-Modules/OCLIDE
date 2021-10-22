@@ -318,6 +318,7 @@ public class ConfigMaker {
                         break;
                     default:
                         Logger.getLogger(ConfigMaker.class.getName()).log(Level.WARNING, "ConfigMaker detected an invalid component type: {0}", configContents[i].substring(configContents[i].indexOf("\""), configContents[i].indexOf("\"", configContents[i].indexOf("\""))));
+                        break;
                 }
                 address = configContents[i].substring(comma1 + 2, comma2 - 1);
                 opts[0] = configContents[i].substring(comma2 + 2, comma3 - 1);

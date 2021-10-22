@@ -23,7 +23,6 @@
  */
 package ru.VladTheMountain.oclide.ui.dialogs;
 
-import ru.VladTheMountain.oclide.ui.frames.EditorFrame;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,6 +54,7 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import ru.VladTheMountain.oclide.ui.frames.EditorFrame;
 
 /**
  *
@@ -434,6 +434,7 @@ public class CreateNewProjectDialog extends JDialog {
                 break;
             default:
                 Logger.getLogger(CreateNewProjectDialog.class.getName()).log(Level.SEVERE, "Something's wrong at projectTypeListValueChanged - wrong index: {0}", this.projectTypeList.getSelectedIndex());
+                break;
         }
     }//GEN-LAST:event_projectTypeListValueChanged
 

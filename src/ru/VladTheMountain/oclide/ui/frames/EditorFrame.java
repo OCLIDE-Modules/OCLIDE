@@ -35,6 +35,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
@@ -126,7 +127,11 @@ public class EditorFrame extends JFrame {
             Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, "Error while creating a new file: ", ex);
             JOptionPane.showMessageDialog(this, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
         }
-        openFile(file); //:D
+        try {
+            openFile(file); //:D
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, "File not found", ex);
+        }
     }
 
     /**
@@ -135,10 +140,10 @@ public class EditorFrame extends JFrame {
      *
      * @param file the {@link File}, which contents are to read
      */
-    private void openFile(File file) {
+    private void openFile(File file) throws FileNotFoundException {
         if (!(file.exists())) {
             JOptionPane.showMessageDialog(this, "The requested file " + file.getAbsolutePath() + " does not exist.", "File does not exist", JOptionPane.ERROR_MESSAGE);
-            throw new NullPointerException("The requested file does not exist");
+            throw new FileNotFoundException("The requested file does not exist");
         }
         String fileContent = "";
         try {
@@ -936,7 +941,11 @@ projectsTree.addMouseListener(new MouseAdapter() {
         if (evt.getButton() == MouseEvent.BUTTON3 && projectsTree.getSelectionPath().getParentPath() == projectsTree.getPathForRow(0)) {
             this.projectManagementPopup.show(projectsTree, evt.getX(), evt.getY());
         } else if (projectsTree.getSelectionCount() != 0 && FileSystems.getDefault().getPath("", projectsTree.getSelectionPath().toString().substring(1, projectsTree.getSelectionPath().toString().length() - 1).split(", ")).toFile().isFile() && evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() == 2) {
-            this.openFile(FileSystems.getDefault().getPath("", projectsTree.getSelectionPath().toString().substring(1, projectsTree.getSelectionPath().toString().length() - 1).split(", ")).toFile());
+            try {
+                this.openFile(FileSystems.getDefault().getPath("", projectsTree.getSelectionPath().toString().substring(1, projectsTree.getSelectionPath().toString().length() - 1).split(", ")).toFile());
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, "File not found", ex);
+            }
         }
     }//GEN-LAST:event_projectsTreeMouseClicked
 
@@ -1002,7 +1011,11 @@ projectsTree.addMouseListener(new MouseAdapter() {
     private void openFileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
         JFileChooser fileChooser = new OpenFileFileChooser();
         if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            openFile(fileChooser.getSelectedFile());
+            try {
+                openFile(fileChooser.getSelectedFile());
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(EditorFrame.class.getName()).log(Level.SEVERE, "File not found", ex);
+            }
         }
     }//GEN-LAST:event_openFileActionPerformed
 
@@ -1045,7 +1058,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
      * {@link io.VladTheMountain.oclide.configurator.ocemu.OCEmuLauncher}
      */
     private void runOCEmu() {
-        if (!(projectsTree.getSelectionPath() == null)) {
+        if (projectsTree.getSelectionPath() != null) {
             if (projectsTree.getSelectionPath().getPath().length > 1 && projectsTree.getSelectionPath().getPath().length < 3) {
                 if (String.valueOf(projectsTree.getSelectionPath().getPath()[1]) == null || "".equals(String.valueOf(projectsTree.getSelectionPath().getPath()[1]))) {
                     JOptionPane.showMessageDialog(this, "Invalid project selection.", "Error: Can't run OCEmu", JOptionPane.ERROR_MESSAGE);

@@ -63,7 +63,7 @@ public class MachineChooserDialog extends JDialog {
         System.arraycopy(fs, 0, this.fileSystemList, 0, fs.length);
         selectedFS = null;
         initComponents();
-        this.setDefaultCloseOperation(javax.swing.JDialog.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
