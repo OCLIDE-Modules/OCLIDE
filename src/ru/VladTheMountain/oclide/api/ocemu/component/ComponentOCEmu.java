@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurators.ocemu.component;
+package ru.VladTheMountain.oclide.api.ocemu.component;
 
 import ru.VladTheMountain.oclide.util.UUIDGenerator;
 
@@ -29,9 +29,10 @@ import ru.VladTheMountain.oclide.util.UUIDGenerator;
  *
  * @author VladTheMountain
  */
-public class EEPROM extends OCEmuComponent {
+public class ComponentOCEmu extends OCEmuComponent {
 
-    public EEPROM(int i1, String path1) {
-        super(1, UUIDGenerator.create(), String.valueOf(i1), path1);
+    public ComponentOCEmu() {
+        super(7, UUIDGenerator.create(), (String) null);
     }
+
 }

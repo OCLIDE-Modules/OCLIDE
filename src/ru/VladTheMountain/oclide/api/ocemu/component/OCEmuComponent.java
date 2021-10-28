@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurators.ocemu.component;
+package ru.VladTheMountain.oclide.api.ocemu.component;
 
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -47,7 +47,7 @@ public class OCEmuComponent {
      * this class.
      *
      * @param componentType the type of the component, see
-     * {@link io.VladTheMountain.oclide.configurator.ocemu.ConfigMaker} to see
+     * {@link ru.VladTheMountain.oclide.api.ocemu.OCEmuConfig} to see
      * which id corresponds to which component
      * @param componentAddress the UUID of the component in OCEmu's machine
      * @param options additional options/parameters that can be passed with the

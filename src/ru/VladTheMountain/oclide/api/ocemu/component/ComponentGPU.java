@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 Vladislav Gorskii.
+ * Copyright 2021 Vladislav Gorskiis.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurators.ocemu.component;
+package ru.VladTheMountain.oclide.api.ocemu.component;
 
 import ru.VladTheMountain.oclide.util.UUIDGenerator;
 
@@ -29,10 +29,10 @@ import ru.VladTheMountain.oclide.util.UUIDGenerator;
  *
  * @author VladTheMountain
  */
-public class OCEmu extends OCEmuComponent {
+public class ComponentGPU extends OCEmuComponent {
 
-    public OCEmu() {
-        super(7, UUIDGenerator.create(), (String) null);
+    public ComponentGPU(int i1, int i2, int i3, int i4) {
+        super(3, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
     }
 
 }

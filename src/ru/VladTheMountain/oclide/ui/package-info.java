@@ -24,9 +24,9 @@
 /**
  * Swing forms for OCLIDE
  *
- * @see io.VladTheMountain.oclide.ui.configurators
- * @see io.VladTheMountain.oclide.ui.dialogs
- * @see io.VladTheMountain.oclide.ui.frames
+ * @see ru.VladTheMountain.oclide.ui.configurators
+ * @see ru.VladTheMountain.oclide.ui.dialogs
+ * @see ru.VladTheMountain.oclide.ui.frames
  * @author VladTheMountain
  */
 package ru.VladTheMountain.oclide.ui;

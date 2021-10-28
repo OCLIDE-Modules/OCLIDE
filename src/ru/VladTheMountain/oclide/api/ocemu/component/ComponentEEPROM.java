@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurators.ocemu.component;
+package ru.VladTheMountain.oclide.api.ocemu.component;
 
 import ru.VladTheMountain.oclide.util.UUIDGenerator;
 
@@ -29,10 +29,9 @@ import ru.VladTheMountain.oclide.util.UUIDGenerator;
  *
  * @author VladTheMountain
  */
-public class Modem extends OCEmuComponent {
+public class ComponentEEPROM extends OCEmuComponent {
 
-    public Modem(int i1, boolean b1) {
-        super(6, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(b1));
-        
+    public ComponentEEPROM(int i1, String path1) {
+        super(1, UUIDGenerator.create(), String.valueOf(i1), path1);
     }
 }

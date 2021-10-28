@@ -66,9 +66,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
 import org.apache.commons.io.FileUtils;
-import ru.VladTheMountain.oclide.configurators.ocemu.ConfigMaker;
-import ru.VladTheMountain.oclide.configurators.ocemu.OCEmuLauncher;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.OCEmuComponent;
+import ru.VladTheMountain.oclide.api.ocemu.OCEmuConfig;
+import ru.VladTheMountain.oclide.api.ocemu.OCEmuLauncher;
+import ru.VladTheMountain.oclide.api.ocemu.component.OCEmuComponent;
 import ru.VladTheMountain.oclide.util.UUIDGenerator;
 
 /**
@@ -97,7 +97,7 @@ public class OCEmuForm extends javax.swing.JFrame {
             this.componentsArray = new OCEmuComponent[OCEmuLauncher.DEFAULT.length];
             System.arraycopy(OCEmuLauncher.DEFAULT, 0, componentsArray, 0, OCEmuLauncher.DEFAULT.length);
         } else {
-            new ConfigMaker(this.componentsArray).readConfig(new File("OCEmu/.machine/ocemu.cfg"));
+            new OCEmuConfig(this.componentsArray).readConfig(new File("OCEmu/.machine/ocemu.cfg"));
         }
         updateComponentList();
         t.start();
@@ -108,7 +108,7 @@ public class OCEmuForm extends javax.swing.JFrame {
      *
      * @param c an OCEmuComponent to add
      * @see
-     * ru.VladTheMountain.oclide.configurators.ocemu.component.OCEmuComponent
+     * ru.VladTheMountain.oclide.api.ocemu.component.OCEmuComponent
      */
     private void addComponent(OCEmuComponent c) {
         OCEmuComponent[] tmp = new OCEmuComponent[this.componentsArray.length + 1];
@@ -681,7 +681,7 @@ public class OCEmuForm extends javax.swing.JFrame {
             Logger.getLogger(this.getClass().getName()).log(Level.FINE, "No filesystem found, creating...");
         }
         // Creating OCEmu config
-        new ConfigMaker(this.componentsArray).createConfig();
+        new OCEmuConfig(this.componentsArray).createConfig();
         System.out.println("Config ready");
         Logger.getLogger(this.getClass().getName()).log(Level.INFO, "OCEmu config ready");
         // Copying all projects' files
@@ -740,13 +740,13 @@ public class OCEmuForm extends javax.swing.JFrame {
 
     private void importConfigItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_importConfigItemActionPerformed
         if (this.configChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            new ConfigMaker(this.componentsArray).readConfig(this.configChooser.getSelectedFile());
+            new OCEmuConfig(this.componentsArray).readConfig(this.configChooser.getSelectedFile());
             updateComponentList();
         }
     }//GEN-LAST:event_importConfigItemActionPerformed
 
     private void saveConfigItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_saveConfigItemActionPerformed
-        new ConfigMaker(this.componentsArray).createConfig();
+        new OCEmuConfig(this.componentsArray).createConfig();
     }//GEN-LAST:event_saveConfigItemActionPerformed
 
     private void componentTypeComboBoxActionPerformed(ActionEvent evt) {//GEN-FIRST:event_componentTypeComboBoxActionPerformed
@@ -754,7 +754,7 @@ public class OCEmuForm extends javax.swing.JFrame {
     }//GEN-LAST:event_componentTypeComboBoxActionPerformed
 
     private void resetConfigItemActionPerformed(ActionEvent evt) {//GEN-FIRST:event_resetConfigItemActionPerformed
-        new ConfigMaker(OCEmuLauncher.DEFAULT).createConfig();
+        new OCEmuConfig(OCEmuLauncher.DEFAULT).createConfig();
         this.componentsArray = new OCEmuComponent[OCEmuLauncher.DEFAULT.length];
         System.arraycopy(OCEmuLauncher.DEFAULT, 0, this.componentsArray, 0, OCEmuLauncher.DEFAULT.length);
         updateComponentList();

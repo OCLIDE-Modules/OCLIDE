@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurators.ocemu.component;
+package ru.VladTheMountain.oclide.api.ocemu.component;
 
 import ru.VladTheMountain.oclide.util.UUIDGenerator;
 
@@ -29,10 +29,10 @@ import ru.VladTheMountain.oclide.util.UUIDGenerator;
  *
  * @author VladTheMountain
  */
-public class Computer extends OCEmuComponent {
+public class ComponentInternet extends OCEmuComponent {
 
-    public Computer() {
-        super(0, UUIDGenerator.create(), (String) null);
+    public ComponentInternet() {
+        super(4, UUIDGenerator.create(), (String) null);
     }
 
 }

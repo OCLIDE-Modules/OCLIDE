@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 Vladislav Gorskii.
+ * Copyright 2021 VladTheMountain.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,8 @@
  * THE SOFTWARE.
  */
 /**
- * Supportive classes that are used to create the configuration file.
+ * A bunch of packages containing tools to launch and configure supported emulators.
  *
  * @author VladTheMountain
  */
-package ru.VladTheMountain.oclide.configurators.ocemu.component;
+package ru.VladTheMountain.oclide.api;

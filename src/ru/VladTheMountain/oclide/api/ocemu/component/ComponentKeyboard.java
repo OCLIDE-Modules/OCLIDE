@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 VladTheMountain.
+ * Copyright 2021 Vladislav Gorskii.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package ru.VladTheMountain.oclide.api.ocemu.component;
+
+import ru.VladTheMountain.oclide.util.UUIDGenerator;
+
 /**
- * The <b>OCEmu</b> launcher and other classes neccessary for its' proper
- * functioning.
  *
- * @see io.VladTheMountain.oclide.configurator.ocemu.component
  * @author VladTheMountain
  */
-package ru.VladTheMountain.oclide.configurators.ocemu;
+public class ComponentKeyboard extends OCEmuComponent {
+
+    public ComponentKeyboard() {
+        super(5, UUIDGenerator.create(), (String) null);
+    }
+
+}

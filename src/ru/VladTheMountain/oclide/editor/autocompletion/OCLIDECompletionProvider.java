@@ -63,7 +63,7 @@ public class OCLIDECompletionProvider {
      * @deprecated Will be reworked to be automated via Parser.
      */
     public static CompletionProvider getProvider() {
-        ResourceBundle autocompletion = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.autocompletion.Autocompletion", Locale.getDefault());
+        ResourceBundle autocompletion = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.autocompletion.Autocompletion", Locale.getDefault());
         defaultProvider = new DefaultCompletionProvider();
         defaultProvider.setAutoActivationRules(true, null);
         defaultProvider.setParameterizedCompletionParams('(', ", ", ')');

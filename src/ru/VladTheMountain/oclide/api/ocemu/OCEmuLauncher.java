@@ -21,20 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurators.ocemu;
+package ru.VladTheMountain.oclide.api.ocemu;
 
+import ru.VladTheMountain.oclide.api.ocemu.OCEmuConfig;
 import javax.swing.JOptionPane;
 import li.cil.repack.org.luaj.vm2.lib.jse.JsePlatform;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.Computer;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.EEPROM;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.Filesystem;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.GPU;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.Internet;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.Keyboard;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.Modem;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.OCEmu;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.OCEmuComponent;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.Screen;
+import ru.VladTheMountain.oclide.api.ocemu.component.ComponentComputer;
+import ru.VladTheMountain.oclide.api.ocemu.component.ComponentEEPROM;
+import ru.VladTheMountain.oclide.api.ocemu.component.ComponentFilesystem;
+import ru.VladTheMountain.oclide.api.ocemu.component.ComponentGPU;
+import ru.VladTheMountain.oclide.api.ocemu.component.ComponentInternet;
+import ru.VladTheMountain.oclide.api.ocemu.component.ComponentKeyboard;
+import ru.VladTheMountain.oclide.api.ocemu.component.ComponentModem;
+import ru.VladTheMountain.oclide.api.ocemu.component.ComponentOCEmu;
+import ru.VladTheMountain.oclide.api.ocemu.component.OCEmuComponent;
+import ru.VladTheMountain.oclide.api.ocemu.component.ComponentScreen;
 
 /**
  *
@@ -43,20 +44,20 @@ import ru.VladTheMountain.oclide.configurators.ocemu.component.Screen;
 public class OCEmuLauncher {
 
     //Config itself
-    private ConfigMaker currentConfiguration;
+    private OCEmuConfig currentConfiguration;
     //Config defaults
     public final static OCEmuComponent[] DEFAULT = {
-        new GPU(0, 160, 50, 3),
-        new Modem(1, false),
-        new EEPROM(9, "lua/bios.lua"),
-        new Filesystem(7, "tmpfs", ".machine/tmpfs", true, 0),
-        new Filesystem(-1, "tmpfs", "tmpfs", false, 0),
-        new Filesystem(5, "nil", "nil", false, 0),
-        new Internet(),
-        new Computer(),
-        new OCEmu(),
-        new Screen("nil", 80, 25, 3),
-        new Keyboard()
+        new ComponentGPU(0, 160, 50, 3),
+        new ComponentModem(1, false),
+        new ComponentEEPROM(9, "lua/bios.lua"),
+        new ComponentFilesystem(7, "tmpfs", ".machine/tmpfs", true, 0),
+        new ComponentFilesystem(-1, "tmpfs", "tmpfs", false, 0),
+        new ComponentFilesystem(5, "nil", "nil", false, 0),
+        new ComponentInternet(),
+        new ComponentComputer(),
+        new ComponentOCEmu(),
+        new ComponentScreen("nil", 80, 25, 3),
+        new ComponentKeyboard()
     };
 
     /**

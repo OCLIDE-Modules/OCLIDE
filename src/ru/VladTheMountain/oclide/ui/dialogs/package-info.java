@@ -24,7 +24,7 @@
 /**
  * Dialog-related UI forms
  *
- * @see io.VladTheMountain.oclide.ui.frames.EditorFrame
+ * @see ru.VladTheMountain.oclide.ui.frames.EditorFrame
  * @author VladTheMountain
  */
 package ru.VladTheMountain.oclide.ui.dialogs;

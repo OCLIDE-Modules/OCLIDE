@@ -62,7 +62,7 @@ import ru.VladTheMountain.oclide.ui.frames.EditorFrame;
  */
 public class CreateNewProjectDialog extends JDialog {
 
-    final ResourceBundle localiztionResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
+    final ResourceBundle localiztionResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
     private static final long serialVersionUID = 1L;
 

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurators.ocemu;
+package ru.VladTheMountain.oclide.api.ocemu;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,13 +30,13 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import ru.VladTheMountain.oclide.configurators.ocemu.component.OCEmuComponent;
+import ru.VladTheMountain.oclide.api.ocemu.component.OCEmuComponent;
 
 /**
  *
  * @author VladTheMountain
  */
-public class ConfigMaker {
+public class OCEmuConfig {
 
     //CONFIG VARIABLES
     private static String monochromeColor = "0xFFFFFF";
@@ -56,11 +56,11 @@ public class ConfigMaker {
      * Initialization constructor
      *
      * @param comps array of OCEmuComponent
-     * @see ru.VladTheMountain.oclide.configurators.ocemu.component.OCEmuComponent
+     * @see ru.VladTheMountain.oclide.api.ocemu.component.OCEmuComponent
      */
-    public ConfigMaker(OCEmuComponent[] comps) {
+    public OCEmuConfig(OCEmuComponent[] comps) {
         if (comps == null || comps.length < 2) {
-            Logger.getLogger(ConfigMaker.class.getName()).log(Level.WARNING, "ConfigMaker received an incomplete configutation", comps);
+            Logger.getLogger(OCEmuConfig.class.getName()).log(Level.WARNING, "ConfigMaker received an incomplete configutation", comps);
             JOptionPane.showMessageDialog(null, "Couldn't create ConfigMaker for OCEmu: Incomplete configuration:\n" + Arrays.toString(comps), "Caught " + "", JOptionPane.WARNING_MESSAGE);
         }
         this.computerComponents = "";
@@ -111,7 +111,7 @@ public class ConfigMaker {
                             + "\"" + comp.getComponentAddress() + "\", " + "" + comp.getOptionAt(0) + ", " + "" + comp.getOptionAt(1) + ", " + "" + comp.getOptionAt(2) + ", " + "" + comp.getOptionAt(3) + "},\n";
                     break;
                 default:
-                    Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, "ConfigMaker received an invalid component type: {0}", comp.getComponentType());
+                    Logger.getLogger(OCEmuConfig.class.getName()).log(Level.SEVERE, "ConfigMaker received an invalid component type: {0}", comp.getComponentType());
                     break;
             }
             Logger.getLogger(this.getClass().getName()).log(Level.CONFIG, "Added component to OCEmu config:", comp.toString());
@@ -144,7 +144,7 @@ public class ConfigMaker {
             try {
                 config.createNewFile();
             } catch (IOException ex) {
-                Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, "Couldn't create config file:", ex);
+                Logger.getLogger(OCEmuConfig.class.getName()).log(Level.SEVERE, "Couldn't create config file:", ex);
                 JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -251,7 +251,7 @@ public class ConfigMaker {
         try {
             Files.write(config.toPath(), contents.getBytes());
         } catch (IOException ex) {
-            Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, "Couldn't write to config file", ex);
+            Logger.getLogger(OCEmuConfig.class.getName()).log(Level.SEVERE, "Couldn't write to config file", ex);
             JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -267,14 +267,14 @@ public class ConfigMaker {
         try {
             lines = Files.readAllLines(f.toPath()).toArray().length;
         } catch (IOException ex) {
-            Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OCEmuConfig.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
         }
         String[] configContents = new String[lines];
         try {
             System.arraycopy(Files.readAllLines(f.toPath()).toArray(configContents), 0, configContents, 0, lines);
         } catch (IOException ex) {
-            Logger.getLogger(ConfigMaker.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OCEmuConfig.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex, "Caught " + ex.getClass().getName(), JOptionPane.ERROR_MESSAGE);
         }
         OCEmuComponent[] tmp = {};
@@ -317,7 +317,7 @@ public class ConfigMaker {
                         type = 8;
                         break;
                     default:
-                        Logger.getLogger(ConfigMaker.class.getName()).log(Level.WARNING, "ConfigMaker detected an invalid component type: {0}", configContents[i].substring(configContents[i].indexOf("\""), configContents[i].indexOf("\"", configContents[i].indexOf("\""))));
+                        Logger.getLogger(OCEmuConfig.class.getName()).log(Level.WARNING, "ConfigMaker detected an invalid component type: {0}", configContents[i].substring(configContents[i].indexOf("\""), configContents[i].indexOf("\"", configContents[i].indexOf("\""))));
                         break;
                 }
                 address = configContents[i].substring(comma1 + 2, comma2 - 1);

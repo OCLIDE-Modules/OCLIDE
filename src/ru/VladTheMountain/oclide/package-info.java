@@ -24,11 +24,11 @@
 /**
  * OCLIDE itself
  *
- * @see io.VladTheMountain.oclide.configurator
- * @see io.VladTheMountain.oclide.editor
- * @see io.VladTheMountain.oclide.resources
- * @see io.VladTheMountain.oclide.ui
- * @see io.VladTheMountain.oclide.util
+ * @see ru.VladTheMountain.oclide.api
+ * @see ru.VladTheMountain.oclide.editor
+ * @see ru.VladTheMountain.oclide.resources
+ * @see ru.VladTheMountain.oclide.ui
+ * @see ru.VladTheMountain.oclide.util
  * @author VladTheMountain
  */
 package ru.VladTheMountain.oclide;

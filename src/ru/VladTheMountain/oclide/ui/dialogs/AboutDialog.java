@@ -36,7 +36,7 @@ import javax.swing.JOptionPane;
  */
 public class AboutDialog {
 
-    final ResourceBundle localizationResource = ResourceBundle.getBundle("io.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
+    final ResourceBundle localizationResource = ResourceBundle.getBundle("ru.VladTheMountain.oclide.resources.dialog.Dialog", Locale.getDefault());
 
     /**
      *

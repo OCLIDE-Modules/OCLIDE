@@ -21,18 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ru.VladTheMountain.oclide.configurators.ocemu.component;
-
-import ru.VladTheMountain.oclide.util.UUIDGenerator;
-
 /**
+ * Supportive classes that are used to create the configuration file.
  *
  * @author VladTheMountain
  */
-public class Keyboard extends OCEmuComponent {
-
-    public Keyboard() {
-        super(5, UUIDGenerator.create(), (String) null);
-    }
-
-}
+package ru.VladTheMountain.oclide.api.ocemu.component;

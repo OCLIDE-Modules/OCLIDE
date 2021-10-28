@@ -24,7 +24,7 @@
 /**
  * Internationalization files which are used by the code autocompletion provider
  *
- * @see io.VladTheMountain.oclide.editor.OCLIDECompletionProvider
+ * @see ru.VladTheMountain.oclide.editor.OCLIDECompletionProvider
  * @author VladTheMountain
  */
 package ru.VladTheMountain.oclide.resources.autocompletion;

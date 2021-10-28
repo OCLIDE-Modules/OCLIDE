@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2021 VladTheMountain.
+ * Copyright 2021 Vladislav Gorskii.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package ru.VladTheMountain.oclide.api.ocemu.component;
+
+import ru.VladTheMountain.oclide.util.UUIDGenerator;
+
 /**
- * A bunch of packages containing tools to launch and configure supported emulators.
  *
  * @author VladTheMountain
  */
-package ru.VladTheMountain.oclide.configurators;
+public class ComponentScreen extends OCEmuComponent {
+
+    public ComponentScreen(int i1, int i2, int i3, int i4) {
+        super(8, UUIDGenerator.create(), String.valueOf(i1), String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
+    }
+
+    /**
+     * Use only if the first param is null
+     *
+     * @param i1 i1
+     * @param i2 i2
+     * @param i3 i3
+     * @param i4 i4
+     */
+    public ComponentScreen(String i1, int i2, int i3, int i4) {
+        super(8, UUIDGenerator.create(), i1, String.valueOf(i2), String.valueOf(i3), String.valueOf(i4));
+    }
+}

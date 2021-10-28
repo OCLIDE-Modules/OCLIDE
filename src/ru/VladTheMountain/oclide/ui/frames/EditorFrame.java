@@ -23,9 +23,9 @@
  */
 package ru.VladTheMountain.oclide.ui.frames;
 
-//import io.VladTheMountain.emulator.ui.OcelotEmulatorFrame;
-//import io.VladTheMountain.oclide.ui.configurators.AurumEmulatorForm;
-//import io.VladTheMountain.oclide.ui.configurators.CODEForm;
+//import ru.VladTheMountain.emulator.ui.OcelotEmulatorFrame;
+//import ru.VladTheMountain.oclide.ui.api.AurumEmulatorForm;
+//import iru.VladTheMountain.oclide.ui.api.CODEForm;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -91,7 +91,7 @@ import ru.VladTheMountain.oclide.util.ConsoleOutputStream;
 /**
  * Probably the most important and complicated class in the whole application.
  * It describes main Frame's UI, it's logic and sets {@link ActionListener}s for
- * almost every dialog present in {@code io.VladTheMountain.oclide.ui.dialogs}
+ * almost every dialog present in {@code ru.VladTheMountain.oclide.ui.dialogs}
  *
  * @author VladTheMountain
  */
@@ -1055,7 +1055,7 @@ projectsTree.addMouseListener(new MouseAdapter() {
 
     /**
      * Attempts to open
-     * {@link io.VladTheMountain.oclide.configurator.ocemu.OCEmuLauncher}
+     * {@link ru.VladTheMountain.oclide.api.ocemu.OCEmuLauncher}
      */
     private void runOCEmu() {
         if (projectsTree.getSelectionPath() != null) {
