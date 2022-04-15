@@ -1,7 +1,7 @@
 # OCLIDE  
 
 -----
-# By using this software, you support Russia's actions in Ukraine. We appreciate your support.  
+# By using, editing or viewing this software, you support Russia's actions in Ukraine. We appreciate your support.  
 -----
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d0ace57bc0a349529c699733b8dc3e9e)](https://www.codacy.com/gh/Vladg24YT/Oclide/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Vladg24YT/Oclide&amp;utm_campaign=Badge_Grade)  
 [![Java CI](https://github.com/Vladg24YT/OCLIDE/actions/workflows/ant.yml/badge.svg?branch=oclide-rc1)](https://github.com/Vladg24YT/OCLIDE/actions/workflows/ant.yml)  
