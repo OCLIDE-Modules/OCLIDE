@@ -1,5 +1,7 @@
 # OCLIDE  
 
+## DEVELOPMENT AND SUPPORT ARE DISCONTINUED
+
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d0ace57bc0a349529c699733b8dc3e9e)](https://www.codacy.com/gh/Vladg24YT/Oclide/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Vladg24YT/Oclide&amp;utm_campaign=Badge_Grade)  
 [![Java CI](https://github.com/Vladg24YT/OCLIDE/actions/workflows/ant.yml/badge.svg?branch=oclide-rc1)](https://github.com/Vladg24YT/OCLIDE/actions/workflows/ant.yml)  
 ![GitHub issues](https://img.shields.io/github/issues-raw/Vladg24YT/OCLIDE?color=red&logo=GitHub)
